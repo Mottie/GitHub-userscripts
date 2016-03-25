@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name          GitHub Code Colors
-// @version       1.0.0
+// @version       1.0.1
 // @description   A userscript that adds a color swatch next to the code color definition
 // @license       https://creativecommons.org/licenses/by-sa/4.0/
 // @namespace     http://github.com/Mottie
