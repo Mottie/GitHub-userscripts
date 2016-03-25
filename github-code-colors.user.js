@@ -47,8 +47,8 @@
       var addNode, loop,
       indx = 0,
       regexNamed = new RegExp("^(" + namedColors + ")$"),
-      // #123 or #123456
-      regexHex = /^#([0-9A-F]{6}|[0-9A-F]{3})$/i,
+      // #123, #123456 or 0x123456 (unix style colors, used by three.js)
+      regexHex = /^(#|0x)([0-9A-F]{6}|[0-9A-F]{3})$/i,
       // rgb(0,0,0) or rgba(0,0,0,0.2)
       regexRGB = /^rgba?$/i,
       // hsl(0,0%,0%) or hsla(0,0%,0%,0.2);
@@ -78,7 +78,7 @@
           txt = el.textContent;
           if (regexHex.test(txt) || regexNamed.test(txt)) {
             if (!el.querySelector(".ghcc-block")) {
-              addNode(el, txt);
+              addNode(el, txt.replace(/^0x/, '#'));
               max++;
             }
           } else if (regexRGB.test(txt)) {
