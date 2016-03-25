@@ -22,7 +22,9 @@ Click the link below for more details.
 
 2. Install the userscript by clicking on the link:
 
-* [GitHub code colors](https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-code-colors.user.js)
-* [GitHub issues counts](https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-issue-counts.user.js)
-* [GitHub title notification](https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-title-notification.user.js)
-* [Gist to dabblet](https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/gist-to-dabblet.user.js)
+[greasyfork-icon]: https://cloud.githubusercontent.com/assets/136959/14036395/65bdd216-f206-11e5-97cd-1db2e394e259.png
+
+  * [![GreasyFork][greasyfork-icon]](https://greasyfork.org/en/scripts/18141-github-code-colors) [GitHub code colors](https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-code-colors.user.js)
+  * [![GreasyFork][greasyfork-icon]](https://greasyfork.org/en/scripts/15560-github-show-repo-issues) [GitHub issues counts](https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-issue-counts.user.js)
+  * [![GreasyFork][greasyfork-icon]](https://greasyfork.org/en/scripts/18253-github-title-notification) [GitHub title notification](https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-title-notification.user.js)
+  * [![GreasyFork][greasyfork-icon]](https://greasyfork.org/en/scripts/18254-gist-to-dabblet) [Gist to dabblet](https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/gist-to-dabblet.user.js)
