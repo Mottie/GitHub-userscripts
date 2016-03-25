@@ -24,5 +24,5 @@ Click the link below for more details.
 
 * [GitHub code colors](https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-code-colors.user.js)
 * [GitHub issues counts](https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-issue-counts.user.js)
-* [GitHub title notifications](https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-title-notifications.user.js)
+* [GitHub title notification](https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-title-notification.user.js)
 * [Gist to dabblet](https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/gist-to-dabblet.user.js)
