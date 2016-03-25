@@ -4,10 +4,10 @@ Userscripts to add functionality to GitHub. This repository currently contains t
 
 Click the link below for more details.
 
-* [GitHub code colors](https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-code-colors.md)
-* [GitHub issue counts](https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-issue-counts.md)
-* [GitHub title notification](https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-title-notification.md)
-* [Gist to dabblet](https://github.com/Mottie/GitHub-userscripts/wiki/Gist-to-dabblet.md)
+* [GitHub code colors](https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-code-colors)
+* [GitHub issue counts](https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-issue-counts)
+* [GitHub title notification](https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-title-notification)
+* [Gist to dabblet](https://github.com/Mottie/GitHub-userscripts/wiki/Gist-to-dabblet)
 
 ## Installation
 
