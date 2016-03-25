@@ -61,6 +61,11 @@
       // hsl(0,0%,0%) or hsla(0,0%,0%,0.2);
       regexHSL = /^hsla?(\([^\)]+\))?/i,
 
+      // misc regex
+      regexQuotes = /[\'\"]/g,
+      regexUnix = /^0x/,
+      regexPercent = /%%/g,
+
       // .pl-c1 targets css hex colors, "rgb" and "hsl"
       // .pl-en targets p5.js function names
       els = document.querySelectorAll(".pl-c1, .pl-s"),
@@ -89,11 +94,11 @@
           el = els[indx];
           txt = el.textContent;
           if (hasClass(el, "pl-s")) {
-            txt = txt.replace(/[\'\"]/g, "");
+            txt = txt.replace(regexQuotes, "");
           }
           if (regexHex.test(txt) || regexNamed.test(txt)) {
             if (!el.querySelector(".ghcc-block")) {
-              addNode(el, txt.replace(/^0x/, "#"));
+              addNode(el, txt.replace(regexUnix, "#"));
               max++;
             }
           } else if (regexRGB.test(txt)) {
@@ -116,10 +121,11 @@
                 // <span class="pl-c1">1</span><span class="pl-k">%</span>,
                 // <span class="pl-c1">1</span><span class="pl-k">%</span>);
                 txt + "(" + els[++indx].textContent + "," + els[++indx].textContent + "%," +
+                  // hsla needs one more parameter
                   els[++indx].textContent + "%" + (tmp ? "," + els[++indx].textContent : "") + ")";
               // sometimes (previews only?) the .pl-k span is nested inside the .pl-c1 span,
               // so we end up with "%%"
-              addNode(el, txt.replace(/%%/g, "%"));
+              addNode(el, txt.replace(regexPercent, "%"));
               max++;
             }
           }
