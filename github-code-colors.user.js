@@ -41,20 +41,29 @@
     "yellowgreen"
   ].join("|"),
 
+  hasClass = function(el, name) {
+    if (el) {
+      return el.classList ? el.classList.contains(name) : new RegExp("\\b" + name + "\\b").test(el.className);
+    }
+    return false;
+  },
+
   addColors = function() {
     busy = true;
     if (document.querySelector(".highlight")) {
       var addNode, loop,
       indx = 0,
-      regexNamed = new RegExp("^(" + namedColors + ")$"),
+      regexNamed = new RegExp("^(" + namedColors + ")$", "i"),
       // #123, #123456 or 0x123456 (unix style colors, used by three.js)
       regexHex = /^(#|0x)([0-9A-F]{6}|[0-9A-F]{3})$/i,
       // rgb(0,0,0) or rgba(0,0,0,0.2)
-      regexRGB = /^rgba?$/i,
+      regexRGB = /^rgba?(\([^\)]+\))?/i,
       // hsl(0,0%,0%) or hsla(0,0%,0%,0.2);
-      regexHSL = /^hsla?$/i,
+      regexHSL = /^hsla?(\([^\)]+\))?/i,
 
-      els = document.querySelectorAll(".pl-c1"),
+      // .pl-c1 targets css hex colors, "rgb" and "hsl"
+      // .pl-en targets p5.js function names
+      els = document.querySelectorAll(".pl-c1, .pl-s"),
       len = els.length,
 
       // don't use a div, because GitHub-Dark adds a :hover background color definition on divs
@@ -64,7 +73,10 @@
       addNode = function(el, val) {
         var node = block.cloneNode();
         node.style.backgroundColor = val;
-        el.insertBefore(node, el.childNodes[0]);
+        // don't add node if color is invalid
+        if (node.style.backgroundColor !== "") {
+          el.insertBefore(node, el.childNodes[0]);
+        }
       };
 
       // loop with delay to allow user interaction
@@ -76,25 +88,35 @@
           if (indx >= len) { return; }
           el = els[indx];
           txt = el.textContent;
+          if (hasClass(el, "pl-s")) {
+            txt = txt.replace(/[\'\"]/g, "");
+          }
           if (regexHex.test(txt) || regexNamed.test(txt)) {
             if (!el.querySelector(".ghcc-block")) {
-              addNode(el, txt.replace(/^0x/, '#'));
+              addNode(el, txt.replace(/^0x/, "#"));
               max++;
             }
           } else if (regexRGB.test(txt)) {
             if (!el.querySelector(".ghcc-block")) {
-              addNode(el, txt += "(" + els[++indx].textContent + ")");
+              txt = hasClass(el, "pl-s") ?
+                // color in a string contains everything
+                txt.match(regexRGB)[0] :
+                txt + "(" + els[++indx].textContent + ")";
+              addNode(el, txt);
               max++;
             }
           } else if (regexHSL.test(txt)) {
             if (!el.querySelector(".ghcc-block")) {
               tmp = /a$/i.test(txt);
-              // traverse this HTML... & els only contains the pl-c1 nodes
-              // <span class="pl-c1">hsl</span>(<span class="pl-c1">1</span>,
-              // <span class="pl-c1">1</span><span class="pl-k">%</span>,
-              // <span class="pl-c1">1</span><span class="pl-k">%</span>);
-              txt += "(" + els[++indx].textContent + "," + els[++indx].textContent + "%," +
-                els[++indx].textContent + "%" + (tmp ? "," + els[++indx].textContent : "") + ")";
+              txt = hasClass(el, "pl-s") ?
+                // color in a string contains everything
+                txt.match(regexHSL)[0] :
+                // traverse this HTML... & els only contains the pl-c1 nodes
+                // <span class="pl-c1">hsl</span>(<span class="pl-c1">1</span>,
+                // <span class="pl-c1">1</span><span class="pl-k">%</span>,
+                // <span class="pl-c1">1</span><span class="pl-k">%</span>);
+                txt + "(" + els[++indx].textContent + "," + els[++indx].textContent + "%," +
+                  els[++indx].textContent + "%" + (tmp ? "," + els[++indx].textContent : "") + ")";
               // sometimes (previews only?) the .pl-k span is nested inside the .pl-c1 span,
               // so we end up with "%%"
               addNode(el, txt.replace(/%%/g, "%"));
