@@ -6,6 +6,7 @@ Click the link below for more details.
 
 * [GitHub code colors](https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-code-colors)
 * [GitHub issue counts](https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-issue-counts)
+* [GitHub table of contents](https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-table-of-contents)
 * [GitHub title notification](https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-title-notification)
 * [Gist to dabblet](https://github.com/Mottie/GitHub-userscripts/wiki/Gist-to-dabblet)
 
@@ -24,5 +25,6 @@ Click the link below for more details.
 
   * [GitHub code colors](https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-code-colors.user.js) ([GreasyFork](https://greasyfork.org/en/scripts/18141-github-code-colors))
   * [GitHub issues counts](https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-issue-counts.user.js) ([GreasyFork](https://greasyfork.org/en/scripts/15560-github-show-repo-issues))
+  * [GitHub table of contents](https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-toc.user.js)
   * [GitHub title notification](https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-title-notification.user.js) ([GreasyFork](https://greasyfork.org/en/scripts/18253-github-title-notification))
   * [Gist to dabblet](https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/gist-to-dabblet.user.js) ([GreasyFork](https://greasyfork.org/en/scripts/18254-gist-to-dabblet))
