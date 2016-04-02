@@ -8,6 +8,7 @@ Click the link below for more details.
 * [GitHub issue counts](https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-issue-counts)
 * [GitHub table of contents](https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-table-of-contents)
 * [GitHub title notification](https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-title-notification)
+* [GitHub toggle wiki sidebar](https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-toggle-wiki-sidebar)
 * [Gist to dabblet](https://github.com/Mottie/GitHub-userscripts/wiki/Gist-to-dabblet)
 
 ## Installation
@@ -27,4 +28,5 @@ Click the link below for more details.
   * [GitHub issues counts](https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-issue-counts.user.js) ([GreasyFork](https://greasyfork.org/en/scripts/15560-github-show-repo-issues))
   * [GitHub table of contents](https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-toc.user.js) ([GreasyFork](https://greasyfork.org/en/scripts/18344-github-toc))
   * [GitHub title notification](https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-title-notification.user.js) ([GreasyFork](https://greasyfork.org/en/scripts/18253-github-title-notification))
+  * [GitHub toggle wiki sidebar](https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-toggle-wiki-sidebar.user.js) ([GreasyFork]())
   * [Gist to dabblet](https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/gist-to-dabblet.user.js) ([GreasyFork](https://greasyfork.org/en/scripts/18254-gist-to-dabblet))
