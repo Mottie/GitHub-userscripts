@@ -26,9 +26,16 @@ Click the link below for more details.
 2. Install the userscript by clicking on the named link, or install it from GreasyFork:
 
   * [GitHub code colors](https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-code-colors.user.js) ([GreasyFork](https://greasyfork.org/en/scripts/18141-github-code-colors))
-  * [GitHub issues comments](https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-issue-comments.user.js) ([GreasyFork]())
+  * [GitHub issues comments](https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-issue-comments.user.js) ([GreasyFork](https://greasyfork.org/en/scripts/18503-github-toggle-issue-comments))
   * [GitHub issues counts](https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-issue-counts.user.js) ([GreasyFork](https://greasyfork.org/en/scripts/15560-github-show-repo-issues))
   * [GitHub table of contents](https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-toc.user.js) ([GreasyFork](https://greasyfork.org/en/scripts/18344-github-toc))
   * [GitHub title notification](https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-title-notification.user.js) ([GreasyFork](https://greasyfork.org/en/scripts/18253-github-title-notification))
   * [GitHub toggle wiki sidebar](https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-toggle-wiki-sidebar.user.js) ([GreasyFork](https://greasyfork.org/en/scripts/18433-github-toggle-wiki-sidebar))
   * [Gist to dabblet](https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/gist-to-dabblet.user.js) ([GreasyFork](https://greasyfork.org/en/scripts/18254-gist-to-dabblet))
+
+## Other userscripts not hosted here:
+
+* [GitHub Dark Script](https://github.com/StylishThemes/GitHub-Dark-Script)
+* [GitHub Custom Emojis](https://github.com/StylishThemes/GitHub-Custom-Emojis)
+* [ZenHub Sort Issues](https://github.com/Mottie/ZenHub-userscripts#zenhub-sort-issues)
+* [ZenHub Toggle Meta](https://github.com/Mottie/ZenHub-userscripts#zenhub-toggle-meta)
