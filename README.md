@@ -4,12 +4,13 @@ Userscripts to add functionality to GitHub. This repository currently contains t
 
 Click the link below for more details.
 
-* [GitHub code colors](https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-code-colors)
-* [GitHub issue counts](https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-issue-counts)
-* [GitHub table of contents](https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-table-of-contents)
-* [GitHub title notification](https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-title-notification)
-* [GitHub toggle wiki sidebar](https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-toggle-wiki-sidebar)
-* [Gist to dabblet](https://github.com/Mottie/GitHub-userscripts/wiki/Gist-to-dabblet)
+* [GitHub code colors](https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-code-colors) (3/20/2016)
+* [GitHub issue comments](https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-issue-comments) (4/4/2016)
+* [GitHub issue counts](https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-issue-counts) (1/16/2012)
+* [GitHub table of contents](https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-table-of-contents) (3/28/2016)
+* [GitHub title notification](https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-title-notification) (3/24/2016)
+* [GitHub toggle wiki sidebar](https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-toggle-wiki-sidebar) (4/1/2016)
+* [Gist to dabblet](https://github.com/Mottie/GitHub-userscripts/wiki/Gist-to-dabblet) (1/26/2012)
 
 ## Installation
 
@@ -22,9 +23,10 @@ Click the link below for more details.
   * Dolphin - install [Tampermonkey](https://tampermonkey.net/?ext=dhdg&browser=dolphin).
   * UC Browser - install [Tampermonkey](https://tampermonkey.net/?ext=dhdg&browser=ucweb).
 
-2. Install the userscript by clicking on the link:
+2. Install the userscript by clicking on the named link, or install it from GreasyFork:
 
   * [GitHub code colors](https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-code-colors.user.js) ([GreasyFork](https://greasyfork.org/en/scripts/18141-github-code-colors))
+  * [GitHub issues comments](https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-issue-comments.user.js) ([GreasyFork]())
   * [GitHub issues counts](https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-issue-counts.user.js) ([GreasyFork](https://greasyfork.org/en/scripts/15560-github-show-repo-issues))
   * [GitHub table of contents](https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-toc.user.js) ([GreasyFork](https://greasyfork.org/en/scripts/18344-github-toc))
   * [GitHub title notification](https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-title-notification.user.js) ([GreasyFork](https://greasyfork.org/en/scripts/18253-github-title-notification))
