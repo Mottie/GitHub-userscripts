@@ -310,8 +310,8 @@
     indx = 0,
     // used https://github.com/isaacs/github/issues/215 for matches here...
     // matches "+1!!!!", "++1", "+!", "+99!!!", "-1", "+ 100", etc
-    // image title ":+1:", ":-1:", ":100:", ":ok_hand:", etc.
-    regex = /([+-]+\s*[\d!]+|:([+-]1|thumbsup|thumbsdown|100|pray|ok_hand):)$/,
+    // image title ":{anything}:", etc.
+    regex = /([+-]+\s*[\d!]+|^:(.+):)$/,
     comments = document.querySelectorAll(".timeline-comment-wrapper .comment-body"),
     len = comments.length,
 
