@@ -1,6 +1,6 @@
 ﻿// ==UserScript==
 // @name          Gist to dabblet
-// @version       2.0.0
+// @version       2.0.1
 // @description   Add a dabblet.com link button to any gist with dabblet information
 // @license       https://creativecommons.org/licenses/by-sa/4.0/
 // @namespace     http://github.com/Mottie
@@ -72,7 +72,7 @@
         for (indx = 0; indx < len; indx++) {
           button = document.createElement("li");
           button.innerHTML = content
-            .replace("{gistid}", list[indx].parentNode.href.match(/\d+$/))
+            .replace("{gistid}", list[indx].parentNode.href.match(/[a-f\d]+$/))
             .replace("{class}", "")
             .replace("{icon}", icons.grey);
           el = closest(list[indx], "gist-snippet-meta").querySelector(".gist-count-links li");
@@ -82,7 +82,7 @@
       } else if (gist) {
         button = document.createElement("li");
         button.innerHTML = content
-          .replace("{gistid}", window.location.pathname.match(/\d+$/))
+          .replace("{gistid}", window.location.pathname.match(/[a-f\d]+$/))
           .replace("{class}", "btn btn-sm")
           .replace("{icon}", icons.black);
         el = document.querySelector(".pagehead-actions li");
