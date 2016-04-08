@@ -144,7 +144,7 @@
 
   matches = function(el, selector) {
     // https://developer.mozilla.org/en-US/docs/Web/API/Element/matches
-    var matches = (el.document || el.ownerDocument).querySelectorAll(selector),
+    var matches = document.querySelectorAll(selector),
       i = matches.length;
     while (--i >= 0 && matches.item(i) !== el) {}
     return i > -1;
@@ -360,25 +360,27 @@
 
   hideParticipant = function(el) {
     var els, indx, len, hide, name,
-     results = [];
-    el.classList.toggle("comments-hidden");
-    hide = el.classList.contains("comments-hidden");
-    name = el.getAttribute("aria-label");
-    els = document.querySelectorAll(".js-discussion .author");
-    len = els.length;
-    for (indx = 0; indx < len; indx++) {
-      if (els[indx].textContent.trim() === name) {
-        results[results.length] = closest(els[indx], ".timeline-comment-wrapper, .commit-comment, .discussion-item");
+      results = [];
+    if (el) {
+      el.classList.toggle("comments-hidden");
+      hide = el.classList.contains("comments-hidden");
+      name = el.getAttribute("aria-label");
+      els = document.querySelectorAll(".js-discussion .author");
+      len = els.length;
+      for (indx = 0; indx < len; indx++) {
+        if (els[indx].textContent.trim() === name) {
+          results[results.length] = closest(els[indx], ".timeline-comment-wrapper, .commit-comment, .discussion-item");
+        }
       }
+      // use a different participant class name to hide timeline events
+      // or unselecting all users will show everything
+      if (el.classList.contains("comments-hidden")) {
+        addClass(results, "ghic-hidden-participant");
+      } else {
+        removeClass(results, "ghic-hidden-participant");
+      }
+      results = [];
     }
-    // use a different participant class name to hide timeline events
-    // or unselecting all users will show everything
-    if (el.classList.contains("comments-hidden")) {
-      addClass(results, "ghic-hidden-participant");
-    } else {
-      removeClass(results, "ghic-hidden-participant");
-    }
-    results = [];
   },
 
   regex = /(svg|path)/i,
