@@ -216,6 +216,7 @@
         header.appendChild(menu);
       }
       addAvatars();
+      update();
     }
     busy = false;
   },
@@ -382,7 +383,16 @@
 
   regex = /(svg|path)/i,
 
-  update = function(event) {
+  update = function() {
+    var keys = Object.keys(settings),
+      indx = keys.length;
+    while (indx--) {
+      // true flag for init - no need to remove classes
+      hideStuff(keys[indx], true);
+    }
+  },
+
+  checkItem = function(event) {
     busy = true;
     if (document.getElementById("discussion_bucket")) {
       var name,
@@ -413,14 +423,9 @@
     busy = true;
     getSettings();
     addMenu();
-    document.querySelector("body").addEventListener("input", update);
-    document.querySelector("body").addEventListener("click", update);
-    var keys = Object.keys(settings),
-      indx = keys.length;
-    while (indx--) {
-      // true flag for init - no need to remove classes
-      hideStuff(keys[indx], true);
-    }
+    document.querySelector("body").addEventListener("input", checkItem);
+    document.querySelector("body").addEventListener("click", checkItem);
+    update();
     busy = false;
   },
 
