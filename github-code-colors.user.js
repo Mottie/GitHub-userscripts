@@ -67,7 +67,6 @@
       regexPercent = /%%/g,
 
       // .pl-c1 targets css hex colors, "rgb" and "hsl"
-      // .pl-en targets p5.js function names
       els = document.querySelectorAll(".pl-c1, .pl-s"),
       len = els.length,
 
