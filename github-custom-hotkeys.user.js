@@ -11,8 +11,8 @@
 // @grant         GM_setValue
 // @run-at        document-idle
 // @author        Rob Garrison
-// @updateURL     https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/GitHub-custom-hotkeys.user.js
-// @downloadURL   https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/GitHub-custom-hotkeys.user.js
+// @updateURL     https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-custom-hotkeys.user.js
+// @downloadURL   https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-custom-hotkeys.user.js
 // ==/UserScript==
 /* global GM_addStyle, GM_getValue, GM_setValue */
 /*jshint unused:true */
