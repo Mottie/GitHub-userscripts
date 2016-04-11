@@ -18,6 +18,7 @@ Userscripts to add functionality to GitHub.
   | Userscript (wiki)                      | Directly Install   | GreasyFork     | Created    |
   |----------------------------------------|:------------------:|:--------------:|------------|
   | [GitHub code colors][ccs-wiki]         | [install][ccs-raw] | [site][ccs-gf] | 03/20/2016 |
+  | [GitHub custom hotkeys][chk-wiki]      | [install][chk-raw] | [site][chk-gf] | 04/10/2016 |
   | [GitHub issue comments][ic1-wiki]      | [install][ic1-raw] | [site][ic1-gf] | 04/04/2016 |
   | [GitHub issue counts][ic2-wiki]        | [install][ic2-raw] | [site][ic2-gf] | 01/16/2012 |
   | [GitHub remove diff signs][rds-wiki]   | [install][rds-raw] | [site][rds-gf] | 04/05/2016 |
@@ -27,6 +28,7 @@ Userscripts to add functionality to GitHub.
   | [Gist to dabblet][g2d-wiki]            | [install][g2d-raw] | [site][g2d-gf] | 01/26/2012 |
 
 [ccs-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-code-colors
+[chk-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-custom-hotkeys
 [ic1-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-issue-comments
 [ic2-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-issue-counts
 [rds-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-remove-diff-signs
@@ -36,6 +38,7 @@ Userscripts to add functionality to GitHub.
 [g2d-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/Gist-to-dabblet
 
 [ccs-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-code-colors.user.js
+[chk-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-custom-hotkeys.user.js
 [ic1-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-issue-comments.user.js
 [ic2-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-issue-counts.user.js
 [rds-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-remove-diff-signs.user.js
@@ -45,6 +48,7 @@ Userscripts to add functionality to GitHub.
 [g2d-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/gist-to-dabblet.user.js
 
 [ccs-gf]: https://greasyfork.org/en/scripts/18141-github-code-colors
+[chk-gf]: https://greasyfork.org/en/scripts/18675-github-custom-hotkeys
 [ic1-gf]: https://greasyfork.org/en/scripts/18503-github-toggle-issue-comments
 [ic2-gf]: https://greasyfork.org/en/scripts/15560-github-show-repo-issues
 [rds-gf]: https://greasyfork.org/en/scripts/18520-github-remove-diff-signs
