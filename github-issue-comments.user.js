@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name          GitHub Toggle Issue Comments
-// @version       1.0.1
+// @version       1.0.2
 // @description   A userscript that toggles issues/pull request comments & messages
 // @license       https://creativecommons.org/licenses/by-sa/4.0/
 // @namespace     http://github.com/Mottie
@@ -331,8 +331,8 @@
           txt = el.textContent;
         }
         // including ":" because someone posted "::+1::"; seen "+1."
-        // seen "^^^" to bump posts
-        txt = txt.replace(/([!,.:^]|bump|please)/gi, "").trim();
+        // seen "^^^" to bump posts; "bump plleeaaassee"
+        txt = txt.replace(/([!,.:^[\]]|bump|pl+e+a+s+e+)/gi, "").trim();
         if (!txt) {
           img = el.querySelector("img");
           if (img) {
