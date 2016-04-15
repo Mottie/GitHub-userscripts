@@ -60,6 +60,9 @@ Userscripts to add functionality to GitHub.
 ## Other userscripts not hosted here:
 
 * [GitHub Dark Script](https://github.com/StylishThemes/GitHub-Dark-Script)
+  * [Github Monospace Font Toggle](https://greasyfork.org/en/scripts/18787-github-monospace-font-toggle) (also part of GitHub Dark Script)
+  * [GitHub Diff File Toggle](https://greasyfork.org/en/scripts/18788-github-diff-file-toggle) (also part of GitHub Dark Script)
+  * [GitHub Toggle Code Wrap](https://greasyfork.org/en/scripts/18789-github-toggle-code-wrap) (also part of GitHub Dark Script)
 * [GitHub Custom Emojis](https://github.com/StylishThemes/GitHub-Custom-Emojis)
 * [ZenHub Sort Issues](https://github.com/Mottie/ZenHub-userscripts#zenhub-sort-issues)
 * [ZenHub Toggle Meta](https://github.com/Mottie/ZenHub-userscripts#zenhub-toggle-meta)
