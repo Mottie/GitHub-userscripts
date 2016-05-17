@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name          GitHub Toggle Issue Comments
-// @version       1.0.2
+// @version       1.0.3
 // @description   A userscript that toggles issues/pull request comments & messages
 // @license       https://creativecommons.org/licenses/by-sa/4.0/
 // @namespace     http://github.com/Mottie
@@ -22,7 +22,8 @@
     ".ghic-button { float:right; }",
     ".ghic-button .btn:hover div.select-menu-modal-holder { display:block; top:auto; bottom:25px; right:0; }",
     ".ghic-right { float:right; }",
-    ".ghic-menu label { display:block; padding:5px 15px; }",
+    // pre-wrap set for Firefox; see https://greasyfork.org/en/forum/discussion/9166/x
+    ".ghic-menu label { display:block; padding:5px 15px; white-space:pre-wrap; }",
     ".ghic-button .select-menu-header, .ghic-participants { cursor:default; }",
     ".ghic-participants { border-top:1px solid #484848; padding:15px; }",
     ".ghic-avatar { display:inline-block; float:left; margin: 0 2px 2px 0; cursor:pointer; position:relative; }",
