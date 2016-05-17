@@ -1,21 +1,25 @@
 // ==UserScript==
 // @name          GitHub Toggle Wiki Sidebar
-// @version       1.0.0
+// @version       1.0.1
 // @description   A userscript that adds a button to toggle the GitHub Wiki sidebar
 // @license       https://creativecommons.org/licenses/by-sa/4.0/
 // @namespace     http://github.com/Mottie
 // @include       https://github.com/*
 // @run-at        document-idle
+// @grant         GM_addStyle
 // @grant         GM_getValue
 // @grant         GM_setValue
 // @author        Rob Garrison
 // @updateURL     https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-toggle-wiki-sidebar.user.js
 // @downloadURL   https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-toggle-wiki-sidebar.user.js
 // ==/UserScript==
-/* global GM_getValue, GM_setValue */
+/* global GM_addStyle, GM_getValue, GM_setValue */
 /*jshint unused:true */
 (function() {
   "use strict";
+
+  // disable click targeting of button SVG internals
+  GM_addStyle(".ghtws-button > * { pointer-events: none; }");
 
   var busy = false,
 
@@ -64,19 +68,8 @@
     busy = false;
   },
 
-  regexPath = /path/i,
-  regexSVG  = /svg/i,
-
   toggleEvent = function(event) {
     var target = event.target;
-    // delegated event binding may fire on stuff inside the button...
-    // also, the nodename may not be uppercase
-    if (target.nodeName && regexPath.test(target.nodeName || "")) {
-      target = target.parentNode;
-    }
-    if (target && regexSVG.test(target.nodeName || "")) {
-      target = target.parentNode;
-    }
     if (target && target.classList.contains("ghtws-button")) {
       isHidden = !isHidden;
       toggleSidebar();
