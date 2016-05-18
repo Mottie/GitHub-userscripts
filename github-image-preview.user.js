@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name          GitHub Image Preview
-// @version       1.0.0
+// @version       1.0.1
 // @description   A userscript that adds clickable image thumbnails
 // @license       https://creativecommons.org/licenses/by-sa/4.0/
 // @namespace     http://github.com/Mottie
@@ -229,7 +229,7 @@
         // preform checks before adding code wrap to minimize function calls
         if (!busy && mutation.target === target) {
           clearTimeout(timer);
-          timer = setTimeout(init, 100);
+          timer = setTimeout(init, 200);
         }
       });
     }).observe(target, {
