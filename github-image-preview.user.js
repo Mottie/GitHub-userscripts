@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name          GitHub Image Preview
-// @version       1.0.1
+// @version       1.0.2
 // @description   A userscript that adds clickable image thumbnails
 // @license       https://creativecommons.org/licenses/by-sa/4.0/
 // @namespace     http://github.com/Mottie
@@ -22,7 +22,7 @@
   GM_addStyle([
     "table.files tr.ghip-image-previews, table.files.ghip-show-previews tbody tr.js-navigation-item { display:none; }",
     "table.files.ghip-show-previews tr.ghip-image-previews { display:table-row; }",
-    "table.files.ghip-show-previews .ghip-non-image { height:80px; margin-top:20px; opacity:.8; }",
+    "table.files.ghip-show-previews .ghip-non-image { height:80px; margin-top:15px; opacity:.8; }",
     "table.files.ghip-show-previews .image { position:relative; overflow:hidden; text-align:center; }",
     ".ghip-image-previews .image { padding:10px; }",
     "table.files.ghip-tiled .image { width:21.9%; }",
@@ -32,6 +32,7 @@
     ".ghip-image-previews .border-wrap img, .ghip-image-previews .border-wrap svg { max-width:95%; }",
     ".ghip-image-previews .border-wrap h4 { overflow:hidden; white-space:nowrap; text-overflow:ellipsis; margin-bottom:5px; }",
     ".btn.ghip-tiled > *, .btn.ghip-fullw > *, .ghip-image-previews iframe { pointer-events:none; }",
+    ".image .ghip-file-type { font-size:18px; margin-top:10px; }",
     // override GitHub-Dark styles
     "table.files img[src*='octocat-spinner'], img[src='/images/spinner.gif'] { width:auto !important; height:auto !important; }"
   ].join(""));
@@ -125,7 +126,7 @@
 
   buildPreviews = function() {
     busy = true;
-    var template, url, temp,
+    var template, url, temp, ext,
       indx = 0,
       row = document.createElement("tr"),
       imgs = "<td colspan='4' class='ghip-content'>",
@@ -157,13 +158,16 @@
           // *** non-images (file/folder icons) ***
           temp = files[indx].querySelector("td.icon svg");
           if (temp) {
+            ext = temp.classList.contains("octicon-file-directory");
             // add xmlns otherwise the svg won't work inside an img
             // GitHub doesn't include this attribute on any svg octicons
             temp = temp.outerHTML.replace("<svg", "<svg xmlns='http://www.w3.org/2000/svg'");
             // include "leaflet-tile-container" to invert icon for GitHub-Dark
             template += "<span class='leaflet-tile-container'>" +
               "<img class='ghip-non-image' src='data:image/svg+xml;base64," + window.btoa(temp) + "'/>" +
-              "</span>";
+              "</span>" +
+              (ext ? "" : "<h4 class='ghip-file-type'>" +
+                url.substring(url.lastIndexOf(".") + 1, url.length).toUpperCase() + "</h4>");
             imgs += updateTemplate(url, template);
           } else if (files[indx].classList.contains("up-tree")) {
             // Up tree link
