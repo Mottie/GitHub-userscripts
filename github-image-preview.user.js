@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name          GitHub Image Preview
-// @version       1.0.3
+// @version       1.0.4
 // @description   A userscript that adds clickable image thumbnails
 // @license       https://creativecommons.org/licenses/by-sa/4.0/
 // @namespace     http://github.com/Mottie
@@ -128,7 +128,7 @@
 
   buildPreviews = function() {
     busy = true;
-    var template, url, temp, ext,
+    var template, url, temp, noExt,
       indx = 0,
       row = document.createElement("tr"),
       imgs = "<td colspan='4' class='ghip-content'>",
@@ -160,16 +160,22 @@
           // *** non-images (file/folder icons) ***
           temp = files[indx].querySelector("td.icon svg");
           if (temp) {
-            ext = temp.classList.contains("octicon-file-directory");
+            noExt = temp.classList.contains("octicon-file-directory");
             // add xmlns otherwise the svg won't work inside an img
             // GitHub doesn't include this attribute on any svg octicons
             temp = temp.outerHTML.replace("<svg", "<svg xmlns='http://www.w3.org/2000/svg'");
             // include "leaflet-tile-container" to invert icon for GitHub-Dark
             template += "<span class='leaflet-tile-container'>" +
               "<img class='ghip-non-image' src='data:image/svg+xml;base64," + window.btoa(temp) + "'/>" +
-              "</span>" +
-              (ext ? "" : "<h4 class='ghip-file-type'>" +
-                url.substring(url.lastIndexOf(".") + 1, url.length).toUpperCase() + "</h4>");
+              "</span>";
+            // get file name + extension
+            temp = url.substring(url.lastIndexOf("/") + 1, url.length);
+            // don't include extension for folders, or files with no extension, or
+            // files starting with a "." (e.g. ".gitignore")
+            if (!noExt && temp.indexOf(".") > 0) {
+              template += "<h4 class='ghip-file-type'>" +
+                temp.substring(temp.lastIndexOf(".") + 1, temp.length).toUpperCase() + "</h4>";
+            }
             imgs += updateTemplate(url, template);
           } else if (files[indx].classList.contains("up-tree")) {
             // Up tree link
