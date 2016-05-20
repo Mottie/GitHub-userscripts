@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name          GitHub Toggle Issue Comments
-// @version       1.0.3
+// @version       1.0.4
 // @description   A userscript that toggles issues/pull request comments & messages
 // @license       https://creativecommons.org/licenses/by-sa/4.0/
 // @namespace     http://github.com/Mottie
@@ -30,9 +30,10 @@
     ".ghic-avatar:last-child { margin-bottom:5px; }",
     ".ghic-avatar.comments-hidden svg { display:block; position:absolute; top:-2px; left:-2px; z-index:1; }",
     ".ghic-avatar.comments-hidden img { opacity:0.5; }",
-    ".ghic-button .dropdown-item input:checked + svg { display: block; }",
-    ".ghic-button .select-menu-modal { margin: 0; }",
-    ".ghic-button .ghic-participants { margin-bottom: 20px; }",
+    ".ghic-button .dropdown-item input:checked + svg { display:block; }",
+    ".ghic-button .select-menu-modal { margin:0; }",
+    ".ghic-button .ghic-participants { margin-bottom:20px; }",
+    // for testing: ".ghic-hidden .timeline-comment { border-color:red !important; }",
     ".ghic-hidden, .ghic-hidden-participant, .ghic-avatar svg, .ghic-button .ghic-right > *,",
       ".ghic-hideReactions .comment-reactions { display:none; }",
   ].join(""));
@@ -308,12 +309,15 @@
   },
 
   hidePlus1 = function(init) {
+    if (init && !settings.plus1.isHidden) { return; }
     var max,
     indx = 0,
     // used https://github.com/isaacs/github/issues/215 for matches here...
     // matches "+1!!!!", "++1", "+!", "+99!!!", "-1", "+ 100", etc
+    // seen "^^^" to bump posts; "bump plleeaaassee"; "eta?"
+    regexStr = /([?!,.:^[\]+-019]|bump|pl+e+a+s+e+|eta)/gi,
     // image title ":{anything}:", etc.
-    regex = /([+-]+\s*[\d!]+|^:(.+):)$/,
+    regexEmoji = /:(.*):/,
     comments = document.querySelectorAll(".timeline-comment-wrapper .comment-body"),
     len = comments.length,
 
@@ -327,20 +331,19 @@
         el = comments[indx];
         if (el.querySelector(".email-quoted-reply")) {
           // ignore quoted messages
-          txt = el.querySelector(".email-fragment").textContent;
+          txt = el.querySelector(".email-fragment").textContent.trim();
         } else {
-          txt = el.textContent;
+          txt = el.textContent.trim();
         }
-        // including ":" because someone posted "::+1::"; seen "+1."
-        // seen "^^^" to bump posts; "bump plleeaaassee"
-        txt = txt.replace(/([!,.:^[\]]|bump|pl+e+a+s+e+)/gi, "").trim();
         if (!txt) {
           img = el.querySelector("img");
           if (img) {
             txt = img.getAttribute("title") || img.getAttribute("alt");
           }
         }
-        if (regex.test(txt) || txt === "" || txt.length < 5) {
+        // remove fluff
+        txt = txt.replace(regexEmoji, "").replace(regexStr, "").trim();
+        if (txt === "" || txt.length < 5) {
           if (settings.plus1.isHidden) {
             closest(el, ".timeline-comment-wrapper").classList.add("ghic-hidden");
           } else if (!init) {
