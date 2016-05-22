@@ -37,7 +37,8 @@
     ".btn.ghip-tiled > *, .btn.ghip-fullw > *, .ghip-image-previews iframe { pointer-events:none; }",
     ".image .ghip-file-type { font-size:30px; top:-65px; position:relative; z-index:2; }",
     // override GitHub-Dark styles
-    "table.files img[src*='octocat-spinner'], img[src='/images/spinner.gif'] { width:auto !important; height:auto !important; }"
+    "table.files img[src*='octocat-spinner'], img[src='/images/spinner.gif'] { width:auto !important; height:auto !important; }",
+    "table.files td .simplified-path { color:#888 !important; }"
   ].join(""));
 
   var busy = false,
@@ -62,6 +63,12 @@
     "<a href='${url}' class='exploregrid-item image js-navigation-open' rel='nofollow'>",
       "<span class='border-wrap'>${image}</span>",
     "</a>"
+  ].join(""),
+
+  spanTemplate = [
+    "<span class='exploregrid-item image'>",
+      "<span class='border-wrap'>${image}</span>",
+    "</span>"
   ].join(""),
 
   addToggles = function() {
@@ -143,9 +150,16 @@
     }
     if (table) {
       for (indx = 0; indx < len; indx++) {
-        temp = files[indx].querySelector("td.content a");
-        template = temp ? "<h4>" + temp.textContent.trim() + "</h4>" : "";
-        url = temp ? temp.href : "";
+        // not every submodule includes a link; reference examples from
+        // see https://github.com/electron/electron/tree/v1.1.1/vendor
+        temp = files[indx].querySelector("td.content a") ||
+          files[indx].querySelector("td.content span span");
+        // use innerHTML because some links include path - see "third_party/lss"
+        template = temp ? temp.innerHTML.trim() + "</h4>" : "";
+        // temp = temp && temp.querySelector("a");
+        url = temp && temp.nodeName === "A" ? temp.href : "";
+        // add link color
+        template = (url ? "<h4 class='text-blue'>" : "<h4>") + template;
         if (imgExt.test(url)) {
           // *** image preview ***
           template += "<img src='" + url + "?raw=true'/>";
@@ -161,7 +175,9 @@
           // *** non-images (file/folder icons) ***
           temp = files[indx].querySelector("td.icon svg");
           if (temp) {
-            noExt = temp.classList.contains("octicon-file-directory");
+            // non-files svg class: "octicon-file-directory" or "octicon-file-submodule"
+            noExt = temp.classList.contains("octicon-file-directory") ||
+              temp.classList.contains("octicon-file-submodule");
             // add xmlns otherwise the svg won't work inside an img
             // GitHub doesn't include this attribute on any svg octicons
             temp = temp.outerHTML.replace("<svg", "<svg xmlns='http://www.w3.org/2000/svg'");
@@ -177,13 +193,19 @@
               template += "<h4 class='ghip-file-type'>" +
                 temp.substring(temp.lastIndexOf(".") + 1, temp.length).toUpperCase() + "</h4>";
             }
-            imgs += updateTemplate(url, template);
+            if (url) {
+              imgs += updateTemplate(url, template);
+            } else {
+              // empty url; use non-link template
+              // see "depot_tools @ 4fa73b8" at https://github.com/electron/electron/tree/v1.1.1/vendor
+              imgs += updateTemplate(url, template, spanTemplate);
+            }
           } else if (files[indx].classList.contains("up-tree")) {
             // Up tree link
             temp = files[indx].querySelector("td:nth-child(2) a");
             url = temp ? temp.href : "";
             if (url) {
-              imgs += updateTemplate(url, "<h4>&middot;&middot</h4>");
+              imgs += updateTemplate(url, "<h4 class='text-blue'>&middot;&middot</h4>");
             }
           }
         }
@@ -194,8 +216,8 @@
     busy = false;
   },
 
-  updateTemplate = function(url, img) {
-    return imgTemplate
+  updateTemplate = function(url, img, tmpl) {
+    return (tmpl || imgTemplate)
       .replace("${url}", url)
       .replace("${image}", img);
   },
