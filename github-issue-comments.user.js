@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name          GitHub Toggle Issue Comments
-// @version       1.0.4
+// @version       1.0.5
 // @description   A userscript that toggles issues/pull request comments & messages
 // @license       https://creativecommons.org/licenses/by-sa/4.0/
 // @namespace     http://github.com/Mottie
@@ -30,18 +30,20 @@
     ".ghic-avatar:last-child { margin-bottom:5px; }",
     ".ghic-avatar.comments-hidden svg { display:block; position:absolute; top:-2px; left:-2px; z-index:1; }",
     ".ghic-avatar.comments-hidden img { opacity:0.5; }",
-    ".ghic-button .dropdown-item input:checked + svg { display:block; }",
+    ".ghic-button .dropdown-item input:checked ~ svg,",
+      ".ghic-button .dropdown-item input:checked ~ .ghic-count { display:inline-block; }",
+    ".ghic-button .ghic-count { float:left; margin-right:5px; }",
     ".ghic-button .select-menu-modal { margin:0; }",
     ".ghic-button .ghic-participants { margin-bottom:20px; }",
-    // for testing: ".ghic-hidden .timeline-comment { border-color:red !important; }",
+    // for testing: ".ghic-hidden { opacity: 0.3; }",
     ".ghic-hidden, .ghic-hidden-participant, .ghic-avatar svg, .ghic-button .ghic-right > *,",
       ".ghic-hideReactions .comment-reactions { display:none; }",
   ].join(""));
 
   var busy = false,
 
-  // ZenHub addon active
-  hasZenHub = document.querySelector("body").classList.contains("zhio"),
+  // ZenHub addon active (include ZenHub Enterprise)
+  hasZenHub = document.querySelector(".zhio, zhe") ? true : false,
 
   iconHidden = "<svg class='octicon' xmlns='http://www.w3.org/2000/svg' width='30' height='30' viewBox='0 0 9 9'><path fill='#777' d='M7.07 4.5c0-.47-.12-.9-.35-1.3L3.2 6.7c.4.25.84.37 1.3.37.35 0 .68-.07 1-.2.32-.14.6-.32.82-.55.23-.23.4-.5.55-.82.13-.32.2-.65.2-1zM2.3 5.8l3.5-3.52c-.4-.23-.83-.35-1.3-.35-.35 0-.68.07-1 .2-.3.14-.6.32-.82.55-.23.23-.4.5-.55.82-.13.32-.2.65-.2 1 0 .47.12.9.36 1.3zm6.06-1.3c0 .7-.17 1.34-.52 1.94-.34.6-.8 1.05-1.4 1.4-.6.34-1.24.52-1.94.52s-1.34-.18-1.94-.52c-.6-.35-1.05-.8-1.4-1.4C.82 5.84.64 5.2.64 4.5s.18-1.35.52-1.94.8-1.06 1.4-1.4S3.8.64 4.5.64s1.35.17 1.94.52 1.06.8 1.4 1.4c.35.6.52 1.24.52 1.94z'/></svg>",
   iconCheck = "<svg class='octicon octicon-check' height='16' viewBox='0 0 12 16' width='12'><path d='M12 5L4 13 0 9l1.5-1.5 2.5 2.5 6.5-6.5 1.5 1.5z'></path></svg>",
@@ -165,6 +167,7 @@
     for (indx = 0; indx < len; indx++) {
       els[indx].classList.add(name);
     }
+    return len;
   },
 
   removeClass = function(els, name) {
@@ -189,7 +192,8 @@
         if (settings.hasOwnProperty(name) && !(name === "pipeline" && !hasZenHub)) {
           list += "<label class='dropdown-item'>" + settings[name].label +
           "<span class='ghic-right " + settings[name].name + "'>" +
-          "<input type='checkbox'" + (settings[name].isHidden ? " checked" : "") + ">" + iconCheck + "</span></label>";
+          "<input type='checkbox'" + (settings[name].isHidden ? " checked" : "") + ">" +
+          iconCheck + "<span class='ghic-count'> </span></span></label>";
         }
       }
 
@@ -294,9 +298,12 @@
 
   hideStuff = function(name, init) {
     if (settings[name].selector) {
-      var results = document.querySelectorAll(settings[name].selector);
+      var count,
+        results = document.querySelectorAll(settings[name].selector);
       if (settings[name].isHidden) {
-        addClass(results, "ghic-hidden");
+        count = addClass(results, "ghic-hidden");
+        document.querySelector(".ghic-menu ." + settings[name].name + " .ghic-count")
+          .textContent = count ? "(" + count + ")" : " ";
       } else if (!init) {
         // no need to remove classes on initialization
         removeClass(results, "ghic-hidden");
@@ -312,6 +319,7 @@
     if (init && !settings.plus1.isHidden) { return; }
     var max,
     indx = 0,
+    count = 0,
     // used https://github.com/isaacs/github/issues/215 for matches here...
     // matches "+1!!!!", "++1", "+!", "+99!!!", "-1", "+ 100", etc
     // seen "^^^" to bump posts; "bump plleeaaassee"; "eta?"
@@ -346,6 +354,7 @@
         if (txt === "" || txt.length < 5) {
           if (settings.plus1.isHidden) {
             closest(el, ".timeline-comment-wrapper").classList.add("ghic-hidden");
+            count++;
           } else if (!init) {
             closest(el, ".timeline-comment-wrapper").classList.remove("ghic-hidden");
           }
@@ -357,6 +366,9 @@
         setTimeout(function() {
           loop();
         }, 200);
+      } else {
+        document.querySelector(".ghic-menu .ghic-plus1 .ghic-count")
+          .textContent = count ? "(" + count + ")" : " ";
       }
     };
     loop();
