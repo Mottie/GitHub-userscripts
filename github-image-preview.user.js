@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name          GitHub Image Preview
-// @version       1.0.4
+// @version       1.0.5
 // @description   A userscript that adds clickable image thumbnails
 // @license       https://creativecommons.org/licenses/by-sa/4.0/
 // @namespace     http://github.com/Mottie
@@ -24,17 +24,18 @@
   GM_addStyle([
     "table.files tr.ghip-image-previews, table.files.ghip-show-previews tbody tr.js-navigation-item { display:none; }",
     "table.files.ghip-show-previews tr.ghip-image-previews { display:table-row; }",
-    "table.files.ghip-show-previews .ghip-non-image { height:80px; margin-top:15px; opacity:.8; }",
+    "table.files.ghip-show-previews .ghip-non-image { height:80px; margin-top:15px; opacity:.2; }",
     "table.files.ghip-show-previews .image { position:relative; overflow:hidden; text-align:center; }",
     ".ghip-image-previews .image { padding:10px; }",
     "table.files.ghip-tiled .image { width:21.9%; }",
     "table.files.ghip-tiled .image .border-wrap img, .ghip-image-previews .border-wrap svg { max-height:130px; }",
     "table.files.ghip-fullw .image { width:97%; height:auto; }",
+    // zoom doesn't work in Firefox, but `-moz-transform:scale(3);` doesn't limit the size of the image, so it overflows
     "table.files.ghip-tiled .image:hover img:not(.ghip-non-image) { zoom:3; }",
     ".ghip-image-previews .border-wrap img, .ghip-image-previews .border-wrap svg { max-width:95%; }",
     ".ghip-image-previews .border-wrap h4 { overflow:hidden; white-space:nowrap; text-overflow:ellipsis; margin-bottom:5px; }",
     ".btn.ghip-tiled > *, .btn.ghip-fullw > *, .ghip-image-previews iframe { pointer-events:none; }",
-    ".image .ghip-file-type { font-size:18px; margin-top:10px; }",
+    ".image .ghip-file-type { font-size:30px; top:-65px; position:relative; z-index:2; }",
     // override GitHub-Dark styles
     "table.files img[src*='octocat-spinner'], img[src='/images/spinner.gif'] { width:auto !important; height:auto !important; }"
   ].join(""));
