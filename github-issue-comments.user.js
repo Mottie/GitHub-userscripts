@@ -326,20 +326,25 @@
     regexStr = /([?!,.:^[\]+-019]|bump|pl+e+a+s+e+|eta)/gi,
     // image title ":{anything}:", etc.
     regexEmoji = /:(.*):/,
-    comments = document.querySelectorAll(".timeline-comment-wrapper .comment-body"),
+    comments = document.querySelectorAll(".timeline-comment-wrapper .comment-body:not(.js-preview-body)"),
     len = comments.length,
 
     loop = function() {
-      var el, txt, img;
+      var el, tmp, txt, img, hasLink;
       max = 0;
       while (max < 20 && indx < len) {
         if (indx >= len) {
           return;
         }
         el = comments[indx];
-        if (el.querySelector(".email-quoted-reply")) {
+        // ignore quoted messages, but get all fragments
+        tmp = el.querySelectorAll(".email-fragment");
+        // some posts only contain a link to related issues; these should not be counted as a +1
+        // see https://github.com/isaacs/github/issues/618#issuecomment-200869630
+        hasLink = el.querySelectorAll(tmp.length ? ".email-fragment .issue-link" : ".issue-link").length;
+        if (tmp.length) {
           // ignore quoted messages
-          txt = el.querySelector(".email-fragment").textContent.trim();
+          txt = getAllText(tmp);
         } else {
           txt = el.textContent.trim();
         }
@@ -351,7 +356,7 @@
         }
         // remove fluff
         txt = txt.replace(regexEmoji, "").replace(regexStr, "").trim();
-        if (txt === "" || txt.length < 5) {
+        if (txt === "" || (txt.length < 5 && !hasLink)) {
           if (settings.plus1.isHidden) {
             closest(el, ".timeline-comment-wrapper").classList.add("ghic-hidden");
             count++;
@@ -372,6 +377,16 @@
       }
     };
     loop();
+  },
+
+  getAllText = function(el) {
+    var txt = "",
+      indx = el.length;
+    // text order doesn't matter
+    while (indx--) {
+      txt += el[indx].textContent.trim();
+    }
+    return txt;
   },
 
   hideParticipant = function(el) {
