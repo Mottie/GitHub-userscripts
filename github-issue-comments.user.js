@@ -47,6 +47,7 @@
 
   iconHidden = "<svg class='octicon' xmlns='http://www.w3.org/2000/svg' width='30' height='30' viewBox='0 0 9 9'><path fill='#777' d='M7.07 4.5c0-.47-.12-.9-.35-1.3L3.2 6.7c.4.25.84.37 1.3.37.35 0 .68-.07 1-.2.32-.14.6-.32.82-.55.23-.23.4-.5.55-.82.13-.32.2-.65.2-1zM2.3 5.8l3.5-3.52c-.4-.23-.83-.35-1.3-.35-.35 0-.68.07-1 .2-.3.14-.6.32-.82.55-.23.23-.4.5-.55.82-.13.32-.2.65-.2 1 0 .47.12.9.36 1.3zm6.06-1.3c0 .7-.17 1.34-.52 1.94-.34.6-.8 1.05-1.4 1.4-.6.34-1.24.52-1.94.52s-1.34-.18-1.94-.52c-.6-.35-1.05-.8-1.4-1.4C.82 5.84.64 5.2.64 4.5s.18-1.35.52-1.94.8-1.06 1.4-1.4S3.8.64 4.5.64s1.35.17 1.94.52 1.06.8 1.4 1.4c.35.6.52 1.24.52 1.94z'/></svg>",
   iconCheck = "<svg class='octicon octicon-check' height='16' viewBox='0 0 12 16' width='12'><path d='M12 5L4 13 0 9l1.5-1.5 2.5 2.5 6.5-6.5 1.5 1.5z'></path></svg>",
+  plus1Icon = "<img src='https://assets-cdn.github.com/images/icons/emoji/unicode/1f44d.png' class='emoji' title=':+1:' alt=':+1:' height='20' width='20' align='absmiddle'>",
 
   settings = {
     // https://github.com/Mottie/Keyboard/issues/448
@@ -222,8 +223,8 @@
         header.appendChild(menu);
       }
       addAvatars();
-      update();
     }
+    update();
     busy = false;
   },
 
@@ -356,7 +357,7 @@
         }
         // remove fluff
         txt = txt.replace(regexEmoji, "").replace(regexStr, "").trim();
-        if (txt === "" || (txt.length < 5 && !hasLink)) {
+        if (txt === "" || (txt.length < 4 && !hasLink)) {
           if (settings.plus1.isHidden) {
             closest(el, ".timeline-comment-wrapper").classList.add("ghic-hidden");
             count++;
@@ -374,6 +375,7 @@
       } else {
         document.querySelector(".ghic-menu .ghic-plus1 .ghic-count")
           .textContent = count ? "(" + count + ")" : " ";
+        addCountToReaction(count);
       }
     };
     loop();
@@ -387,6 +389,33 @@
       txt += el[indx].textContent.trim();
     }
     return txt;
+  },
+
+  addCountToReaction = function(count) {
+    if (!count) {
+      count = (document.querySelector(".ghic-menu .ghic-plus1 .ghic-count").textContent || "").trim();
+    }
+    var comment = document.querySelector(".timeline-comment"),
+      tmp = comment.querySelector(".has-reactions button[value='+1 react']"),
+      el = comment.querySelector(".ghic-count");
+    if (el) {
+      // the count may have been appended to the comment & now
+      // there is a reaction, so remove any "ghic-count" elements
+      el.parentNode.removeChild(el);
+    }
+    if (count) {
+      if (tmp) {
+        el = document.createElement("span");
+        el.className = "ghic-count";
+        el.textContent = count ? " + " + count + " (from hidden comments)" : "";
+        tmp.appendChild(el);
+      } else {
+        el = document.createElement("p");
+        el.className = "ghic-count";
+        el.innerHTML = "<hr>" + plus1Icon + " " + count + " (from hidden comments)";
+        comment.querySelector(".comment-body").appendChild(el);
+      }
+    }
   },
 
   hideParticipant = function(el) {
@@ -417,7 +446,8 @@
   regex = /(svg|path)/i,
 
   update = function() {
-    if (document.querySelector("#discussion_bucket")) {
+    busy = true;
+    if (document.querySelector("#discussion_bucket") && document.querySelector(".ghic-button")) {
       var keys = Object.keys(settings),
         indx = keys.length;
       while (indx--) {
@@ -425,6 +455,7 @@
         hideStuff(keys[indx], true);
       }
     }
+    busy = false;
   },
 
   checkItem = function(event) {
