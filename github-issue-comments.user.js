@@ -498,7 +498,8 @@
   // DOM targets - to detect GitHub dynamic ajax page loading
   targets = document.querySelectorAll([
     "#js-repo-pjax-container",
-    "#js-pjax-container"
+    "#js-pjax-container",
+    ".js-discussion"
   ].join(","));
 
   // update TOC when content changes
