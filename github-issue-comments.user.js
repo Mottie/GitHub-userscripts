@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name          GitHub Toggle Issue Comments
-// @version       1.0.7
+// @version       1.0.8
 // @description   A userscript that toggles issues/pull request comments & messages
 // @license       https://creativecommons.org/licenses/by-sa/4.0/
 // @namespace     http://github.com/Mottie
@@ -321,23 +321,57 @@
     var max,
     indx = 0,
     count = 0,
+    total = 0,
+    // keep a list of post authors to prevent duplicate +1 counts
+    authors = [],
     // used https://github.com/isaacs/github/issues/215 for matches here...
-    // matches "+1!!!!", "++1", "+!", "+99!!!", "-1", "+ 100", etc
-    // seen "^^^" to bump posts; "bump plleeaaassee"; "eta?"
-    regexStr = /([?!,.:^[\]+-019]|bump|pl+e+a+s+e+|eta)/gi,
+    // matches "+1!!!!", "++1", "+!", "+99!!!", "-1", "+ 100", "thumbs up"; ":+1:^21425235"
+    // ignoring -1's...
+    regexPlus = /([?!,.:^[\]()\'\"+-\d]|bump|thumbs|up)/gi,
+    // other comments to hide - they are still counted towards the +1 counter (for now?)
+    // seen "^^^" to bump posts; "bump plleeaaassee"; "eta?"; "pretty please"
+    // "need this"; "right now"; "still nothing?"; "super helpful"; "for gods sake"
+    regexHide = new RegExp("(" + [
+      "@\\w+",
+      "pretty",
+      "pl+e+a+s+e+",
+      "y+e+s+",
+      "eta",
+      "much",
+      "need(ed)?",
+      "fix",
+      "this",
+      "right",
+      "now",
+      "still",
+      "nothing",
+      "super",
+      "helpful",
+      "for\\sgods\\ssake"
+    ].join("|") + ")", "gi"),
     // image title ":{anything}:", etc.
     regexEmoji = /:(.*):/,
-    comments = document.querySelectorAll(".timeline-comment-wrapper .comment-body:not(.js-preview-body)"),
+
+    comments = document.querySelectorAll(".js-discussion .timeline-comment-wrapper"),
     len = comments.length,
 
     loop = function() {
-      var el, tmp, txt, img, hasLink;
+      var wrapper, el, tmp, txt, img, hasLink, dupe;
       max = 0;
       while (max < 20 && indx < len) {
         if (indx >= len) {
           return;
         }
-        el = comments[indx];
+        wrapper = comments[indx];
+        // save author list to prevent repeat +1s
+        el = wrapper.querySelector(".timeline-comment-header .author");
+        txt = (el ? el.textContent || "" : "").toLowerCase();
+        dupe = true;
+        if (txt && authors.indexOf(txt) < 0) {
+          authors[authors.length] = txt;
+          dupe = false;
+        }
+        el = wrapper.querySelector(".comment-body");
         // ignore quoted messages, but get all fragments
         tmp = el.querySelectorAll(".email-fragment");
         // some posts only contain a link to related issues; these should not be counted as a +1
@@ -356,13 +390,17 @@
           }
         }
         // remove fluff
-        txt = txt.replace(regexEmoji, "").replace(regexStr, "").trim();
+        txt = txt.replace(regexEmoji, "").replace(regexPlus, "").replace(regexHide, "").trim();
         if (txt === "" || (txt.length < 4 && !hasLink)) {
           if (settings.plus1.isHidden) {
-            closest(el, ".timeline-comment-wrapper").classList.add("ghic-hidden");
-            count++;
+            wrapper.classList.add("ghic-hidden");
+            total++;
+            // one +1 per author
+            if (!dupe) {
+              count++;
+            }
           } else if (!init) {
-            closest(el, ".timeline-comment-wrapper").classList.remove("ghic-hidden");
+            wrapper.classList.remove("ghic-hidden");
           }
           max++;
         }
@@ -374,7 +412,7 @@
         }, 200);
       } else {
         document.querySelector(".ghic-menu .ghic-plus1 .ghic-count")
-          .textContent = count ? "(" + count + ")" : " ";
+          .textContent = total ? "(" + total + ")" : " ";
         addCountToReaction(count);
       }
     };
@@ -396,7 +434,7 @@
       count = (document.querySelector(".ghic-menu .ghic-plus1 .ghic-count").textContent || "").trim();
     }
     var comment = document.querySelector(".timeline-comment"),
-      tmp = comment.querySelector(".has-reactions button[value='+1 react']"),
+      tmp = comment.querySelector(".has-reactions button[value='+1 react'], .has-reactions button[value='+1 unreact']"),
       el = comment.querySelector(".ghic-count");
     if (el) {
       // the count may have been appended to the comment & now
