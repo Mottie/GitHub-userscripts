@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name          GitHub Custom Hotkeys
-// @version       0.1.0
+// @version       0.2.0
 // @description   A userscript that allows you to add custom GitHub keyboard hotkeys
 // @license       https://creativecommons.org/licenses/by-sa/4.0/
 // @namespace     http://github.com/Mottie
@@ -51,16 +51,26 @@
 
   // https://github.com/{nonUser}
   nonUser = new RegExp("(" + [
-    "issues",
-    "pulls",
-    "notifications",
-    "new",
-    "stars",
+    "about",
+    "account",
+    "blog",
+    "business",
+    "contact"
     "explore",
     "integrations",
+    "issues",
+    "new",
+    "notifications",
+    "open-source",
+    "personal",
+    "pricing",
+    "pulls",
     "search",
+    "security",
     "settings",
-    "watching"
+    "site",
+    "stars",
+    "watching",
   ].join("|") + ")"),
 
   getUrlParts = function() {
