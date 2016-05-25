@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name          GitHub Toggle Issue Comments
-// @version       1.0.8
+// @version       1.0.9
 // @description   A userscript that toggles issues/pull request comments & messages
 // @license       https://creativecommons.org/licenses/by-sa/4.0/
 // @namespace     http://github.com/Mottie
@@ -431,7 +431,9 @@
 
   addCountToReaction = function(count) {
     if (!count) {
-      count = (document.querySelector(".ghic-menu .ghic-plus1 .ghic-count").textContent || "").trim();
+      count = (document.querySelector(".ghic-menu .ghic-plus1 .ghic-count").textContent || "")
+        .replace(/[()]/g, "")
+        .trim();
     }
     var comment = document.querySelector(".timeline-comment"),
       tmp = comment.querySelector(".has-reactions button[value='+1 react'], .has-reactions button[value='+1 unreact']"),
