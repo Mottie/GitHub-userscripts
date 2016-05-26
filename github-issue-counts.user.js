@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name          GitHub Show Repo Issues
-// @version       2.3.1
+// @version       2.3.2
 // @description   A userscript that adds a repo issues count to the repository tab & organization page (https://github.com/:user)
 // @license       https://creativecommons.org/licenses/by-sa/4.0/
 // @namespace     http://github.com/Mottie
@@ -22,6 +22,8 @@
 
 		// look for repo tab or user/organization page
 		if (document.querySelectorAll(".tabnav-tab.selected, .repo-list").length &&
+			// no stargazer/fork items on https://github.com/stars
+			document.querySelectorAll("a.repo-list-stat-item").length &&
 			// and not already applied
 			!document.querySelectorAll(".repo-list-stat-item.issues").length) {
 
