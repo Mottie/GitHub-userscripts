@@ -183,7 +183,7 @@
         content = "<ul>",
         anchors = $$(".markdown-body .anchor"),
         len = anchors.length;
-      if (len) {
+      if (len > 2) {
         busy = true;
         for (indx = 0; indx < len; indx++) {
           anchor = anchors[indx];
