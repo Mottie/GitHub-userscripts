@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name          GitHub Toggle Issue Comments
-// @version       1.0.9
+// @version       1.0.10
 // @description   A userscript that toggles issues/pull request comments & messages
 // @license       https://creativecommons.org/licenses/by-sa/4.0/
 // @namespace     http://github.com/Mottie
@@ -147,19 +147,11 @@
     }
   },
 
-  matches = function(el, selector) {
-    // https://developer.mozilla.org/en-US/docs/Web/API/Element/matches
-    var matches = document.querySelectorAll(selector),
-      i = matches.length;
-    while (--i >= 0 && matches.item(i) !== el) {}
-    return i > -1;
-  },
-
   closest = function(el, selector) {
-    while (el && !matches(el, selector)) {
+    while (el && !el.matches(selector)) {
       el = el.parentNode;
     }
-    return matches(el, selector) ? el : null;
+    return el.matches(selector) ? el : null;
   },
 
   addClass = function(els, name) {
