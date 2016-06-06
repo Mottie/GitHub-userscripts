@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name          GitHub TOC
-// @version       1.0.1
+// @version       1.1.0
 // @description   A userscript that adds a table of contents to readme & wiki pages
 // @license       https://creativecommons.org/licenses/by-sa/4.0/
 // @namespace     http://github.com/Mottie
@@ -244,13 +244,13 @@
       count = 0;
       group = [];
       el = els[indx];
-      next = el && el.nextSibling;
+      next = el && el.nextElementSibling;
       if (next) {
         num = el.className.match(/\d/)[0];
         while (next && !next.classList.contains("github-toc-h" + num)) {
           count += next.className.match(/\d/)[0] > num ? 1 : 0;
           group[group.length] = next;
-          next = next.nextSibling;
+          next = next.nextElementSibling;
         }
         if (count > 0) {
           el.className += " collapsible collapsible-" + indx;
@@ -260,22 +260,35 @@
     }
     group = [];
     on(container, "click", function(event) {
-      if (event.target.classList.contains("github-toc-icon")) {
-        // click on icon, then target LI parent
-        var item = event.target.parentNode,
-          num = item.className.match(/collapsible-(\d+)/),
-          els = num ? $$(".github-toc-childof-" + num[1], container) : null;
-        if (els) {
-          if (item.classList.contains("collapsed")) {
-            item.classList.remove("collapsed");
-            removeClass(els, "github-toc-hidden");
-          } else {
-            item.classList.add("collapsed");
-            addClass(els, "github-toc-hidden");
-          }
+      // click on icon, then target LI parent
+      var els, name, indx,
+        el = event.target.parentNode,
+        collapse = el.classList.contains("collapsed");
+      if (event.shiftKey) {
+        name = el.className.match(/github-toc-h\d/);
+        els = name ? $$("." + name, container) : [];
+        indx = els.length;
+        while (indx--) {
+          collapseChildren(els[indx], collapse);
         }
+      } else {
+        collapseChildren(el, collapse);
       }
+      removeSelection();
     });
+  }
+  function collapseChildren(el, collapse) {
+    var name = el && el.className.match(/collapsible-(\d+)/),
+      children = name ? $$(".github-toc-childof-" + name[1], container) : null;
+    if ($(".github-toc-icon", el) && children) {
+      if (collapse) {
+        el.classList.remove("collapsed");
+        removeClass(children, "github-toc-hidden");
+      } else {
+        el.classList.add("collapsed");
+        addClass(children, "github-toc-hidden");
+      }
+    }
   }
 
   // keyboard shortcuts
