@@ -53,8 +53,10 @@
     ".github-toc-no-selection { -webkit-user-select:none !important; -moz-user-select:none !important; user-select:none !important; }"
   ].join(""));
 
+  var targets,
+
   // modifiable title
-  var title = GM_getValue("github-toc-title", "Table of Contents"),
+  title = GM_getValue("github-toc-title", "Table of Contents"),
 
   container = document.createElement("div"),
   busy = false,
@@ -76,9 +78,10 @@
     elm  : [ 0, 0 ],
     time : 0,
     unsel: null
-  },
+  };
+
   // drag code adapted from http://jsfiddle.net/tovic/Xcb8d/light/
-  dragInit = function() {
+  function dragInit() {
     if (!container.classList.contains("collapsed")) {
       drag.el = container;
       drag.elm[0] = drag.pos[0] - drag.el.offsetLeft;
@@ -88,8 +91,8 @@
       drag.el = null;
     }
     drag.time = new Date().getTime() + 500;
-  },
-  dragMove = function(event) {
+  }
+  function dragMove(event) {
     drag.pos[0] = document.all ? window.event.clientX : event.pageX;
     drag.pos[1] = document.all ? window.event.clientY : event.pageY;
     if (drag.el !== null) {
@@ -97,29 +100,28 @@
       drag.el.style.top = (drag.pos[1] - drag.elm[1]) + "px";
       drag.el.style.right = "auto";
     }
-  },
-  dragStop = function() {
+  }
+  function dragStop() {
     if (drag.el !== null) {
       dragSave();
       selectionToggle();
     }
     drag.el = null;
-  },
-  dragSave = function(clear) {
+  }
+  function dragSave(clear) {
     var val = clear ? null : [container.style.left, container.style.top];
     GM_setValue("github-toc-location", val);
-  },
+  }
 
   // stop text selection while dragging
-  selectionToggle = function(disable) {
-    var sel,
-      body = document.querySelector("body");
+  function selectionToggle(disable) {
+    var body = $("body");
     if (disable) {
       // save current "unselectable" value
       drag.unsel = body.getAttribute("unselectable");
       body.setAttribute("unselectable", "on");
       body.classList.add("github-toc-no-selection");
-      body.addEventListener("onselectstart", selectionStop);
+      on(body, "onselectstart", selectionStop);
     } else {
       if (drag.unsel) {
         body.setAttribute("unselectable", drag.unsel);
@@ -127,8 +129,14 @@
       body.classList.remove("github-toc-no-selection");
       body.removeEventListener("onselectstart", selectionStop);
     }
+    removeSelection();
+  }
+  function selectionStop() {
+    return false;
+  }
+  function removeSelection() {
     // remove text selection - http://stackoverflow.com/a/3171348/145346
-    sel = window.getSelection ? window.getSelection() : document.selection;
+    var sel = window.getSelection ? window.getSelection() : document.selection;
     if ( sel ) {
       if ( sel.removeAllRanges ) {
         sel.removeAllRanges();
@@ -136,20 +144,17 @@
         sel.empty();
       }
     }
-  },
-  selectionStop = function() {
-    return false;
-  },
+  }
 
-  tocShow = function() {
+  function tocShow() {
     container.classList.remove("collapsed");
     GM_setValue("github-toc-hidden", false);
-  },
-  tocHide = function() {
+  }
+  function tocHide() {
     container.classList.add("collapsed");
     GM_setValue("github-toc-hidden", true);
-  },
-  tocToggle = function() {
+  }
+  function tocToggle() {
     // don't toggle content on long clicks
     if (drag.time > new Date().getTime()) {
       if (container.classList.contains("collapsed")) {
@@ -158,25 +163,25 @@
         tocHide();
       }
     }
-  },
+  }
   // hide TOC entirely, if no rendered markdown detected
-  tocView = function(mode) {
-    var toc = document.querySelector(".github-toc");
+  function tocView(mode) {
+    var toc = $(".github-toc");
     if (toc) {
       toc.style.display = mode || "none";
     }
-  },
+  }
 
-  tocAdd = function() {
+  function tocAdd() {
     // make sure the script is initialized
     init();
     if (!tocInit) {
       return;
     }
-    if (document.querySelectorAll("#wiki-content, #readme")) {
+    if ($("#wiki-content, #readme")) {
       var indx, header, anchor, txt,
         content = "<ul>",
-        anchors = document.querySelectorAll(".markdown-body .anchor"),
+        anchors = $$(".markdown-body .anchor"),
         len = anchors.length;
       if (len) {
         busy = true;
@@ -195,7 +200,7 @@
             ].join("");
           }
         }
-        container.querySelector(".boxed-group-inner").innerHTML = content + "</ul>";
+        $(".boxed-group-inner", container).innerHTML = content + "</ul>";
         tocView("block");
         listCollapsible();
         busy = false;
@@ -205,27 +210,35 @@
     } else {
       tocView();
     }
-  },
+  }
 
-  addClass = function(els, name) {
+  function $(str, el) {
+    return (el || document).querySelector(str);
+  }
+  function $$(str, el) {
+    return Array.from((el || document).querySelectorAll(str));
+  }
+  function on(el, name, handler) {
+    el.addEventListener(name, handler);
+  }
+  function addClass(els, name) {
     var indx,
       len = els.length;
     for (indx = 0; indx < len; indx++) {
       els[indx].classList.add(name);
     }
-  },
-
-  removeClass = function(els, name) {
+  }
+  function removeClass(els, name) {
     var indx,
       len = els.length;
     for (indx = 0; indx < len; indx++) {
       els[indx].classList.remove(name);
     }
-  },
+  }
 
-  listCollapsible = function() {
+  function listCollapsible() {
     var indx, el, next, count, num, group,
-      els = container.querySelectorAll("li"),
+      els = $$("li", container),
       len = els.length;
     for (indx = 0; indx < len; indx++) {
       count = 0;
@@ -246,12 +259,12 @@
       }
     }
     group = [];
-    container.addEventListener("click", function(event) {
+    on(container, "click", function(event) {
       if (event.target.classList.contains("github-toc-icon")) {
         // click on icon, then target LI parent
         var item = event.target.parentNode,
           num = item.className.match(/collapsible-(\d+)/),
-          els = num ? container.querySelectorAll(".github-toc-childof-" + num[1]) : null;
+          els = num ? $$(".github-toc-childof-" + num[1], container) : null;
         if (els) {
           if (item.classList.contains("collapsed")) {
             item.classList.remove("collapsed");
@@ -263,11 +276,11 @@
         }
       }
     });
-  },
+  }
 
   // keyboard shortcuts
-  // not sure what GitHub uses, so rolling our own
-  keyboardCheck = function(event) {
+  // GitHub hotkeys are set up to only go to a url, so rolling our own
+  function keyboardCheck(event) {
     clearTimeout(keyboard.timer);
     // use "g+t" to toggle the panel; "g+r" to reset the position
     // keypress may be needed for non-alphanumeric keys
@@ -285,7 +298,7 @@
     if (/(input|textarea)/i.test(document.activeElement.nodeName)) {
       return;
     }
-    // toggle TOC
+    // toggle TOC (g+t)
     if (keyboard.lastKey === tocToggle[0] && key === tocToggle[1]) {
       if (panelHidden) {
         tocShow();
@@ -293,7 +306,7 @@
         tocHide();
       }
     }
-    // reset TOC window position
+    // reset TOC window position (g+r)
     if (keyboard.lastKey === tocReset[0] && key === tocReset[1]) {
       container.setAttribute("style", "");
       dragSave(true);
@@ -302,11 +315,11 @@
     keyboard.timer = setTimeout(function() {
       keyboard.lastKey = null;
     }, keyboard.delay);
-  },
+  }
 
-  init = function() {
+  function init() {
     // there is no ".header" on github.com/contact; and some other pages
-    if (!document.querySelector(".header") || tocInit) {
+    if (!$(".header") || tocInit) {
       return;
     }
     // insert TOC after header
@@ -332,25 +345,24 @@
     ].join("");
 
     // add container
-    tmp = document.querySelector(".header");
+    tmp = $(".header");
     tmp.parentNode.insertBefore(container, tmp);
 
     // make draggable
-    container.querySelector("h3").addEventListener("mousedown", dragInit);
-    document.addEventListener("mousemove", dragMove);
-    document.addEventListener("mouseup", dragStop);
+    on($("h3", container), "mousedown", dragInit);
+    on(document, "mousemove", dragMove);
+    on(document, "mouseup", dragStop);
     // toggle TOC
-    container.querySelector(".github-toc-icon").addEventListener("mouseup", tocToggle);
+    on($(".github-toc-icon", container), "mouseup", tocToggle);
     // prevent container content selection
-    container.addEventListener("onselectstart", function() { return false; });
+    on(container, "onselectstart", function() { return false; });
     // keyboard shortcuts
-    // document.addEventListener("keypress", keyboardCheck);
-    document.addEventListener("keydown", keyboardCheck);
+    on(document, "keydown", keyboardCheck);
     tocInit = true;
-  },
+  }
 
   // DOM targets - to detect GitHub dynamic ajax page loading
-  targets = document.querySelectorAll([
+  targets = $$([
     "#js-repo-pjax-container",
     // targeted by ZenHub
     "#js-repo-pjax-container > .container",
@@ -377,7 +389,7 @@
   GM_registerMenuCommand("Set Table of Contents Title", function() {
     title = prompt("Table of Content Title:", title);
     GM_setValue("toc-title", title);
-    container.querySelector("h3 span").textContent = title;
+    $("h3 span", container).textContent = title;
   });
 
   tocAdd();
