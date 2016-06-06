@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name          GitHub TOC
-// @version       1.1.0
+// @version       1.1.1
 // @description   A userscript that adds a table of contents to readme & wiki pages
 // @license       https://creativecommons.org/licenses/by-sa/4.0/
 // @namespace     http://github.com/Mottie
@@ -264,23 +264,25 @@
       var els, name, indx,
         el = event.target.parentNode,
         collapse = el.classList.contains("collapsed");
-      if (event.shiftKey) {
-        name = el.className.match(/github-toc-h\d/);
-        els = name ? $$("." + name, container) : [];
-        indx = els.length;
-        while (indx--) {
-          collapseChildren(els[indx], collapse);
+      if (el.classList.contains("github-toc-icon")) {
+        if (event.shiftKey) {
+          name = el.className.match(/github-toc-h\d/);
+          els = name ? $$("." + name, container) : [];
+          indx = els.length;
+          while (indx--) {
+            collapseChildren(els[indx], collapse);
+          }
+        } else {
+          collapseChildren(el, collapse);
         }
-      } else {
-        collapseChildren(el, collapse);
+        removeSelection();
       }
-      removeSelection();
     });
   }
   function collapseChildren(el, collapse) {
     var name = el && el.className.match(/collapsible-(\d+)/),
       children = name ? $$(".github-toc-childof-" + name[1], container) : null;
-    if ($(".github-toc-icon", el) && children) {
+    if (children) {
       if (collapse) {
         el.classList.remove("collapsed");
         removeClass(children, "github-toc-hidden");
