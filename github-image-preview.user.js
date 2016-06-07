@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name          GitHub Image Preview
-// @version       1.0.5
+// @version       1.0.6
 // @description   A userscript that adds clickable image thumbnails
 // @license       https://creativecommons.org/licenses/by-sa/4.0/
 // @namespace     http://github.com/Mottie
@@ -44,8 +44,8 @@
   var busy = false,
 
   // supported img types
-  imgExt = /(png|jpg|jpeg|gif|tif|tiff|bmp|webp)$/,
-  svgExt = /svg$/,
+  imgExt = /(png|jpg|jpeg|gif|tif|tiff|bmp|webp)$/i,
+  svgExt = /svg$/i,
 
   tiled = [
     "<svg class='octicon' xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 16 16'>",
