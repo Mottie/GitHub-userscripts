@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name          GitHub Font Preview
-// @version       1.0.0
+// @version       1.0.1
 // @description   A userscript that adds a font file preview
 // @license       https://creativecommons.org/licenses/by-sa/4.0/
 // @namespace     http://github.com/Mottie
@@ -75,21 +75,21 @@
         <hr>
         <div id="gfp-font-data">
           <div class="gfp-collapsed">Font Header table <a href="https://www.microsoft.com/typography/OTSPEC/head.htm" target="_blank">head</a></div>
-          <dl id="gfp-head-table"></dl>
+          <dl id="gfp-head-table"><dt>Undefined</dt></dl>
           <div class="gfp-collapsed">Horizontal Header table <a href="https://www.microsoft.com/typography/OTSPEC/hhea.htm" target="_blank">hhea</a></div>
-          <dl id="gfp-hhea-table"></dl>
+          <dl id="gfp-hhea-table"><dt>Undefined</dt></dl>
           <div class="gfp-collapsed">Maximum Profile table <a href="https://www.microsoft.com/typography/OTSPEC/maxp.htm" target="_blank">maxp</a></div>
-          <dl id="gfp-maxp-table"></dl>
+          <dl id="gfp-maxp-table"><dt>Undefined</dt></dl>
           <div class="gfp-collapsed">Naming table <a href="https://www.microsoft.com/typography/OTSPEC/name.htm" target="_blank">name</a></div>
-          <dl id="gfp-name-table"></dl>
+          <dl id="gfp-name-table"><dt>Undefined</dt></dl>
           <div class="gfp-collapsed">OS/2 and Windows Metrics table <a href="https://www.microsoft.com/typography/OTSPEC/os2.htm" target="_blank">OS/2</a></div>
-          <dl id="gfp-os2-table"></dl>
+          <dl id="gfp-os2-table"><dt>Undefined</dt></dl>
           <div class="gfp-collapsed">PostScript table <a href="https://www.microsoft.com/typography/OTSPEC/post.htm" target="_blank">post</a></div>
-          <dl id="gfp-post-table"></dl>
+          <dl id="gfp-post-table"><dt>Undefined</dt></dl>
           <div class="gfp-collapsed">Character To Glyph Index Mapping Table <a href="https://www.microsoft.com/typography/OTSPEC/cmap.htm" target="_blank">cmap</a></div>
-          <dl id="gfp-cmap-table"></dl>
+          <dl id="gfp-cmap-table"><dt>Undefined</dt></dl>
           <div class="gfp-collapsed">Font Variations table <a href="https://developer.apple.com/fonts/TrueType-Reference-Manual/RM06/Chap6fvar.html" target="_blank">fvar</a></div>
-          <dl id="gfp-fvar-table"></dl>
+          <dl id="gfp-fvar-table"><dt>Undefined</dt></dl>
         </div>
         <hr>
         <div>
