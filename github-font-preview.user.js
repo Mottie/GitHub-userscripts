@@ -1,12 +1,14 @@
 // ==UserScript==
 // @name          GitHub Font Preview
-// @version       1.0.1
+// @version       1.0.2
 // @description   A userscript that adds a font file preview
 // @license       https://creativecommons.org/licenses/by-sa/4.0/
 // @namespace     http://github.com/Mottie
 // @include       https://github.com/*
 // @run-at        document-idle
 // @grant         GM_addStyle
+// @grant         GM_getValue
+// @grant         GM_setValue
 // @grant         GM_xmlhttpRequest
 // @connect       github.com
 // @connect       githubusercontent.com
@@ -15,13 +17,17 @@
 // @updateURL     https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-font-preview.user.js
 // @downloadURL   https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-font-preview.user.js
 // ==/UserScript==
-/* global GM_addStyle, GM_xmlhttpRequest, opentype */
+/* global GM_addStyle, GM_getValue, GM_setValue, GM_xmlhttpRequest, opentype */
 /*jshint unused:true, esnext:true */
 (function() {
   'use strict';
 
   let timer, targets, font,
-    busy = false;
+    busy = false,
+    showUnicode = GM_getValue('gfp-show-unicode', false),
+    showPoints = GM_getValue('gfp-show-points', true),
+    showArrows = GM_getValue('gfp-show-arrows', true),
+    currentIndex = 0;
 
   // supported font types
   const fontExt = /\.(otf|ttf|woff)$/i,
@@ -35,6 +41,8 @@
 
   function getFont(url) {
     if (url) {
+      // add loading indicator
+      document.querySelector('.image').innerHTML = '<span class="gfp-loading ghd-invert"></span>';
       GM_xmlhttpRequest({
         method: 'GET',
         url: url,
@@ -50,12 +58,13 @@
     busy = true;
     let target = document.querySelector('.file .image');
     if (target) {
-      addHTML(target);
       try {
         font = opentype.parse(data);
+        addHTML(target);
         showErrorMessage('');
         onFontLoaded(font);
       } catch (err) {
+      	target.innerHTML = '<h2 class="gfp-message cdel"></h2>';
         showErrorMessage(err.toString());
         if (err.stack) {
           console.error(err.stack);
@@ -71,7 +80,7 @@
     target.innerHTML = `
       <div id="gfp-wrapper">
         <span class="gfp-info" id="gfp-font-name">${name}</span>
-        <div id="gfp-message"></div>
+        <h2 class="gfp-message cdel"></h2>
         <hr>
         <div id="gfp-font-data">
           <div class="gfp-collapsed">Font Header table <a href="https://www.microsoft.com/typography/OTSPEC/head.htm" target="_blank">head</a></div>
@@ -93,6 +102,7 @@
         </div>
         <hr>
         <div>
+          <div>Show unicode: <input class="gfp-show-unicode" type="checkbox"${showUnicode ? ' checked' : ''}></div>
           Glyphs <span id="gfp-pagination"></span>
           <br>
           <div id="gfp-glyph-list-end"></div>
@@ -117,6 +127,24 @@
         e.target.classList.toggle('gfp-collapsed');
       }, false);
     }
+    addBindings();
+  }
+
+  function addBindings() {
+    document.querySelector('.gfp-show-unicode').addEventListener('change', function() {
+      showUnicode = this.checked;
+      GM_setValue('gfp-show-unicode', showUnicode);
+      displayGlyphPage(pageSelected);
+      return false;
+    }, false);
+    document.querySelector('#gfp-glyph-data').addEventListener('change', function() {
+      showPoints = this.querySelector('.gfp-show-points').checked;
+      showArrows = this.querySelector('.gfp-show-arrows').checked;
+      GM_setValue('gfp-show-points', showPoints);
+      GM_setValue('gfp-show-arrows', showArrows);
+      cellSelect();
+      return false;
+    }, false);
   }
 
   function init() {
@@ -158,7 +186,7 @@
   GM_addStyle(`
     #gfp-wrapper { text-align:left; }
     #gfp-wrapper canvas { background-image:none !important; background-color:transparent !important; }
-    #gfp-message { position:relative; top:-3px; background:red; color:white; padding:1px 5px; font-weight:bold; border-radius:2px; display:none; clear:both; }
+    .gfp-message { position:relative; top:-3px; padding:1px 5px; font-weight:bold; border-radius:2px; display:none; clear:both; }
     #gfp-glyphs { width:950px; }
     .gfp-info { float:right; font-size:11px; color:#999; }
     hr { clear:both; border:none; border-bottom:1px solid #ccc; margin:20px 0 20px 0; padding:0; }
@@ -167,14 +195,15 @@
     #gfp-font-data div:before { font-size:85%; content:'▼ '; }
     #gfp-font-data div.gfp-collapsed:before { font-size:85%; content:'► '; }
     #gfp-font-data div.gfp-collapsed + dl { display:none; }
-    #gfp-font-data dl { margin-top:0; padding-left:2em; color:#707070; }
+    #gfp-font-data dl { margin-top:0; padding-left:2em; color:#777; }
     #gfp-font-data dt { float:left; }
     #gfp-font-data dd { margin-left: 12em; }
     #gfp-font-data .gfp-langtag { font-size:85%; color:#999; white-space:nowrap; }
     #gfp-font-data .gfp-langname { padding-right:0.5em; }
+    #gfp-font-data .gfp-underline { border-bottom:1px solid #555; }
     /* Glyph Inspector */
-    #gfp-pagination span { margin:0 0.3em; color:#505050; cursor:pointer; }
-    #gfp-pagination span.gfp-page-selected { font-weight:bold; -webkit-filter:brightness(150%); filter:brightness(150%); }
+    #gfp-pagination span { margin:0 0.3em; cursor:pointer; }
+    #gfp-pagination span.gfp-page-selected { font-weight:bold; cursor:default; -webkit-filter:brightness(150%); filter:brightness(150%); }
     canvas.gfp-item { float:left; border:solid 1px #a0a0a0; margin-right:-1px; margin-bottom:-1px; cursor:pointer; }
     canvas.gfp-item:hover { opacity:.8; }
     #gfp-glyph-list-end { clear:both; height:20px; }
@@ -189,6 +218,8 @@
     pre.gfp-contour { margin:0 0 1em 2em; border-bottom:solid 1px #a0a0a0; }
     span.gfp-oncurve { color:blue; }
     span.gfp-offcurve { color:red; }
+    .gfp-loading { display:inline-block; margin:0 auto; border-radius:50%; border-width:2px; border-style:solid; border-color: transparent transparent #000 #000; width:30px; height:30px; animation:gfploading .5s infinite linear; }
+    @keyframes gfploading { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
   `);
 
   /* Code copied from http://opentype.js.org/font-inspector.html */
@@ -260,8 +291,8 @@
 
   /* Code copied from http://opentype.js.org/glyph-inspector.html */
   const cellCount = 100,
-    cellWidth = 44,
-    cellHeight = 40,
+    cellWidth = 62,
+    cellHeight = 60,
     cellMarginTop = 1,
     cellMarginBottom = 8,
     cellMarginLeftRight = 1,
@@ -289,7 +320,7 @@
   }
 
   function showErrorMessage(message) {
-    let el = document.getElementById('gfp-message');
+    let el = document.querySelector('.gfp-message');
     el.style.display = (!message || message.trim().length === 0) ? 'none' : 'block';
     el.innerHTML = message;
   }
@@ -322,28 +353,34 @@
 
   function displayGlyphData(glyphIndex) {
     let glyph, contours, html,
-      container = document.getElementById('gfp-glyph-data');
+      container = document.getElementById('gfp-glyph-data'),
+      addItem = function(name) {
+        return glyph[name] ? `<dt>${name}</dt><dd>${glyph[name]}</dd>` : '';
+      };
     if (glyphIndex < 0) {
       container.innerHTML = '';
       return;
     }
     glyph = font.glyphs.get(glyphIndex);
-    html = '<dt>name</dt><dd>' + glyph.name + '</dd>';
-    if (glyph.unicodes.length > 0) {
+    html = `<dl>
+      <dt>Show points</dt>
+      <dd><input class="gfp-show-points" type="checkbox"${showPoints ? ' checked' : ''}></dd>
+      <dt>Show arrows</dt>
+      <dd><input class="gfp-show-arrows" type="checkbox"${showArrows ? ' checked' : ''}></dd>
+      <dt>name</dt><dd>${glyph.name}</dd>`;
+
+    if (glyph.unicode) {
       html += '<dt>unicode</dt><dd>' + glyph.unicodes.map(formatUnicode).join(', ') + '</dd>';
     }
-    html += '<dl><dt>index</dt><dd>' + glyph.index + '</dd>';
-    if (glyph.xMin !== 0 || glyph.xMax !== 0 || glyph.yMin !== 0 || glyph.yMax !== 0) {
-      html += '<dt>xMin</dt><dd>' + glyph.xMin + '</dd>' +
-        '<dt>xMax</dt><dd>' + glyph.xMax + '</dd>' +
-        '<dt>yMin</dt><dd>' + glyph.yMin + '</dd>' +
-        '<dt>yMax</dt><dd>' + glyph.yMax + '</dd>';
-    }
-    html += '<dt>advanceWidth</dt><dd>' + glyph.advanceWidth + '</dd>';
-    if (glyph.leftSideBearing !== undefined) {
-      html += '<dt>leftSideBearing</dt><dd>' + glyph.leftSideBearing + '</dd>';
-    }
-    html += '</dl>';
+    html += addItem('index') +
+      addItem('xMin') +
+      addItem('xMax') +
+      addItem('yMin') +
+      addItem('yMax') +
+      addItem('advanceWidth') +
+      addItem('leftSideBearing') +
+      '</dl>';
+
     if (glyph.numberOfContours > 0) {
       contours = glyph.getContours();
       html += 'contours:<br>' + contours.map(contourToString).join('\n');
@@ -424,9 +461,11 @@
       ctx.stroke();
     }
     ctx.fillStyle = bigGlyphStrokeColor;
-    arrows.forEach(function(arrow) {
-      drawArrow.apply(null, arrow);
-    });
+    if (showArrows) {
+      arrows.forEach(function(arrow) {
+        drawArrow.apply(null, arrow);
+      });
+    }
   }
 
   function displayGlyph(glyphIndex) {
@@ -459,7 +498,9 @@
     path.stroke = bigGlyphStrokeColor;
     path.strokeWidth = 1.5;
     drawPathWithArrows(ctx, path);
-    glyph.drawPoints(ctx, x0, glyphBaseline, glyphSize);
+    if (showPoints) {
+      glyph.drawPoints(ctx, x0, glyphBaseline, glyphSize);
+    }
   }
 
   function renderGlyphItem(canvas, glyphIndex) {
@@ -469,13 +510,14 @@
     if (glyphIndex >= font.numGlyphs) { return; }
 
     ctx.fillStyle = miniGlyphMarkerColor;
-    ctx.font = '9px sans-serif';
-    ctx.fillText(glyphIndex, 1, cellHeight-1);
+    ctx.font = '10px sans-serif';
     let glyph = font.glyphs.get(glyphIndex),
       glyphWidth = glyph.advanceWidth * fontScale,
       xmin = (cellWidth - glyphWidth) / 2,
       xmax = (cellWidth + glyphWidth) / 2,
       x0 = xmin;
+
+    ctx.fillText(showUnicode ? glyph.unicodes.map(formatUnicode).join(', ') : glyphIndex, 1, cellHeight-1);
 
     ctx.fillStyle = glyphRulerColor;
     ctx.fillRect(xmin-cellMarkSize+1, fontBaseline, cellMarkSize, 1);
@@ -498,7 +540,7 @@
   }
 
   function pageSelect(event) {
-    document.getElementsByClassName('gfp-page-selected')[0].className = '';
+    document.getElementsByClassName('gfp-page-selected')[0].className = 'text-blue';
     displayGlyphPage((event.target.id || '').replace('gfp-p', ''));
   }
 
@@ -553,6 +595,7 @@
       lastIndex = Math.min(font.numGlyphs - 1, (indx + 1) * cellCount - 1);
       link.textContent = indx * cellCount + '-' + lastIndex;
       link.id = 'gfp-p' + indx;
+      link.className = 'text-blue';
       link.addEventListener('click', pageSelect, false);
       fragment.appendChild(link);
       // A white space allows to break very long lines into multiple lines.
@@ -571,8 +614,9 @@
   function cellSelect(event) {
     if (!font) { return; }
     let firstGlyphIndex = pageSelected * cellCount,
-      cellIndex = +event.target.id.replace('gfp-g', ''),
+      cellIndex = event ? +event.target.id.replace('gfp-g', '') : currentIndex,
       glyphIndex = firstGlyphIndex + cellIndex;
+    currentIndex = cellIndex;
     if (glyphIndex < font.numGlyphs) {
       displayGlyph(glyphIndex);
       displayGlyphData(glyphIndex);
