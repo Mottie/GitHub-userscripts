@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name          GitHub Toggle Issue Comments
-// @version       1.0.10
+// @version       1.0.11
 // @description   A userscript that toggles issues/pull request comments & messages
 // @license       https://creativecommons.org/licenses/by-sa/4.0/
 // @namespace     http://github.com/Mottie
@@ -151,7 +151,7 @@
     while (el && !el.matches(selector)) {
       el = el.parentNode;
     }
-    return el.matches(selector) ? el : null;
+    return el && el.matches(selector) ? el : null;
   },
 
   addClass = function(els, name) {
