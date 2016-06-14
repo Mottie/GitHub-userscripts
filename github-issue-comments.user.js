@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name          GitHub Toggle Issue Comments
-// @version       1.0.11
+// @version       1.0.12
 // @description   A userscript that toggles issues/pull request comments & messages
 // @license       https://creativecommons.org/licenses/by-sa/4.0/
 // @namespace     http://github.com/Mottie
@@ -14,43 +14,44 @@
 // @downloadURL   https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-issue-comments.user.js
 // ==/UserScript==
 /* global GM_addStyle, GM_getValue, GM_setValue */
-/*jshint unused:true */
+/*jshint unused:true, esnext:true */
 (function() {
   "use strict";
 
-  GM_addStyle([
-    ".ghic-button { float:right; }",
-    ".ghic-button .btn:hover div.select-menu-modal-holder { display:block; top:auto; bottom:25px; right:0; }",
-    ".ghic-right { float:right; }",
-    // pre-wrap set for Firefox; see https://greasyfork.org/en/forum/discussion/9166/x
-    ".ghic-menu label { display:block; padding:5px 15px; white-space:pre-wrap; }",
-    ".ghic-button .select-menu-header, .ghic-participants { cursor:default; }",
-    ".ghic-participants { border-top:1px solid #484848; padding:15px; }",
-    ".ghic-avatar { display:inline-block; float:left; margin: 0 2px 2px 0; cursor:pointer; position:relative; }",
-    ".ghic-avatar:last-child { margin-bottom:5px; }",
-    ".ghic-avatar.comments-hidden svg { display:block; position:absolute; top:-2px; left:-2px; z-index:1; }",
-    ".ghic-avatar.comments-hidden img { opacity:0.5; }",
-    ".ghic-button .dropdown-item input:checked ~ svg,",
-      ".ghic-button .dropdown-item input:checked ~ .ghic-count { display:inline-block; }",
-    ".ghic-button .ghic-count { float:left; margin-right:5px; }",
-    ".ghic-button .select-menu-modal { margin:0; }",
-    ".ghic-button .ghic-participants { margin-bottom:20px; }",
-    // for testing: ".ghic-hidden { opacity: 0.3; }",
-    ".ghic-hidden, .ghic-hidden-participant, .ghic-avatar svg, .ghic-button .ghic-right > *,",
-      ".ghic-hideReactions .comment-reactions { display:none; }",
-  ].join(""));
+  GM_addStyle(`
+    .ghic-button { float:right; }
+    .ghic-button .btn:hover div.select-menu-modal-holder { display:block; top:auto; bottom:25px; right:0; }
+    .ghic-right { float:right; }
+    /* pre-wrap set for Firefox; see https://greasyfork.org/en/forum/discussion/9166/x */
+    .ghic-menu label { display:block; padding:5px 15px; white-space:pre-wrap; }
+    .ghic-button .select-menu-header, .ghic-participants { cursor:default; }
+    .ghic-participants { border-top:1px solid #484848; padding:15px; }
+    .ghic-avatar { display:inline-block; float:left; margin: 0 2px 2px 0; cursor:pointer; position:relative; }
+    .ghic-avatar:last-child { margin-bottom:5px; }
+    .ghic-avatar.comments-hidden svg { display:block; position:absolute; top:-2px; left:-2px; z-index:1; }
+    .ghic-avatar.comments-hidden img { opacity:0.5; }
+    .ghic-button .dropdown-item span { font-weight:normal; opacity:.5; }
+    .ghic-button .dropdown-item.ghic-has-content span { opacity:1; }
+    .ghic-button .dropdown-item.ghic-checked span { font-weight:bold; }
+    .ghic-button .dropdown-item.ghic-checked svg,
+      .ghic-button .dropdown-item.ghic-checked .ghic-count { display:inline-block; }
+    .ghic-button .ghic-count { float:left; margin-right:5px; }
+    .ghic-button .select-menu-modal { margin:0; }
+    .ghic-button .ghic-participants { margin-bottom:20px; }
+    /* for testing: ".ghic-hidden { opacity: 0.3; } */
+    .ghic-hidden, .ghic-hidden-participant, .ghic-avatar svg, .ghic-button .ghic-right > *,
+      .ghic-hideReactions .comment-reactions { display:none; }
+  `);
 
-  var busy = false,
+  let targets,
+    busy = false,
+    // ZenHub addon active (include ZenHub Enterprise)
+    hasZenHub = $(".zhio, .zhe") ? true : false;
 
-  // ZenHub addon active (include ZenHub Enterprise)
-  hasZenHub = document.querySelector(".zhio, zhe") ? true : false,
-
-  iconHidden = "<svg class='octicon' xmlns='http://www.w3.org/2000/svg' width='30' height='30' viewBox='0 0 9 9'><path fill='#777' d='M7.07 4.5c0-.47-.12-.9-.35-1.3L3.2 6.7c.4.25.84.37 1.3.37.35 0 .68-.07 1-.2.32-.14.6-.32.82-.55.23-.23.4-.5.55-.82.13-.32.2-.65.2-1zM2.3 5.8l3.5-3.52c-.4-.23-.83-.35-1.3-.35-.35 0-.68.07-1 .2-.3.14-.6.32-.82.55-.23.23-.4.5-.55.82-.13.32-.2.65-.2 1 0 .47.12.9.36 1.3zm6.06-1.3c0 .7-.17 1.34-.52 1.94-.34.6-.8 1.05-1.4 1.4-.6.34-1.24.52-1.94.52s-1.34-.18-1.94-.52c-.6-.35-1.05-.8-1.4-1.4C.82 5.84.64 5.2.64 4.5s.18-1.35.52-1.94.8-1.06 1.4-1.4S3.8.64 4.5.64s1.35.17 1.94.52 1.06.8 1.4 1.4c.35.6.52 1.24.52 1.94z'/></svg>",
-  iconCheck = "<svg class='octicon octicon-check' height='16' viewBox='0 0 12 16' width='12'><path d='M12 5L4 13 0 9l1.5-1.5 2.5 2.5 6.5-6.5 1.5 1.5z'></path></svg>",
-  plus1Icon = "<img src='https://assets-cdn.github.com/images/icons/emoji/unicode/1f44d.png' class='emoji' title=':+1:' alt=':+1:' height='20' width='20' align='absmiddle'>",
+  const regex = /(svg|path)/i,
 
   settings = {
-    // https://github.com/Mottie/Keyboard/issues/448
+    // example: https://github.com/Mottie/Keyboard/issues/448
     title: {
       isHidden: false,
       name: "ghic-title",
@@ -70,7 +71,7 @@
       label: "State Changes (close/reopen)"
     },
 
-    // https://github.com/jquery/jquery/issues/2986
+    // example: https://github.com/jquery/jquery/issues/2986
     milestone: {
       isHidden: false,
       name: "ghic-milestone",
@@ -97,7 +98,7 @@
       selector: ".discussion-commits",
       label: "Commits"
     },
-    // https://github.com/jquery/jquery/pull/3014
+    // example: https://github.com/jquery/jquery/pull/3014
     diffOld: {
       isHidden: false,
       name: "ghic-diffOld",
@@ -110,7 +111,7 @@
       selector: "[id^=diff-for-comment-]:not(.outdated-diff-comment-container)",
       label: "Diff (current) Comments"
     },
-    // https://github.com/jquery/jquery/pull/2949
+    // example: https://github.com/jquery/jquery/pull/2949
     merged: {
       isHidden: false,
       name: "ghic-merged",
@@ -145,70 +146,88 @@
       selector: ".discussion-item.zh-discussion-item",
       label: "ZenHub Pipeline Changes"
     }
-  },
+  };
 
-  closest = function(el, selector) {
+  const iconHidden = `<svg class="octicon" xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 9 9"><path fill="#777" d="M7.07 4.5c0-.47-.12-.9-.35-1.3L3.2 6.7c.4.25.84.37 1.3.37.35 0 .68-.07 1-.2.32-.14.6-.32.82-.55.23-.23.4-.5.55-.82.13-.32.2-.65.2-1zM2.3 5.8l3.5-3.52c-.4-.23-.83-.35-1.3-.35-.35 0-.68.07-1 .2-.3.14-.6.32-.82.55-.23.23-.4.5-.55.82-.13.32-.2.65-.2 1 0 .47.12.9.36 1.3zm6.06-1.3c0 .7-.17 1.34-.52 1.94-.34.6-.8 1.05-1.4 1.4-.6.34-1.24.52-1.94.52s-1.34-.18-1.94-.52c-.6-.35-1.05-.8-1.4-1.4C.82 5.84.64 5.2.64 4.5s.18-1.35.52-1.94.8-1.06 1.4-1.4S3.8.64 4.5.64s1.35.17 1.94.52 1.06.8 1.4 1.4c.35.6.52 1.24.52 1.94z"/></svg>`,
+  iconCheck = `<svg class="octicon octicon-check" height="16" viewBox="0 0 12 16" width="12"><path d="M12 5L4 13 0 9l1.5-1.5 2.5 2.5 6.5-6.5 1.5 1.5z"></path></svg>`,
+  plus1Icon = `<img src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f44d.png" class="emoji" title=":+1:" alt=":+1:" height="20" width="20" align="absmiddle">`;
+
+  function $(selector, el) {
+    return (el || document).querySelector(selector);
+  }
+  function $$(selector, el) {
+    return Array.from((el || document).querySelectorAll(selector));
+  }
+  function closest(el, selector) {
     while (el && !el.matches(selector)) {
       el = el.parentNode;
     }
     return el && el.matches(selector) ? el : null;
-  },
-
-  addClass = function(els, name) {
-    var indx,
-    len = els.length;
+  }
+  function addClass(els, name) {
+    let indx,
+      len = els.length;
     for (indx = 0; indx < len; indx++) {
       els[indx].classList.add(name);
     }
     return len;
-  },
-
-  removeClass = function(els, name) {
-    var indx,
-    len = els.length;
+  }
+  function removeClass(els, name) {
+    let indx,
+      len = els.length;
     for (indx = 0; indx < len; indx++) {
       els[indx].classList.remove(name);
     }
-  },
+  }
 
-  addMenu = function() {
+  function addMenu() {
     busy = true;
-    if (document.getElementById("discussion_bucket") && !document.querySelector(".ghic-button")) {
+    if ($("#discussion_bucket") && !$(".ghic-button")) {
       // update "isHidden" values
       getSettings();
-      var name,
+      let name, bright, isHidden, isChecked,
         list = "",
-        header = document.querySelector(".discussion-sidebar-item:last-child"),
+        keys = Object.keys(settings),
+        header = $(".discussion-sidebar-item:last-child"),
         menu = document.createElement("div");
 
-      for (name in settings) {
-        if (settings.hasOwnProperty(name) && !(name === "pipeline" && !hasZenHub)) {
-          list += "<label class='dropdown-item'>" + settings[name].label +
-          "<span class='ghic-right " + settings[name].name + "'>" +
-          "<input type='checkbox'" + (settings[name].isHidden ? " checked" : "") + ">" +
-          iconCheck + "<span class='ghic-count'> </span></span></label>";
+      for (name of keys) {
+        if (!(name === "pipeline" && !hasZenHub)) {
+          // make plus1 and reactions list items always bright
+          bright = name === "plus1" ? " ghic-has-content" : "";
+          isHidden = settings[name].isHidden;
+          isChecked = isHidden ? " ghic-checked": "";
+          // not using multi-line backticks because it adds lots of white-space to the label
+          list += `<label class="dropdown-item${bright}${isChecked}">` +
+            `<span>${settings[name].label}</span>` +
+            `<span class="ghic-right ${settings[name].name}">` +
+              `<input type="checkbox"${isHidden ? " checked" : ""}>` +
+              `${iconCheck}<span class="ghic-count"> </span>` +
+            `</span></label>`;
         }
       }
 
       menu.className = "ghic-button";
-      menu.innerHTML = [
-        "<span class='btn btn-sm' role='button' tabindex='0' aria-haspopup='true'>",
-          "<span class='tooltipped tooltipped-w' aria-label='Toggle issue comments'>",
-            "<svg class='octicon octicon-comment-discussion' height='16' width='16' role='img' viewBox='0 0 16 16'><path d='M15 2H6c-0.55 0-1 0.45-1 1v2H1c-0.55 0-1 0.45-1 1v6c0 0.55 0.45 1 1 1h1v3l3-3h4c0.55 0 1-0.45 1-1V10h1l3 3V10h1c0.55 0 1-0.45 1-1V3c0-0.55-0.45-1-1-1zM9 12H4.5l-1.5 1.5v-1.5H1V6h4v3c0 0.55 0.45 1 1 1h3v2z m6-3H13v1.5l-1.5-1.5H6V3h9v6z'></path></svg>",
-          "</span>",
-          "<div class='select-menu-modal-holder'>",
-            "<div class='select-menu-modal' aria-hidden='true'>",
-              "<div class='select-menu-header' tabindex='-1'>",
-                "<span class='select-menu-title'>Toggle items</span>",
-              "</div>",
-              "<div class='select-menu-list ghic-menu' role='menu'>",
-                list,
-                "<div class='ghic-participants'></div>",
-              "</div>",
-            "</div>",
-          "</div>",
-        "</span>"
-      ].join("");
+      menu.innerHTML = `
+        <span class="btn btn-sm" role="button" tabindex="0" aria-haspopup="true">
+          <span class="tooltipped tooltipped-w" aria-label="Toggle issue comments">
+            <svg class="octicon octicon-comment-discussion" height="16" width="16" role="img" viewBox="0 0 16 16">
+              <path d="M15 2H6c-0.55 0-1 0.45-1 1v2H1c-0.55 0-1 0.45-1 1v6c0 0.55 0.45 1 1 1h1v3l3-3h4c0.55 0 1-0.45 1-1V10h1l3 3V10h1c0.55 0 1-0.45 1-1V3c0-0.55-0.45-1-1-1zM9 12H4.5l-1.5 1.5v-1.5H1V6h4v3c0 0.55 0.45 1 1 1h3v2z m6-3H13v1.5l-1.5-1.5H6V3h9v6z"></path>
+            </svg>
+          </span>
+          <div class="select-menu-modal-holder">
+            <div class="select-menu-modal" aria-hidden="true">
+              <div class="select-menu-header" tabindex="-1">
+                <span class="select-menu-title">Toggle items</span>
+              </div>
+              <div class="select-menu-list ghic-menu" role="menu">
+                ${list}
+                <div class="ghic-participants"></div>
+              </div>
+            </div>
+          </div>
+        </span>
+      `;
       if (hasZenHub) {
         header.insertBefore(menu, header.childNodes[0]);
       } else {
@@ -218,19 +237,19 @@
     }
     update();
     busy = false;
-  },
+  }
 
-  addAvatars = function() {
-    var indx = 0,
+  function addAvatars() {
+    let indx = 0,
 
     str = "<h3>Hide Comments from</h3>",
     unique = [],
     // get all avatars
-    avatars = document.querySelectorAll(".timeline-comment-avatar"),
+    avatars = $$(".timeline-comment-avatar"),
     len = avatars.length - 1, // last avatar is the new comment with the current user
 
     loop = function(callback) {
-      var el, name,
+      let el, name,
         max = 0;
       while (max < 50 && indx < len) {
         if (indx >= len) {
@@ -239,10 +258,10 @@
         el = avatars[indx];
         name = (el.getAttribute("alt") || "").replace("@", "");
         if (unique.indexOf(name) < 0) {
-          str += "<span class='ghic-avatar tooltipped tooltipped-n' aria-label='" + name + "'>" +
-            iconHidden +
-            "<img class='ghic-avatar avatar' width='24' height='24' src='" + el.src + "'/>" +
-            "</span>";
+          str += `<span class="ghic-avatar tooltipped tooltipped-n" aria-label="${name}">
+              ${iconHidden}
+              <img class="ghic-avatar avatar" width="24" height="24" src="${el.src}"/>
+            </span>`;
           unique[unique.length] = name;
           max++;
         }
@@ -257,60 +276,66 @@
       }
     };
     loop(function() {
-      document.querySelector(".ghic-participants").innerHTML = str;
+      $(".ghic-participants").innerHTML = str;
     });
-  },
+  }
 
-  getSettings = function() {
-    var name;
-    for (name in settings) {
-      if (settings.hasOwnProperty(name)) {
-        settings[name].isHidden = GM_getValue(settings[name].name, false);
+  function getSettings() {
+    let name,
+      keys = Object.keys(settings);
+    for (name of keys) {
+      settings[name].isHidden = GM_getValue(settings[name].name, false);
+    }
+  }
+
+  function saveSettings() {
+    let name,
+      keys = Object.keys(settings);
+    for (name of keys) {
+      GM_setValue(settings[name].name, settings[name].isHidden);
+    }
+  }
+
+  function getInputValues() {
+    let name, item,
+      keys = Object.keys(settings),
+      menu = $(".ghic-menu");
+    for (name of keys) {
+      if (!(name === "pipeline" && !hasZenHub)) {
+        item = closest($("." + settings[name].name, menu), ".dropdown-item");
+        settings[name].isHidden = $("input", item).checked;
+        toggleClass(item, "ghic-checked", settings[name].isHidden);
       }
     }
-  },
+  }
 
-  saveSettings = function() {
-    var name;
-    for (name in settings) {
-      if (settings.hasOwnProperty(name)) {
-        GM_setValue(settings[name].name, settings[name].isHidden);
-      }
-    }
-  },
-
-  getInputValues = function() {
-    var name,
-    menu = document.querySelector(".ghic-menu");
-    for (name in settings) {
-      if (settings.hasOwnProperty(name) && !(name === "pipeline" && !hasZenHub)) {
-        settings[name].isHidden = menu.querySelector("." + settings[name].name + " input").checked;
-      }
-    }
-  },
-
-  hideStuff = function(name, init) {
-    if (settings[name].selector) {
-      var count,
-        results = document.querySelectorAll(settings[name].selector);
-      if (settings[name].isHidden) {
+  function hideStuff(name, init) {
+    let count, results,
+      obj = settings[name],
+      isHidden = obj.isHidden,
+      item = closest($(".ghic-menu ." + obj.name), ".dropdown-item");
+    if (obj.selector) {
+      results = $$(obj.selector);
+      toggleClass(item, "ghic-checked", isHidden);
+      if (isHidden) {
         count = addClass(results, "ghic-hidden");
-        document.querySelector(".ghic-menu ." + settings[name].name + " .ghic-count")
-          .textContent = count ? "(" + count + ")" : " ";
+        $(".ghic-count", item).textContent = count ? "(" + count + ")" : " ";
       } else if (!init) {
         // no need to remove classes on initialization
         removeClass(results, "ghic-hidden");
       }
+      toggleClass(item, "ghic-has-content", results.length);
     } else if (name === "plus1") {
       hidePlus1(init);
     } else if (name === "reactions") {
-      document.querySelector("body").classList[settings[name].isHidden ? "add" : "remove"]("ghic-hideReactions");
+      toggleClass($("body"), "ghic-hideReactions", isHidden);
+      toggleClass(item, "ghic-has-content", $$(".has-reactions").length);
     }
-  },
+  }
 
-  hidePlus1 = function(init) {
+  function hidePlus1(init) {
     if (init && !settings.plus1.isHidden) { return; }
-    var max,
+    let max,
     indx = 0,
     count = 0,
     total = 0,
@@ -344,11 +369,11 @@
     // image title ":{anything}:", etc.
     regexEmoji = /:(.*):/,
 
-    comments = document.querySelectorAll(".js-discussion .timeline-comment-wrapper"),
+    comments = $$(".js-discussion .timeline-comment-wrapper"),
     len = comments.length,
 
     loop = function() {
-      var wrapper, el, tmp, txt, img, hasLink, dupe;
+      let wrapper, el, tmp, txt, img, hasLink, dupe;
       max = 0;
       while (max < 20 && indx < len) {
         if (indx >= len) {
@@ -356,19 +381,19 @@
         }
         wrapper = comments[indx];
         // save author list to prevent repeat +1s
-        el = wrapper.querySelector(".timeline-comment-header .author");
+        el = $(".timeline-comment-header .author", wrapper);
         txt = (el ? el.textContent || "" : "").toLowerCase();
         dupe = true;
         if (txt && authors.indexOf(txt) < 0) {
           authors[authors.length] = txt;
           dupe = false;
         }
-        el = wrapper.querySelector(".comment-body");
+        el = $(".comment-body", wrapper);
         // ignore quoted messages, but get all fragments
-        tmp = el.querySelectorAll(".email-fragment");
+        tmp = $$(".email-fragment", el);
         // some posts only contain a link to related issues; these should not be counted as a +1
         // see https://github.com/isaacs/github/issues/618#issuecomment-200869630
-        hasLink = el.querySelectorAll(tmp.length ? ".email-fragment .issue-link" : ".issue-link").length;
+        hasLink = $$(tmp.length ? ".email-fragment .issue-link" : ".issue-link", el).length;
         if (tmp.length) {
           // ignore quoted messages
           txt = getAllText(tmp);
@@ -376,7 +401,7 @@
           txt = el.textContent.trim();
         }
         if (!txt) {
-          img = el.querySelector("img");
+          img = $("img", el);
           if (img) {
             txt = img.getAttribute("title") || img.getAttribute("alt");
           }
@@ -403,33 +428,33 @@
           loop();
         }, 200);
       } else {
-        document.querySelector(".ghic-menu .ghic-plus1 .ghic-count")
-          .textContent = total ? "(" + total + ")" : " ";
+        $(".ghic-menu .ghic-plus1 .ghic-count").textContent = total ? "(" + total + ")" : " ";
+        toggleClass($(".ghic-menu ." + settings.plus1.name), "ghic-has-content", total);
         addCountToReaction(count);
       }
     };
     loop();
-  },
+  }
 
-  getAllText = function(el) {
-    var txt = "",
+  function getAllText(el) {
+    let txt = "",
       indx = el.length;
     // text order doesn't matter
     while (indx--) {
       txt += el[indx].textContent.trim();
     }
     return txt;
-  },
+  }
 
-  addCountToReaction = function(count) {
+  function addCountToReaction(count) {
     if (!count) {
-      count = (document.querySelector(".ghic-menu .ghic-plus1 .ghic-count").textContent || "")
+      count = ($(".ghic-menu .ghic-plus1 .ghic-count").textContent || "")
         .replace(/[()]/g, "")
         .trim();
     }
-    var comment = document.querySelector(".timeline-comment"),
-      tmp = comment.querySelector(".has-reactions button[value='+1 react'], .has-reactions button[value='+1 unreact']"),
-      el = comment.querySelector(".ghic-count");
+    let comment = $(".timeline-comment"),
+      tmp = $(".has-reactions button[value='+1 react'], .has-reactions button[value='+1 unreact']", comment),
+      el = $(".ghic-count", comment);
     if (el) {
       // the count may have been appended to the comment & now
       // there is a reaction, so remove any "ghic-count" elements
@@ -445,19 +470,36 @@
         el = document.createElement("p");
         el.className = "ghic-count";
         el.innerHTML = "<hr>" + plus1Icon + " " + count + " (from hidden comments)";
-        comment.querySelector(".comment-body").appendChild(el);
+        $(".comment-body", comment).appendChild(el);
       }
     }
-  },
+  }
 
-  hideParticipant = function(el) {
-    var els, indx, len, hide, name,
+  function toggleClass(els, name, flag) {
+    els = Array.isArray(els) ? els : [els];
+    let el,
+      indx = els.length;
+    while (indx--) {
+      el = els[indx];
+      if (typeof flag === "undefined") {
+        flag = !el.classList.contains(name);
+      }
+      if (flag) {
+        el.classList.add(name);
+      } else {
+        el.classList.remove(name);
+      }
+    }
+  }
+
+  function hideParticipant(el) {
+    let els, indx, len, hide, name,
       results = [];
     if (el) {
       el.classList.toggle("comments-hidden");
       hide = el.classList.contains("comments-hidden");
       name = el.getAttribute("aria-label");
-      els = document.querySelectorAll(".js-discussion .author");
+      els = $$(".js-discussion .author");
       len = els.length;
       for (indx = 0; indx < len; indx++) {
         if (els[indx].textContent.trim() === name) {
@@ -473,14 +515,12 @@
       }
       results = [];
     }
-  },
+  }
 
-  regex = /(svg|path)/i,
-
-  update = function() {
+  function update() {
     busy = true;
-    if (document.querySelector("#discussion_bucket") && document.querySelector(".ghic-button")) {
-      var keys = Object.keys(settings),
+    if ($("#discussion_bucket") && $(".ghic-button")) {
+      let keys = Object.keys(settings),
         indx = keys.length;
       while (indx--) {
         // true flag for init - no need to remove classes
@@ -488,14 +528,14 @@
       }
     }
     busy = false;
-  },
+  }
 
-  checkItem = function(event) {
+  function checkItem(event) {
     busy = true;
     if (document.getElementById("discussion_bucket")) {
-      var name,
-      target = event.target,
-      wrap = target && target.parentNode;
+      let name,
+        target = event.target,
+        wrap = target && target.parentNode;
       if (target && wrap) {
         if (target.nodeName === "INPUT" && wrap.classList.contains("ghic-right")) {
           getInputValues();
@@ -515,24 +555,20 @@
       }
     }
     busy = false;
-  },
+  }
 
-  init = function() {
+  function init() {
     busy = true;
     getSettings();
     addMenu();
-    document.querySelector("body").addEventListener("input", checkItem);
-    document.querySelector("body").addEventListener("click", checkItem);
+    $("body").addEventListener("input", checkItem);
+    $("body").addEventListener("click", checkItem);
     update();
     busy = false;
-  },
+  }
 
   // DOM targets - to detect GitHub dynamic ajax page loading
-  targets = document.querySelectorAll([
-    "#js-repo-pjax-container",
-    "#js-pjax-container",
-    ".js-discussion"
-  ].join(","));
+  targets = $$("#js-repo-pjax-container, #js-pjax-container, .js-discussion");
 
   // update TOC when content changes
   Array.prototype.forEach.call(targets, function(target) {
