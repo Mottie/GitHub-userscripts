@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name          GitHub RTL Comment Blocks
-// @version       1.0.0
+// @version       1.1.0
 // @description   A userscript that adds a button to insert RTL text blocks in comments
 // @license       https://creativecommons.org/licenses/by-sa/4.0/
 // @namespace     http://github.com/Mottie
@@ -20,67 +20,140 @@
   let targets,
     busy = false;
 
-   // ${text} is not an es6 placeholder!
-  const rtlBlock = '<div dir="rtl" align="right">${text}</div>',
-
-  icon = `
+  const icon = `
     <svg class="octicon" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14">
       <path d="M14 3v8l-4-4m-7 7V6C1 6 0 5 0 3s1-3 3-3h7v2H9v12H7V2H5v12H3z"/>
-    </svg>
-  `;
+    </svg>`,
 
-  // delegated binding; ignore clicks on svg & path
-  GM_addStyle('.ghu-rtl > * { pointer-events:none; }');
+    // maybe using &#x2067; RTL text &#x2066; (isolates) is a better combo?
+    openRTL = "&rlm;",  // https://en.wikipedia.org/wiki/Right-to-left_mark
+    closeRTL = "&lrm;", // https://en.wikipedia.org/wiki/Left-to-right_mark
+
+    regexOpen = /\u200f/ig,
+    regexClose = /\u200e/ig,
+    regexSplit = /(\u200f|\u200e)/ig;
+
+  GM_addStyle(`
+    .ghu-rtl-css { direction:rtl; text-align:right; unicode-bidi:isolate; }
+    /* delegated binding; ignore clicks on svg & path */
+    .ghu-rtl > * { pointer-events:none; }
+    /* override RTL on code blocks */
+    .js-preview-body pre, .markdown-body pre, .js-preview-body code, .markdown-body code {
+      direction:ltr;
+      text-align:left;
+      unicode-bidi:normal;
+    }
+  `);
 
   // Add monospace font toggle
   function addRtlButton() {
     busy = true;
-    var el, button,
-      toolbars = document.querySelectorAll(".toolbar-commenting"),
+    let el, button,
+      toolbars = $$(".toolbar-commenting"),
       indx = toolbars.length;
-    while (indx--) {
-      el = toolbars[indx];
-      if (!el.querySelector(".ghu-rtl")) {
-        button = document.querySelector("button");
-        button.type = "button";
-        button.className = "ghu-rtl toolbar-item tooltipped tooltipped-n";
-        button.setAttribute("aria-label", "RTL");
-        button.setAttribute("tabindex", "-1");
-        button.innerHTML = icon;
-        el.insertBefore(button, el.childNodes[0]);
+    if (indx) {
+      button = document.createElement("button");
+      button.type = "button";
+      button.className = "ghu-rtl toolbar-item tooltipped tooltipped-n";
+      button.setAttribute("aria-label", "RTL");
+      button.setAttribute("tabindex", "-1");
+      button.innerHTML = icon;
+      while (indx--) {
+        el = toolbars[indx];
+        if (!$(".ghu-rtl", el)) {
+          el.insertBefore(button.cloneNode(true), el.childNodes[0]);
+        }
       }
     }
+    checkRTL();
     busy = false;
   }
 
+  function checkContent(el) {
+    // check the contents, and wrap in either a span or div
+    let indx, // useDiv,
+      html = el.innerHTML,
+      parts = html.split(regexSplit),
+      len = parts.length;
+    for (indx = 0; indx < len; indx++) {
+      if (regexOpen.test(parts[indx])) {
+        // check if the content contains HTML
+        // useDiv = regexTestHTML.test(parts[indx + 1]);
+        // parts[indx] = (useDiv ? "<div" : "<span") + " class='ghu-rtl-css'>";
+        parts[indx] = "<div class='ghu-rtl-css'>";
+      } else if (regexClose.test(parts[indx])) {
+        // parts[indx] = useDiv ? "</div>" : "</span>";
+        parts[indx] = "</div>";
+      }
+    }
+    el.innerHTML = parts.join("");
+    // remove empty paragraph wrappers (may have previously contained the mark)
+    return el.innerHTML.replace(/<p><\/p>/g, "");
+  }
+
+  function checkRTL() {
+    let clone,
+      indx = 0,
+      div = document.createElement("div"),
+      containers = $$(".js-preview-body, .markdown-body"),
+      len = containers.length,
+      // main loop
+      loop = function() {
+        let el, tmp,
+          max = 0;
+        while (max < 10 && indx < len) {
+          if (indx > len) {
+            return;
+          }
+          el = containers[indx];
+          tmp = el.innerHTML;
+          if (regexOpen.test(tmp) || regexClose.test(tmp)) {
+            clone = div.cloneNode();
+            clone.innerHTML = tmp;
+            // now we can replace all instances
+            el.innerHTML = checkContent(clone);
+            max++;
+          }
+          indx++;
+        }
+        if (indx < len) {
+          setTimeout(function() {
+            loop();
+          }, 200);
+        }
+      };
+    loop();
+  }
+
+  function $(selector, el) {
+    return (el || document).querySelector(selector);
+  }
+  function $$(selector, el) {
+    return Array.from((el || document).querySelectorAll(selector));
+  }
   function closest(el, selector) {
-    while (el && el.nodeName !== 'BODY' && !el.matches(selector)) {
+    while (el && el.nodeName !== "BODY" && !el.matches(selector)) {
       el = el.parentNode;
     }
     return el && el.matches(selector) ? el : [];
   }
 
   function addBindings() {
-    document.querySelector('body').addEventListener('click', function(event) {
-      var textarea, str,
+    $("body").addEventListener("click", function(event) {
+      let textarea,
         target = event.target;
-      if (target && target.classList.contains('ghu-rtl')) {
-        textarea = closest(target, '.previewable-comment-form');
-        textarea = textarea.querySelector('.comment-form-textarea');
+      if (target && target.classList.contains("ghu-rtl")) {
+        textarea = closest(target, ".previewable-comment-form");
+        textarea = $(".comment-form-textarea", textarea);
         textarea.focus();
-        str = rtlBlock.split('${text}');
-        // insert text - before: "<div dir='rtl' align='right'>", after: "</div>"
-        surroundSelectedText(textarea, str[0], str[1]);
+        // add extra white space around the tags
+        surroundSelectedText(textarea, ' ' + openRTL + ' ', ' ' + closeRTL + ' ');
         return false;
       }
     });
   }
 
-  targets = document.querySelectorAll([
-    '#js-repo-pjax-container',
-    '#js-pjax-container',
-    '.js-preview-body'
-  ].join(','));
+  targets = $$("#js-repo-pjax-container, #js-pjax-container, .js-preview-body");
 
   Array.prototype.forEach.call(targets, function(target) {
     new MutationObserver(function(mutations) {
