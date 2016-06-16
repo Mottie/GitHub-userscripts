@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name          GitHub Toggle Issue Comments
-// @version       1.0.13
+// @version       1.0.14
 // @description   A userscript that toggles issues/pull request comments & messages
 // @license       https://creativecommons.org/licenses/by-sa/4.0/
 // @namespace     http://github.com/Mottie
@@ -159,7 +159,7 @@
     return Array.from((el || document).querySelectorAll(selector));
   }
   function closest(el, selector) {
-    while (el && !el.matches(selector)) {
+    while (el && el.nodeName !== 'BODY' && !el.matches(selector)) {
       el = el.parentNode;
     }
     return el && el.matches(selector) ? el : null;
