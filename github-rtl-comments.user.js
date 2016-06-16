@@ -34,7 +34,7 @@
     regexSplit = /(\u200f|\u200e)/ig;
 
   GM_addStyle(`
-    .ghu-rtl-css { direction:rtl; text-align:right; unicode-bidi:isolate; }
+    .ghu-rtl-css { direction:rtl; text-align:right; }
     /* delegated binding; ignore clicks on svg & path */
     .ghu-rtl > * { pointer-events:none; }
     /* override RTL on code blocks */
