@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name          GitHub Toggle Issue Comments
-// @version       1.0.12
+// @version       1.0.13
 // @description   A userscript that toggles issues/pull request comments & messages
 // @license       https://creativecommons.org/licenses/by-sa/4.0/
 // @namespace     http://github.com/Mottie
@@ -177,6 +177,24 @@
       len = els.length;
     for (indx = 0; indx < len; indx++) {
       els[indx].classList.remove(name);
+    }
+  }
+  function toggleClass(els, name, flag) {
+    els = Array.isArray(els) ? els : [els];
+    let el,
+      indx = els.length;
+    while (indx--) {
+      el = els[indx];
+      if (el) {
+        if (typeof flag === "undefined") {
+          flag = !el.classList.contains(name);
+        }
+        if (flag) {
+          el.classList.add(name);
+        } else {
+          el.classList.remove(name);
+        }
+      }
     }
   }
 
@@ -471,23 +489,6 @@
         el.className = "ghic-count";
         el.innerHTML = "<hr>" + plus1Icon + " " + count + " (from hidden comments)";
         $(".comment-body", comment).appendChild(el);
-      }
-    }
-  }
-
-  function toggleClass(els, name, flag) {
-    els = Array.isArray(els) ? els : [els];
-    let el,
-      indx = els.length;
-    while (indx--) {
-      el = els[indx];
-      if (typeof flag === "undefined") {
-        flag = !el.classList.contains(name);
-      }
-      if (flag) {
-        el.classList.add(name);
-      } else {
-        el.classList.remove(name);
       }
     }
   }
