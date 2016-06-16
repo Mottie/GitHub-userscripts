@@ -21,11 +21,11 @@ Userscripts to add functionality to GitHub.
   | [GitHub custom hotkeys][chk-wiki]      | [install][chk-raw] | [site][chk-gf] | 04/10/2016 | 05/25/2016 |
   | [GitHub font preview][fpv-wiki]        | [install][fpv-raw] | [site][fpv-gf] | 06/11/2016 | 06/12/2016 |
   | [GitHub image preview][ipv-wiki]       | [install][ipv-raw] | [site][ipv-gf] | 05/17/2016 | 06/07/2016 |
-  | [GitHub issue comments][ic1-wiki]      | [install][ic1-raw] | [site][ic1-gf] | 04/04/2016 | 06/15/2016 |
+  | [GitHub issue comments][ic1-wiki]      | [install][ic1-raw] | [site][ic1-gf] | 04/04/2016 | 06/16/2016 |
   | [GitHub issue counts][ic2-wiki]        | [install][ic2-raw] | [site][ic2-gf] | 01/16/2012 | 05/25/2016 |
   | [GitHub issue highlighter][gih-wiki]   | [install][gih-raw] | [site][gih-gf] | 05/21/2016 | 05/21/2016 |
   | [GitHub remove diff signs][rds-wiki]   | [install][rds-raw] | [site][rds-gf] | 04/05/2016 | 06/06/2016 |
-  | [GitHub rtl comments][rtl-wiki]        | [install][rtl-raw] | [site][rtl-gf] | 06/13/2016 | 06/15/2016 |
+  | [GitHub rtl comments][rtl-wiki]        | [install][rtl-raw] | [site][rtl-gf] | 06/13/2016 | 06/16/2016 |
   | [GitHub table of contents][toc-wiki]   | [install][toc-raw] | [site][toc-gf] | 03/28/2016 | 06/06/2016 |
   | [GitHub title notification][tbn-wiki]  | [install][tbn-raw] | [site][tbn-gf] | 03/24/2016 | 03/24/2016 |
   | [GitHub toggle wiki sidebar][tws-wiki] | [install][tws-raw] | [site][tws-gf] | 04/01/2016 | 05/18/2016 |
