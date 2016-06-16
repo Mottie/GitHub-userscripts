@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name          GitHub RTL Comment Blocks
-// @version       1.1.0
+// @version       1.1.1
 // @description   A userscript that adds a button to insert RTL text blocks in comments
 // @license       https://creativecommons.org/licenses/by-sa/4.0/
 // @namespace     http://github.com/Mottie
@@ -147,19 +147,21 @@
         textarea = $(".comment-form-textarea", textarea);
         textarea.focus();
         // add extra white space around the tags
-        surroundSelectedText(textarea, ' ' + openRTL + ' ', ' ' + closeRTL + ' ');
+        surroundSelectedText(textarea, " " + openRTL + " ", " " + closeRTL + " ");
         return false;
       }
     });
   }
 
-  targets = $$("#js-repo-pjax-container, #js-pjax-container, .js-preview-body");
+  targets = $$("#js-repo-pjax-container, #js-pjax-container");
 
   Array.prototype.forEach.call(targets, function(target) {
     new MutationObserver(function(mutations) {
       mutations.forEach(function(mutation) {
+        let mtarget = mutation.target;
         // preform checks before adding code wrap to minimize function calls
-        if (!busy && mutation.target === target) {
+        // update after comments are edited
+        if (!busy && mtarget === target || target.matches(".js-comment-body, .js-preview-body")) {
           addRtlButton();
         }
       });
