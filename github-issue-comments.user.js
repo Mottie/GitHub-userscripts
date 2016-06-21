@@ -159,7 +159,7 @@
     return Array.from((el || document).querySelectorAll(selector));
   }
   function closest(el, selector) {
-    while (el && el.nodeName !== 'BODY' && !el.matches(selector)) {
+    while (el && el.nodeName !== "BODY" && !el.matches(selector)) {
       el = el.parentNode;
     }
     return el && el.matches(selector) ? el : null;
