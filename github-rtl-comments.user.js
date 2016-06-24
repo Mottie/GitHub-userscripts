@@ -5,6 +5,7 @@
 // @license       https://creativecommons.org/licenses/by-sa/4.0/
 // @namespace     http://github.com/Mottie
 // @include       https://github.com/*
+// @include       https://gist.github.com/*
 // @run-at        document-idle
 // @grant         GM_addStyle
 // @connect       github.com
@@ -153,7 +154,7 @@
     });
   }
 
-  targets = $$("#js-repo-pjax-container, #js-pjax-container");
+  targets = $$("#js-repo-pjax-container, #js-pjax-container, .js-preview-body");
 
   Array.prototype.forEach.call(targets, function(target) {
     new MutationObserver(function(mutations) {
@@ -161,7 +162,7 @@
         let mtarget = mutation.target;
         // preform checks before adding code wrap to minimize function calls
         // update after comments are edited
-        if (!busy && mtarget === target || target.matches(".js-comment-body, .js-preview-body")) {
+        if (!busy && (mtarget === target || mtarget.matches(".js-comment-body, .js-preview-body"))) {
           addRtlButton();
         }
       });
