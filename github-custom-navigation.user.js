@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name          GitHub Custom Navigation
-// @version       1.0.0
+// @version       1.0.1
 // @description   A userscript that allows you to customize GitHub's main navigation bar
 // @license       https://creativecommons.org/licenses/by-sa/4.0/
 // @namespace     http://github.com/Mottie
@@ -163,7 +163,8 @@
       .ghcn-close .octicon { vertical-align:middle; fill:currentColor; }
       #ghcn-settings-inner { position:fixed; left:50%; top:55px; z-index:10; width:30rem;
         transform:translate(-50%,0); box-shadow:0 .5rem 1rem #111; color:#c0c0c0; display:none; }
-      #ghcn-settings-inner input { width:85%; float:right; border-style:solid; border-width:1px; }
+      #ghcn-settings-inner input { width:85%; float:right; border-style:solid; border-width:1px;
+        max-height:35px; }
       .ghcn-settings-wrapper div { line-height:38px; }
       #ghcn-nav-items { min-height: 38px; }
       #ghcn-nav-items .header-nav-item { margin-bottom:4px; }
