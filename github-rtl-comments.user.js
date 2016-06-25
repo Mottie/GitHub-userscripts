@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name          GitHub RTL Comment Blocks
-// @version       1.1.1
+// @version       1.2.0
 // @description   A userscript that adds a button to insert RTL text blocks in comments
 // @license       https://creativecommons.org/licenses/by-sa/4.0/
 // @namespace     http://github.com/Mottie
@@ -18,7 +18,7 @@
 (function() {
   "use strict";
 
-  let targets,
+  let targets, timer, busyTimer,
     busy = false;
 
   const icon = `
@@ -67,7 +67,7 @@
       }
     }
     checkRTL();
-    busy = false;
+    clearBusy();
   }
 
   function checkContent(el) {
@@ -119,11 +119,24 @@
         }
         if (indx < len) {
           setTimeout(function() {
+            busy = true;
             loop();
+            clearBusy();
           }, 200);
         }
       };
+    busy = true;
     loop();
+    clearBusy();
+  }
+
+  // This method cuts out 3 extra calls to addRtlButton()
+  // when a preview tab is used.
+  function clearBusy() {
+    clearTimeout(busyTimer);
+    busyTimer = setTimeout(function() {
+      busy = false;
+    }, 200);
   }
 
   function $(selector, el) {
@@ -162,8 +175,13 @@
         let mtarget = mutation.target;
         // preform checks before adding code wrap to minimize function calls
         // update after comments are edited
-        if (!busy && (mtarget === target || mtarget.matches(".js-comment-body, .js-preview-body"))) {
-          addRtlButton();
+        if (mtarget === target || mtarget.matches(".js-comment-body, .js-preview-body")) {
+          clearTimeout(timer);
+          setTimeout(function() {
+            if (!busy) {
+              addRtlButton();
+            }
+          }, 100);
         }
       });
     }).observe(target, {
