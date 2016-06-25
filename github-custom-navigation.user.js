@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name          GitHub Custom Navigation
-// @version       1.0.1
+// @version       1.0.2
 // @description   A userscript that allows you to customize GitHub's main navigation bar
 // @license       https://creativecommons.org/licenses/by-sa/4.0/
 // @namespace     http://github.com/Mottie
@@ -173,7 +173,7 @@
       .header-nav-link { height:28px; }
       .header-nav-link.left svg, .header-nav-link.left img { max-height:16px; fill:currentColor; }
       /* panel open */
-      body.ghcn-settings-open { overflow:hidden; }
+      body.ghcn-settings-open { overflow:hidden !important; /* !important overrides wiki style */ }
       /* hide other header elements while settings is open (overflow issues) */
       body.ghcn-settings-open .header-search,
         body.ghcn-settings-open .header-nav.right,
@@ -228,7 +228,7 @@
               </div>
               <div>Tooltip<input class="form-control ghcn-tooltip" type="text"/></div>
               <div>Hotkey
-                <a href="https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-custom-navigation#hotkey" class="tooltipped tooltipped-e" aria-label="Click to learn about hotkeys">${icons.info}</a>
+                <a href="https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-custom-navigation#hotkey" class="tooltipped tooltipped-e ghcn-hotkey-link" aria-label="Click to learn about hotkeys">${icons.info}</a>
                 <input class="form-control ghcn-hotkey" type="text"/>
               </div>
               <div>Content
@@ -547,7 +547,8 @@
     on($(".ghcn-reset"), "click", function() {
       resetLinks();
     });
-    on($(".ghcn-close"), "click", function() {
+    // close panel when hotkey link is clicked or the page scrolls on the documentation wiki
+    on($$(".ghcn-close, .ghcn-hotkey-link"), "click", function() {
       closePanel();
     });
 
