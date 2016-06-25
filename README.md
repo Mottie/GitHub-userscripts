@@ -19,7 +19,7 @@ Userscripts to add functionality to GitHub.
   |----------------------------------------|:------------------:|:--------------:|:----------:|:----------:|
   | [GitHub code colors][ccs-wiki]         | [install][ccs-raw] | [site][ccs-gf] | 03/20/2016 | 03/25/2016 |
   | [GitHub custom hotkeys][chk-wiki]      | [install][chk-raw] | [site][chk-gf] | 04/10/2016 | 06/21/2016 |
-  | [GitHub custom navigation][cnv-wiki]   | [install][cnv-raw] | [site][cnv-gf] | 06/22/2016 | 06/24/2016 |
+  | [GitHub custom navigation][cnv-wiki]   | [install][cnv-raw] | [site][cnv-gf] | 06/22/2016 | 06/25/2016 |
   | [GitHub font preview][fpv-wiki]        | [install][fpv-raw] | [site][fpv-gf] | 06/11/2016 | 06/20/2016 |
   | [GitHub image preview][ipv-wiki]       | [install][ipv-raw] | [site][ipv-gf] | 05/17/2016 | 06/07/2016 |
   | [GitHub issue comments][ic1-wiki]      | [install][ic1-raw] | [site][ic1-gf] | 04/04/2016 | 06/21/2016 |
