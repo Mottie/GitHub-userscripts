@@ -18,6 +18,8 @@ Userscripts to add functionality to GitHub.
   | Userscript Wiki                        | Direct Install     | GreasyFork     | Created    | Updated    |
   |----------------------------------------|:------------------:|:--------------:|:----------:|:----------:|
   | [GitHub code colors][ccs-wiki]         | [install][ccs-raw] | [site][ccs-gf] | 03/20/2016 | 03/25/2016 |
+  | [GitHub collapse in comment][cic-wiki] | [install][cic-raw] | [site][cic-gf] | 06/27/2016 | 06/27/2016 |
+  | [GitHub collapse markdown][cmd-wiki]   | [install][cmd-raw] | [site][cmd-gf] | 06/27/2016 | 06/27/2016 |
   | [GitHub custom hotkeys][chk-wiki]      | [install][chk-raw] | [site][chk-gf] | 04/10/2016 | 06/21/2016 |
   | [GitHub custom navigation][cnv-wiki]   | [install][cnv-raw] | [site][cnv-gf] | 06/22/2016 | 06/25/2016 |
   | [GitHub font preview][fpv-wiki]        | [install][fpv-raw] | [site][fpv-gf] | 06/11/2016 | 06/20/2016 |
@@ -33,6 +35,8 @@ Userscripts to add functionality to GitHub.
   | [Gist to dabblet][g2d-wiki]            | [install][g2d-raw] | [site][g2d-gf] | 01/26/2012 | 04/07/2016 |
 
 [ccs-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-code-colors
+[cic-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-collapse-in-comment
+[cmd-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-collapse-markdown
 [chk-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-custom-hotkeys
 [cnv-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-custom-navigation
 [fpv-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-font-preview
@@ -48,6 +52,8 @@ Userscripts to add functionality to GitHub.
 [g2d-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/Gist-to-dabblet
 
 [ccs-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-code-colors.user.js
+[cic-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-collapse-in-comment.user.js
+[cmd-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-collapse-markdown.user.js
 [chk-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-custom-hotkeys.user.js
 [cnv-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-custom-navigation.user.js
 [fpv-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-font-preview.user.js
@@ -63,6 +69,8 @@ Userscripts to add functionality to GitHub.
 [g2d-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/gist-to-dabblet.user.js
 
 [ccs-gf]: https://greasyfork.org/en/scripts/18141-github-code-colors
+[cic-gf]: https://greasyfork.org/en/scripts/20973-github-collapse-in-comment
+[cmd-gf]: https://greasyfork.org/en/scripts/20974-github-collapse-markdown
 [chk-gf]: https://greasyfork.org/en/scripts/18675-github-custom-hotkeys
 [cnv-gf]: https://greasyfork.org/en/scripts/20830-github-custom-navigation
 [fpv-gf]: https://greasyfork.org/en/scripts/20479-github-font-preview
