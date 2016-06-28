@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name          GitHub Toggle Issue Comments
-// @version       1.0.14
+// @version       1.0.15
 // @description   A userscript that toggles issues/pull request comments & messages
 // @license       https://creativecommons.org/licenses/by-sa/4.0/
 // @namespace     http://github.com/Mottie
@@ -542,7 +542,7 @@
           getInputValues();
           saveSettings();
           // extract ghic-{name}, because it matches the name in settings
-          name = wrap.className.replace("ghic-right", "").trim();
+          name = wrap.className.replace("ghic-right", "").replace("ghic-has-content", "").trim();
           if (wrap.classList.contains(name)) {
             hideStuff(name.replace("ghic-", ""));
           }
