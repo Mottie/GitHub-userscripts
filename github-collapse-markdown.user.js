@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         GitHub Collapse Markdown
-// @version      1.0.0
+// @version      1.0.1
 // @description  A userscript that collapses markdown headers
 // @license      https://creativecommons.org/licenses/by-sa/4.0/
 // @namespace    https://github.com/Mottie
@@ -147,11 +147,13 @@
 
   function addBinding() {
     document.addEventListener("click", event => {
-      if (event.target.classList.contains("anchor")) {
+      let target = event.target;
+      if (target.classList.contains("anchor") || target.nodeName === "A" ||
+        target.nodeName ==="IMG") {
         return;
       }
       // check if element is inside a header
-      let target = closest(event.target, headers.join(","));
+      target = closest(event.target, headers.join(","));
       if (target && headers.indexOf(target.nodeName || "") > -1) {
         // make sure the header is inside of markdown
         if (closest(target, `.${markdown}`)) {
