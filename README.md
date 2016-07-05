@@ -16,7 +16,7 @@ Userscripts to add functionality to GitHub.
 2. Get more information about the userscript by clicking on the named link. Or install it directly or from the GreasyFork site:
 
   | Userscript Wiki                        | Ext | Direct Install     | GreasyFork     | Created    | Updated    |
-  |----------------------------------------|-----|:------------------:|:--------------:|:----------:|:----------:|
+  |----------------------------------------|:---:|:------------------:|:--------------:|:----------:|:----------:|
   | [GitHub code colors][ccs-wiki]         |     | [install][ccs-raw] | [site][ccs-gf] | 03/20/2016 | 03/25/2016 |
   | [GitHub collapse in comment][cic-wiki] |  *  | [install][cic-raw] | [site][cic-gf] | 06/27/2016 | 06/27/2016 |
   | [GitHub collapse markdown][cmd-wiki]   |  *  | [install][cmd-raw] | [site][cmd-gf] | 06/27/2016 | 07/05/2016 |
