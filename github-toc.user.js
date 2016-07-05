@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name          GitHub TOC
-// @version       1.1.1
+// @version       1.1.2
 // @description   A userscript that adds a table of contents to readme & wiki pages
 // @license       https://creativecommons.org/licenses/by-sa/4.0/
 // @namespace     http://github.com/Mottie
@@ -264,7 +264,7 @@
       var els, name, indx,
         el = event.target.parentNode,
         collapse = el.classList.contains("collapsed");
-      if (el.classList.contains("github-toc-icon")) {
+      if (event.target.classList.contains("github-toc-icon")) {
         if (event.shiftKey) {
           name = el.className.match(/github-toc-h\d/);
           els = name ? $$("." + name, container) : [];
