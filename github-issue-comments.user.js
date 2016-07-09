@@ -361,8 +361,8 @@
     authors = [],
     // used https://github.com/isaacs/github/issues/215 for matches here...
     // matches "+1!!!!", "++1", "+!", "+99!!!", "-1", "+ 100", "thumbs up"; ":+1:^21425235"
-    // ignoring -1's...
-    regexPlus = /([?!,.:^[\]()\'\"+-\d]|bump|thumbs|up)/gi,
+    // ignoring -1's... add unicode for thumbs up; it gets replaced with an image in Windows
+    regexPlus = /([?!,.:^[\]()\'\"+-\d]|bump|thumbs|up|\ud83d\udc4d)/gi,
     // other comments to hide - they are still counted towards the +1 counter (for now?)
     // seen "^^^" to bump posts; "bump plleeaaassee"; "eta?"; "pretty please"
     // "need this"; "right now"; "still nothing?"; "super helpful"; "for gods sake"
