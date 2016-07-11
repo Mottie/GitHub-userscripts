@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name          GitHub Custom Hotkeys
-// @version       0.2.3
+// @version       0.2.4
 // @description   A userscript that allows you to add custom GitHub keyboard hotkeys
 // @license       https://creativecommons.org/licenses/by-sa/4.0/
 // @namespace     http://github.com/Mottie
@@ -51,6 +51,7 @@
 
   // https://github.com/{nonUser}
   // see https://github.com/buunguyen/octotree/blob/master/src/adapters/github.js#L1-L10
+  // and https://github.com/buunguyen/octotree/issues/304
   nonUser = new RegExp("(" + [
     "about",
     "account",
@@ -64,6 +65,7 @@
     "integrations",
     "issues",
     "join",
+    "mirrors",
     "new",
     "notifications",
     "organizations",
