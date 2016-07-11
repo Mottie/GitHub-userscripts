@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name          GitHub Toggle Issue Comments
-// @version       1.0.16
+// @version       1.0.17
 // @description   A userscript that toggles issues/pull request comments & messages
 // @license       https://creativecommons.org/licenses/by-sa/4.0/
 // @namespace     http://github.com/Mottie
@@ -347,9 +347,12 @@
       hidePlus1(init);
     } else if (name === "reactions") {
       toggleClass($("body"), "ghic-hideReactions", isHidden);
-      // make first comment reactions visible
-      $(".has-reactions").style.display = "block";
       toggleClass(item, "ghic-has-content", $$(".has-reactions").length - 1);
+      // make first comment reactions visible
+      item = $(".has-reactions", $(".timeline-comment-wrapper"));
+      if (item) {
+        item.style.display = "block";
+      }
     }
   }
 
