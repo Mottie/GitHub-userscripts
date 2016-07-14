@@ -35,7 +35,7 @@ Userscripts to add functionality to GitHub.
   | [GitHub toggle wiki sidebar][tws-wiki] |     | [install][tws-raw] | [site][tws-gf] | 04/01/2016 | 05/18/2016 |
   | [Gist to dabblet][g2d-wiki]            |     | [install][g2d-raw] | [site][g2d-gf] | 01/26/2012 | 04/07/2016 |
 
-\* "Ext" column indicates that the userscript has been included in the [Octopatcher](https://github.com/Mottie/Octopatcher) Chrome extension.
+\* "Ext" column indicates that the userscript has been included in the [Octopatcher](https://github.com/Mottie/Octopatcher) browser extension/addon.
 
 [ccs-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-code-colors
 [cic-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-collapse-in-comment
