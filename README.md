@@ -29,6 +29,7 @@ Userscripts to add functionality to GitHub.
   | [GitHub issue highlighter][gih-wiki]   |     | [install][gih-raw] | [site][gih-gf] | 05/21/2016 | 05/21/2016 |
   | [GitHub remove diff signs][rds-wiki]   |     | [install][rds-raw] | [site][rds-gf] | 04/05/2016 | 06/06/2016 |
   | [GitHub rtl comments][rtl-wiki]        |     | [install][rtl-raw] | [site][rtl-gf] | 06/13/2016 | 06/24/2016 |
+  | [GitHub sort content][srt-wiki]        |     | [install][srt-raw] | [site][srt-gf] | 07/13/2016 | 07/13/2016 |
   | [GitHub table of contents][toc-wiki]   |     | [install][toc-raw] | [site][toc-gf] | 03/28/2016 | 07/05/2016 |
   | [GitHub title notification][tbn-wiki]  |     | [install][tbn-raw] | [site][tbn-gf] | 03/24/2016 | 03/24/2016 |
   | [GitHub toggle wiki sidebar][tws-wiki] |     | [install][tws-raw] | [site][tws-gf] | 04/01/2016 | 05/18/2016 |
@@ -48,6 +49,7 @@ Userscripts to add functionality to GitHub.
 [gih-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-issue-highlighter
 [rds-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-remove-diff-signs
 [rtl-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-rtl-comments
+[srt-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-sort-content
 [toc-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-table-of-contents
 [tbn-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-title-notification
 [tws-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-toggle-wiki-sidebar
@@ -65,6 +67,7 @@ Userscripts to add functionality to GitHub.
 [gih-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-issue-highlighter.user.js
 [rds-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-remove-diff-signs.user.js
 [rtl-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-rtl-comments.user.js
+[srt-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-sort-content.user.js
 [toc-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-toc.user.js
 [tbn-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-title-notification.user.js
 [tws-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-toggle-wiki-sidebar.user.js
@@ -82,6 +85,7 @@ Userscripts to add functionality to GitHub.
 [gih-gf]: https://greasyfork.org/en/scripts/19867-github-issue-highlighter
 [rds-gf]: https://greasyfork.org/en/scripts/18520-github-remove-diff-signs
 [rtl-gf]: https://greasyfork.org/en/scripts/20542-github-rtl-comment-blocks
+[srt-gf]: https://greasyfork.org/en/scripts/21373-github-sort-content
 [toc-gf]: https://greasyfork.org/en/scripts/18344-github-toc
 [tbn-gf]: https://greasyfork.org/en/scripts/18253-github-title-notification
 [tws-gf]: https://greasyfork.org/en/scripts/18433-github-toggle-wiki-sidebar
