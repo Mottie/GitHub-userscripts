@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name          GitHub Toggle Issue Comments
-// @version       1.0.17
+// @version       1.0.18
 // @description   A userscript that toggles issues/pull request comments & messages
 // @license       https://creativecommons.org/licenses/by-sa/4.0/
 // @namespace     http://github.com/Mottie
@@ -387,7 +387,9 @@
       "nothing",
       "super",
       "helpful",
-      "for\\sgods\\ssake"
+      "for\\sgods\\ssake",
+      "c'?mon",
+      "come\\son"
     ].join("|") + ")", "gi"),
     // image title ":{anything}:", etc.
     regexEmoji = /:(.*):/,
