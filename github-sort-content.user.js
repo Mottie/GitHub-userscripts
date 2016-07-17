@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name          GitHub Sort Content
-// @version       1.0.0
+// @version       1.0.1
 // @description   A userscript that makes some lists & markdown tables sortable
 // @license       https://creativecommons.org/licenses/by-sa/4.0/
 // @namespace     http://github.com/Mottie
@@ -116,10 +116,10 @@
 
     GM_addStyle(`
       /* unsorted icon */
-      table thead th {
+      .markdown-body table thead th {
         cursor:pointer;
         padding-right:22px !important;
-        background:url(${styles.unsorted}) no-repeat calc(100% - 5px) center;
+        background:url(${styles.unsorted}) no-repeat calc(100% - 5px) center !important;
       }
       div.js-pinned-repos-reorder-container > h3, .dashboard-sidebar .boxed-group > h3,
       div.filter-repos, .repo-tab .filter-bar, .org-toolbar, .sort-bar  {
