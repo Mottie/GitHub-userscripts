@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name          GitHub Sort Content
-// @version       1.0.1
+// @version       1.0.2
 // @description   A userscript that makes some lists & markdown tables sortable
 // @license       https://creativecommons.org/licenses/by-sa/4.0/
 // @namespace     http://github.com/Mottie
@@ -39,7 +39,7 @@
     }
   },
   // toolbars - target for sort arrows
-  regexBars = /\b(filter-bar|org-toolbar|sort-bar)\b/;
+  regexBars = /\b(filter-bar|org-toolbar|sort-bar|tabnav-tabs)\b/;
 
   function initSortTable(el) {
     removeSelection();
@@ -122,7 +122,7 @@
         background:url(${styles.unsorted}) no-repeat calc(100% - 5px) center !important;
       }
       div.js-pinned-repos-reorder-container > h3, .dashboard-sidebar .boxed-group > h3,
-      div.filter-repos, .repo-tab .filter-bar, .org-toolbar, .sort-bar  {
+      div.filter-repos, div.repo-tab .filter-bar, .org-toolbar, .sort-bar, h2 + .tabnav > .tabnav-tabs {
         cursor:pointer;
         padding-right:10px;
         background-image:url(${styles.unsorted}) !important;
@@ -132,7 +132,7 @@
       /* https://github.com/ */
       div.filter-repos { background-position:calc(100% - 5px) 80% !important; }
       /* https://github.com/:user?tab=repositories */
-      .repo-tab .filter-bar { background-position:338px 10px !important; }
+      div.repo-tab .filter-bar { background-position:338px 10px !important; }
       /* https://github.com/:organization */
       .org-toolbar { background-position:calc(100% - 5px) 10px !important; }
       /* https://github.com/stars */
@@ -140,12 +140,12 @@
       /* asc/dec icons */
       table thead th.asc, div.boxed-group h3.asc,
       div.filter-repos.asc, div.filter-bar.asc,
-      .org-toolbar.asc, .sort-bar.asc {
+      .org-toolbar.asc, .sort-bar.asc, h2 + .tabnav > .tabnav-tabs.asc {
         background-image:url(${styles.asc}) !important;
       }
       table thead th.desc, div.boxed-group h3.desc,
       div.filter-repos.desc, div.filter-bar.desc,
-      .org-toolbar.desc, .sort-bar.desc {
+      .org-toolbar.desc, .sort-bar.desc, h2 + .tabnav > .tabnav-tabs.desc {
         background-image:url(${styles.desc}) !important;
       }
       /* remove sort arrows */
@@ -174,6 +174,12 @@
         // don't sort tables not inside of markdown
         if (name === "TH" && closest(target, ".markdown-body")) {
           return initSortTable(target);
+        }
+
+        // following
+        el = $("ol.follow-list", closest(target, ".container"));
+        if (el) {
+          return initSortUl(target, el, ".follow-list-name a");
         }
 
         // organization people - https://github.com/orgs/:organization/people
