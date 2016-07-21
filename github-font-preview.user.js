@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name          GitHub Font Preview
-// @version       1.0.3
+// @version       1.0.4
 // @description   A userscript that adds a font file preview
 // @license       https://creativecommons.org/licenses/by-sa/4.0/
 // @namespace     http://github.com/Mottie
@@ -22,7 +22,7 @@
 (function() {
   'use strict';
 
-  let timer, targets, font,
+  let timer, font,
     busy = false,
     showUnicode = GM_getValue('gfp-show-unicode', false),
     showPoints = GM_getValue('gfp-show-points', true),
@@ -42,7 +42,7 @@
   function getFont(url) {
     if (url) {
       // add loading indicator
-      document.querySelector('.image').innerHTML = '<span class="gfp-loading ghd-invert"></span>';
+      $('.file .image').innerHTML = '<span class="gfp-loading ghd-invert"></span>';
       GM_xmlhttpRequest({
         method: 'GET',
         url: url,
@@ -56,15 +56,16 @@
 
   function setupFont(data) {
     busy = true;
-    let target = document.querySelector('.file .image');
-    if (target) {
+    let target = $('.file .image'),
+      el = $('.final-path');
+    if (target && el) {
       try {
         font = opentype.parse(data);
-        addHTML(target);
+        addHTML(target, el);
         showErrorMessage('');
         onFontLoaded(font);
       } catch (err) {
-      	target.innerHTML = '<h2 class="gfp-message cdel"></h2>';
+        target.innerHTML = '<h2 class="gfp-message cdel"></h2>';
         showErrorMessage(err.toString());
         if (err.stack) {
           console.error(err.stack);
@@ -75,8 +76,8 @@
     busy = false;
   }
 
-  function addHTML(target) {
-    let name = document.querySelector('.final-path').textContent || '';
+  function addHTML(target, el) {
+    let name = el.textContent || '';
     target.innerHTML = `
       <div id="gfp-wrapper">
         <span class="gfp-info" id="gfp-font-name">${name}</span>
@@ -131,15 +132,15 @@
   }
 
   function addBindings() {
-    document.querySelector('.gfp-show-unicode').addEventListener('change', function() {
+    $('.gfp-show-unicode').addEventListener('change', function() {
       showUnicode = this.checked;
       GM_setValue('gfp-show-unicode', showUnicode);
       displayGlyphPage(pageSelected);
       return false;
     }, false);
-    document.querySelector('#gfp-glyph-data').addEventListener('change', function() {
-      showPoints = this.querySelector('.gfp-show-points').checked;
-      showArrows = this.querySelector('.gfp-show-arrows').checked;
+    $('#gfp-glyph-data').addEventListener('change', function() {
+      showPoints = $('.gfp-show-points', this).checked;
+      showArrows = $('.gfp-show-arrows', this).checked;
       GM_setValue('gfp-show-points', showPoints);
       GM_setValue('gfp-show-arrows', showArrows);
       cellSelect();
@@ -147,25 +148,32 @@
     }, false);
   }
 
+  function $(selector, el) {
+    return (el || document).querySelector(selector);
+  }
+  function $$(selector, el) {
+    return Array.from((el || document).querySelectorAll(selector));
+  }
+
   function init() {
-    let name,
-      el = document.querySelector('.file .image');
-    if (el) {
-      name = document.querySelector('.final-path').textContent || '';
-      if (name && fontExt.test(name)) {
-        getFont(el.querySelector('a').href || '');
+    // view raw container
+    let target = $('.file .image'),
+      // get file name from bread crumb
+      el = $('.final-path');
+    if (target && el) {
+      // font extension supported?
+      if (fontExt.test(el.textContent || '')) {
+        // get URL from "View Raw" link
+        el = $('a', target);
+        if (el) {
+          getFont(el.href || '');
+        }
       }
     }
   }
 
   // DOM targets - to detect GitHub dynamic ajax page loading
-  targets = document.querySelectorAll([
-    '#js-repo-pjax-container',
-    '.context-loader-container',
-    '[data-pjax-container]'
-  ].join(','));
-
-  Array.prototype.forEach.call(targets, function(target) {
+  $$('#js-repo-pjax-container, .context-loader-container, [data-pjax-container]').forEach(function(target) {
     new MutationObserver(function(mutations) {
       mutations.forEach(function(mutation) {
         // preform checks before adding code wrap to minimize function calls
@@ -320,7 +328,7 @@
   }
 
   function showErrorMessage(message) {
-    let el = document.querySelector('.gfp-message');
+    let el = $('.gfp-message');
     el.style.display = (!message || message.trim().length === 0) ? 'none' : 'block';
     el.innerHTML = message;
   }
