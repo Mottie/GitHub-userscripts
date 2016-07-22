@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name          GitHub Custom Navigation
-// @version       1.0.2
+// @version       1.0.3
 // @description   A userscript that allows you to customize GitHub's main navigation bar
 // @license       https://creativecommons.org/licenses/by-sa/4.0/
 // @namespace     http://github.com/Mottie
@@ -171,7 +171,9 @@
       .ghcn-settings-wrapper hr { margin: 10px 0; }
       .ghcn-footer { margin-top:4px; border-top:#555 solid 1px; }
       .header-nav-link { height:28px; }
-      .header-nav-link.left svg, .header-nav-link.left img { max-height:16px; fill:currentColor; }
+      .header-nav.left .header-nav-link svg, .header-nav.left .header-nav-link img,
+        #ghcn-nav-items .header-nav-link svg, #ghcn-nav-items .header-nav-link img,
+        .gu-mirror svg, .gu-mirror img { max-height:16px; fill:currentColor; vertical-align:middle; }
       /* panel open */
       body.ghcn-settings-open { overflow:hidden !important; /* !important overrides wiki style */ }
       /* hide other header elements while settings is open (overflow issues) */
