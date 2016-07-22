@@ -21,7 +21,8 @@ Userscripts to add functionality to GitHub.
   | [GitHub collapse in comment][cic-wiki] |  *  | [install][cic-raw] | [site][cic-gf] | 06/27/2016 | 06/27/2016 |
   | [GitHub collapse markdown][cmd-wiki]   |  *  | [install][cmd-raw] | [site][cmd-gf] | 06/27/2016 | 07/05/2016 |
   | [GitHub custom hotkeys][chk-wiki]      |     | [install][chk-raw] | [site][chk-gf] | 04/10/2016 | 07/11/2016 |
-  | [GitHub custom navigation][cnv-wiki]   |     | [install][cnv-raw] | [site][cnv-gf] | 06/22/2016 | 06/25/2016 |
+  | [GitHub custom navigation][cnv-wiki]   |     | [install][cnv-raw] | [site][cnv-gf] | 06/22/2016 | 07/21/2016 |
+  | [GitHub diff links][dfl-wiki]          |     | [install][dfl-raw] | [site][dfl-gf] | 07/21/2016 | 07/21/2016 |
   | [GitHub font preview][fpv-wiki]        |     | [install][fpv-raw] | [site][fpv-gf] | 06/11/2016 | 07/21/2016 |
   | [GitHub image preview][ipv-wiki]       |     | [install][ipv-raw] | [site][ipv-gf] | 05/17/2016 | 06/07/2016 |
   | [GitHub issue comments][ic1-wiki]      |     | [install][ic1-raw] | [site][ic1-gf] | 04/04/2016 | 07/17/2016 |
@@ -42,6 +43,7 @@ Userscripts to add functionality to GitHub.
 [cmd-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-collapse-markdown
 [chk-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-custom-hotkeys
 [cnv-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-custom-navigation
+[dfl-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-diff-links
 [fpv-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-font-preview
 [ipv-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-image-preview
 [ic1-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-issue-comments
@@ -60,6 +62,7 @@ Userscripts to add functionality to GitHub.
 [cmd-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-collapse-markdown.user.js
 [chk-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-custom-hotkeys.user.js
 [cnv-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-custom-navigation.user.js
+[dfl-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-diff-links.user.js
 [fpv-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-font-preview.user.js
 [ipv-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-image-preview.user.js
 [ic1-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-issue-comments.user.js
@@ -78,6 +81,7 @@ Userscripts to add functionality to GitHub.
 [cmd-gf]: https://greasyfork.org/en/scripts/20974-github-collapse-markdown
 [chk-gf]: https://greasyfork.org/en/scripts/18675-github-custom-hotkeys
 [cnv-gf]: https://greasyfork.org/en/scripts/20830-github-custom-navigation
+[dfl-gf]: https://greasyfork.org/en/scripts/21559-github-diff-links
 [fpv-gf]: https://greasyfork.org/en/scripts/20479-github-font-preview
 [ipv-gf]: https://greasyfork.org/en/scripts/19773-github-image-preview
 [ic1-gf]: https://greasyfork.org/en/scripts/18503-github-toggle-issue-comments
