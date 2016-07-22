@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name          GitHub Custom Hotkeys
-// @version       0.2.4
+// @version       0.2.5
 // @description   A userscript that allows you to add custom GitHub keyboard hotkeys
 // @license       https://creativecommons.org/licenses/by-sa/4.0/
 // @namespace     http://github.com/Mottie
@@ -38,7 +38,9 @@
   }
   */
   var data = GM_getValue("github-hotkeys", {
-    "f1": "#hotkey-settings"
+    "all": [
+      { "f1" : "#hotkey-settings" }
+    ]
   }),
 
   openHash = "#hotkey-settings",
