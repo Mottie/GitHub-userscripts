@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name          GitHub Issue Highlighter
-// @version       1.0.0
+// @version       1.0.1
 // @description   A userscript that highlights the linked-to comment
 // @license       https://creativecommons.org/licenses/by-sa/4.0/
 // @namespace     http://github.com/Mottie
@@ -12,20 +12,26 @@
 // @downloadURL   https://raw.githubusercontent.com/Mottie/Github-userscripts/master/github-highlight-comment.user.js
 // ==/UserScript==
 /* global GM_addStyle */
-/*jshint unused:true */
+/*jshint unused:true, esnext:true */
 (function() {
   "use strict";
 
-  GM_addStyle([
-    // !important needed to override styles added by
-    // https://github.com/StylishThemes/GitHub-Dark
-    ".timeline-comment.selected { border-color: #4183C4 !important; }",
-    ".timeline-comment.selected:before { border-right-color: #4183C4 !important; }"
-  ].join(""));
+  // !important needed to override styles added by
+  // https://github.com/StylishThemes/GitHub-Dark
+  GM_addStyle(`
+    .timeline-comment.selected,
+    .timeline-comment.current-user.selected {
+      border-color: #4183C4 !important;
+    }
+    .timeline-comment.selected:before,
+    .timeline-comment.current-user.selected:before {
+      border-right-color: #4183C4 !important;
+    }
+  `);
 
-  var init = function(event) {
+  function init(event) {
     if (document.querySelector("#discussion_bucket")) {
-      var target, indx,
+      let target, indx,
         hash = window.location.hash;
       // remove "selected" class on hashchange
       if (event) {
@@ -43,7 +49,7 @@
         }
       }
     }
-  };
+  }
 
   window.addEventListener("hashchange", init);
   init();
