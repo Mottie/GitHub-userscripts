@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name          GitHub TOC
-// @version       1.1.2
+// @version       1.2.0
 // @description   A userscript that adds a table of contents to readme & wiki pages
 // @license       https://creativecommons.org/licenses/by-sa/4.0/
 // @namespace     http://github.com/Mottie
@@ -15,52 +15,52 @@
 // @downloadURL   https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-toc.user.js
 // ==/UserScript==
 /* global GM_registerMenuCommand, GM_getValue, GM_setValue, GM_addStyle */
-/*jshint unused:true */
-(function() {
+/*jshint unused:true, esnext:true */
+(() => {
   "use strict";
 
-  GM_addStyle([
-    ".github-toc { position:fixed; z-index:75; min-width:200px; top:55px; right:10px; }",
-    ".github-toc h3 { cursor:move; }",
-    // icon toggles TOC container & subgroups
-    ".github-toc h3 svg, .github-toc li.collapsible .github-toc-icon { cursor:pointer; }",
-    // move collapsed TOC to top right corner
-    ".github-toc.collapsed {",
-      "width:30px; height:30px; min-width:auto; overflow:hidden; top:10px !important; left:auto !important;",
-      "right:10px !important; border:1px solid #d8d8d8; border-radius:3px;",
-    "}",
-    ".github-toc.collapsed > h3 { cursor:pointer; padding-top:5px; border:none; }",
-    // move header text out-of-view when collapsed
-    ".github-toc.collapsed > h3 svg { margin-bottom: 10px; }",
-    ".github-toc-hidden, .github-toc.collapsed .boxed-group-inner,",
-     ".github-toc li:not(.collapsible) .github-toc-icon { display:none; }",
-    ".github-toc .boxed-group-inner { max-width:250px; max-height:400px; overflow-y:auto; overflow-x:hidden; }",
-    ".github-toc ul { list-style:none; }",
-    ".github-toc li { max-width:230px; white-space:nowrap; overflow-x:hidden; text-overflow:ellipsis; }",
-    ".github-toc .github-toc-h1 { padding-left:15px; }",
-    ".github-toc .github-toc-h2 { padding-left:30px; }",
-    ".github-toc .github-toc-h3 { padding-left:45px; }",
-    ".github-toc .github-toc-h4 { padding-left:60px; }",
-    ".github-toc .github-toc-h5 { padding-left:75px; }",
-    ".github-toc .github-toc-h6 { padding-left:90px; }",
-    // anchor collapsible icon
-    ".github-toc li.collapsible .github-toc-icon {",
-      "width:16px; height:16px; display:inline-block; margin-left:-16px;",
-      "background: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGNsYXNzPSdvY3RpY29uJyBoZWlnaHQ9JzE0JyB2aWV3Qm94PScwIDAgMTIgMTYnPjxwYXRoIGQ9J00wIDVsNiA2IDYtNkgweic+PC9wYXRoPjwvc3ZnPg==) left center no-repeat;",
-    "}",
-    // on rotate, height becomes width, so this is keeping things lined up
-    ".github-toc li.collapsible.collapsed .github-toc-icon { -webkit-transform:rotate(-90deg); transform:rotate(-90deg); height:10px; width:12px; margin-right:2px; }",
-    ".github-toc-no-selection { -webkit-user-select:none !important; -moz-user-select:none !important; user-select:none !important; }"
-  ].join(""));
+  GM_addStyle(`
+    /* z-index > 1000 to be above the */
+    .github-toc { position:fixed; z-index:1001; min-width:200px; top:55px; right:10px; }
+    .github-toc h3 { cursor:move; }
+    /* icon toggles TOC container & subgroups */
+    .github-toc h3 svg, .github-toc li.collapsible .github-toc-icon { cursor:pointer; vertical-align:baseline; }
+    /* move collapsed TOC to top right corner */
+    .github-toc.collapsed {
+      width:30px; height:30px; min-width:auto; overflow:hidden; top:10px !important; left:auto !important;
+      right:10px !important; border:1px solid #d8d8d8; border-radius:3px;
+    }
+    .github-toc.collapsed > h3 { cursor:pointer; padding-top:5px; border:none; }
+    /* move header text out-of-view when collapsed */
+    .github-toc.collapsed > h3 svg { margin-bottom: 10px; }
+    .github-toc-hidden, .github-toc.collapsed .boxed-group-inner,
+     .github-toc li:not(.collapsible) .github-toc-icon { display:none; }
+    .github-toc .boxed-group-inner { max-width:250px; max-height:400px; overflow-y:auto; overflow-x:hidden; }
+    .github-toc ul { list-style:none; }
+    .github-toc li { max-width:230px; white-space:nowrap; overflow-x:hidden; text-overflow:ellipsis; }
+    .github-toc .github-toc-h1 { padding-left:15px; }
+    .github-toc .github-toc-h2 { padding-left:30px; }
+    .github-toc .github-toc-h3 { padding-left:45px; }
+    .github-toc .github-toc-h4 { padding-left:60px; }
+    .github-toc .github-toc-h5 { padding-left:75px; }
+    .github-toc .github-toc-h6 { padding-left:90px; }
+    /* anchor collapsible icon */
+    .github-toc li.collapsible .github-toc-icon {
+      width:16px; height:16px; display:inline-block; margin-left:-16px;
+      background: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGNsYXNzPSdvY3RpY29uJyBoZWlnaHQ9JzE0JyB2aWV3Qm94PScwIDAgMTIgMTYnPjxwYXRoIGQ9J00wIDVsNiA2IDYtNkgweic+PC9wYXRoPjwvc3ZnPg==) left center no-repeat;
+    }
+    /* on rotate, height becomes width, so this is keeping things lined up */
+    .github-toc li.collapsible.collapsed .github-toc-icon { -webkit-transform:rotate(-90deg); transform:rotate(-90deg); height:10px; width:12px; margin-right:2px; }
+    .github-toc-no-selection { -webkit-user-select:none !important; -moz-user-select:none !important; user-select:none !important; }
+  `);
 
-  var targets,
+  let busy = false,
+    tocInit = false,
 
   // modifiable title
-  title = GM_getValue("github-toc-title", "Table of Contents"),
+  title = GM_getValue("github-toc-title", "Table of Contents");
 
-  container = document.createElement("div"),
-  busy = false,
-  tocInit = false,
+  const container = document.createElement("div"),
 
   // keyboard shortcuts
   keyboard = {
@@ -74,8 +74,8 @@
   // drag variables
   drag = {
     el   : null,
-    pos  : [ 0, 0 ],
-    elm  : [ 0, 0 ],
+    pos  : [0, 0],
+    elm  : [0, 0],
     time : 0,
     unsel: null
   };
@@ -109,13 +109,13 @@
     drag.el = null;
   }
   function dragSave(clear) {
-    var val = clear ? null : [container.style.left, container.style.top];
+    let val = clear ? null : [container.style.left, container.style.top];
     GM_setValue("github-toc-location", val);
   }
 
   // stop text selection while dragging
   function selectionToggle(disable) {
-    var body = $("body");
+    const body = $("body");
     if (disable) {
       // save current "unselectable" value
       drag.unsel = body.getAttribute("unselectable");
@@ -136,11 +136,11 @@
   }
   function removeSelection() {
     // remove text selection - http://stackoverflow.com/a/3171348/145346
-    var sel = window.getSelection ? window.getSelection() : document.selection;
-    if ( sel ) {
-      if ( sel.removeAllRanges ) {
+    const sel = window.getSelection ? window.getSelection() : document.selection;
+    if (sel) {
+      if (sel.removeAllRanges) {
         sel.removeAllRanges();
-      } else if ( sel.empty ) {
+      } else if (sel.empty) {
         sel.empty();
       }
     }
@@ -166,7 +166,7 @@
   }
   // hide TOC entirely, if no rendered markdown detected
   function tocView(mode) {
-    var toc = $(".github-toc");
+    const toc = $(".github-toc");
     if (toc) {
       toc.style.display = mode || "none";
     }
@@ -179,7 +179,7 @@
       return;
     }
     if ($("#wiki-content, #readme")) {
-      var indx, header, anchor, txt,
+      let indx, header, anchor, txt,
         content = "<ul>",
         anchors = $$(".markdown-body .anchor"),
         len = anchors.length;
@@ -191,13 +191,12 @@
             header = anchor.parentNode;
             // replace single & double quotes with right angled quotes
             txt = header.textContent.trim().replace(/'/g, "&#8217;").replace(/"/g, "&#8221;");
-            content += [
-              "<li class='github-toc-" + header.nodeName.toLowerCase() + "'>",
-                // using a ZenHub class here to invert the icon for the dark theme
-                "<span class='github-toc-icon octicon zh-octicon-grey'></span>",
-                "<a href='" + anchor.hash + "' title='" + txt + "'>" + txt + "</a>",
-              "</li>"
-            ].join("");
+            content += `
+              <li class="github-toc-${header.nodeName.toLowerCase()}">
+                <span class="github-toc-icon octicon ghd-invert"></span>
+                <a href="${anchor.hash}" title="${txt}">${txt}</a>
+              </li>
+            `;
           }
         }
         $(".boxed-group-inner", container).innerHTML = content + "</ul>";
@@ -222,14 +221,14 @@
     el.addEventListener(name, handler);
   }
   function addClass(els, name) {
-    var indx,
+    let indx,
       len = els.length;
     for (indx = 0; indx < len; indx++) {
       els[indx].classList.add(name);
     }
   }
   function removeClass(els, name) {
-    var indx,
+    let indx,
       len = els.length;
     for (indx = 0; indx < len; indx++) {
       els[indx].classList.remove(name);
@@ -237,7 +236,7 @@
   }
 
   function listCollapsible() {
-    var indx, el, next, count, num, group,
+    let indx, el, next, count, num, group,
       els = $$("li", container),
       len = els.length;
     for (indx = 0; indx < len; indx++) {
@@ -261,7 +260,7 @@
     group = [];
     on(container, "click", function(event) {
       // click on icon, then target LI parent
-      var els, name, indx,
+      let els, name, indx,
         el = event.target.parentNode,
         collapse = el.classList.contains("collapsed");
       if (event.target.classList.contains("github-toc-icon")) {
@@ -280,7 +279,7 @@
     });
   }
   function collapseChildren(el, collapse) {
-    var name = el && el.className.match(/collapsible-(\d+)/),
+    let name = el && el.className.match(/collapsible-(\d+)/),
       children = name ? $$(".github-toc-childof-" + name[1], container) : null;
     if (children) {
       if (collapse) {
@@ -299,7 +298,7 @@
     clearTimeout(keyboard.timer);
     // use "g+t" to toggle the panel; "g+r" to reset the position
     // keypress may be needed for non-alphanumeric keys
-    var tocToggle = keyboard.toggle.split("+"),
+    let tocToggle = keyboard.toggle.split("+"),
       tocReset = keyboard.restore.split("+"),
       key = String.fromCharCode(event.which).toLowerCase(),
       panelHidden = container.classList.contains("collapsed");
@@ -338,7 +337,7 @@
       return;
     }
     // insert TOC after header
-    var tmp = GM_getValue("github-toc-location", null);
+    let tmp = GM_getValue("github-toc-location", null);
     // restore last position
     if (tmp) {
       container.style.left = tmp[0];
@@ -351,13 +350,15 @@
     container.className = "github-toc boxed-group wiki-pages-box readability-sidebar" + (tmp ? " collapsed" : "");
     container.setAttribute("role", "navigation");
     container.setAttribute("unselectable", "on");
-    container.innerHTML = [
-      "<h3 class='js-wiki-toggle-collapse wiki-auxiliary-content' data-hotkey='g t'>",
-        "<svg class='octicon github-toc-icon' height='14' width='14' xmlns='http://www.w3.org/2000/svg' viewbox='0 0 16 12'><path d='M2 13c0 .6 0 1-.6 1H.6c-.6 0-.6-.4-.6-1s0-1 .6-1h.8c.6 0 .6.4.6 1zm2.6-9h6.8c.6 0 .6-.4.6-1s0-1-.6-1H4.6C4 2 4 2.4 4 3s0 1 .6 1zM1.4 7H.6C0 7 0 7.4 0 8s0 1 .6 1h.8C2 9 2 8.6 2 8s0-1-.6-1zm0-5H.6C0 2 0 2.4 0 3s0 1 .6 1h.8C2 4 2 3.6 2 3s0-1-.6-1zm10 5H4.6C4 7 4 7.4 4 8s0 1 .6 1h6.8c.6 0 .6-.4.6-1s0-1-.6-1zm0 5H4.6c-.6 0-.6.4-.6 1s0 1 .6 1h6.8c.6 0 .6-.4.6-1s0-1-.6-1z'/></svg> ",
-        "<span>" + title + "</span>",
-      "</h3>",
-      "<div class='boxed-group-inner wiki-auxiliary-content wiki-auxiliary-content-no-bg'></div>"
-    ].join("");
+    container.innerHTML = `
+      <h3 class="js-wiki-toggle-collapse wiki-auxiliary-content" data-hotkey="g t">
+        <svg class="octicon github-toc-icon" height="14" width="14" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 16 12">
+          <path d="M2 13c0 .6 0 1-.6 1H.6c-.6 0-.6-.4-.6-1s0-1 .6-1h.8c.6 0 .6.4.6 1zm2.6-9h6.8c.6 0 .6-.4.6-1s0-1-.6-1H4.6C4 2 4 2.4 4 3s0 1 .6 1zM1.4 7H.6C0 7 0 7.4 0 8s0 1 .6 1h.8C2 9 2 8.6 2 8s0-1-.6-1zm0-5H.6C0 2 0 2.4 0 3s0 1 .6 1h.8C2 4 2 3.6 2 3s0-1-.6-1zm10 5H4.6C4 7 4 7.4 4 8s0 1 .6 1h6.8c.6 0 .6-.4.6-1s0-1-.6-1zm0 5H4.6c-.6 0-.6.4-.6 1s0 1 .6 1h6.8c.6 0 .6-.4.6-1s0-1-.6-1z"/>
+        </svg>
+        <span>${title}</span>
+      </h3>
+      <div class="boxed-group-inner wiki-auxiliary-content wiki-auxiliary-content-no-bg"></div>
+    `;
 
     // add container
     tmp = $(".header");
@@ -377,18 +378,10 @@
   }
 
   // DOM targets - to detect GitHub dynamic ajax page loading
-  targets = $$([
-    "#js-repo-pjax-container",
-    // targeted by ZenHub
-    "#js-repo-pjax-container > .container",
-    "#js-pjax-container",
-    ".js-preview-body"
-  ].join(","));
-
   // update TOC when content changes
-  Array.prototype.forEach.call(targets, function(target) {
-    new MutationObserver(function(mutations) {
-      mutations.forEach(function(mutation) {
+  $$("#js-repo-pjax-container, #js-repo-pjax-container > .container, #js-pjax-container, .js-preview-body").forEach((target) => {
+    new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
         // preform checks before adding code wrap to minimize function calls
         if (!busy && mutation.target === target) {
           tocAdd();
