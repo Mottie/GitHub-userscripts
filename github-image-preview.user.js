@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name          GitHub Image Preview
-// @version       1.0.7
+// @version       1.0.8
 // @description   A userscript that adds clickable image thumbnails
 // @license       https://creativecommons.org/licenses/by-sa/4.0/
 // @namespace     http://github.com/Mottie
@@ -33,9 +33,9 @@
     // zoom doesn't work in Firefox, but `-moz-transform:scale(3);` doesn't limit the size of the image, so it overflows
     "table.files.ghip-tiled .image:hover img:not(.ghip-non-image) { zoom:3; }",
     ".ghip-image-previews .border-wrap img, .ghip-image-previews .border-wrap svg { max-width:95%; }",
-    ".ghip-image-previews .border-wrap h4 { overflow:hidden; white-space:nowrap; text-overflow:ellipsis; margin-bottom:5px; }",
-    ".btn.ghip-tiled > *, .btn.ghip-fullw > *, .ghip-image-previews iframe { pointer-events:none; }",
-    ".image .ghip-file-type { font-size:30px; top:-65px; position:relative; z-index:2; }",
+    ".ghip-image-previews .border-wrap h4 { white-space:nowrap; text-overflow:ellipsis; margin-bottom:5px; }",
+    ".btn.ghip-tiled > *, .btn.ghip-fullw > *, .ghip-image-previews iframe { pointer-events:none; vertical-align:middle; }",
+    ".image .ghip-file-type { font-size:30px; top:-1.8em; position:relative; z-index:2; }",
     // override GitHub-Dark styles
     "table.files img[src*='octocat-spinner'], img[src='/images/spinner.gif'] { width:auto !important; height:auto !important; }",
     "table.files td .simplified-path { color:#888 !important; }"
