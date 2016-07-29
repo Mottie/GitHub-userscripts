@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name          GitHub Sort Content
-// @version       1.0.2
+// @version       1.0.3
 // @description   A userscript that makes some lists & markdown tables sortable
 // @license       https://creativecommons.org/licenses/by-sa/4.0/
 // @namespace     http://github.com/Mottie
@@ -57,16 +57,18 @@
   }
 
   function initSortUl(arrows, list, selector) {
-    removeSelection();
-    let dir = arrows.classList.contains(sorts[0]) ? sorts[1] : sorts[0],
-      options = { order: dir, natural: true };
-    if (selector) {
-      options.selector = selector;
+    if (list && list.children) {
+      removeSelection();
+      let dir = arrows.classList.contains(sorts[0]) ? sorts[1] : sorts[0],
+        options = { order: dir, natural: true };
+      if (selector) {
+        options.selector = selector;
+      }
+      // using children because the big repo contains UL > DIV
+      tinysort(list.children, options);
+      arrows.classList.remove(...sorts);
+      arrows.classList.add(dir);
     }
-    // using children because the big repo contains UL > DIV
-    tinysort(list.children, options);
-    arrows.classList.remove(...sorts);
-    arrows.classList.add(dir);
   }
 
   function needDarkTheme() {
