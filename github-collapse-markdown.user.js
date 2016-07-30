@@ -49,10 +49,10 @@
       content:"\u25bc";
     }
     .${markdown} .${collapsed}:after {
-      content:"\u25C4";
+      transform: rotate(90deg);
     }
     /* clicking on header link won't pass svg as the event.target */
-    .octicon-link {
+    .octicon-link, .octicon-link > * {
       pointer-events:none;
     }
     .ghcm-hidden {
@@ -147,9 +147,16 @@
 
   function addBinding() {
     document.addEventListener("click", event => {
-      let target = event.target;
-      if (target.classList.contains("anchor") || target.nodeName === "A" ||
-        target.nodeName ==="IMG") {
+      let target = event.target,
+        name = (target && target.nodeName || "").toLowerCase();
+      if (name === "path") {
+        target = closest(target, "svg");
+      }
+      if (!target || target.classList.contains("anchor") ||
+        target.nodeName === "a" || name ==="img" ||
+        // add support for "pointer-events:none" applied to "anchor" in
+        // https://github.com/StylishThemes/GitHub-FixedHeader
+        (name === "svg" && target.classList.contains("octicon-link"))) {
         return;
       }
       // check if element is inside a header
