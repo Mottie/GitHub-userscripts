@@ -71,8 +71,7 @@
       margin-bottom:10px;
     }
     .gcic-block-closed:after {
-      content:"\u25C4 ";
-      float:right;
+      transform: rotate(90deg);
     }
     .gcic-block-closed + .highlight, .gcic-block-closed + .email-signature-reply,
     .gcic-block-closed + pre {
