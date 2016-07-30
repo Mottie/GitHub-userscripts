@@ -18,8 +18,8 @@ Userscripts to add functionality to GitHub.
   | Userscript Wiki                        | Ext | Direct Install     | GreasyFork     | Created    | Updated    |
   |----------------------------------------|:---:|:------------------:|:--------------:|:----------:|:----------:|
   | [GitHub code colors][ccs-wiki]         |     | [install][ccs-raw] | [site][ccs-gf] | 03/20/2016 | 03/25/2016 |
-  | [GitHub collapse in comment][cic-wiki] |  *  | [install][cic-raw] | [site][cic-gf] | 06/27/2016 | 06/27/2016 |
-  | [GitHub collapse markdown][cmd-wiki]   |  *  | [install][cmd-raw] | [site][cmd-gf] | 06/27/2016 | 07/05/2016 |
+  | [GitHub collapse in comment][cic-wiki] |  *  | [install][cic-raw] | [site][cic-gf] | 06/27/2016 | 07/30/2016 |
+  | [GitHub collapse markdown][cmd-wiki]   |  *  | [install][cmd-raw] | [site][cmd-gf] | 06/27/2016 | 07/30/2016 |
   | [GitHub custom hotkeys][chk-wiki]      |     | [install][chk-raw] | [site][chk-gf] | 04/10/2016 | 07/22/2016 |
   | [GitHub custom navigation][cnv-wiki]   |     | [install][cnv-raw] | [site][cnv-gf] | 06/22/2016 | 07/21/2016 |
   | [GitHub diff links][dfl-wiki]          |     | [install][dfl-raw] | [site][dfl-gf] | 07/21/2016 | 07/21/2016 |
