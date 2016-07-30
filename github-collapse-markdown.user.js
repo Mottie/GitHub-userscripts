@@ -156,10 +156,10 @@
         target = closest(target, "svg");
       }
       if (!target || target.classList.contains("anchor") ||
-        target.nodeName === "a" || name ==="img" ||
+        name === "a" || name === "img" ||
         // add support for "pointer-events:none" applied to "anchor" in
         // https://github.com/StylishThemes/GitHub-FixedHeader
-        (name === "svg" && target.classList.contains("octicon-link"))) {
+        target.classList.contains("octicon-link")) {
         return;
       }
       // check if element is inside a header
