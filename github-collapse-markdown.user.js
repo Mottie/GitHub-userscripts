@@ -1,11 +1,12 @@
 // ==UserScript==
 // @name         GitHub Collapse Markdown
-// @version      1.0.1
+// @version      1.1.0
 // @description  A userscript that collapses markdown headers
 // @license      https://creativecommons.org/licenses/by-sa/4.0/
 // @namespace    https://github.com/Mottie
 // @include      https://github.com/*
 // @include      https://gist.github.com/*
+// @include      https://help.github.com/*
 // @run-at       document-idle
 // @grant        GM_addStyle
 // @grant        GM_getValue
@@ -26,21 +27,23 @@
     colors = GM_getValue("ghcm-colors", defaultColors),
 
     headers = "H1 H2 H3 H4 H5 H6".split(" "),
-    // markdown wrapper class name
-    markdown = "markdown-body",
     collapsed = "ghcm-collapsed",
 
     arrowColors = document.createElement("style");
 
   GM_addStyle(`
-    .${markdown} h1, .${markdown} h2, .${markdown} h3, .${markdown} h4,
-    .${markdown} h5, .${markdown} h6 {
+    .markdown-body h1, .markdown-body h2, .markdown-body h3,
+    .markdown-body h4, .markdown-body h5, .markdown-body h6,
+    .markdown-format h1, .markdown-format h2, .markdown-format h3,
+    .markdown-format h4, .markdown-format h5, .markdown-format h6 {
       position:relative;
       padding-right:.8em;
       cursor:pointer;
     }
-    .${markdown} h1:after, .${markdown} h2:after, .${markdown} h3:after,
-    .${markdown} h4:after, .${markdown} h5:after, .${markdown} h6:after {
+    .markdown-body h1:after, .markdown-body h2:after, .markdown-body h3:after,
+    .markdown-body h4:after, .markdown-body h5:after, .markdown-body h6:after,
+    .markdown-format h1:after, .markdown-format h2:after, .markdown-format h3:after,
+    .markdown-format h4:after, .markdown-format h5:after, .markdown-format h6:after {
       display:inline-block;
       position:absolute;
       right:0;
@@ -48,7 +51,7 @@
       font-size:.8em;
       content:"\u25bc";
     }
-    .${markdown} .${collapsed}:after {
+    .markdown-body .${collapsed}:after, .markdown-format .${collapsed}:after {
       transform: rotate(90deg);
     }
     /* clicking on header link won't pass svg as the event.target */
@@ -62,12 +65,12 @@
 
   function addColors() {
     arrowColors.textContent = `
-      .${markdown} h1:after { color:${colors[0]} }
-      .${markdown} h2:after { color:${colors[1]} }
-      .${markdown} h3:after { color:${colors[2]} }
-      .${markdown} h4:after { color:${colors[3]} }
-      .${markdown} h5:after { color:${colors[4]} }
-      .${markdown} h6:after { color:${colors[5]} }
+      .markdown-body h1:after, .markdown-format h1:after { color:${colors[0]} }
+      .markdown-body h2:after, .markdown-format h2:after { color:${colors[1]} }
+      .markdown-body h3:after, .markdown-format h3:after { color:${colors[2]} }
+      .markdown-body h4:after, .markdown-format h4:after { color:${colors[3]} }
+      .markdown-body h5:after, .markdown-format h5:after { color:${colors[4]} }
+      .markdown-body h6:after, .markdown-format h6:after { color:${colors[5]} }
     `;
   }
 
@@ -80,7 +83,7 @@
         isCollapsed = el.classList.contains(collapsed);
       if (shifted) {
         // collapse all same level anchors
-        els = $$(`.${markdown} ${name}`);
+        els = $$(`.markdown-body ${name}, .markdown-format ${name}`);
         for (el of els) {
           nextHeader(el, level, isCollapsed);
         }
@@ -163,7 +166,7 @@
       target = closest(event.target, headers.join(","));
       if (target && headers.indexOf(target.nodeName || "") > -1) {
         // make sure the header is inside of markdown
-        if (closest(target, `.${markdown}`)) {
+        if (closest(target, ".markdown-body, .markdown-format")) {
           toggle(target, event.shiftKey);
         }
       }
@@ -172,7 +175,7 @@
 
   function checkHash() {
     let el, els, md, tmp,
-      mds = $$(`.${markdown}`);
+      mds = $$(".markdown-body, .markdown-format");
     for (md of mds) {
       els = $$(headers.join(","), md);
       if (els.length > 1) {
