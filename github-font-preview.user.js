@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name          GitHub Font Preview
-// @version       1.0.4
+// @version       1.0.5
 // @description   A userscript that adds a font file preview
 // @license       https://creativecommons.org/licenses/by-sa/4.0/
 // @namespace     http://github.com/Mottie
@@ -197,7 +197,7 @@
     .gfp-message { position:relative; top:-3px; padding:1px 5px; font-weight:bold; border-radius:2px; display:none; clear:both; }
     #gfp-glyphs { width:950px; }
     .gfp-info { float:right; font-size:11px; color:#999; }
-    hr { clear:both; border:none; border-bottom:1px solid #ccc; margin:20px 0 20px 0; padding:0; }
+    #gfp-wrapper hr { clear:both; border:none; border-bottom:1px solid #ccc; margin:20px 0 20px 0; padding:0; }
     /* Font Inspector */
     #gfp-font-data div { font-weight:normal; margin:0; cursor:pointer; }
     #gfp-font-data div:before { font-size:85%; content:'▼ '; }
