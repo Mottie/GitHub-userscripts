@@ -21,7 +21,7 @@ Userscripts to add functionality to GitHub.
   | [GitHub collapse in comment][cic-wiki] |  *  | [install][cic-raw] | [site][cic-gf] | 06/27/2016 | 07/30/2016 |
   | [GitHub collapse markdown][cmd-wiki]   |  *  | [install][cmd-raw] | [site][cmd-gf] | 06/27/2016 | 07/30/2016 |
   | [GitHub custom hotkeys][chk-wiki]      |     | [install][chk-raw] | [site][chk-gf] | 04/10/2016 | 07/22/2016 |
-  | [GitHub custom navigation][cnv-wiki]   |     | [install][cnv-raw] | [site][cnv-gf] | 06/22/2016 | 07/21/2016 |
+  | [GitHub custom navigation][cnv-wiki]   |     | [install][cnv-raw] | [site][cnv-gf] | 06/22/2016 | 08/10/2016 |
   | [GitHub diff links][dfl-wiki]          |     | [install][dfl-raw] | [site][dfl-gf] | 07/21/2016 | 07/21/2016 |
   | [GitHub font preview][fpv-wiki]        |     | [install][fpv-raw] | [site][fpv-gf] | 06/11/2016 | 07/30/2016 |
   | [GitHub image preview][ipv-wiki]       |     | [install][ipv-raw] | [site][ipv-gf] | 05/17/2016 | 07/28/2016 |
@@ -102,5 +102,6 @@ Userscripts to add functionality to GitHub.
   * [GitHub Diff File Toggle](https://greasyfork.org/en/scripts/18788-github-diff-file-toggle) (also part of GitHub Dark Script)
   * [GitHub Toggle Code Wrap](https://greasyfork.org/en/scripts/18789-github-toggle-code-wrap) (also part of GitHub Dark Script)
 * [GitHub Custom Emojis](https://github.com/StylishThemes/GitHub-Custom-Emojis)
+* [GitHub Make Tooltips](https://greasyfork.org/en/scripts/22194)
 * [ZenHub Sort Issues](https://github.com/Mottie/ZenHub-userscripts#zenhub-sort-issues)
 * [ZenHub Toggle Meta](https://github.com/Mottie/ZenHub-userscripts#zenhub-toggle-meta)
