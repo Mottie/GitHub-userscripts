@@ -17,7 +17,7 @@ Userscripts to add functionality to GitHub.
 
   | Userscript Wiki                        | Ext | Direct Install     | GreasyFork     | Created    | Updated    |
   |----------------------------------------|:---:|:------------------:|:--------------:|:----------:|:----------:|
-  | [GitHub code colors][ccs-wiki]         |     | [install][ccs-raw] | [site][ccs-gf] | 03/20/2016 | 03/25/2016 |
+  | [GitHub code colors][ccs-wiki]         |     | [install][ccs-raw] | [site][ccs-gf] | 03/20/2016 | 08/20/2016 |
   | [GitHub collapse in comment][cic-wiki] |  *  | [install][cic-raw] | [site][cic-gf] | 06/27/2016 | 07/30/2016 |
   | [GitHub collapse markdown][cmd-wiki]   |  *  | [install][cmd-raw] | [site][cmd-gf] | 06/27/2016 | 07/30/2016 |
   | [GitHub custom hotkeys][chk-wiki]      |     | [install][chk-raw] | [site][chk-gf] | 04/10/2016 | 07/22/2016 |
@@ -30,7 +30,7 @@ Userscripts to add functionality to GitHub.
   | [GitHub issue highlighter][gih-wiki]   |     | [install][gih-raw] | [site][gih-gf] | 05/21/2016 | 07/28/2016 |
   | [GitHub remove diff signs][rds-wiki]   |     | [install][rds-raw] | [site][rds-gf] | 04/05/2016 | 06/06/2016 |
   | [GitHub rtl comments][rtl-wiki]        |     | [install][rtl-raw] | [site][rtl-gf] | 06/13/2016 | 06/24/2016 |
-  | [GitHub sort content][srt-wiki]        |     | [install][srt-raw] | [site][srt-gf] | 07/13/2016 | 07/29/2016 |
+  | [GitHub sort content][srt-wiki]        |     | [install][srt-raw] | [site][srt-gf] | 07/13/2016 | 08/20/2016 |
   | [GitHub table of contents][toc-wiki]   |     | [install][toc-raw] | [site][toc-gf] | 03/28/2016 | 07/29/2016 |
   | [GitHub title notification][tbn-wiki]  |     | [install][tbn-raw] | [site][tbn-gf] | 03/24/2016 | 03/24/2016 |
   | [GitHub toggle wiki sidebar][tws-wiki] |     | [install][tws-raw] | [site][tws-gf] | 04/01/2016 | 05/18/2016 |
