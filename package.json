@@ -1,7 +1,12 @@
 {
-  "name": "github-userscripts",
-  "version": "1.0.60",
-  "description": "Userscripts to add functionality to GitHub",
-  "license": "CC-BY-SA-4.0",
-  "repository": "Mottie/GitHub-userscripts"
+	"name": "github-userscripts",
+	"version": "1.0.61",
+	"description": "Userscripts to add functionality to GitHub",
+	"license": "CC-BY-SA-4.0",
+	"repository": "Mottie/GitHub-userscripts",
+	"author": {
+		"name": "Rob Garrison",
+		"email": "wowmotty@gmail.com",
+		"url": "https://github.com/Mottie"
+	}
 }
