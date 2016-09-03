@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name          GitHub Sort Content
-// @version       1.0.6
+// @version       1.0.7
 // @description   A userscript that makes some lists & markdown tables sortable
 // @license       https://creativecommons.org/licenses/by-sa/4.0/
 // @namespace     http://github.com/Mottie
@@ -21,9 +21,10 @@
 	Contribute repos & Your Repos - https://github.com/
 	organization repos - https://github.com/jquery
 	organization members - https://github.com/orgs/jquery/people
-	pinned repos - https://github.com/addyosmani
+	pinned & no pinned repos - https://github.com/addyosmani
 	repos - https://github.com/addyosmani?tab=repositories
 	stars - https://github.com/stars
+	watching - https://github.com/watching
 	*/
 	const sorts = ["asc", "desc"],
 		icons = {
@@ -125,7 +126,7 @@
 		}
 		div.js-pinned-repos-reorder-container > h3, .dashboard-sidebar .boxed-group > h3,
 		div.filter-repos, div.js-repo-filter .filter-bar, .org-toolbar, .sort-bar,
-		h2 + .tabnav > .tabnav-tabs {
+		h2 + .tabnav > .tabnav-tabs, .subscriptions-content .boxed-group > h3 {
 			cursor:pointer;
 			padding-right:10px;
 			background-image:url(${styles.unsorted}) !important;
@@ -140,16 +141,22 @@
 		.org-toolbar { background-position:calc(100% - 5px) 10px !important; }
 		/* https://github.com/stars */
 		.sort-bar { background-position:525px 10px !important; }
+		/* https://github.com/watching */
+		.subscriptions-content .boxed-group > h3 {
+			 background-position:150px 10px !important;
+		}
 		/* asc/dec icons */
 		table thead th.asc, div.boxed-group h3.asc,
 		div.js-repo-filter.asc, div.filter-bar.asc,
-		.org-toolbar.asc, .sort-bar.asc, h2 + .tabnav > .tabnav-tabs.asc {
+		.org-toolbar.asc, .sort-bar.asc, h2 + .tabnav > .tabnav-tabs.asc,
+		.subscriptions-content .boxed-group > h3.asc {
 			background-image:url(${styles.asc}) !important;
 			background-repeat:no-repeat !important;
 		}
 		table thead th.desc, div.boxed-group h3.desc,
 		div.js-repo-filter.desc, div.filter-bar.desc,
-		.org-toolbar.desc, .sort-bar.desc, h2 + .tabnav > .tabnav-tabs.desc {
+		.org-toolbar.desc, .sort-bar.desc, h2 + .tabnav > .tabnav-tabs.desc,
+		.subscriptions-content .boxed-group > h3.desc {
 			background-image:url(${styles.desc}) !important;
 			background-repeat:no-repeat !important;
 		}
@@ -198,6 +205,12 @@
 				el = closest(target, ".sort-bar, .filter-bar, .org-toolbar");
 				if (el && $(".repo-list", el.parentNode)) {
 					return initSortUl(el, $(".repo-list", el.parentNode), ".repo-list-name a");
+				}
+
+				// https://github.com/watching
+				el = closest(target, ".subscriptions-content");
+				if (el && $(".repo-list", el)) {
+					return initSortUl(target, $(".repo-list", el), "li a");
 				}
 
 				// mini-repo listings with & without filter - https://github.com/
