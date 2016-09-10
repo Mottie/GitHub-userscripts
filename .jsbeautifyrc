@@ -1,0 +1,11 @@
+{
+	"indent_size": 1,
+	"indent_char": "\t",
+	"indent_level": 0,
+	"indent_with_tabs": true,
+	"preserve_newlines": true,
+	"max_preserve_newlines": 2,
+	"jslint_happy": true,
+	"end_with_newline": true,
+	"wrap_line_length": 80
+}
