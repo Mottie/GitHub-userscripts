@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name          GitHub Custom Navigation
-// @version       1.0.4
+// @version       1.0.5
 // @description   A userscript that allows you to customize GitHub's main navigation bar
 // @license       https://creativecommons.org/licenses/by-sa/4.0/
 // @namespace     http://github.com/Mottie
@@ -171,7 +171,7 @@
       .ghcn-settings-wrapper hr { margin: 10px 0; }
       .ghcn-footer { margin-top:4px; border-top:#555 solid 1px; }
       .header-nav-link { height:28px; }
-      .header-nav.left .header-nav-link svg, .header-nav.left .header-nav-link img,
+      .header-nav.float-left .header-nav-link svg, .header-nav.float-left .header-nav-link img,
         #ghcn-nav-items .header-nav-link svg, #ghcn-nav-items .header-nav-link img,
         .gu-mirror svg, .gu-mirror img { max-height:16px; fill:currentColor; vertical-align:middle;
         overflow:visible; }
@@ -184,12 +184,12 @@
         body.ghcn-settings-open .header-logo-wordmark,
         .gist-header .octicon-logo-github, /* hide GitHub logo on Gist page */
         .zh-todo-link { display:none; }
-      body.ghcn-settings-open .header-nav.left { width:100%; }
+      body.ghcn-settings-open .header-nav.float-left { width:100%; }
       body.ghcn-settings-open .header-nav-link > * { pointer-events:none; }
       body.ghcn-settings-open #ghcn-overlay,
         body.ghcn-settings-open #ghcn-settings-inner,
         #ghcn-nav-items { display:block; }
-      body.ghcn-settings-open .header-nav.left .header-nav-item,
+      body.ghcn-settings-open .header-nav.float-left .header-nav-item,
         .ghcn-settings-wrapper .header-nav-item { cursor:move; border:#555 1px solid; border-radius:4px;
         margin-left: 2px; }
       body.ghcn-settings-open .header-nav-link,
