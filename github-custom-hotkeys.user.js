@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name          GitHub Custom Hotkeys
-// @version       1.0.0
+// @version       1.0.1
 // @description   A userscript that allows you to add custom GitHub keyboard hotkeys
 // @license       https://creativecommons.org/licenses/by-sa/4.0/
 // @namespace     http://github.com/Mottie
@@ -95,12 +95,14 @@
 				origin: loc.origin,
 				page: ""
 			};
-		// pathname "should" always start with a "/"
-		let tmp = loc.pathname.split("/");
 		// me
-		parts.m = $("meta[name='user-login']").getAttribute(
-			"content") || "";
+		let tmp = $("meta[name='user-login']");
+		parts.m = tmp && tmp.getAttribute("content") || "";
 		parts.me = parts.me ? parts.root + "/" + parts.m : "";
+
+		// pathname "should" always start with a "/"
+		tmp = loc.pathname.split("/");
+
 		// user name
 		if (nonUser.test(tmp[1] || "")) {
 			// invalid user! clear out the values
