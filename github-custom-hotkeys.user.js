@@ -132,18 +132,14 @@
 	// pass true to initialize; false to remove everything
 	function checkScope() {
 		removeElms($("body"), ".ghch-link");
-		const parts = getUrlParts(),
-			keys = Object.keys(data);
-		let key, url,
-			indx = keys.length;
-		while (indx--) {
-			key = keys[indx];
-			url = fixUrl(parts, key === "all" ? "{root}" : key);
+		const parts = getUrlParts();
+		Object.keys(data).forEach(key => {
+			const url = fixUrl(parts, key === "all" ? "{root}" : key);
 			if (window.location.href.indexOf(url) > -1) {
 				debug("Checking custom hotkeys for " + key);
 				addHotkeys(parts, url, data[key]);
 			}
-		}
+		});
 	}
 
 	function fixUrl(parts, url) {
@@ -181,14 +177,6 @@
 				return val;
 			});
 		return valid ? url : "";
-	}
-
-	function $(str, el) {
-		return (el || document).querySelector(str);
-	}
-
-	function $$(str, el) {
-		return Array.from((el || document).querySelectorAll(str));
 	}
 
 	function removeElms(src, selector) {
@@ -278,7 +266,9 @@
 				</h3>
 				<div class="ghch-menu-inner boxed-group-inner">
 					<fieldset class="ghch-scope-all">
-						<legend><span class="simple-box" data-scope="all">All of GitHub &amp; subdomains</span></legend>
+						<legend>
+							<span class="simple-box" data-scope="all">All of GitHub &amp; subdomains</span>
+						</legend>
 						${templates.scope}
 					</fieldset>
 					<div class="ghch-scope-add">+ Click to add a new scope</div>
@@ -333,10 +323,9 @@
 
 	function processJSON() {
 		let val;
-		const textarea = $(".ghch-json-code"),
-			txt = textarea.value;
+		const textarea = $(".ghch-json-code");
 		try {
-			val = JSON.parse(txt);
+			val = JSON.parse(textarea.value);
 			data = val;
 		} catch (err) {}
 	}
@@ -369,9 +358,9 @@
 	}
 
 	function refreshData() {
+		data = {};
 		let tmp, scope, sIndx, hotkeys, scIndx, scLen, val;
 		const menu = $(".ghch-menu-inner"),
-			data = {},
 			scopes = $$("fieldset", menu),
 			sLen = scopes.length;
 		for (sIndx = 0; sIndx < sLen; sIndx++) {
@@ -400,20 +389,19 @@
 		const menu = $("#ghch-menu");
 
 		// open menu
-		$("#ghch-open-menu").addEventListener("click",
-			openPanel);
+		on($("#ghch-open-menu"), "click", openPanel);
 		// close menu
-		menu.addEventListener("click", closePanel);
-		$("body").addEventListener("keydown", event => {
+		on(menu, "click", closePanel);
+		on($("body"), "keydown", event => {
 			if (event.which === 27) {
 				closePanel();
 			}
 		});
 		// stop propagation
-		$("#ghch-settings-inner", menu).addEventListener("keydown", event => {
+		on($("#ghch-settings-inner", menu), "keydown", event => {
 			event.stopPropagation();
 		});
-		$("#ghch-settings-inner", menu).addEventListener("click", event => {
+		on($("#ghch-settings-inner", menu), "click", event => {
 			event.stopPropagation();
 			let target = event.target;
 			// add hotkey
@@ -441,26 +429,25 @@
 				}
 			}
 		});
-		menu.addEventListener("change", refreshData);
+		on(menu, "change", refreshData);
 		// contenteditable scope title
-		menu.addEventListener("input", event => {
+		on(menu, "input", event => {
 			if (event.target.classList.contains("simple-box")) {
 				refreshData();
 			}
 		});
-		$("button.ghch-close", menu).addEventListener("click", closePanel);
+		on($("button.ghch-close", menu), "click", closePanel);
 		// open JSON code textarea
-		tmp = $(".ghch-code", menu);
-		tmp.addEventListener("click", () => {
+		on($(".ghch-code", menu), "click", () => {
 			$(".ghch-json-code", menu).classList.toggle("ghch-open");
 			addJSON();
 		});
 		// close JSON code textarea
 		tmp = $(".ghch-json-code", menu);
-		tmp.addEventListener("focus", () => {
+		on(tmp, "focus", () => {
 			this.select();
 		});
-		tmp.addEventListener("paste", () => {
+		on(tmp, "paste", () => {
 			setTimeout(() => {
 				processJSON();
 				updateMenu();
@@ -481,6 +468,26 @@
 				}
 			}
 		}, 1000);
+	}
+
+	function $(str, el) {
+		return (el || document).querySelector(str);
+	}
+
+	function $$(str, el) {
+		return Array.from((el || document).querySelectorAll(str));
+	}
+
+	function on(els, name, callback) {
+		els = Array.isArray(els) ? els : [els];
+		const events = name.split(/\s+/);
+		els.forEach(el => {
+			if (el) {
+				events.forEach(ev => {
+					el.addEventListener(ev, callback);
+				});
+			}
+		});
 	}
 
 	// include a "debug" anywhere in the browser URL (search parameter) to enable debugging
