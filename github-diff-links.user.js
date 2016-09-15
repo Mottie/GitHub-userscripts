@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        GitHub Diff Links
-// @version     1.1.0
-// @description A userscript that adds links to diff headers to jump back & forth between files
+// @version     1.1.1
+// @description A userscript that adds links to diff and pull request headers to jump back & forth between files
 // @license     https://creativecommons.org/licenses/by-sa/4.0/
 // @namespace   http://github.com/Mottie
 // @include     https://github.com/*
