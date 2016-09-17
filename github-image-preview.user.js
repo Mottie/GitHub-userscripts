@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name          GitHub Image Preview
-// @version       1.1.0
+// @version       1.1.1
 // @description   A userscript that adds clickable image thumbnails
 // @license       https://creativecommons.org/licenses/by-sa/4.0/
 // @namespace     https://github.com/Mottie
@@ -67,20 +67,17 @@
 				<path d="M0 0h7v7H0zM9 9h7v7H9zM9 0h7v7H9zM0 9h7v7H0z"/>
 			</svg>
 		`,
-
 		fullWidth = `
 			<svg class="octicon" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 16 16">
 				<path d="M0 0h16v7H0zM0 9h16v7H0z"/>
 			</svg>
 		`,
-
 		imgTemplate = [
 			// not using backticks here
 			"<a href='${url}' class='exploregrid-item image js-navigation-open' rel='nofollow'>",
 			"<span class='border-wrap'>${image}</span>",
 			"</a>"
 		].join(""),
-
 		spanTemplate = [
 			"<span class='exploregrid-item image'>",
 			"<span class='border-wrap'>${image}</span>",
@@ -93,7 +90,7 @@
 		}
 		busy = true;
 		const div = document.createElement("div"),
-			btn = `btn btn-sm tooltipped tooltipped-n" aria-label="Show`;
+			btn = `btn btn-sm BtnGroup-item tooltipped tooltipped-n" aria-label="Show`;
 		div.className = "BtnGroup float-right gh-img-preview";
 		div.innerHTML = `
 			<div class="ghip-tiled ${btn} tiled files with image preview">${tiled}</div>
