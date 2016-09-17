@@ -1,9 +1,9 @@
 // ==UserScript==
 // @name          GitHub Custom Navigation
-// @version       1.0.5
+// @version       1.0.6
 // @description   A userscript that allows you to customize GitHub's main navigation bar
 // @license       https://creativecommons.org/licenses/by-sa/4.0/
-// @namespace     http://github.com/Mottie
+// @namespace     https://github.com/Mottie
 // @include       https://github.com/*
 // @include       https://gist.github.com/*
 // @grant         GM_addStyle
@@ -155,13 +155,13 @@
       /* Use border right when a vertical bar is added */
       .header-nav-link.ghcn-separator { border-right:#e5e5e5 2px solid; padding:4px 0; }
       /* settings panel */
-      #ghcn-overlay { position:fixed; top:50px; left:0; right:0; bottom:0; z-index:5;
+      #ghcn-overlay { position:fixed; top:50px; left:0; right:0; bottom:0; z-index:45;
         background:rgba(0,0,0,.5); display:none; }
       #ghcn-menu { cursor:pointer; }
       .ghcn-close, .ghcn-code { float:right; cursor:pointer; font-size:.8em; margin-left:3px;
         padding:0 6px 2px 6px; }
       .ghcn-close .octicon { vertical-align:middle; fill:currentColor; }
-      #ghcn-settings-inner { position:fixed; left:50%; top:55px; z-index:10; width:30rem;
+      #ghcn-settings-inner { position:fixed; left:50%; top:55px; z-index:50; width:30rem;
         transform:translate(-50%,0); box-shadow:0 .5rem 1rem #111; color:#c0c0c0; display:none; }
       #ghcn-settings-inner input { width:85%; float:right; border-style:solid; border-width:1px;
         max-height:35px; }
@@ -179,7 +179,7 @@
       body.ghcn-settings-open { overflow:hidden !important; /* !important overrides wiki style */ }
       /* hide other header elements while settings is open (overflow issues) */
       body.ghcn-settings-open .header-search,
-        body.ghcn-settings-open .header-nav.right,
+        body.ghcn-settings-open .header-nav.float-right,
         body.ghcn-settings-open .header-logo-invertocat,
         body.ghcn-settings-open .header-logo-wordmark,
         .gist-header .octicon-logo-github, /* hide GitHub logo on Gist page */
@@ -219,7 +219,7 @@
             <button type="button" class="ghcn-code btn btn-sm tooltipped tooltipped-n" aria-label="Toggle JSON data view">{ }</button>
           </h3>
           <div class="ghcn-settings-wrapper boxed-group-inner">
-            <ul id="ghcn-nav-items" class="btn-group header-nav"></ul>
+            <ul id="ghcn-nav-items" class="BtnGroup header-nav"></ul>
             <hr>
             <form>
               <p>Click an link above to edit its properties
