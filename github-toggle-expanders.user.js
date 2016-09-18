@@ -1,14 +1,14 @@
 // ==UserScript==
 // @name          GitHub Toggle Expanders
-// @version       1.0.0
+// @version       1.0.1
 // @description   A userscript that toggles all expanders when one expander is shift-clicked
 // @license       https://creativecommons.org/licenses/by-sa/4.0/
 // @namespace     https://github.com/Mottie
 // @include       https://github.com/*
 // @run-at        document-idle
 // @author        Rob Garrison
-// @updateURL     https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-toggle-expander.user.js
-// @downloadURL   https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-toggle-expander.user.js
+// @updateURL     https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-toggle-expanders.user.js
+// @downloadURL   https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-toggle-expanders.user.js
 // ==/UserScript==
 /* jshint esnext:true, unused:true */
 (() => {
