@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name          GitHub Image Preview
-// @version       1.1.1
+// @version       1.1.2
 // @description   A userscript that adds clickable image thumbnails
 // @license       https://creativecommons.org/licenses/by-sa/4.0/
 // @namespace     https://github.com/Mottie
@@ -31,7 +31,7 @@
 		table.files.ghip-show-previews .image { position:relative; overflow:hidden;
 			text-align:center; }
 		.ghip-image-previews .image { padding:10px; }
-		table.files.ghip-tiled .image { width:21.9%; }
+		table.files.ghip-tiled .image { width:22.5%; height:180px; }
 		table.files.ghip-tiled .image .border-wrap img,
 			.ghip-image-previews .border-wrap svg { max-height:130px; }
 		table.files.ghip-fullw .image { width:97%; height:auto; }
@@ -74,12 +74,12 @@
 		`,
 		imgTemplate = [
 			// not using backticks here
-			"<a href='${url}' class='exploregrid-item image js-navigation-open' rel='nofollow'>",
+			"<a href='${url}' class='exploregrid-item image m-3 float-left js-navigation-open' rel='nofollow'>",
 			"<span class='border-wrap'>${image}</span>",
 			"</a>"
 		].join(""),
 		spanTemplate = [
-			"<span class='exploregrid-item image'>",
+			"<span class='exploregrid-item image m-3 float-left'>",
 			"<span class='border-wrap'>${image}</span>",
 			"</span>"
 		].join("");
