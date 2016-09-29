@@ -48,7 +48,7 @@
 			span.blob-code-inner {
 				font-family: "${font}", Consolas, "Liberation Mono", Menlo, Courier, monospace !important;
 			}
-			span.blob-code-inner, td.blob-code-inner {
+			span.blob-code-inner, td.blob-code-inner:not(.blob-code-hunk) {
 				display: block !important;
 				background: linear-gradient(to right, transparent 0%, ${css} transparent 100%) !important;
 			}
