@@ -107,6 +107,16 @@ Userscripts to add functionality to GitHub.
 [tws-gf]: https://greasyfork.org/en/scripts/18433-github-toggle-wiki-sidebar
 [g2d-gf]: https://greasyfork.org/en/scripts/18254-gist-to-dabblet
 
+## Updating
+
+Userscripts are set up to automatically update. You can check for updates from within the Greasemonkey or Tampermonkey menu, or click on the install link again to get the update.
+
+Each individual userscript's change log is contained on its wiki documentation page.
+
+## Issues
+
+Please report any userscript issues within this repository's [issue section](https://github.com/Mottie/GitHub-userscripts/issues). Greasyfork messages are also received, but not as easily tracked. Thanks!
+
 ## Other userscripts not hosted here:
 
 * [GitHub Dark Script](https://github.com/StylishThemes/GitHub-Dark-Script)
