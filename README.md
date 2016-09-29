@@ -35,7 +35,7 @@ Userscripts to add functionality to GitHub.
 	| [GitHub sort content][srt-wiki]        |     | [install][srt-raw] | [site][srt-gf] | 07/13/2016 | 09/15/2016 |
 	| [GitHub table of contents][toc-wiki]   |     | [install][toc-raw] | [site][toc-gf] | 03/28/2016 | 07/29/2016 |
 	| [GitHub title notification][tbn-wiki]  |     | [install][tbn-raw] | [site][tbn-gf] | 03/24/2016 | 03/24/2016 |
-	| [GitHub toggle expanders][tex-wiki]    |     | [install][tex-raw] | [site][tex-gf] | 09/17/2016 | 09/17/2016 |
+	| [GitHub toggle expanders][tex-wiki]    |     | [install][tex-raw] | [site][tex-gf] | 09/17/2016 | 09/29/2016 |
 	| [GitHub toggle wiki sidebar][tws-wiki] |     | [install][tws-raw] | [site][tws-gf] | 04/01/2016 | 05/18/2016 |
 	| [Gist to dabblet][g2d-wiki]            |     | [install][g2d-raw] | [site][g2d-gf] | 01/26/2012 | 09/12/2016 |
 
