@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         GitHub Collapse Markdown
-// @version      1.1.3
+// @version      1.1.4
 // @description  A userscript that collapses markdown headers
 // @license      https://creativecommons.org/licenses/by-sa/4.0/
 // @namespace    https://github.com/Mottie
@@ -100,6 +100,7 @@
 	function nextHeader(el, level, isCollapsed) {
 		el.classList[isCollapsed ? "add" : "remove"](collapsed);
 		const selector = headers.slice(0, level).join(","),
+			name = [collapsed, "ghcm-hidden"],
 			els = [];
 		el = el.nextElementSibling;
 		while (el && !el.matches(selector)) {
@@ -108,9 +109,13 @@
 		}
 		if (els.length) {
 			if (isCollapsed) {
-				addClass(els, "ghcm-hidden");
+				els.forEach(el => {
+					el.classList.add("ghcm-hidden");
+				});
 			} else {
-				removeClass(els, collapsed + " ghcm-hidden");
+				els.forEach(el => {
+					el.classList.remove(...name);
+				});
 			}
 		}
 	}
@@ -229,19 +234,6 @@
 
 	function $$(selectors, el) {
 		return Array.from((el || document).querySelectorAll(selectors));
-	}
-
-	function addClass(els, name) {
-		for (const el of els) {
-			el.classList.add(name);
-		}
-	}
-
-	function removeClass(els, name) {
-		name = (name || "").split(" ");
-		for (const el of els) {
-			el.classList.remove(...name);
-		}
 	}
 
 	function closest(el, selector) {
