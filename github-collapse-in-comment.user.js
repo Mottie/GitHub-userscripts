@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         GitHub Collapse In Comment
-// @version      1.0.2
+// @version      1.0.3
 // @description  A userscript that adds a header that can toggle long code and quote blocks in comments
 // @license      https://creativecommons.org/licenses/by-sa/4.0/
 // @namespace    https://github.com/Mottie
@@ -230,9 +230,12 @@
 	});
 
 	GM_registerMenuCommand("Set GitHub Collapse In Comment Initial State", () => {
-		let val = prompt("Start with blocks collapsed?", !startCollapsed);
+		let val = prompt(
+			"Start with blocks (c)ollapsed or (e)xpanded (first letter necessary):",
+			startCollapsed ? "expanded" : "collapsed"
+		);
 		if (val) {
-			val = /^t/.test(val || "");
+			val = /^c/.test(val || "");
 			startCollapsed = val;
 			GM_setValue("gcic-start-collapsed", val);
 			update();
