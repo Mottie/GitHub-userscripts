@@ -20,14 +20,14 @@ Userscripts to add functionality to GitHub.
 	| [GitHub code colors][ccs-wiki]         |     | [install][ccs-raw] | [site][ccs-gf] | 03/20/2016 | 09/12/2016 |
 	| [GitHub code guides][cgl-wiki]         |     | [install][cgl-raw] | [site][cgl-gf] | 08/27/2016 | 09/29/2016 |
 	| [GitHub collapse in comment][cic-wiki] |  *  | [install][cic-raw] | [site][cic-gf] | 06/27/2016 | 10/03/2016 |
-	| [GitHub collapse markdown][cmd-wiki]   |  *  | [install][cmd-raw] | [site][cmd-gf] | 06/27/2016 | 10/03/2016 |
+	| [GitHub collapse markdown][cmd-wiki]   |  *  | [install][cmd-raw] | [site][cmd-gf] | 06/27/2016 | 12/18/2016 |
 	| [GitHub custom hotkeys][chk-wiki]      |     | [install][chk-raw] | [site][chk-gf] | 04/10/2016 | 09/12/2016 |
 	| [GitHub custom navigation][cnv-wiki]   |     | [install][cnv-raw] | [site][cnv-gf] | 06/22/2016 | 09/16/2016 |
 	| [GitHub diff links][dfl-wiki]          |     | [install][dfl-raw] | [site][dfl-gf] | 07/21/2016 | 09/14/2016 |
 	| [GitHub font preview][fpv-wiki]        |     | [install][fpv-raw] | [site][fpv-gf] | 06/11/2016 | 07/30/2016 |
 	| [GitHub image preview][ipv-wiki]       |     | [install][ipv-raw] | [site][ipv-gf] | 05/17/2016 | 09/24/2016 |
 	| [GitHub issue comments][ic1-wiki]      |     | [install][ic1-raw] | [site][ic1-gf] | 04/04/2016 | 07/17/2016 |
-	| [GitHub issue counts][ic2-wiki]        |     | [install][ic2-raw] | [site][ic2-gf] | 01/16/2012 | 05/25/2016 |
+	| [GitHub issue counts][ic2-wiki]        |     | [install][ic2-raw] | [site][ic2-gf] | 01/16/2012 | 12/18/2016 |
 	| [GitHub issue highlighter][gih-wiki]   |     | [install][gih-raw] | [site][gih-gf] | 05/21/2016 | 07/28/2016 |
 	| [GitHub label color picker][glc-wiki]  |     | [install][glc-raw] | [site][glc-gf] | 09/16/2016 | 09/16/2016 |
 	| [GitHub remove diff signs][rds-wiki]   |     | [install][rds-raw] | [site][rds-gf] | 04/05/2016 | 06/06/2016 |
