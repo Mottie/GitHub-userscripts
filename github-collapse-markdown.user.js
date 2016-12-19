@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         GitHub Collapse Markdown
-// @version      1.1.4
+// @version      1.1.5
 // @description  A userscript that collapses markdown headers
 // @license      https://creativecommons.org/licenses/by-sa/4.0/
 // @namespace    https://github.com/Mottie
@@ -250,7 +250,7 @@
 			startCollapsed ? "collapsed" : "expanded"
 		);
 		if (val !== null) {
-			startCollapsed = /^c/.test(val);
+			startCollapsed = /^c/i.test(val);
 			GM_setValue("ghcm-collapsed", startCollapsed);
 			console.log(
 				`GitHub Collapse Markdown: Headers will ${startCollapsed ? "be" : "not be"} initially collapsed`
