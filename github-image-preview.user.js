@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name          GitHub Image Preview
-// @version       1.1.2
+// @version       1.1.3
 // @description   A userscript that adds clickable image thumbnails
 // @license       https://creativecommons.org/licenses/by-sa/4.0/
 // @namespace     https://github.com/Mottie
@@ -31,7 +31,8 @@
 		table.files.ghip-show-previews .image { position:relative; overflow:hidden;
 			text-align:center; }
 		.ghip-image-previews .image { padding:10px; }
-		table.files.ghip-tiled .image { width:22.5%; height:180px; }
+		table.files.ghip-tiled .image { width:22.5%; height:180px;
+			margin:12px !important; /* GitHub uses !important flags now :( */ }
 		table.files.ghip-tiled .image .border-wrap img,
 			.ghip-image-previews .border-wrap svg { max-height:130px; }
 		table.files.ghip-fullw .image { width:97%; height:auto; }
