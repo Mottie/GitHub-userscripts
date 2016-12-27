@@ -33,8 +33,8 @@
   const fontExt = /\.(otf|ttf|woff)$/i,
 
   // canvas colors
+  glyphFillColor       = '#808080', // (big) (mini) fill color
   bigGlyphStrokeColor  = '#111111', // (big) stroke color
-  bigGlyphFillColor    = '#808080', // (big) fill color
   bigGlyphMarkerColor  = '#f00',    // (big) min & max width marker
   miniGlyphMarkerColor = '#606060', // (mini) glyph index (bottom left corner)
   glyphRulerColor      = '#a0a0a0'; // (mini) min & max width marker & (big) glyph horizontal lines
@@ -502,7 +502,7 @@
 
     ctx.fillStyle = bigGlyphStrokeColor;
     path = glyph.getPath(x0, glyphBaseline, glyphSize);
-    path.fill = bigGlyphFillColor;
+    path.fill = glyphFillColor;
     path.stroke = bigGlyphStrokeColor;
     path.strokeWidth = 1.5;
     drawPathWithArrows(ctx, path);
@@ -534,7 +534,9 @@
     ctx.fillRect(xmax, fontBaseline, 1, cellMarkSize);
 
     ctx.fillStyle = '#000000';
-    glyph.draw(ctx, x0, fontBaseline, fontSize);
+    let path = glyph.getPath(x0, fontBaseline, fontSize);
+    path.fill = glyphFillColor;
+    path.draw(ctx);
   }
 
   function displayGlyphPage(pageNum) {
