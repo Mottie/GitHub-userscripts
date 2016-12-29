@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Diff Links
-// @version     1.1.1
+// @version     1.1.2
 // @description A userscript that adds links to diff and pull request headers to jump back & forth between files
 // @license     https://creativecommons.org/licenses/by-sa/4.0/
 // @namespace   http://github.com/Mottie
@@ -28,7 +28,7 @@
 	button.setAttribute("rel", "nofollow");
 
 	function addButton(el, content, link) {
-		var btn = button.cloneNode(),
+		let btn = button.cloneNode(),
 			txt = el.classList.contains("select-menu-item") ?
 				$(".description", el).textContent :
 				link.textContent || "";
@@ -44,7 +44,7 @@
 	}
 
 	function addSpace(el, content) {
-		var btn = button.cloneNode();
+		let btn = button.cloneNode();
 		btn.disabled = true;
 		btn.className = "btn btn-sm gh-diff-links disabled";
 		btn.innerHTML = content[0];

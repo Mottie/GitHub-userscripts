@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name          GitHub Sort Content
-// @version       1.1.0
+// @version       1.1.1
 // @description   A userscript that makes some lists & markdown tables sortable
 // @license       https://creativecommons.org/licenses/by-sa/4.0/
 // @namespace     https://github.com/Mottie
@@ -13,7 +13,7 @@
 // @downloadURL   https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-sort-content.user.js
 // ==/UserScript==
 /* global GM_addStyle, tinysort */
-/* jshint esnext:true, unused:true */
+/* jshint unused:true, esnext:true */
 (() => {
 	"use strict";
 	/* example pages:
@@ -240,7 +240,7 @@
 					el = $(".underline-nav-item.selected", target);
 					if (el) {
 						console.log(el.textContent.trim(), el.href);
-						if (el.textContent.indexOf('Overview') > -1) {
+						if (el.textContent.indexOf("Overview") > -1) {
 							return initSortUl(target, $(".pinned-repos-list"), ".repo");
 						} else if (el.href.indexOf("tab=repo") > -1) {
 							return initSortUl(target, $(".js-repo-list"), "h3 a");
