@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name          GitHub Sort Content
-// @version       1.1.1
+// @version       1.1.2
 // @description   A userscript that makes some lists & markdown tables sortable
 // @license       https://creativecommons.org/licenses/by-sa/4.0/
 // @namespace     https://github.com/Mottie
@@ -239,7 +239,6 @@
 				if (target.classList.contains("user-profile-nav")) {
 					el = $(".underline-nav-item.selected", target);
 					if (el) {
-						console.log(el.textContent.trim(), el.href);
 						if (el.textContent.indexOf("Overview") > -1) {
 							return initSortUl(target, $(".pinned-repos-list"), ".repo");
 						} else if (el.href.indexOf("tab=repo") > -1) {
