@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name          GitHub Diff Files Filter
-// @version       0.1.0
+// @version       0.1.1
 // @description   A userscript that adds filters that toggle diff & PR files by extension
 // @license       https://creativecommons.org/licenses/by-sa/4.0/
 // @namespace     http://github.com/Mottie
@@ -19,7 +19,7 @@
 		noExtLabel = "\u00ABno-ext\u00BB",
 		dotExtLabel = "\u00ABdot-files\u00BB";
 
-	let list,
+	let list = {},
 		busy = false;
 
 	function toggleBlocks(extension, type) {
@@ -95,17 +95,22 @@
 	}
 
 	function makeFilter() {
+		buildList();
 		const files = $("#files");
-		let filters,
+		let filters = 0,
+			keys = Object.keys(list),
 			html = "Filter file extension: <div class='BtnGroup gdf-filter'>",
 			btnClass = "btn btn-sm selected BtnGroup-item";
-		buildList();
+		// get length, but don't count empty arrays
+		keys.forEach(ext => {
+			filters += list[ext].length > 0 ? 1 : 0;
+		});
 		// Don't bother if only one extension is found
-		if (files && Object.keys(list).length > 1) {
+		if (files && filters > 1) {
 			filters = document.createElement("p");
 			// add a filter "all" button to the beginning
 			html += `<a class="${btnClass} gdf-all" href="#">${allExtLabel}</a>`;
-			Object.keys(list).forEach(ext => {
+			keys.forEach(ext => {
 				if (list[ext].length) {
 					html += `<a class="${btnClass}" href="#">${ext}</a>`;
 				}
