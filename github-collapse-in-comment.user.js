@@ -166,7 +166,7 @@
 					indx = els.length;
 					flag = el.classList.contains("gcic-block-closed");
 					while (indx--) {
-						els[indx].classList[flag ? "remove" : "add"]("gcic-block-closed");
+						els[indx].classList.toggle("gcic-block-closed", !flag);
 					}
 				} else {
 					el.classList.toggle("gcic-block-closed");

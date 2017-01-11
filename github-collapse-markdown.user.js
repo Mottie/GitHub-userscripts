@@ -98,7 +98,7 @@
 	}
 
 	function nextHeader(el, level, isCollapsed) {
-		el.classList[isCollapsed ? "add" : "remove"](collapsed);
+		el.classList.toggle(collapsed, isCollapsed);
 		const selector = headers.slice(0, level).join(","),
 			name = [collapsed, "ghcm-hidden"],
 			els = [];

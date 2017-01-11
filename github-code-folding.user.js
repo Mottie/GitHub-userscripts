@@ -80,7 +80,7 @@
 		if (depth) {
 			els = $$(`.collapser[data-depth="${depth}"]`);
 			lineNums = els.map(el => {
-				el.classList[action === "hide" ? "add" : "remove"]("sideways");
+				el.classList.toggle("sideways", action === "hide");
 				return getLineNumber(el);
 			});
 		} else {

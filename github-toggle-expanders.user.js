@@ -21,7 +21,7 @@
 			selector = `.commits-listing .commits-list-item,
 				#commits_bucket .js-details-container`;
 		Array.from(document.querySelectorAll(selector)).forEach(el => {
-			el.classList[state ? "add" : "remove"]("open");
+			el.classList.toggle("open", state);
 		});
 	}
 
