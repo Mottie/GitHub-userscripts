@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name          GitHub Diff Files Filter
-// @version       0.1.1
+// @version       0.1.2
 // @description   A userscript that adds filters that toggle diff & PR files by extension
 // @license       https://creativecommons.org/licenses/by-sa/4.0/
 // @namespace     http://github.com/Mottie
@@ -12,7 +12,7 @@
 // @downloadURL   https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-diff-files-filter.user.js
 // ==/UserScript==
 /* jshint unused:true, esnext:true */
-(function() {
+(() => {
 	"use strict";
 
 	const allExtLabel = "\u00ABall\u00BB",
@@ -144,10 +144,13 @@
 		return Array.from((el || document).querySelectorAll(str));
 	}
 	function closest(selector, el) {
-		while (el && el.nodeName !== "BODY" && !el.matches(selector)) {
+		while (el && el.nodeType === 1) {
+			if (el.matches(selector)) {
+				return el;
+			}
 			el = el.parentNode;
 		}
-		return el && el.matches(selector) ? el : null;
+		return null;
 	}
 
 	// DOM targets - to detect GitHub dynamic ajax page loading

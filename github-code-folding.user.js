@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Code Folding
-// @version     0.1.0
+// @version     0.1.1
 // @description A userscript that adds code folding to GitHub files
 // @license     https://opensource.org/licenses/MIT
 // @namespace   http://github.com/Mottie
@@ -218,10 +218,13 @@
 		return Array.from((el || document).querySelectorAll(selector));
 	}
 	function closest(selector, el) {
-		while (el && el.nodeName !== "BODY" && !el.matches(selector)) {
+		while (el && el.nodeType === 1) {
+			if (el.matches(selector)) {
+				return el;
+			}
 			el = el.parentNode;
 		}
-		return el && el.matches(selector) ? el : null;
+		return null;
 	}
 	function remove(selector, el) {
 		let els = $$(selector, el),

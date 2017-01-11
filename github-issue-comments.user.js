@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name          GitHub Toggle Issue Comments
-// @version       1.0.19
+// @version       1.0.20
 // @description   A userscript that toggles issues/pull request comments & messages
 // @license       https://creativecommons.org/licenses/by-sa/4.0/
 // @namespace     http://github.com/Mottie
@@ -158,11 +158,14 @@
 	function $$(selector, el) {
 		return Array.from((el || document).querySelectorAll(selector));
 	}
-	function closest(el, selector) {
-		while (el && el.nodeName !== "BODY" && !el.matches(selector)) {
+	function closest(selector, el) {
+		while (el && el.nodeType === 1) {
+			if (el.matches(selector)) {
+				return el;
+			}
 			el = el.parentNode;
 		}
-		return el && el.matches(selector) ? el : null;
+		return null;
 	}
 	function addClass(els, name) {
 		let indx,
@@ -320,7 +323,7 @@
 			menu = $(".ghic-menu");
 		for (name of keys) {
 			if (!(name === "pipeline" && !hasZenHub)) {
-				item = closest($("." + settings[name].name, menu), ".dropdown-item");
+				item = closest(".dropdown-item", $("." + settings[name].name, menu));
 				settings[name].isHidden = $("input", item).checked;
 				toggleClass(item, "ghic-checked", settings[name].isHidden);
 			}
@@ -331,7 +334,7 @@
 		let count, results,
 			obj = settings[name],
 			isHidden = obj.isHidden,
-			item = closest($(".ghic-menu ." + obj.name), ".dropdown-item");
+			item = closest(".dropdown-item", $(".ghic-menu ." + obj.name));
 		if (obj.selector) {
 			results = $$(obj.selector);
 			toggleClass(item, "ghic-checked", isHidden);
@@ -513,7 +516,7 @@
 			len = els.length;
 			for (indx = 0; indx < len; indx++) {
 				if (els[indx].textContent.trim() === name) {
-					results[results.length] = closest(els[indx], ".timeline-comment-wrapper, .commit-comment, .discussion-item");
+					results[results.length] = closest(".timeline-comment-wrapper, .commit-comment, .discussion-item", els[indx]);
 				}
 			}
 			// use a different participant class name to hide timeline events
@@ -560,7 +563,7 @@
 					hideParticipant(target.nodeName === "IMG" ? target.parentNode : target);
 				} else if (regex.test(target.nodeName)) {
 					// clicking on the SVG may target the svg or path inside
-					hideParticipant(closest(target, ".ghic-avatar"));
+					hideParticipant(closest(".ghic-avatar", target));
 				}
 			}
 		}

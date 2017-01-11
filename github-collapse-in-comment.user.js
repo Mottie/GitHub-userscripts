@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         GitHub Collapse In Comment
-// @version      1.0.4
+// @version      1.0.5
 // @description  A userscript that adds a header that can toggle long code and quote blocks in comments
 // @license      https://creativecommons.org/licenses/by-sa/4.0/
 // @namespace    https://github.com/Mottie
@@ -123,7 +123,7 @@
 						numberOfLines = el.innerHTML.split("\n").length;
 						if (numberOfLines > minLines) {
 							syntaxClass = "";
-							wrap = closest(el, ".highlight");
+							wrap = closest(".highlight", el);
 							if (wrap && wrap.classList.contains("highlight")) {
 								syntaxClass = wrap.className;
 							} else {
@@ -199,11 +199,14 @@
 		return Array.from((el || document).querySelectorAll(selector));
 	}
 
-	function closest(el, selector) {
-		while (el && el.nodeName !== "BODY" && !el.matches(selector)) {
+	function closest(selector, el) {
+		while (el && el.nodeType === 1) {
+			if (el.matches(selector)) {
+				return el;
+			}
 			el = el.parentNode;
 		}
-		return el && el.matches(selector) ? el : null;
+		return null;
 	}
 
 	function removeSelection() {

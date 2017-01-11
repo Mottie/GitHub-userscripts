@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name          GitHub RTL Comment Blocks
-// @version       1.2.1
+// @version       1.2.2
 // @description   A userscript that adds a button to insert RTL text blocks in comments
 // @license       https://creativecommons.org/licenses/by-sa/4.0/
 // @namespace     http://github.com/Mottie
@@ -145,11 +145,14 @@
 	function $$(selector, el) {
 		return Array.from((el || document).querySelectorAll(selector));
 	}
-	function closest(el, selector) {
-		while (el && el.nodeName !== "BODY" && !el.matches(selector)) {
+	function closest(selector, el) {
+		while (el && el.nodeType === 1) {
+			if (el.matches(selector)) {
+				return el;
+			}
 			el = el.parentNode;
 		}
-		return el && el.matches(selector) ? el : [];
+		return null;
 	}
 
 	function addBindings() {
@@ -157,7 +160,7 @@
 			let textarea,
 				target = event.target;
 			if (target && target.classList.contains("ghu-rtl")) {
-				textarea = closest(target, ".previewable-comment-form");
+				textarea = closest(".previewable-comment-form", target);
 				textarea = $(".comment-form-textarea", textarea);
 				textarea.focus();
 				// add extra white space around the tags

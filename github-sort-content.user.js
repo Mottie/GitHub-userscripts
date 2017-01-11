@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name          GitHub Sort Content
-// @version       1.1.2
+// @version       1.1.3
 // @description   A userscript that makes some lists & markdown tables sortable
 // @license       https://creativecommons.org/licenses/by-sa/4.0/
 // @namespace     https://github.com/Mottie
@@ -45,7 +45,7 @@
 	function initSortTable(el) {
 		removeSelection();
 		const dir = el.classList.contains(sorts[0]) ? sorts[1] : sorts[0],
-			table = closest(el, "table");
+			table = closest("table", el);
 		tinysort($$("tbody tr", table), {
 			order: dir,
 			natural: true,
@@ -101,11 +101,14 @@
 		return Array.from((el || document).querySelectorAll(str));
 	}
 
-	function closest(el, selector) {
-		while (el && el.nodeName !== "BODY" && !el.matches(selector)) {
+	function closest(selector, el) {
+		while (el && el.nodeType === 1) {
+			if (el.matches(selector)) {
+				return el;
+			}
 			el = el.parentNode;
 		}
-		return el && el.matches(selector) ? el : null;
+		return null;
 	}
 
 	function removeSelection() {
@@ -195,12 +198,12 @@
 					regexBars.test(target.className)
 			)) {
 				// don't sort tables not inside of markdown
-				if (name === "TH" && closest(target, ".markdown-body")) {
+				if (name === "TH" && closest(".markdown-body", target)) {
 					return initSortTable(target);
 				}
 
 				// following
-				el = $("ol.follow-list", closest(target, ".container"));
+				el = $("ol.follow-list", closest(".container", target));
 				if (el) {
 					return initSortUl(target, el, ".follow-list-name a");
 				}
@@ -213,20 +216,20 @@
 
 				// big repo list - https://github.com/:user?tab=repositories
 				// stars - https://github.com/stars
-				el = closest(target, ".sort-bar, .filter-bar, .org-toolbar");
+				el = closest(".sort-bar, .filter-bar, .org-toolbar", target);
 				if (el && $(".repo-list", el.parentNode)) {
 					return initSortUl(el, $(".repo-list", el.parentNode), ".repo-list-name a");
 				}
 
 				// https://github.com/watching
-				el = closest(target, ".subscriptions-content");
+				el = closest(".subscriptions-content", target);
 				if (el && $(".repo-list", el)) {
 					return initSortUl(target, $(".repo-list", el), "li a");
 				}
 
 				// mini-repo listings with & without filter - https://github.com/
 				// and pinned repo lists
-				el = closest(target, ".boxed-group");
+				el = closest(".boxed-group", target);
 				// prevent clicking on the H3 header of filtered repos
 				if (el && name === "H3" && (
 						el.classList.contains("js-repo-filter") ||
