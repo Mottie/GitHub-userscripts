@@ -29,18 +29,29 @@
 	const sorts = ["asc", "desc"],
 		icons = {
 			white: {
-				unsorted: "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNiI+PHBhdGggZD0iTTE1IDggMSA4IDggMHpNMTUgOSAxIDkgOCAxNnoiIHN0eWxlPSJmaWxsOiNkZGQ7b3BhY2l0eTowLjIiLz48L3N2Zz4=",
-				asc: "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNiI+PHBhdGggZD0iTTE1IDggMSA4IDggMHoiIHN0eWxlPSJmaWxsOiNkZGQiLz48cGF0aCBkPSJNMTUgOSAxIDkgOCAxNnoiIHN0eWxlPSJmaWxsOiNkZGQ7b3BhY2l0eTowLjIiLz48L3N2Zz4=",
-				desc: "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNiI+PHBhdGggZD0iTTE1IDggMSA4IDggMHoiIHN0eWxlPSJmaWxsOiNkZGQ7b3BhY2l0eTowLjIiLz48cGF0aCBkPSJNMTUgOSAxIDkgOCAxNnoiIHN0eWxlPSJmaWxsOiNkZGQiLz48L3N2Zz4="
+				unsorted: "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNiI+PHBhdGggZD0iTTE1IDhIMWw3LTh6bTAgMUgxbDcgN3oiIGZpbGw9IiNkZGQiIG9wYWNpdHk9Ii4yIi8+PC9zdmc+",
+				asc: "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNiI+PHBhdGggZD0iTTE1IDhIMWw3LTh6IiBmaWxsPSIjZGRkIi8+PHBhdGggZD0iTTE1IDlIMWw3IDd6IiBmaWxsPSIjZGRkIiBvcGFjaXR5PSIuMiIvPjwvc3ZnPg==",
+				desc: "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNiI+PHBhdGggZD0iTTE1IDhIMWw3LTh6IiBmaWxsPSIjZGRkIiBvcGFjaXR5PSIuMiIvPjxwYXRoIGQ9Ik0xNSA5SDFsNyA3eiIgZmlsbD0iI2RkZCIvPjwvc3ZnPg=="
 			},
 			black: {
-				unsorted: "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNiI+PHBhdGggZD0iTTE1IDggMSA4IDggMHpNMTUgOSAxIDkgOCAxNnoiIHN0eWxlPSJmaWxsOiMyMjI7b3BhY2l0eTowLjIiLz48L3N2Zz4=",
-				asc: "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNiI+PHBhdGggZD0iTTE1IDggMSA4IDggMHoiIHN0eWxlPSJmaWxsOiMyMjIiLz48cGF0aCBkPSJNMTUgOSAxIDkgOCAxNnoiIHN0eWxlPSJmaWxsOiMyMjI7b3BhY2l0eTowLjIiLz48L3N2Zz4=",
-				desc: "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNiI+PHBhdGggZD0iTTE1IDggMSA4IDggMHoiIHN0eWxlPSJmaWxsOiMyMjI7b3BhY2l0eTowLjIiLz48cGF0aCBkPSJNMTUgOSAxIDkgOCAxNnoiIHN0eWxlPSJmaWxsOiMyMjIiLz48L3N2Zz4="
+				unsorted: "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNiI+PHBhdGggZD0iTTE1IDhIMWw3LTh6bTAgMUgxbDcgN3oiIGZpbGw9IiMyMjIiIG9wYWNpdHk9Ii4yIi8+PC9zdmc+",
+				asc: "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNiI+PHBhdGggZD0iTTE1IDhIMWw3LTh6IiBmaWxsPSIjMjIyIi8+PHBhdGggZD0iTTE1IDlIMWw3IDd6IiBmaWxsPSIjMjIyIiBvcGFjaXR5PSIuMiIvPjwvc3ZnPg==",
+				desc: "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNiI+PHBhdGggZD0iTTE1IDhIMWw3LTh6IiBmaWxsPSIjMjIyIiBvcGFjaXR5PSIuMiIvPjxwYXRoIGQ9Ik0xNSA5SDFsNyA3eiIgZmlsbD0iIzIyMiIvPjwvc3ZnPg=="
 			}
 		},
 		// toolbars - target for sort arrows
-		regexBars = /\b(filter-bar|org-toolbar|sort-bar|tabnav-tabs|user-profile-nav)\b/;
+		regexBars = new RegExp(
+			"\\b(" +
+			[
+				"TableObject",          // org repos
+				"org-toolbar",          // org people
+				"sort-bar",             // https://github.com/stars
+				"tabnav-tabs",          // https://github.com/:user/follower(s|ing)
+				"Box-header|flex-auto", // watching
+				"user-profile-nav"      // user repos
+			].join("|") +
+			")\\b"
+		);
 
 	function initSortTable(el) {
 		removeSelection();
@@ -79,7 +90,9 @@
 		let brightest = 0,
 			// color will be "rgb(#, #, #)" or "rgba(#, #, #, #)"
 			color = window.getComputedStyle(document.body).backgroundColor;
-		const rgb = (color || "").replace(/\s/g, "").match(/^rgba?\((\d+),(\d+),(\d+)/i);
+		const rgb = (color || "")
+			.replace(/\s/g, "")
+			.match(/^rgba?\((\d+),(\d+),(\d+)/i);
 		if (rgb) {
 			color = rgb.slice(1); // remove "rgb.." part from match
 			color.forEach(c => {
@@ -113,7 +126,9 @@
 
 	function removeSelection() {
 		// remove text selection - http://stackoverflow.com/a/3171348/145346
-		const sel = window.getSelection ? window.getSelection() : document.selection;
+		const sel = window.getSelection ?
+			window.getSelection() :
+			document.selection;
 		if (sel) {
 			if (sel.removeAllRanges) {
 				sel.removeAllRanges();
@@ -131,12 +146,15 @@
 			.markdown-body table thead th {
 				cursor:pointer;
 				padding-right:22px !important;
-				background:url(${styles.unsorted}) no-repeat calc(100% - 5px) center !important;
+				background-image:url(${styles.unsorted}) !important;
+				background-repeat:no-repeat !important;
+				background-position:calc(100% - 5px) center !important;
 			}
-			div.js-pinned-repos-reorder-container > h3, .dashboard-sidebar .boxed-group > h3,
-			div.filter-repos, div.js-repo-filter .filter-bar, .org-toolbar, .sort-bar,
-			h2 + .tabnav > .tabnav-tabs, .subscriptions-content .boxed-group > h3,
-			div.user-profile-nav {
+			div.js-pinned-repos-reorder-container > h3, div.filter-repos,
+			.dashboard-sidebar .boxed-group > h3,
+			.sort-bar, h2 + .tabnav > .tabnav-tabs, .org-toolbar,
+			.org-profile .TableObject-item--primary,
+			.subscriptions-content .Box-header, div.user-profile-nav.js-sticky {
 				cursor:pointer;
 				padding-right:10px;
 				background-image:url(${styles.unsorted}) !important;
@@ -144,39 +162,54 @@
 				background-position:calc(100% - 5px) center !important;
 			}
 			/* https://github.com/ -> your repositories */
-			.dashboard-sidebar .user-repos h3 { background-position: 175px 10px !important; }
+			.dashboard-sidebar .user-repos h3 {
+				background-position: 175px 10px !important;
+			}
 			/* https://github.com/:user?tab=repositories */
-			div.user-profile-nav { background-position:calc(100% - 80px) 22px !important; }
-			/* https://github.com/:organization */
-			.org-toolbar { background-position:calc(100% - 5px) 10px !important; }
+			div.user-profile-nav.js-sticky {
+				background-position:calc(100% - 80px) 22px !important;
+			}
+			/* https://github.com/:organization repos & people */
+			.org-profile .TableObject-item--primary, .org-toolbar {
+				background-position:calc(100% - 5px) 10px !important;
+			}
+			.TableObject-item--primary input {
+				width: 97.5% !important;
+			}
 			/* https://github.com/stars */
-			.sort-bar { background-position:525px 10px !important; }
+			.sort-bar {
+				background-position:525px 10px !important;
+			}
 			/* https://github.com/watching */
-			.subscriptions-content .boxed-group > h3 {
-				 background-position:150px 10px !important;
+			.subscriptions-content .Box-header {
+				 background-position:160px 15px !important;
 			}
 			/* asc/dec icons */
 			table thead th.asc, div.boxed-group h3.asc, div.user-profile-nav.asc,
-			div.js-repo-filter.asc, div.filter-bar.asc, .org-toolbar.asc,
-			.sort-bar.asc, h2 + .tabnav > .tabnav-tabs.asc,
-			.subscriptions-content .boxed-group > h3.asc {
+			div.js-repo-filter.asc, .org-toolbar.asc,
+			.TableObject-item--primary.asc, .sort-bar.asc,
+			h2 + .tabnav > .tabnav-tabs.asc,
+			.subscriptions-content .Box-header.asc {
 				background-image:url(${styles.asc}) !important;
 				background-repeat:no-repeat !important;
 			}
 			table thead th.desc, div.boxed-group h3.desc, div.user-profile-nav.desc,
-			div.js-repo-filter.desc, div.filter-bar.desc, .org-toolbar.desc,
-			.sort-bar.desc, h2 + .tabnav > .tabnav-tabs.desc,
-			.subscriptions-content .boxed-group > h3.desc {
+			div.js-repo-filter.desc, .org-toolbar.desc,
+			.TableObject-item--primary.desc, .sort-bar.desc,
+			h2 + .tabnav > .tabnav-tabs.desc,
+			.subscriptions-content .Box-header.desc {
 				background-image:url(${styles.desc}) !important;
 				background-repeat:no-repeat !important;
 			}
 			/* remove sort arrows */
-			.popular-repos + div.boxed-group h3, .dashboard-sidebar div.filter-bar {
+			.popular-repos + div.boxed-group h3 {
 				background-image:none !important;
 				cursor:default;
 			}
 			/* move "Customize your pinned..." - https://github.com/:self */
-			.pinned-repos-setting-link { margin-right:14px; }
+			.pinned-repos-setting-link {
+				margin-right:14px;
+			}
 		`);
 
 		document.body.addEventListener("click", event => {
@@ -184,10 +217,10 @@
 			const target = event.target,
 				name = target.nodeName;
 			if (target && target.nodeType === 1 && (
-					// nodes th|h3 - form for stars page
+					// nodes th|h3 & form for stars page
 					name === "H3" || name === "TH" || name === "FORM" ||
-					// mini-repo & https://github.com/:user?tab=repositories (filter-bar)
-					// https://github.com/:organization filter bar (org-toolbar)
+					// https://github.com/:organization filter bar
+					//   filter: .TableObject-item--primary, repo wrapper: .org-profile
 					// https://github.com/stars (sort-bar)
 					// https://github.com/:user/followers (tabnav-tabs)
 					// https://github.com/:user/following (tabnav-tabs)
@@ -209,22 +242,27 @@
 				}
 
 				// organization people - https://github.com/orgs/:organization/people
-				el = $("ul.member-listing", target.parentNode);
+				el = $("ul.member-listing-next", target.parentNode);
 				if (el) {
-					return initSortUl(target, el, ".member-link");
+					return initSortUl(target, el, ".member-info a");
 				}
 
-				// big repo list - https://github.com/:user?tab=repositories
 				// stars - https://github.com/stars
-				el = closest(".sort-bar, .filter-bar, .org-toolbar", target);
+				el = closest(".sort-bar", target);
 				if (el && $(".repo-list", el.parentNode)) {
-					return initSortUl(el, $(".repo-list", el.parentNode), ".repo-list-name a");
+					return initSortUl(el, $(".repo-list", el.parentNode), "h3 a");
+				}
+
+				// org repos - https://github.com/:organization
+				el = closest(".org-profile", target);
+				if (el && $(".repo-list", el)) {
+					return initSortUl(target, $(".repo-list", el), "h3 a");
 				}
 
 				// https://github.com/watching
 				el = closest(".subscriptions-content", target);
 				if (el && $(".repo-list", el)) {
-					return initSortUl(target, $(".repo-list", el), "li a");
+					return initSortUl($(".Box-header", el), $(".repo-list", el), "li a");
 				}
 
 				// mini-repo listings with & without filter - https://github.com/
