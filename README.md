@@ -34,7 +34,7 @@ Userscripts to add functionality to GitHub.
 	| [GitHub label color picker][glc-wiki]  |     | [install][glc-raw] | [site][glc-gf] | 2016.09.16 | 2016.12.28 |
 	| [GitHub remove diff signs][rds-wiki]   |     | [install][rds-raw] | [site][rds-gf] | 2016.04.05 | 2016.12.28 |
 	| [GitHub rtl comments][rtl-wiki]        |     | [install][rtl-raw] | [site][rtl-gf] | 2016.06.13 | 2017.01.11 |
-	| [GitHub sort content][srt-wiki]        |     | [install][srt-raw] | [site][srt-gf] | 2016.07.13 | 2017.01.11 |
+	| [GitHub sort content][srt-wiki]        |     | [install][srt-raw] | [site][srt-gf] | 2016.07.13 | 2017.01.13 |
 	| [GitHub table of contents][toc-wiki]   |     | [install][toc-raw] | [site][toc-gf] | 2016.03.28 | 2016.12.28 |
 	| [GitHub title notification][tbn-wiki]  |     | [install][tbn-raw] | [site][tbn-gf] | 2016.03.24 | 2016.12.28 |
 	| [GitHub toggle expanders][tex-wiki]    |     | [install][tex-raw] | [site][tex-gf] | 2016.09.17 | 2017.01.11 |
