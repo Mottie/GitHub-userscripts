@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name          GitHub Sort Content
-// @version       1.1.3
+// @version       1.1.4
 // @description   A userscript that makes some lists & markdown tables sortable
 // @license       https://creativecommons.org/licenses/by-sa/4.0/
 // @namespace     https://github.com/Mottie
@@ -150,7 +150,7 @@
 				background-repeat:no-repeat !important;
 				background-position:calc(100% - 5px) center !important;
 			}
-			div.js-pinned-repos-reorder-container > h3, div.filter-repos,
+			div.js-pinned-repos-reorder-container > h3,
 			.dashboard-sidebar .boxed-group > h3,
 			.sort-bar, h2 + .tabnav > .tabnav-tabs, .org-toolbar,
 			.org-profile .TableObject-item--primary,
