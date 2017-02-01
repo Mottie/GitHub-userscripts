@@ -19,7 +19,7 @@ Userscripts to add functionality to GitHub.
 	|----------------------------------------|:---:|:------------------:|:--------------:|:----------:|:----------:|
 	| [GitHub code colors][ccs-wiki]         |     | [install][ccs-raw] | [site][ccs-gf] | 2016.03.20 | 2016.09.12 |
 	| [GitHub code folding][cfd-wiki]        |     | [install][cfd-raw] | [site][cfd-gf] | 2016.12.28 | 2017.01.11 |
-	| [GitHub code guides][cgl-wiki]         |     | [install][cgl-raw] | [site][cgl-gf] | 2016.08.27 | 2016.09.29 |
+	| [GitHub code guides][cgl-wiki]         |     | [install][cgl-raw] | [site][cgl-gf] | 2016.08.27 | 2017.01.31 |
 	| [GitHub collapse in comment][cic-wiki] |  *  | [install][cic-raw] | [site][cic-gf] | 2016.06.27 | 2017.01.11 |
 	| [GitHub collapse markdown][cmd-wiki]   |  *  | [install][cmd-raw] | [site][cmd-gf] | 2016.06.27 | 2017.01.11 |
 	| [GitHub custom hotkeys][chk-wiki]      |     | [install][chk-raw] | [site][chk-gf] | 2016.04.10 | 2016.09.12 |
