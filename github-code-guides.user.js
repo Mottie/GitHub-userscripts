@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         GitHub Code Guides
-// @version      1.1.0
+// @version      1.1.1
 // @description  A userscript that allows you to add one or more vertical guidelines to the code
 // @license      https://creativecommons.org/licenses/by-sa/4.0/
 // @namespace    http://github.com/Mottie
@@ -46,10 +46,10 @@
 		});
 		style.textContent = `
 			span.blob-code-inner {
-				font-family: "${font}", Consolas, "Liberation Mono", Menlo, Courier, monospace !important;
+				display: block !important;
 			}
 			span.blob-code-inner, td.blob-code-inner:not(.blob-code-hunk) {
-				display: block !important;
+				font-family: "${font}", Consolas, "Liberation Mono", Menlo, Courier, monospace !important;
 				background: linear-gradient(to right, transparent 0%, ${css} transparent 100%) !important;
 			}
 		`;
