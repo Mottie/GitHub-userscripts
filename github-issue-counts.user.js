@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name          GitHub Show Repo Issues
-// @version       3.0.0
+// @version       3.0.1
 // @description   A userscript that adds a repo issues count to the repository tab & organization page (https://github.com/:user)
 // @license       https://creativecommons.org/licenses/by-sa/4.0/
 // @namespace     http://github.com/Mottie
@@ -73,8 +73,8 @@
 				});
 			// pinned
 			if (repo.classList.contains("pinned-repo-item")) {
-				el = $$(".pinned-repo-item-content a", repo);
-				setClass = "pinned-repo-meta muted-link ghic2-issue-link";
+				el = $$(".pinned-repo-item-content p:last-child", repo);
+				setClass = "muted-link ghic2-issue-link";
 			} else {
 				// user/org list = third div in repo list contains links
 				wrapper = $$("div", repo)[3];
@@ -90,7 +90,14 @@
 					el = el[el.length - 1];
 					// add after last link, sometimes there is no fork
 					if (el) {
-						el.insertAdjacentHTML("afterend", html);
+						if (el.tagName === "P") {
+							wrapper = document.createElement("span");
+							wrapper.className = "ghic-link pinned-repo-meta";
+							el.appendChild(wrapper);
+							el.querySelector(".ghic-link").innerHTML = html;
+						} else {
+							el.insertAdjacentHTML("afterend", html);
+						}
 					}
 				}
 			}
