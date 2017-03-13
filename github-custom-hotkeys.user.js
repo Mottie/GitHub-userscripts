@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name          GitHub Custom Hotkeys
-// @version       1.0.1
+// @version       1.0.2
 // @description   A userscript that allows you to add custom GitHub keyboard hotkeys
 // @license       https://creativecommons.org/licenses/by-sa/4.0/
 // @namespace     http://github.com/Mottie
@@ -73,6 +73,7 @@
 			"notifications",
 			"organizations",
 			"open-source",
+			"pages",
 			"personal",
 			"pricing",
 			"pulls",
