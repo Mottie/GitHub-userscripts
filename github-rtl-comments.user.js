@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name          GitHub RTL Comment Blocks
-// @version       1.2.2
+// @version       1.2.3
 // @description   A userscript that adds a button to insert RTL text blocks in comments
 // @license       https://creativecommons.org/licenses/by-sa/4.0/
 // @namespace     http://github.com/Mottie
@@ -46,7 +46,7 @@
 		}
 	`);
 
-	// Add monospace font toggle
+	// Add RTL button
 	function addRtlButton() {
 		busy = true;
 		let el, button,
