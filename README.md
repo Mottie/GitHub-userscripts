@@ -28,12 +28,13 @@ Userscripts to add functionality to GitHub.
 	| [GitHub diff links][dfl-wiki]          |     | [install][dfl-raw] | [site][dfl-gf] | 2016.07.21 | 2016.12.28 |
 	| [GitHub font preview][fpv-wiki]        |     | [install][fpv-raw] | [site][fpv-gf] | 2016.06.11 | 2016.12.28 |
 	| [GitHub image preview][ipv-wiki]       |     | [install][ipv-raw] | [site][ipv-gf] | 2016.05.17 | 2016.12.21 |
+	| [GitHub indent comments][ioc-wiki]     |     | [install][ioc-raw] | [site][ioc-gf] | 2017.03.15 | 2017.03.15 |
 	| [GitHub issue comments][ic1-wiki]      |     | [install][ic1-raw] | [site][ic1-gf] | 2016.04.04 | 2017.01.11 |
 	| [GitHub issue counts][ic2-wiki]        |     | [install][ic2-raw] | [site][ic2-gf] | 2012.01.16 | 2017.03.12 |
 	| [GitHub issue highlighter][gih-wiki]   |     | [install][gih-raw] | [site][gih-gf] | 2016.05.21 | 2016.12.28 |
 	| [GitHub label color picker][glc-wiki]  |     | [install][glc-raw] | [site][glc-gf] | 2016.09.16 | 2016.12.28 |
 	| [GitHub remove diff signs][rds-wiki]   |     | [install][rds-raw] | [site][rds-gf] | 2016.04.05 | 2016.12.28 |
-	| [GitHub rtl comments][rtl-wiki]        |     | [install][rtl-raw] | [site][rtl-gf] | 2016.06.13 | 2017.01.11 |
+	| [GitHub rtl comments][rtl-wiki]        |     | [install][rtl-raw] | [site][rtl-gf] | 2016.06.13 | 2017.03.15 |
 	| [GitHub sort content][srt-wiki]        |     | [install][srt-raw] | [site][srt-gf] | 2016.07.13 | 2017.01.13 |
 	| [GitHub table of contents][toc-wiki]   |     | [install][toc-raw] | [site][toc-gf] | 2016.03.28 | 2016.12.28 |
 	| [GitHub title notification][tbn-wiki]  |     | [install][tbn-raw] | [site][tbn-gf] | 2016.03.24 | 2016.12.28 |
@@ -58,6 +59,7 @@ Userscripts to add functionality to GitHub.
 [glc-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-label-color-picker
 [ic1-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-issue-comments
 [ic2-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-issue-counts
+[ioc-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-indent-comments
 [ipv-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-image-preview
 [rds-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-remove-diff-signs
 [rtl-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-rtl-comments
@@ -82,6 +84,7 @@ Userscripts to add functionality to GitHub.
 [glc-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-label-color-picker.user.js
 [ic1-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-issue-comments.user.js
 [ic2-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-issue-counts.user.js
+[ioc-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-indent-comments.user.js
 [ipv-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-image-preview.user.js
 [rds-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-remove-diff-signs.user.js
 [rtl-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-rtl-comments.user.js
@@ -106,6 +109,7 @@ Userscripts to add functionality to GitHub.
 [glc-gf]: https://greasyfork.org/en/scripts/23270-github-label-color-picker
 [ic1-gf]: https://greasyfork.org/en/scripts/18503-github-toggle-issue-comments
 [ic2-gf]: https://greasyfork.org/en/scripts/15560-github-show-repo-issues
+[ioc-gf]: https://greasyfork.org/en/scripts/28176-github-indent-comment-blocks
 [ipv-gf]: https://greasyfork.org/en/scripts/19773-github-image-preview
 [rds-gf]: https://greasyfork.org/en/scripts/18520-github-remove-diff-signs
 [rtl-gf]: https://greasyfork.org/en/scripts/20542-github-rtl-comment-blocks
