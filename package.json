@@ -8,5 +8,11 @@
 		"name": "Rob Garrison",
 		"email": "wowmotty@gmail.com",
 		"url": "https://github.com/Mottie"
-	}
+	},
+  "devDependencies": {
+    "eslint": "^3.18.0"
+  },
+  "scripts": {
+    "lint": "eslint *.js || true"
+  }
 }
