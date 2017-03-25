@@ -1,9 +1,9 @@
 // ==UserScript==
 // @name          GitHub Toggle Issue Comments
-// @version       1.0.20
+// @version       1.0.21
 // @description   A userscript that toggles issues/pull request comments & messages
 // @license       https://creativecommons.org/licenses/by-sa/4.0/
-// @namespace     http://github.com/Mottie
+// @namespace     https://github.com/Mottie
 // @include       https://github.com/*
 // @run-at        document-idle
 // @grant         GM_addStyle
@@ -13,9 +13,7 @@
 // @updateURL     https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-issue-comments.user.js
 // @downloadURL   https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-issue-comments.user.js
 // ==/UserScript==
-/* global GM_addStyle, GM_getValue, GM_setValue */
-/* jshint unused:true, esnext:true */
-(function() {
+(() => {
 	"use strict";
 
 	GM_addStyle(`
@@ -43,12 +41,13 @@
 			.ghic-hideReactions .comment-reactions { display:none; }
 	`);
 
-	let targets,
+	let debounce,
 		busy = false,
-		// ZenHub addon active (include ZenHub Enterprise)
-		hasZenHub = $(".zhio, .zhe") ? true : false;
+		observers = [];
 
 	const regex = /(svg|path)/i,
+		// ZenHub addon active (include ZenHub Enterprise)
+		hasZenHub = $(".zhio, .zhe") ? true : false,
 
 		settings = {
 			// example: https://github.com/Mottie/Keyboard/issues/448
@@ -152,58 +151,10 @@
 		iconCheck = `<svg class="octicon octicon-check" height="16" viewBox="0 0 12 16" width="12"><path d="M12 5L4 13 0 9l1.5-1.5 2.5 2.5 6.5-6.5 1.5 1.5z"></path></svg>`,
 		plus1Icon = `<img src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f44d.png" class="emoji" title=":+1:" alt=":+1:" height="20" width="20" align="absmiddle">`;
 
-	function $(selector, el) {
-		return (el || document).querySelector(selector);
-	}
-	function $$(selector, el) {
-		return Array.from((el || document).querySelectorAll(selector));
-	}
-	function closest(selector, el) {
-		while (el && el.nodeType === 1) {
-			if (el.matches(selector)) {
-				return el;
-			}
-			el = el.parentNode;
-		}
-		return null;
-	}
-	function addClass(els, name) {
-		let indx,
-			len = els.length;
-		for (indx = 0; indx < len; indx++) {
-			els[indx].classList.add(name);
-		}
-		return len;
-	}
-	function removeClass(els, name) {
-		let indx,
-			len = els.length;
-		for (indx = 0; indx < len; indx++) {
-			els[indx].classList.remove(name);
-		}
-	}
-	function toggleClass(els, name, flag) {
-		els = Array.isArray(els) ? els : [els];
-		let el,
-			indx = els.length;
-		while (indx--) {
-			el = els[indx];
-			if (el) {
-				if (typeof flag === "undefined") {
-					flag = !el.classList.contains(name);
-				}
-				if (flag) {
-					el.classList.add(name);
-				} else {
-					el.classList.remove(name);
-				}
-			}
-		}
-	}
-
 	function addMenu() {
 		busy = true;
 		if ($("#discussion_bucket") && !$(".ghic-button")) {
+			addObservers();
 			// update "isHidden" values
 			getSettings();
 			let name, bright, isHidden, isChecked,
@@ -269,7 +220,7 @@
 			avatars = $$(".timeline-comment-avatar"),
 			len = avatars.length - 1, // last avatar is the new comment with the current user
 
-			loop = function(callback) {
+			loop = (callback) => {
 				let el, name,
 					max = 0;
 				while (max < 50 && indx < len) {
@@ -289,14 +240,14 @@
 					indx++;
 				}
 				if (indx < len) {
-					setTimeout(function() {
+					setTimeout(() => {
 						loop(callback);
 					}, 200);
 				} else {
 					callback();
 				}
 			};
-		loop(function() {
+		loop(() => {
 			$(".ghic-participants").innerHTML = str;
 		});
 	}
@@ -402,7 +353,7 @@
 			comments = $$(".js-discussion .timeline-comment-wrapper"),
 			len = comments.length,
 
-			loop = function() {
+			loop = () => {
 				let wrapper, el, tmp, txt, img, hasLink, dupe;
 				max = 0;
 				while (max < 20 && indx < len) {
@@ -454,7 +405,7 @@
 					indx++;
 				}
 				if (indx < len) {
-					setTimeout(function() {
+					setTimeout(() => {
 						loop();
 					}, 200);
 				} else {
@@ -483,7 +434,10 @@
 				.trim();
 		}
 		let comment = $(".timeline-comment"),
-			tmp = $(".has-reactions button[value='+1 react'], .has-reactions button[value='+1 unreact']", comment),
+			tmp = $(
+				".has-reactions button[value='+1 react'], .has-reactions button[value='+1 unreact']",
+				comment
+			),
 			el = $(".ghic-count", comment);
 		if (el) {
 			// the count may have been appended to the comment & now
@@ -506,7 +460,7 @@
 	}
 
 	function hideParticipant(el) {
-		let els, indx, len, hide, name,
+		let els, indx, len, name,
 			results = [];
 		if (el) {
 			el.classList.toggle("comments-hidden");
@@ -516,7 +470,10 @@
 			len = els.length;
 			for (indx = 0; indx < len; indx++) {
 				if (els[indx].textContent.trim() === name) {
-					results[results.length] = closest(".timeline-comment-wrapper, .commit-comment, .discussion-item", els[indx]);
+					results[results.length] = closest(
+						".timeline-comment-wrapper, .commit-comment, .discussion-item",
+						els[indx]
+					);
 				}
 			}
 			// use a different participant class name to hide timeline events
@@ -570,8 +527,96 @@
 		busy = false;
 	}
 
+	function removeObservers() {
+		observers.forEach(observer => {
+			if (observer) {
+				observer.disconnect();
+			}
+		});
+		observers = [];
+	}
+
+	function addObservers() {
+		// DOM targets - to detect GitHub dynamic ajax page loading
+		// Observe progressively loaded content
+		$$(".js-discussion").forEach(target => {
+			const obsrvr = new MutationObserver(mutations => {
+				mutations.forEach(mutation => {
+					// preform checks before adding code wrap to minimize function calls
+					const tar = mutation.target;
+					if (!busy && tar === target) {
+						clearTimeout(debounce);
+						debounce = setTimeout(() => {
+							update();
+						}, 500);
+					}
+				});
+			});
+			obsrvr.observe(target, {
+				childList: true,
+				subtree: true
+			});
+			observers.push(obsrvr);
+		});
+	}
+
+	function $(selector, el) {
+		return (el || document).querySelector(selector);
+	}
+
+	function $$(selector, el) {
+		return Array.from((el || document).querySelectorAll(selector));
+	}
+
+	function closest(selector, el) {
+		while (el && el.nodeType === 1) {
+			if (el.matches(selector)) {
+				return el;
+			}
+			el = el.parentNode;
+		}
+		return null;
+	}
+
+	function addClass(els, name) {
+		let indx,
+			len = els.length;
+		for (indx = 0; indx < len; indx++) {
+			els[indx].classList.add(name);
+		}
+		return len;
+	}
+
+	function removeClass(els, name) {
+		let indx,
+			len = els.length;
+		for (indx = 0; indx < len; indx++) {
+			els[indx].classList.remove(name);
+		}
+	}
+
+	function toggleClass(els, name, flag) {
+		els = Array.isArray(els) ? els : [els];
+		let el,
+			indx = els.length;
+		while (indx--) {
+			el = els[indx];
+			if (el) {
+				if (typeof flag === "undefined") {
+					flag = !el.classList.contains(name);
+				}
+				if (flag) {
+					el.classList.add(name);
+				} else {
+					el.classList.remove(name);
+				}
+			}
+		}
+	}
+
 	function init() {
 		busy = true;
+		removeObservers();
 		getSettings();
 		addMenu();
 		$("body").addEventListener("input", checkItem);
@@ -580,24 +625,8 @@
 		busy = false;
 	}
 
-	// DOM targets - to detect GitHub dynamic ajax page loading
-	targets = $$("#js-repo-pjax-container, #js-pjax-container, .js-discussion");
-
 	// update TOC when content changes
-	Array.prototype.forEach.call(targets, function(target) {
-		new MutationObserver(function(mutations) {
-			mutations.forEach(function(mutation) {
-				// preform checks before adding code wrap to minimize function calls
-				if (!busy && mutation.target === target) {
-					addMenu();
-				}
-			});
-		}).observe(target, {
-			childList: true,
-			subtree: true
-		});
-	});
-
+	document.addEventListener("pjax:end", addMenu);
 	init();
 
 })();
