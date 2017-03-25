@@ -1,9 +1,9 @@
 // ==UserScript==
 // @name          GitHub Issue Highlighter
-// @version       1.0.2
+// @version       1.0.3
 // @description   A userscript that highlights the linked-to comment
 // @license       https://creativecommons.org/licenses/by-sa/4.0/
-// @namespace     http://github.com/Mottie
+// @namespace     https://github.com/Mottie
 // @include       https://github.com/*
 // @run-at        document-idle
 // @grant         GM_addStyle
@@ -11,9 +11,7 @@
 // @updateURL     https://raw.githubusercontent.com/Mottie/Github-userscripts/master/github-highlight-comment.user.js
 // @downloadURL   https://raw.githubusercontent.com/Mottie/Github-userscripts/master/github-highlight-comment.user.js
 // ==/UserScript==
-/* global GM_addStyle */
-/* jshint unused:true, esnext:true */
-(function() {
+(() => {
 	"use strict";
 
 	// !important needed to override styles added by
