@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name          GitHub Image Preview
-// @version       1.1.3
+// @version       1.1.4
 // @description   A userscript that adds clickable image thumbnails
 // @license       https://creativecommons.org/licenses/by-sa/4.0/
 // @namespace     https://github.com/Mottie
@@ -16,8 +16,6 @@
 // @updateURL     https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-image-preview.user.js
 // @downloadURL   https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-image-preview.user.js
 // ==/UserScript==
-/* global GM_addStyle, GM_getValue, GM_setValue, GM_xmlhttpRequest */
-/* jshint unused:true, esnext:true */
 (() => {
 	"use strict";
 
@@ -55,10 +53,6 @@
 		table.files td .simplified-path { color:#888 !important; }
 	`);
 
-	// timer needed for file list to update?
-	let timer,
-		busy = false;
-
 	// supported img types
 	const imgExt = /(png|jpg|jpeg|gif|tif|tiff|bmp|webp)$/i,
 		svgExt = /svg$/i,
@@ -89,7 +83,6 @@
 		if ($(".gh-img-preview")) {
 			return;
 		}
-		busy = true;
 		const div = document.createElement("div"),
 			btn = `btn btn-sm BtnGroup-item tooltipped tooltipped-n" aria-label="Show`;
 		div.className = "BtnGroup float-right gh-img-preview";
@@ -105,7 +98,6 @@
 		$(".ghip-fullw", div).addEventListener("click", () => {
 			openView("fullw");
 		});
-		busy = false;
 	}
 
 	function setInitState() {
@@ -151,7 +143,6 @@
 	}
 
 	function buildPreviews() {
-		busy = true;
 		let template, url, temp, noExt,
 			imgs = "<td colspan='4' class='ghip-content'>",
 			indx = 0;
@@ -239,7 +230,6 @@
 			row.innerHTML = imgs + "</td>";
 			table.appendChild(row);
 		}
-		busy = false;
 	}
 
 	function updateTemplate(url, img, tmpl) {
@@ -253,7 +243,6 @@
 			method: "GET",
 			url,
 			onload: response => {
-				busy = true;
 				let encoded;
 				const url = response.finalUrl,
 					file = url.substring(url.lastIndexOf("/") + 1, url.length),
@@ -262,7 +251,6 @@
 					encoded = window.btoa(response.responseText);
 					target.src = "data:image/svg+xml;base64," + encoded;
 				}
-				busy = false;
 			}
 		});
 	}
@@ -281,23 +269,6 @@
 		}
 	}
 
-	// DOM targets - to detect GitHub dynamic ajax page loading
-	$$(
-		"#js-repo-pjax-container, .context-loader-container, [data-pjax-container]"
-	).forEach(target => {
-		new MutationObserver(mutations => {
-			mutations.forEach(mutation => {
-				// preform checks before adding code wrap to minimize function calls
-				if (!busy && mutation.target === target) {
-					clearTimeout(timer);
-					timer = setTimeout(init, 200);
-				}
-			});
-		}).observe(target, {
-			childList: true,
-			subtree: true
-		});
-	});
-
+	document.addEventListener("pjax:end", init);
 	init();
 })();
