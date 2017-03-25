@@ -72,7 +72,7 @@
 	}
 
 	function outdent(text) {
-		let regex = new RegExp(`^\\s{0,${spaceSize}}`),
+		let regex = new RegExp(`^(\x20{1,${spaceSize}}|\xA0{1,${spaceSize}}|\x09)`),
 			result = [];
 		(text || "").split(/\r*\n/).forEach(line => {
 			result.push(line.replace(regex, ""));
@@ -82,6 +82,7 @@
 
 	function addBindings() {
 		window.rangyInput.init();
+		saveTabSize();
 		$("body").addEventListener("click", event => {
 			let textarea,
 				target = event.target;
@@ -117,6 +118,17 @@
 		});
 	}
 
+	function saveTabSize() {
+		let $el = $(".gh-indent-size");
+		if (!$el) {
+			$el = document.createElement("style");
+			$el.setAttribute("rel", "stylesheet");
+			$el.className = "gh-indent-size";
+			document.querySelector("head").appendChild($el);
+		}
+		$el.innerHTML = `.comment-form-textarea { tab-size:${spaceSize}; }`;
+	}
+
 	function $(selector, el) {
 		return (el || document).querySelector(selector);
 	}
@@ -139,11 +151,12 @@
 	GM_registerMenuCommand(
 		"Indent or outdent size",
 		() => {
-			const spaces = GM_getValue("indentOutdentSize", "2");
+			const spaces = GM_getValue("indentOutdentSize", spaceSize);
 			let val = prompt("Enter number of spaces to indent or outdent:", spaces);
 			if (val !== null && typeof val === "string") {
 				spaceSize = val;
 				GM_setValue("space-size", val);
+				saveTabSize();
 			}
 		}
 	);
