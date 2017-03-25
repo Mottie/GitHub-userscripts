@@ -1,9 +1,9 @@
 // ==UserScript==
 // @name          GitHub Diff Files Filter
-// @version       0.1.2
+// @version       0.1.3
 // @description   A userscript that adds filters that toggle diff & PR files by extension
 // @license       https://creativecommons.org/licenses/by-sa/4.0/
-// @namespace     http://github.com/Mottie
+// @namespace     https://github.com/Mottie
 // @include       https://github.com/*
 // @grant         none
 // @run-at        document-idle
@@ -11,7 +11,6 @@
 // @updateURL     https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-diff-files-filter.user.js
 // @downloadURL   https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-diff-files-filter.user.js
 // ==/UserScript==
-/* jshint unused:true, esnext:true */
 (() => {
 	"use strict";
 
@@ -19,11 +18,9 @@
 		noExtLabel = "\u00ABno-ext\u00BB",
 		dotExtLabel = "\u00ABdot-files\u00BB";
 
-	let list = {},
-		busy = false;
+	let list = {};
 
 	function toggleBlocks(extension, type) {
-		busy = true;
 		const files = $("#files"),
 			view = type === "show" ? "" : "none";
 		if (extension === allExtLabel) {
@@ -49,7 +46,6 @@
 			});
 		}
 		updateAllButton();
-		busy = false;
 	}
 
 	function updateAllButton() {
@@ -140,9 +136,11 @@
 	function $(str, el) {
 		return (el || document).querySelector(str);
 	}
+
 	function $$(str, el) {
 		return Array.from((el || document).querySelectorAll(str));
 	}
+
 	function closest(selector, el) {
 		while (el && el.nodeType === 1) {
 			if (el.matches(selector)) {
@@ -153,21 +151,7 @@
 		return null;
 	}
 
-	// DOM targets - to detect GitHub dynamic ajax page loading
-	$$("#js-repo-pjax-container, #js-pjax-container").forEach(target => {
-		new MutationObserver(mutations => {
-			mutations.forEach(mutation => {
-				// preform checks before adding code wrap to minimize function calls
-				if (!busy && mutation.target === target) {
-					init();
-				}
-			});
-		}).observe(target, {
-			childList: true,
-			subtree: true
-		});
-	});
-
+	document.addEventListener("pjax:end", init);
 	init();
 
 })();
