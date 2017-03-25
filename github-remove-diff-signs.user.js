@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name          GitHub Remove Diff Signs
-// @version       1.1.0
+// @version       1.1.1
 // @description   A userscript that removes the "+" and "-" from code diffs
 // @license       https://creativecommons.org/licenses/by-sa/4.0/
 // @namespace     https://github.com/Mottie
@@ -84,6 +84,7 @@
 					// preform checks before adding code wrap to minimize function calls
 					const tar = mutation.target;
 					if (!busy && tar && (
+							tar.classList.contains("js-diff-progressive-container") ||
 							tar.classList.contains("js-diff-load-container") ||
 							tar.classList.contains("blob-wrapper")
 						)
