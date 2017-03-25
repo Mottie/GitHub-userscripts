@@ -1,9 +1,9 @@
 // ==UserScript==
 // @name         GitHub Code Guides
-// @version      1.1.1
+// @version      1.1.2
 // @description  A userscript that allows you to add one or more vertical guidelines to the code
 // @license      https://creativecommons.org/licenses/by-sa/4.0/
-// @namespace    http://github.com/Mottie
+// @namespace    https://github.com/Mottie
 // @include      https://github.com/*
 // @grant        GM_getValue
 // @grant        GM_setValue
@@ -17,8 +17,6 @@
          1         2         3         4         5         6         7         8
 1234567890123456789012345678901234567890123456789012345678901234567890123456789012345
 */
-/* global document, prompt, GM_getValue, GM_setValue, GM_registerMenuCommand */
-/* jshint esnext:true, unused:true */
 (() => {
 	"use strict";
 	const style = document.createElement("style");
@@ -85,7 +83,10 @@
 
 	// Add GM options
 	GM_registerMenuCommand("Set code guideline position & color", () => {
-		let val = prompt(`Enter valid JSON [{ "chars":80, "color":"#f00", "width":0.2 }, ...}`, JSON.stringify(guides));
+		let val = prompt(
+			`Enter valid JSON [{ "chars":80, "color":"#f00", "width":0.2 }, ...}]`,
+			JSON.stringify(guides)
+		);
 		if (val !== null) {
 			try {
 				val = JSON.parse(val);
