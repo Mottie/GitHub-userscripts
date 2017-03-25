@@ -1,9 +1,9 @@
 // ==UserScript==
 // @name          GitHub Font Preview
-// @version       1.0.7
+// @version       1.0.8
 // @description   A userscript that adds a font file preview
 // @license       https://creativecommons.org/licenses/by-sa/4.0/
-// @namespace     http://github.com/Mottie
+// @namespace     https://github.com/Mottie
 // @include       https://github.com/*
 // @run-at        document-idle
 // @grant         GM_addStyle
@@ -17,13 +17,10 @@
 // @updateURL     https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-font-preview.user.js
 // @downloadURL   https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-font-preview.user.js
 // ==/UserScript==
-/* global GM_addStyle, GM_getValue, GM_setValue, GM_xmlhttpRequest, opentype */
-/* jshint unused:true, esnext:true */
-(function () {
+(() => {
 	"use strict";
 
-	let timer, font,
-		busy = false,
+	let font,
 		showUnicode = GM_getValue("gfp-show-unicode", false),
 		showPoints = GM_getValue("gfp-show-points", true),
 		showArrows = GM_getValue("gfp-show-arrows", true),
@@ -47,7 +44,7 @@
 				method: "GET",
 				url: url,
 				responseType: "arraybuffer",
-				onload: function (response) {
+				onload: response => {
 					setupFont(response.response);
 				}
 			});
@@ -55,7 +52,6 @@
 	}
 
 	function setupFont(data) {
-		busy = true;
 		let target = $(".file .image"),
 			el = $(".final-path");
 		if (target && el) {
@@ -73,7 +69,6 @@
 				throw (err);
 			}
 		}
-		busy = false;
 	}
 
 	function addHTML(target, el) {
@@ -124,21 +119,21 @@
 		let tableHeaders = document.getElementById("gfp-font-data").getElementsByTagName("div"),
 			indx = tableHeaders.length;
 		while (indx--) {
-			tableHeaders[indx].addEventListener("click", function (e) {
-				e.target.classList.toggle("gfp-collapsed");
+			tableHeaders[indx].addEventListener("click", event => {
+				event.target.classList.toggle("gfp-collapsed");
 			}, false);
 		}
 		addBindings();
 	}
 
 	function addBindings() {
-		$(".gfp-show-unicode").addEventListener("change", function () {
+		$(".gfp-show-unicode").addEventListener("change", function() {
 			showUnicode = this.checked;
 			GM_setValue("gfp-show-unicode", showUnicode);
 			displayGlyphPage(pageSelected);
 			return false;
 		}, false);
-		$("#gfp-glyph-data").addEventListener("change", function () {
+		$("#gfp-glyph-data").addEventListener("change", function() {
 			showPoints = $(".gfp-show-points", this).checked;
 			showArrows = $(".gfp-show-arrows", this).checked;
 			GM_setValue("gfp-show-points", showPoints);
@@ -150,10 +145,6 @@
 
 	function $(selector, el) {
 		return (el || document).querySelector(selector);
-	}
-
-	function $$(selector, el) {
-		return Array.from((el || document).querySelectorAll(selector));
 	}
 
 	function init() {
@@ -173,22 +164,7 @@
 		}
 	}
 
-	// DOM targets - to detect GitHub dynamic ajax page loading
-	$$("#js-repo-pjax-container, .context-loader-container, [data-pjax-container]").forEach(function (target) {
-		new MutationObserver(function (mutations) {
-			mutations.forEach(function (mutation) {
-				// preform checks before adding code wrap to minimize function calls
-				if (!busy && mutation.target === target) {
-					clearTimeout(timer);
-					timer = setTimeout(init, 200);
-				}
-			});
-		}).observe(target, {
-			childList: true,
-			subtree: true
-		});
-	});
-
+	document.addEventListener("pjax:end", init);
 	init();
 
 	/* Code modified from http://opentype.js.org/ demos */
@@ -280,7 +256,7 @@
 						value = table[property];
 						html += '<dt>' + property + '</dt><dd>';
 						if (Array.isArray(value) && typeof value[0] === 'object') {
-							html += value.map(function (item) {
+							html += value.map(item => {
 								return JSON.stringify(item);
 							}).join('<br>');
 						} else if (typeof value === 'object') {
@@ -346,7 +322,7 @@
 	}
 
 	function contourToString(contour) {
-		return '<pre class="gfp-contour">' + contour.map(function (point) {
+		return '<pre class="gfp-contour">' + contour.map(point => {
 			// ".alert.tip" class modified by GitHub Dark style - more readable blue
 			// ".cdel" class modified by GitHub Dark style - more readable red
 			return '<span class="gfp-' + (point.onCurve ? 'oncurve alert tip' : 'offcurve cdel') +
@@ -366,7 +342,7 @@
 	function displayGlyphData(glyphIndex) {
 		let glyph, contours, html,
 			container = document.getElementById('gfp-glyph-data'),
-			addItem = function (name) {
+			addItem = name => {
 				return glyph[name] ? `<dt>${name}</dt><dd>${glyph[name]}</dd>` : '';
 			};
 		if (glyphIndex < 0) {
@@ -398,7 +374,7 @@
 			html += 'contours:<br>' + contours.map(contourToString).join('\n');
 		} else if (glyph.isComposite) {
 			html += '<br>This composite glyph is a combination of :<ul><li>' +
-				glyph.components.map(function (component) {
+				glyph.components.map(component => {
 					return 'glyph ' + component.glyphIndex + ' at dx=' + component.dx +
 						', dy=' + component.dy;
 				}).join('</li><li>') + '</li></ul>';
@@ -474,7 +450,7 @@
 		}
 		ctx.fillStyle = bigGlyphStrokeColor;
 		if (showArrows) {
-			arrows.forEach(function (arrow) {
+			arrows.forEach(arrow => {
 				drawArrow.apply(null, arrow);
 			});
 		}
