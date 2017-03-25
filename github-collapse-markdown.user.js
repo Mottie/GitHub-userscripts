@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         GitHub Collapse Markdown
-// @version      1.1.6
+// @version      1.1.7
 // @description  A userscript that collapses markdown headers
 // @license      https://creativecommons.org/licenses/by-sa/4.0/
 // @namespace    https://github.com/Mottie
@@ -16,8 +16,6 @@
 // @updateURL    https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-collapse-markdown.user.js
 // @downloadURL  https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-collapse-markdown.user.js
 // ==/UserScript==
-/* global GM_addStyle, GM_getValue, GM_setValue, GM_registerMenuCommand */
-/* jshint esnext:true, unused:true */
 (() => {
 	"use strict";
 
@@ -145,7 +143,7 @@
 	}
 
 	function removeSelection() {
-		// remove text selection - http://stackoverflow.com/a/3171348/145346
+		// remove text selection - https://stackoverflow.com/a/3171348/145346
 		const sel = window.getSelection ? window.getSelection() : document.selection;
 		if (sel) {
 			if (sel.removeAllRanges) {
