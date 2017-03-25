@@ -1,9 +1,9 @@
 // ==UserScript==
 // @name          GitHub Custom Hotkeys
-// @version       1.0.2
+// @version       1.0.3
 // @description   A userscript that allows you to add custom GitHub keyboard hotkeys
 // @license       https://creativecommons.org/licenses/by-sa/4.0/
-// @namespace     http://github.com/Mottie
+// @namespace     https://github.com/Mottie
 // @include       https://github.com/*
 // @include       https://*.github.com/*
 // @grant         GM_addStyle
@@ -14,8 +14,6 @@
 // @updateURL     https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-custom-hotkeys.user.js
 // @downloadURL   https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-custom-hotkeys.user.js
 // ==/UserScript==
-/* global GM_addStyle, GM_getValue, GM_setValue */
-/* jshint esnext:true, unused:true */
 (() => {
 	"use strict";
 	/* "g p" here overrides the GitHub default "g p" which takes you to the Pull Requests page
