@@ -1,9 +1,9 @@
 // ==UserScript==
 // @name          GitHub TOC
-// @version       1.2.1
+// @version       1.2.2
 // @description   A userscript that adds a table of contents to readme & wiki pages
 // @license       https://creativecommons.org/licenses/by-sa/4.0/
-// @namespace     http://github.com/Mottie
+// @namespace     https://github.com/Mottie
 // @include       https://github.com/*
 // @run-at        document-idle
 // @grant         GM_registerMenuCommand
@@ -14,8 +14,6 @@
 // @updateURL     https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-toc.user.js
 // @downloadURL   https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-toc.user.js
 // ==/UserScript==
-/* global GM_registerMenuCommand, GM_getValue, GM_setValue, GM_addStyle */
-/* jshint unused:true, esnext:true */
 (() => {
 	"use strict";
 
@@ -54,8 +52,7 @@
 		.github-toc-no-selection { -webkit-user-select:none !important; -moz-user-select:none !important; user-select:none !important; }
 	`);
 
-	let busy = false,
-		tocInit = false,
+	let tocInit = false,
 
 		// modifiable title
 		title = GM_getValue("github-toc-title", "Table of Contents");
@@ -92,6 +89,7 @@
 		}
 		drag.time = new Date().getTime() + 500;
 	}
+
 	function dragMove(event) {
 		drag.pos[0] = document.all ? window.event.clientX : event.pageX;
 		drag.pos[1] = document.all ? window.event.clientY : event.pageY;
@@ -101,6 +99,7 @@
 			drag.el.style.right = "auto";
 		}
 	}
+
 	function dragStop() {
 		if (drag.el !== null) {
 			dragSave();
@@ -108,6 +107,7 @@
 		}
 		drag.el = null;
 	}
+
 	function dragSave(clear) {
 		let val = clear ? null : [container.style.left, container.style.top];
 		GM_setValue("github-toc-location", val);
@@ -121,19 +121,17 @@
 			drag.unsel = body.getAttribute("unselectable");
 			body.setAttribute("unselectable", "on");
 			body.classList.add("github-toc-no-selection");
-			on(body, "onselectstart", selectionStop);
+			on(body, "onselectstart", () => false);
 		} else {
 			if (drag.unsel) {
 				body.setAttribute("unselectable", drag.unsel);
 			}
 			body.classList.remove("github-toc-no-selection");
-			body.removeEventListener("onselectstart", selectionStop);
+			body.removeEventListener("onselectstart", () => false);
 		}
 		removeSelection();
 	}
-	function selectionStop() {
-		return false;
-	}
+
 	function removeSelection() {
 		// remove text selection - http://stackoverflow.com/a/3171348/145346
 		const sel = window.getSelection ? window.getSelection() : document.selection;
@@ -150,10 +148,12 @@
 		container.classList.remove("collapsed");
 		GM_setValue("github-toc-hidden", false);
 	}
+
 	function tocHide() {
 		container.classList.add("collapsed");
 		GM_setValue("github-toc-hidden", true);
 	}
+
 	function tocToggle() {
 		// don't toggle content on long clicks
 		if (drag.time > new Date().getTime()) {
@@ -184,7 +184,6 @@
 				anchors = $$(".markdown-body .anchor"),
 				len = anchors.length;
 			if (len > 2) {
-				busy = true;
 				for (indx = 0; indx < len; indx++) {
 					anchor = anchors[indx];
 					if (anchor.parentNode) {
@@ -202,36 +201,11 @@
 				$(".boxed-group-inner", container).innerHTML = content + "</ul>";
 				tocView("block");
 				listCollapsible();
-				busy = false;
 			} else {
 				tocView();
 			}
 		} else {
 			tocView();
-		}
-	}
-
-	function $(str, el) {
-		return (el || document).querySelector(str);
-	}
-	function $$(str, el) {
-		return Array.from((el || document).querySelectorAll(str));
-	}
-	function on(el, name, handler) {
-		el.addEventListener(name, handler);
-	}
-	function addClass(els, name) {
-		let indx,
-			len = els.length;
-		for (indx = 0; indx < len; indx++) {
-			els[indx].classList.add(name);
-		}
-	}
-	function removeClass(els, name) {
-		let indx,
-			len = els.length;
-		for (indx = 0; indx < len; indx++) {
-			els[indx].classList.remove(name);
 		}
 	}
 
@@ -258,7 +232,7 @@
 			}
 		}
 		group = [];
-		on(container, "click", function(event) {
+		on(container, "click", event => {
 			// click on icon, then target LI parent
 			let els, name, indx,
 				el = event.target.parentNode,
@@ -326,7 +300,7 @@
 			dragSave(true);
 		}
 		keyboard.lastKey = key;
-		keyboard.timer = setTimeout(function() {
+		keyboard.timer = setTimeout(() => {
 			keyboard.lastKey = null;
 		}, keyboard.delay);
 	}
@@ -377,29 +351,51 @@
 		tocInit = true;
 	}
 
-	// DOM targets - to detect GitHub dynamic ajax page loading
-	// update TOC when content changes
-	$$("#js-repo-pjax-container, #js-repo-pjax-container > .container, #js-pjax-container, .js-preview-body").forEach((target) => {
-		new MutationObserver((mutations) => {
-			mutations.forEach((mutation) => {
-				// preform checks before adding code wrap to minimize function calls
-				if (!busy && mutation.target === target) {
-					tocAdd();
-				}
-			});
-		}).observe(target, {
-			childList: true,
-			subtree: true
-		});
-	});
+	function $(str, el) {
+		return (el || document).querySelector(str);
+	}
+
+	function $$(str, el) {
+		return Array.from((el || document).querySelectorAll(str));
+	}
+
+	function on(el, name, handler) {
+		el.addEventListener(name, handler);
+	}
+
+	function addClass(els, name) {
+		let indx,
+			len = els.length;
+		for (indx = 0; indx < len; indx++) {
+			els[indx].classList.add(name);
+		}
+	}
+
+	function removeClass(els, name) {
+		let indx,
+			len = els.length;
+		for (indx = 0; indx < len; indx++) {
+			els[indx].classList.remove(name);
+		}
+	}
 
 	// Add GM options
-	GM_registerMenuCommand("Set Table of Contents Title", function() {
+	GM_registerMenuCommand("Set Table of Contents Title", () => {
 		title = prompt("Table of Content Title:", title);
 		GM_setValue("toc-title", title);
 		$("h3 span", container).textContent = title;
 	});
 
+	on(document, "pjax:end", tocAdd);
+	// "preview:render" only fires when using the hotkey :(
+	// "preview:setup" fires on hover & click
+	on(document, "preview:setup", () => {
+		setTimeout(() => {
+			// must include some rendering time...
+			// 200 ms seems to be enough for a 1100+ line markdown file
+			tocAdd();
+		}, 500);
+	});
 	tocAdd();
 
 })();
