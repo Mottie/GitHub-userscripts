@@ -1,9 +1,9 @@
 // ==UserScript==
 // @name          GitHub Code Colors
-// @version       1.1.0
+// @version       1.1.1
 // @description   A userscript that adds a color swatch next to the code color definition
 // @license       https://creativecommons.org/licenses/by-sa/4.0/
-// @namespace     http://github.com/Mottie
+// @namespace     https://github.com/Mottie
 // @include       https://github.com/*
 // @grant         GM_addStyle
 // @run-at        document-idle
@@ -11,8 +11,6 @@
 // @updateURL     https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-code-colors.user.js
 // @downloadURL   https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-code-colors.user.js
 // ==/UserScript==
-/* global GM_addStyle */
-/* jshint esnext:true, unused:true */
 (() => {
 	"use strict";
 
@@ -21,7 +19,6 @@
 			vertical-align:middle; margin-right:4px; border:1px solid #555; }
 	`);
 
-	let busy = false;
 	const namedColors = [
 			"aliceblue", "antiquewhite", "aqua", "aquamarine", "azure", "beige",
 			"bisque", "black", "blanchedalmond", "blue", "blueviolet", "brown",
@@ -69,7 +66,6 @@
 	}
 
 	function addColors() {
-		busy = true;
 		if (document.querySelector(".highlight")) {
 			let indx = 0;
 			const regexNamed = new RegExp("^(" + namedColors + ")$", "i"),
@@ -148,27 +144,17 @@
 			};
 			loop();
 		}
-		busy = false;
 	}
 
-	Array.from(
-		document.querySelectorAll(
-			"#js-repo-pjax-container, #js-pjax-container, .js-preview-body"
-		)
-	).forEach(
-		target => {
-			new MutationObserver(mutations => {
-				mutations.forEach(mutation => {
-					// preform checks before adding code wrap to minimize function calls
-					if (!busy && mutation.target === target) {
-						addColors();
-					}
-				});
-			}).observe(target, {
-				childList: true,
-				subtree: true
-			});
-		});
-
+	document.addEventListener("pjax:end", addColors);
+	// "preview:render" only fires when using the hotkey :(
+	// "preview:setup" fires on hover & click of comment preview tab
+	document.addEventListener("preview:setup", () => {
+		setTimeout(() => {
+			// must include some rendering time...
+			// 200 ms seems to be enough for a 1100+ line markdown file
+			addColors();
+		}, 500);
+	});
 	addColors();
 })();
