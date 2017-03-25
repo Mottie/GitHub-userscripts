@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name          GitHub Custom Navigation
-// @version       1.0.7
+// @version       1.0.8
 // @description   A userscript that allows you to customize GitHub's main navigation bar
 // @license       https://creativecommons.org/licenses/by-sa/4.0/
 // @namespace     https://github.com/Mottie
@@ -15,8 +15,6 @@
 // @updateURL     https://raw.githubusercontent.com/Mottie/Github-userscripts/master/github-custom-navigation.user.js
 // @downloadURL   https://raw.githubusercontent.com/Mottie/Github-userscripts/master/github-custom-navigation.user.js
 // ==/UserScript==
-/* global GM_addStyle, GM_getValue, GM_setValue, dragula */
-/* jshint esnext:true, unused:true */
 (() => {
 	"use strict";
 
@@ -318,11 +316,11 @@
 	function addDragula() {
 		let topNav = $(".header-nav");
 		drake = dragula($$(".header-nav, #ghcn-nav-items"), {
-			invalid: function () {
+			invalid: () => {
 				return !editMode;
 			}
 		});
-		drake.on("drop", function () {
+		drake.on("drop", () => {
 			let indx, link,
 				temp = [],
 				list = topNav.childNodes,
@@ -515,69 +513,72 @@
 				}
 			});
 
-		el = $$(".header .dropdown-item[href='/settings/profile'], .header .dropdown-item[data-ga-click*='go to profile']");
+		el = $$(`
+			.header .dropdown-item[href='/settings/profile'],
+			.header .dropdown-item[data-ga-click*='go to profile']`
+		);
 		// get last found item - gists only have the "go to profile" item; GitHub has both
 		el = el[el.length - 1];
 		if (el) {
 			// insert after
 			el.parentNode.insertBefore(menu, el.nextSibling);
-			on($("#ghcn-menu"), "click", function () {
+			on($("#ghcn-menu"), "click", () => {
 				openPanel();
 			});
 		}
 
-		on(window, "hashchange", function () {
+		on(window, "hashchange", () => {
 			openPanelOnHash();
 		});
 
-		on($("#ghcn-overlay"), "click", function (event) {
+		on($("#ghcn-overlay"), "click", event => {
 			// ignore bubbled up events
 			if (event.target.id === "ghcn-overlay") {
 				closePanel();
 			}
 		});
-		on($("body"), "keyup", function (event) {
+		on($("body"), "keyup", event => {
 			// using F2 key for testing
 			if (editMode && event.keyCode === 27) {
 				closePanel();
 			}
 		});
-		on($("body"), "click", function (event) {
+		on($("body"), "click", event => {
 			if (editMode && event.target.classList.contains("header-nav-link")) {
 				// header-nav-link is a child of header-nav-item, but is the same size
 				settings.currentLink = event.target.parentNode.getAttribute("data-ghcn");
 				selectItem();
 			}
 		});
-		on($$(".ghcn-settings-wrapper input"), "input change", function () {
+		on($$(".ghcn-settings-wrapper input"), "input change", () => {
 			saveLink();
 		});
-		on($(".ghcn-add"), "click", function () {
+		on($(".ghcn-add"), "click", () => {
 			createLink();
 		});
-		on($(".ghcn-destroy"), "click", function () {
+		on($(".ghcn-destroy"), "click", () => {
 			destroyLink(settings.currentLink);
 		});
-		on($(".ghcn-reset"), "click", function () {
+		on($(".ghcn-reset"), "click", () => {
 			resetLinks();
 		});
 		// close panel when hotkey link is clicked or the page scrolls on the documentation wiki
-		on($$(".ghcn-close, .ghcn-hotkey-link"), "click", function () {
+		on($$(".ghcn-close, .ghcn-hotkey-link"), "click", () => {
 			closePanel();
 		});
 
 		// Code
-		on($(".ghcn-code"), "click", function () {
+		on($(".ghcn-code"), "click", () => {
 			// open JSON code textarea
 			$(".ghcn-json-code").classList.toggle("ghcn-visible");
 			addJSON();
 		});
 		// close JSON code textarea
-		on($(".ghcn-json-code"), "focus", function () {
+		on($(".ghcn-json-code"), "focus", function() {
 			this.select();
 		});
-		on($(".ghcn-json-code"), "paste", function () {
-			setTimeout(function () {
+		on($(".ghcn-json-code"), "paste", () => {
+			setTimeout(() => {
 				checkJSON(processJSON());
 			}, 200);
 		});
@@ -658,7 +659,7 @@
 			} else {
 				// narrow the search bar when there are a bunch of links added
 				// add delay to allow browser to complete reflow
-				setTimeout(function () {
+				setTimeout(() => {
 					let width = nav.offsetWidth,
 						// don't let search bar get narrower than 200px; 360 = starting width
 						adjust = width > adjustWidth ?
@@ -696,8 +697,8 @@
 	function on(els, name, callback) {
 		els = Array.isArray(els) ? els : [els];
 		let events = name.split(/\s+/);
-		els.forEach(function (el) {
-			events.forEach(function (ev) {
+		els.forEach(el => {
+			events.forEach(ev => {
 				el.addEventListener(ev, callback);
 			});
 		});
