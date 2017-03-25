@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name          GitHub Label Color Picker
-// @version       1.0.1
+// @version       1.0.2
 // @description   A userscript that adds a color picker to the label color input
 // @license       https://creativecommons.org/licenses/by-sa/4.0/
 // @namespace     https://github.com/Mottie
@@ -15,8 +15,6 @@
 // @updateURL     https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-label-color-picker.user.js
 // @downloadURL   https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-label-color-picker.user.js
 // ==/UserScript==
-/* global GM_addStyle, GM_getValue, GM_setValue, GM_registerMenuCommand, jsColorPicker */
-/* jshint esnext:true, unused:true */
 (() => {
 	"use strict";
 
@@ -27,7 +25,7 @@
 			jsColorPicker(".js-color-editor-input", {
 				customBG: "#222",
 				noAlpha: true,
-				renderCallback : function(colors) {
+				renderCallback: function(colors) {
 					let input = this && this.input;
 					if (input) {
 						input.value = "#" + colors.HEX;
