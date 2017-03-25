@@ -1,9 +1,9 @@
 // ==UserScript==
 // @name        GitHub Code Folding
-// @version     0.1.1
+// @version     1.0.0
 // @description A userscript that adds code folding to GitHub files
 // @license     https://opensource.org/licenses/MIT
-// @namespace   http://github.com/Mottie
+// @namespace   https://github.com/Mottie
 // @include     https://github.com/*
 // @run-at      document-idle
 // @grant       GM_addStyle
@@ -11,7 +11,6 @@
 // @updateURL   https://raw.githubusercontent.com/Mottie/Github-userscripts/master/github-code-folding.user.js
 // @downloadURL https://raw.githubusercontent.com/Mottie/Github-userscripts/master/github-code-folding.user.js
 // ==/UserScript==
-/* jshint esnext:true, unused:true */
 /**
  * This userscript has been heavily modified from the "github-code-folding"
  * Chrome extension Copyright 2016 by Noam Lustiger; under an MIT license
@@ -33,7 +32,6 @@
 		.ellipsis:hover { background:rgba(255,235,59,.7); }
 	`);
 
-	let busy = false;
 	const pairs = new Map(),
 		ellipsis = document.createElement("span"),
 		triangle = document.createElement("span");
@@ -56,8 +54,7 @@
 	function getPreviousSpaces(map, lineNum) {
 		let prev = map.get(lineNum - 1);
 		return prev === -1 ?
-			getPreviousSpaces(map, lineNum - 1) :
-			{
+			getPreviousSpaces(map, lineNum - 1) : {
 				lineNum: lineNum - 1,
 				count: prev
 			};
@@ -73,7 +70,6 @@
 	}
 
 	function toggleCode(action, index, depth) {
-		busy = true;
 		let els, lineNums;
 		const codeLines = $$(".file table.highlight .blob-code-inner");
 		// depth is a string containing a specific depth number to toggle
@@ -121,7 +117,6 @@
 		if (lineNums.length > 1) {
 			removeSelection();
 		}
-		busy = false;
 	}
 
 	function addBindings() {
@@ -169,7 +164,6 @@
 
 	function addCodeFolding() {
 		if ($(".file table.highlight")) {
-			busy = true;
 			// In case this script has already been run and modified the DOM on a
 			// previous page in github, make sure to reset it.
 			remove("span.collapser");
@@ -207,16 +201,17 @@
 					stack.push(prevSpaces.lineNum);
 				}
 			});
-			busy = false;
 		}
 	}
 
 	function $(selector, el) {
 		return (el || document).querySelector(selector);
 	}
+
 	function $$(selector, el) {
 		return Array.from((el || document).querySelectorAll(selector));
 	}
+
 	function closest(selector, el) {
 		while (el && el.nodeType === 1) {
 			if (el.matches(selector)) {
@@ -226,6 +221,7 @@
 		}
 		return null;
 	}
+
 	function remove(selector, el) {
 		let els = $$(selector, el),
 			index = els.length;
@@ -233,8 +229,9 @@
 			els[index].parentNode.removeChild(els[index]);
 		}
 	}
+
 	function removeSelection() {
-		// remove text selection - http://stackoverflow.com/a/3171348/145346
+		// remove text selection - https://stackoverflow.com/a/3171348/145346
 		const sel = window.getSelection ?
 			window.getSelection() :
 			document.selection;
@@ -247,24 +244,7 @@
 		}
 	}
 
-	// Detect GitHub dynamic ajax page loading
-	$$(
-		"#js-repo-pjax-container, .context-loader-container, [data-pjax-container]"
-	).forEach(target => {
-		new MutationObserver(mutations => {
-			mutations.forEach(mutation => {
-				// preform checks before adding code wrap to minimize function calls
-				if (!busy && mutation.target === target) {
-					addCodeFolding();
-				}
-			});
-		}).observe(target, {
-			childList: true,
-			subtree: true
-		});
-	});
-
+	document.addEventListener("pjax:end", addCodeFolding);
 	addCodeFolding();
 	addBindings();
-
 })();
