@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         GitHub Collapse In Comment
-// @version      1.0.5
+// @version      1.0.6
 // @description  A userscript that adds a header that can toggle long code and quote blocks in comments
 // @license      https://creativecommons.org/licenses/by-sa/4.0/
 // @namespace    https://github.com/Mottie
@@ -15,21 +15,17 @@
 // @updateURL    https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-collapse-in-comment.user.js
 // @downloadURL  https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-collapse-in-comment.user.js
 // ==/UserScript==
-/* global GM_addStyle, GM_getValue, GM_setValue, GM_registerMenuCommand */
-/* jshint esnext:true, unused:true */
 (() => {
 	"use strict";
 	/*
-	Idea from: https://github.com/dear-github/dear-github/issues/166 & https://github.com/isaacs/github/issues/208
+	Idea from: https://github.com/dear-github/dear-github/issues/166 &
+		https://github.com/isaacs/github/issues/208
 	examples:
 		https://github.com/Mottie/tablesorter/issues/569
 		https://github.com/jquery/jquery/issues/3195
 	*/
-	let timer,
-		busy = false,
-
-		// hide code/quotes longer than this number of lines
-		minLines = GM_getValue("gcic-max-lines", 10),
+	// hide code/quotes longer than this number of lines
+	let minLines = GM_getValue("gcic-max-lines", 10),
 		startCollapsed = GM_getValue("gcic-start-collapsed", true);
 
 	// syntax highlight class name lookup table
@@ -95,7 +91,6 @@
 	}
 
 	function addToggles() {
-		busy = true;
 		// issue comments
 		if ($("#discussion_bucket")) {
 			let indx = 0;
@@ -150,7 +145,6 @@
 			};
 			loop();
 		}
-		busy = false;
 	}
 
 	function addBindings() {
@@ -177,7 +171,6 @@
 	}
 
 	function update() {
-		busy = true;
 		let toggles = $$(".gcic-block"),
 			indx = toggles.length;
 		while (indx--) {
@@ -210,7 +203,7 @@
 	}
 
 	function removeSelection() {
-		// remove text selection - http://stackoverflow.com/a/3171348/145346
+		// remove text selection - https://stackoverflow.com/a/3171348/145346
 		const sel = window.getSelection ? window.getSelection() : document.selection;
 		if (sel) {
 			if (sel.removeAllRanges) {
@@ -245,26 +238,16 @@
 		}
 	});
 
-	$$("#js-repo-pjax-container, #js-pjax-container").forEach(target => {
-		new MutationObserver(mutations => {
-			mutations.forEach(mutation => {
-				const mtarget = mutation.target;
-				// preform checks before adding code wrap to minimize function calls
-				// update after comments are edited
-				if (!busy && (mtarget === target || mtarget.matches(
-						".js-comment-body, .js-preview-body"))) {
-					clearTimeout(timer);
-					timer = setTimeout(() => {
-						addToggles();
-					}, 100);
-				}
-			});
-		}).observe(target, {
-			childList: true,
-			subtree: true
-		});
+	document.addEventListener("pjax:end", addToggles);
+	// "preview:render" only fires when using the hotkey :(
+	// "preview:setup" fires on hover & click of comment preview tab
+	document.addEventListener("preview:setup", () => {
+		setTimeout(() => {
+			// must include some rendering time...
+			// 200 ms seems to be enough for a 1100+ line markdown file
+			addToggles();
+		}, 500);
 	});
-
 	addBindings();
 	addToggles();
 })();
