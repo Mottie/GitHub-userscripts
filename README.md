@@ -104,7 +104,7 @@ Userscripts to add functionality to GitHub.
 [cic-gf]: https://greasyfork.org/en/scripts/20973-github-collapse-in-comment
 [cmd-gf]: https://greasyfork.org/en/scripts/20974-github-collapse-markdown
 [cnv-gf]: https://greasyfork.org/en/scripts/20830-github-custom-navigation
-[cnv-gf]: https://greasyfork.org/en/scripts/28454-github-code-show-whitespace
+[csw-gf]: https://greasyfork.org/en/scripts/28454-github-code-show-whitespace
 [dff-gf]: https://greasyfork.org/en/scripts/26191-github-diff-files-filter
 [dfl-gf]: https://greasyfork.org/en/scripts/21559-github-diff-links
 [fpv-gf]: https://greasyfork.org/en/scripts/20479-github-font-preview
