@@ -20,6 +20,7 @@ Userscripts to add functionality to GitHub.
 	| [GitHub code colors][ccs-wiki]         |     | [install][ccs-raw] | [site][ccs-gf] | 2016.03.20 | 2017.03.25 |
 	| [GitHub code folding][cfd-wiki]        |     | [install][cfd-raw] | [site][cfd-gf] | 2016.12.28 | 2017.03.25 |
 	| [GitHub code guides][cgl-wiki]         |     | [install][cgl-raw] | [site][cgl-gf] | 2016.08.27 | 2017.03.25 |
+	| [GitHub code show whitespace][csw-wiki]|     | [install][csw-raw] | [site][csw-gf] | 2017.03.26 | 2017.03.26 |
 	| [GitHub collapse in comment][cic-wiki] |  *  | [install][cic-raw] | [site][cic-gf] | 2016.06.27 | 2017.03.25 |
 	| [GitHub collapse markdown][cmd-wiki]   |  *  | [install][cmd-raw] | [site][cmd-gf] | 2016.06.27 | 2017.03.25 |
 	| [GitHub custom hotkeys][chk-wiki]      |     | [install][chk-raw] | [site][chk-gf] | 2016.04.10 | 2017.03.25 |
@@ -51,6 +52,7 @@ Userscripts to add functionality to GitHub.
 [cic-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-collapse-in-comment
 [cmd-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-collapse-markdown
 [cnv-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-custom-navigation
+[csw-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-code-show-whitespace
 [dff-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-diff-files-filter
 [dfl-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-diff-links
 [fpv-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-font-preview
@@ -76,6 +78,7 @@ Userscripts to add functionality to GitHub.
 [cic-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-collapse-in-comment.user.js
 [cmd-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-collapse-markdown.user.js
 [cnv-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-custom-navigation.user.js
+[csw-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-code-show-whitespace.user.js
 [dff-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-diff-files-filter.user.js
 [dfl-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-diff-links.user.js
 [fpv-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-font-preview.user.js
@@ -101,6 +104,7 @@ Userscripts to add functionality to GitHub.
 [cic-gf]: https://greasyfork.org/en/scripts/20973-github-collapse-in-comment
 [cmd-gf]: https://greasyfork.org/en/scripts/20974-github-collapse-markdown
 [cnv-gf]: https://greasyfork.org/en/scripts/20830-github-custom-navigation
+[cnv-gf]: https://greasyfork.org/en/scripts/28454-github-code-show-whitespace
 [dff-gf]: https://greasyfork.org/en/scripts/26191-github-diff-files-filter
 [dfl-gf]: https://greasyfork.org/en/scripts/21559-github-diff-links
 [fpv-gf]: https://greasyfork.org/en/scripts/20479-github-font-preview
