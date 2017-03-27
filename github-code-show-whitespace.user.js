@@ -1,10 +1,11 @@
 // ==UserScript==
 // @name        GitHub Code Show Whitespace
-// @version     0.1.0
+// @version     0.1.1
 // @description A userscript that shows whitespace (space, tabs and carriage returns) in code blocks
 // @license     https://opensource.org/licenses/MIT
 // @namespace   https://github.com/Mottie
 // @include     https://github.com/*
+// @include     https://gist.github.com/*
 // @run-at      document-idle
 // @grant       GM_addStyle
 // @author      Rob Garrison
@@ -40,7 +41,8 @@
 		.highlight.ghcw-active.tab-size-6 .pl-tab { width: 3.3em; }
 		.highlight.ghcw-active.tab-size-8 .pl-tab { width: 4.4em; }
 
-		.ghcw-active .ghcw-whitespace {
+		.ghcw-active .ghcw-whitespace,
+		.gist-content-wrapper .file-actions .btn-group {
 			position: relative;
 			display: inline-block;
 		}
