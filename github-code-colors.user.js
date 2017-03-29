@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name          GitHub Code Colors
-// @version       1.1.1
+// @version       1.1.2
 // @description   A userscript that adds a color swatch next to the code color definition
 // @license       https://creativecommons.org/licenses/by-sa/4.0/
 // @namespace     https://github.com/Mottie
@@ -27,7 +27,7 @@
 			"darkgoldenrod", "darkgray", "darkgrey", "darkgreen", "darkkhaki",
 			"darkmagenta", "darkolivegreen", "darkorange", "darkorchid", "darkred",
 			"darksalmon", "darkseagreen", "darkslateblue", "darkslategray",
-			"darkslagegrey", "darkturquoise", "darkviolet", "deeppink", "deepskyblue",
+			"darkslategrey", "darkturquoise", "darkviolet", "deeppink", "deepskyblue",
 			"dimgray", "dimgrey", "dodgerblue", "firebrick", "floralwhite",
 			"forestgreen", "fuchsia", "gainsboro", "ghostwhite", "gold", "goldenrod",
 			"gray", "grey", "green", "greenyellow", "honeydew", "hotpink",
