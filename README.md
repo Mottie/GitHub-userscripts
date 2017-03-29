@@ -17,7 +17,7 @@ Userscripts to add functionality to GitHub.
 
 	| Userscript Wiki                        | Ext | Direct Install     | GreasyFork     | Created    | Updated    |
 	|----------------------------------------|:---:|:------------------:|:--------------:|:----------:|:----------:|
-	| [GitHub code colors][ccs-wiki]         |     | [install][ccs-raw] | [site][ccs-gf] | 2016.03.20 | 2017.03.25 |
+	| [GitHub code colors][ccs-wiki]         |     | [install][ccs-raw] | [site][ccs-gf] | 2016.03.20 | 2017.03.29 |
 	| [GitHub code folding][cfd-wiki]        |     | [install][cfd-raw] | [site][cfd-gf] | 2016.12.28 | 2017.03.25 |
 	| [GitHub code guides][cgl-wiki]         |     | [install][cgl-raw] | [site][cgl-gf] | 2016.08.27 | 2017.03.25 |
 	| [GitHub code show whitespace][csw-wiki]|     | [install][csw-raw] | [site][csw-gf] | 2017.03.26 | 2017.03.27 |
