@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name          GitHub Custom Navigation
-// @version       1.0.8
+// @version       1.0.9
 // @description   A userscript that allows you to customize GitHub's main navigation bar
 // @license       https://creativecommons.org/licenses/by-sa/4.0/
 // @namespace     https://github.com/Mottie
@@ -38,6 +38,12 @@
 			currentLink: "pr",
 			// using full length url so the links work from any subdomain (e.g. gist pages)
 			items: {
+				"advsearch": {
+					url: "https://github.com/search/advanced",
+					tooltip: "Advanced Search",
+					hotkey: "",
+					content: "<svg class='octicon' xmlns='http://www.w3.org/2000/svg' aria-hidden='true' height='16' width='16' viewBox='0 0 16 16'><path d='M15.7 14.3L11.89 10.47c0.7-0.98 1.11-2.17 1.11-3.47 0-3.31-2.69-6-6-6S1 3.69 1 7s2.69 6 6 6c1.3 0 2.48-0.41 3.47-1.11l3.83 3.81c0.19 0.2 0.45 0.3 0.7 0.3s0.52-0.09 0.7-0.3c0.39-0.39 0.39-1.02 0-1.41zM7 11.7c-2.59 0-4.7-2.11-4.7-4.7s2.11-4.7 4.7-4.7 4.7 2.11 4.7 4.7-2.11 4.7-4.7 4.7z'/></svg>"
+				},
 				"blog": {
 					url: "https://github.com/blog",
 					tooltip: "Blog",
@@ -151,30 +157,38 @@
 	function addPanel() {
 		GM_addStyle(`
 			/* Use border right when a vertical bar is added */
-			.header-nav-link.ghcn-separator { border-right:#e5e5e5 2px solid; padding:4px 0; }
+			.header-nav-link.ghcn-separator { border-right:#777 1px solid;
+				padding:4px 0; }
 			/* settings panel */
-			#ghcn-overlay { position:fixed; top:50px; left:0; right:0; bottom:0; z-index:45;
-				background:rgba(0,0,0,.5); display:none; }
+			#ghcn-overlay { position:fixed; top:50px; left:0; right:0; bottom:0;
+				z-index:45; background:rgba(0,0,0,.5); display:none; }
 			#ghcn-menu { cursor:pointer; }
-			.ghcn-close, .ghcn-code { float:right; cursor:pointer; font-size:.8em; margin-left:3px;
-				padding:0 6px 2px 6px; }
+			.ghcn-close, .ghcn-code { float:right; cursor:pointer; font-size:.8em;
+				margin-left:3px; padding:0 6px 2px 6px; }
 			.ghcn-close .octicon { vertical-align:middle; fill:currentColor; }
-			#ghcn-settings-inner { position:fixed; left:50%; top:55px; z-index:50; width:30rem;
-				transform:translate(-50%,0); box-shadow:0 .5rem 1rem #111; color:#c0c0c0; display:none; }
-			#ghcn-settings-inner input { width:85%; float:right; border-style:solid; border-width:1px;
-				max-height:35px; }
+			#ghcn-settings-inner { position:fixed; left:50%; top:55px; z-index:50;
+				width:30rem; transform:translate(-50%,0); box-shadow:0 .5rem 1rem #111;
+				color:#c0c0c0; display:none; }
+			#ghcn-settings-inner input { width:85%; float:right; border-style:solid;
+				border-width:1px; max-height:35px; }
 			.ghcn-settings-wrapper div { line-height:38px; }
 			#ghcn-nav-items { min-height: 38px; }
 			#ghcn-nav-items .header-nav-item { margin-bottom:4px; }
 			.ghcn-settings-wrapper hr { margin: 10px 0; }
 			.ghcn-footer { margin-top:4px; border-top:#555 solid 1px; }
 			.header-nav-link { height:28px; }
-			.header-nav.float-left .header-nav-link svg, .header-nav.float-left .header-nav-link img,
-				#ghcn-nav-items .header-nav-link svg, #ghcn-nav-items .header-nav-link img,
-				.gu-mirror svg, .gu-mirror img { max-height:16px; fill:currentColor; vertical-align:middle;
+			.header-nav.float-left .header-nav-link svg,
+				.header-nav.float-left .header-nav-link img,
+				#ghcn-nav-items .header-nav-link svg,
+				#ghcn-nav-items .header-nav-link img, .gu-mirror svg, .gu-mirror img {
+				max-height:16px; fill:currentColor; vertical-align:middle;
 				overflow:visible; }
+			/* override white text when settings panel is open*/
+			body.ghcn-settings-open #ghcn-nav-items .text-emphasized {
+				color: #24292e; }
 			/* panel open */
-			body.ghcn-settings-open { overflow:hidden !important; /* !important overrides wiki style */ }
+			body.ghcn-settings-open {
+				overflow:hidden !important; /* !important overrides wiki style */ }
 			/* hide other header elements while settings is open (overflow issues) */
 			body.ghcn-settings-open .header-search,
 				body.ghcn-settings-open .header-nav.float-right,
@@ -185,23 +199,29 @@
 			body.ghcn-settings-open .header-nav.float-left { width:100%; }
 			body.ghcn-settings-open .header-nav-link > * { pointer-events:none; }
 			body.ghcn-settings-open #ghcn-overlay,
-				body.ghcn-settings-open #ghcn-settings-inner,
-				#ghcn-nav-items { display:block; }
+			body.ghcn-settings-open #ghcn-settings-inner,
+			#ghcn-nav-items { display:block; }
 			body.ghcn-settings-open .header-nav.float-left .header-nav-item,
-				.ghcn-settings-wrapper .header-nav-item { cursor:move; border:#555 1px solid; border-radius:4px;
+			.ghcn-settings-wrapper .header-nav-item { cursor:move;
+					border:#555 1px solid; border-radius:4px;
 				margin-left: 2px; }
 			body.ghcn-settings-open .header-nav-link,
-				.ghcn-settings-wrapper .header-nav-link { min-height:auto; min-width:16px; }
+				.ghcn-settings-wrapper .header-nav-link { min-height:auto;
+				min-width:16px; padding-top:1px; }
+			body.ghcn-settings-open .header .header-nav-link.form-control {
+				background-color: transparent; border: 1px solid #444; }
 			/* JSON code block */
-			.ghcn-json-code { display:none; font-family:Menlo, Inconsolata, "Droid Mono", monospace; font-size:1em; }
-			.ghcn-visible { display:block; position:absolute; top:38px; bottom:0; left:2px; right:2px; z-index:1;
+			.ghcn-json-code { display:none; font-family:Menlo, Inconsolata,
+				"Droid Mono", monospace; font-size:1em; }
+			.ghcn-visible { display:block; position:absolute; top:38px; bottom:0;
+				left:2px; right:2px; z-index:1;
 				width:476px; max-width:476px; }
 			/* Dragula.min.css v3.7.1 (Microsoft definitions removed) */
-			.gu-mirror { position:fixed !important; margin:0 !important; z-index:9999 !important; opacity:.8;
-				list-style:none; }
+			.gu-mirror { position:fixed !important; margin:0 !important;
+				z-index:9999 !important; opacity:.8; list-style:none; }
 			.gu-hide { display:none !important; }
-			.gu-unselectable { -webkit-user-select:none !important; -moz-user-select:none !important;
-				user-select:none !important; }
+			.gu-unselectable { -webkit-user-select:none !important;
+				-moz-user-select:none !important; user-select:none !important; }
 			.gu-transit { opacity:.2; }
 		`);
 
@@ -369,9 +389,8 @@
 		let html,
 			item = settings.items[name] || {},
 			url = (item.url || "").replace(/\$\{me\}/g, user),
-			linkClass = editMode ?
-			"header-nav-link form-control" :
-			"js-selected-navigation-item header-nav-link";
+			linkClass = "text-emphasized header-nav-link " +
+				(editMode ? "form-control" : "js-selected-navigation-item");
 		// only show tooltip if defined
 		if (item.tooltip) {
 			linkClass += " tooltipped tooltipped-s";
