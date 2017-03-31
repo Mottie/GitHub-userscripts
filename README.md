@@ -24,7 +24,7 @@ Userscripts to add functionality to GitHub.
 	| [GitHub collapse in comment][cic-wiki] |  *  | [install][cic-raw] | [site][cic-gf] | 2016.06.27 | 2017.03.25 |
 	| [GitHub collapse markdown][cmd-wiki]   |  *  | [install][cmd-raw] | [site][cmd-gf] | 2016.06.27 | 2017.03.25 |
 	| [GitHub custom hotkeys][chk-wiki]      |     | [install][chk-raw] | [site][chk-gf] | 2016.04.10 | 2017.03.25 |
-	| [GitHub custom navigation][cnv-wiki]   |     | [install][cnv-raw] | [site][cnv-gf] | 2016.06.22 | 2017.03.25 |
+	| [GitHub custom navigation][cnv-wiki]   |     | [install][cnv-raw] | [site][cnv-gf] | 2016.06.22 | 2017.03.31 |
 	| [GitHub diff files filter][dff-wiki]   |     | [install][dff-raw] | [site][dff-gf] | 2016.12.31 | 2017.03.25 |
 	| [GitHub diff links][dfl-wiki]          |     | [install][dfl-raw] | [site][dfl-gf] | 2016.07.21 | 2017.03.25 |
 	| [GitHub font preview][fpv-wiki]        |     | [install][fpv-raw] | [site][fpv-gf] | 2016.06.11 | 2017.03.25 |
@@ -36,6 +36,7 @@ Userscripts to add functionality to GitHub.
 	| [GitHub label color picker][glc-wiki]  |     | [install][glc-raw] | [site][glc-gf] | 2016.09.16 | 2017.03.25 |
 	| [GitHub remove diff signs][rds-wiki]   |     | [install][rds-raw] | [site][rds-gf] | 2016.04.05 | 2017.03.25 |
 	| [GitHub rtl comments][rtl-wiki]        |     | [install][rtl-raw] | [site][rtl-gf] | 2016.06.13 | 2017.03.25 |
+	| [GitHub search autocomplete][sac-wiki] |     | [install][sac-raw] | [site][sac-gf] | 2017.03.31 | 2017.03.31 |
 	| [GitHub sort content][srt-wiki]        |     | [install][srt-raw] | [site][srt-gf] | 2016.07.13 | 2017.03.25 |
 	| [GitHub table of contents][toc-wiki]   |     | [install][toc-raw] | [site][toc-gf] | 2016.03.28 | 2017.03.25 |
 	| [GitHub title notification][tbn-wiki]  |     | [install][tbn-raw] | [site][tbn-gf] | 2016.03.24 | 2017.03.25 |
@@ -65,6 +66,7 @@ Userscripts to add functionality to GitHub.
 [ipv-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-image-preview
 [rds-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-remove-diff-signs
 [rtl-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-rtl-comments
+[sac-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-search-autocomplete
 [srt-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-sort-content
 [tbn-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-title-notification
 [tex-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-toggle-expanders
@@ -91,6 +93,7 @@ Userscripts to add functionality to GitHub.
 [ipv-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-image-preview.user.js
 [rds-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-remove-diff-signs.user.js
 [rtl-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-rtl-comments.user.js
+[sac-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-search-autocomplete.user.js
 [srt-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-sort-content.user.js
 [tbn-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-title-notification.user.js
 [tex-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-toggle-expanders.user.js
@@ -117,6 +120,7 @@ Userscripts to add functionality to GitHub.
 [ipv-gf]: https://greasyfork.org/en/scripts/19773-github-image-preview
 [rds-gf]: https://greasyfork.org/en/scripts/18520-github-remove-diff-signs
 [rtl-gf]: https://greasyfork.org/en/scripts/20542-github-rtl-comment-blocks
+[sac-gf]: https://greasyfork.org/en/scripts/28592-github-search-autocomplete
 [srt-gf]: https://greasyfork.org/en/scripts/21373-github-sort-content
 [tbn-gf]: https://greasyfork.org/en/scripts/18253-github-title-notification
 [tex-gf]: https://greasyfork.org/en/scripts/23303-github-toggle-expanders
