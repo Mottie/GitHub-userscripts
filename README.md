@@ -13,7 +13,7 @@ Userscripts to add functionality to GitHub.
 	* Dolphin - install [Tampermonkey](https://tampermonkey.net/?ext=dhdg&browser=dolphin).
 	* UC Browser - install [Tampermonkey](https://tampermonkey.net/?ext=dhdg&browser=ucweb).
 
-2. Get more information about the userscript by clicking on the named link. Or install it directly or from the GreasyFork site:
+2. Get more information about the userscript by clicking on the named link. Or install it directly or from the GreasyFork site (or [OpenUserJS](https://openuserjs.org/users/Mottie/scripts)):
 
 	| Userscript Wiki                        | Ext | Direct Install     | GreasyFork     | Created    | Updated    |
 	|----------------------------------------|:---:|:------------------:|:--------------:|:----------:|:----------:|
