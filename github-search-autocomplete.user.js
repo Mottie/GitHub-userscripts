@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Search Autocomplete
-// @version     0.1.0
+// @version     0.1.1
 // @description A userscript that adds autocomplete search filters to GitHub
 // @license     https://opensource.org/licenses/MIT
 // @namespace   https://github.com/Mottie
@@ -487,7 +487,7 @@
 			return li;
 		}
 		const regexp = new RegExp(
-			">\\s*([^\<]*?)(" + query.replace("+", "\\+") + ")([^\<]*)\\s*<", 'ig'
+			">\\s*([^\<]*?)(" + query.replace("+", "\\+") + ")([^\<]*)\\s*<", "ig"
 		);
 		return li.replace(regexp, function(str, $1, $2, $3) {
 			return `>${$1}<strong class="text-emphasized">${$2}</strong>${$3} <`;
@@ -549,11 +549,10 @@
 						this.setting.suffix = " ";
 						return items;
 					},
-					beforeInsert: function(value, $li) {
+					beforeInsert: function(value) {
 						// don't add a space if the user chooses an empty string value
 						// meaning the filter ends with a colon, e.g. "in:"
 						this.setting.suffix = value.slice(-1) === ":" ? "" : " ";
-						console.log(`"${value}"`, `"${this.setting.suffix}"` );
 						return value;
 					}
 				}
