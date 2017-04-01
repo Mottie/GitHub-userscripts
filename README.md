@@ -42,7 +42,7 @@ Userscripts to add functionality to GitHub.
 	| [GitHub rtl comments][rtl-wiki]        |     | [install][rtl-raw] | [site][rtl-gf] | 2016.06.13 | 2017.03.25 |
 	| [GitHub search autocomplete][sac-wiki] |     | [install][sac-raw] | [site][sac-gf] | 2017.03.31 | 2017.03.31 |
 	| [GitHub sort content][srt-wiki]        |     | [install][srt-raw] | [site][srt-gf] | 2016.07.13 | 2017.03.25 |
-	| [GitHub table of contents][toc-wiki]   |     | [install][toc-raw] | [site][toc-gf] | 2016.03.28 | 2017.03.25 |
+	| [GitHub table of contents][toc-wiki]   |     | [install][toc-raw] | [site][toc-gf] | 2016.03.28 | 2017.03.31 |
 	| [GitHub title notification][tbn-wiki]  |     | [install][tbn-raw] | [site][tbn-gf] | 2016.03.24 | 2017.03.25 |
 	| [GitHub toggle expanders][tex-wiki]    |     | [install][tex-raw] | [site][tex-gf] | 2016.09.17 | 2017.03.25 |
 	| [GitHub toggle wiki sidebar][tws-wiki] |     | [install][tws-raw] | [site][tws-gf] | 2016.04.01 | 2017.03.25 |
