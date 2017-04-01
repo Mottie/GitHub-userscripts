@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name          GitHub TOC
-// @version       1.2.2
+// @version       1.2.3
 // @description   A userscript that adds a table of contents to readme & wiki pages
 // @license       https://creativecommons.org/licenses/by-sa/4.0/
 // @namespace     https://github.com/Mottie
@@ -223,8 +223,10 @@
 			if (next) {
 				num = el.className.match(/\d/)[0];
 				while (next && !next.classList.contains("github-toc-h" + num)) {
-					count += next.className.match(/\d/)[0] > num ? 1 : 0;
-					group[group.length] = next;
+					if (next.className.match(/\d/)[0] > num) {
+						count++;
+						group[group.length] = next;
+					}
 					next = next.nextElementSibling;
 				}
 				if (count > 0) {
