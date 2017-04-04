@@ -16,39 +16,39 @@ Userscripts to add functionality to GitHub.
 2. Get information or install:
 	* Learn more about the userscript by clicking on the named link. You will be taken to the specific wiki page.
 	* Install a script directly from GitHub by clicking on the "install" link in the table below.
-	* Install a script from GreasyFork from the userscript site page
-	* Or, install the scripts from [OpenUserJS](https://openuserjs.org/users/Mottie/scripts).<br><br>
+	* Install a script from [GreasyFork](https://greasyfork.org/en/users/24847-mottie) (GF) from the userscript site page
+	* Or, install the scripts from [OpenUserJS](https://openuserjs.org/users/Mottie/scripts) (OU).<br><br>
 
-	| Userscript Wiki                        | Ext | Direct Install     | GreasyFork     | Created    | Updated    |
-	|----------------------------------------|:---:|:------------------:|:--------------:|:----------:|:----------:|
-	| [GitHub code colors][ccs-wiki]         |     | [install][ccs-raw] | [site][ccs-gf] | 2016.03.20 | 2017.03.29 |
-	| [GitHub code folding][cfd-wiki]        |     | [install][cfd-raw] | [site][cfd-gf] | 2016.12.28 | 2017.03.25 |
-	| [GitHub code guides][cgl-wiki]         |     | [install][cgl-raw] | [site][cgl-gf] | 2016.08.27 | 2017.03.25 |
-	| [GitHub code show whitespace][csw-wiki]|     | [install][csw-raw] | [site][csw-gf] | 2017.03.26 | 2017.03.27 |
-	| [GitHub collapse in comment][cic-wiki] |  *  | [install][cic-raw] | [site][cic-gf] | 2016.06.27 | 2017.03.25 |
-	| [GitHub collapse markdown][cmd-wiki]   |  *  | [install][cmd-raw] | [site][cmd-gf] | 2016.06.27 | 2017.03.25 |
-	| [GitHub custom hotkeys][chk-wiki]      |     | [install][chk-raw] | [site][chk-gf] | 2016.04.10 | 2017.03.25 |
-	| [GitHub custom navigation][cnv-wiki]   |     | [install][cnv-raw] | [site][cnv-gf] | 2016.06.22 | 2017.03.31 |
-	| [GitHub diff files filter][dff-wiki]   |     | [install][dff-raw] | [site][dff-gf] | 2016.12.31 | 2017.03.25 |
-	| [GitHub diff links][dfl-wiki]          |     | [install][dfl-raw] | [site][dfl-gf] | 2016.07.21 | 2017.03.25 |
-	| [GitHub font preview][fpv-wiki]        |     | [install][fpv-raw] | [site][fpv-gf] | 2016.06.11 | 2017.03.25 |
-	| [GitHub image preview][ipv-wiki]       |     | [install][ipv-raw] | [site][ipv-gf] | 2016.05.17 | 2017.03.25 |
-	| [GitHub indent comments][ioc-wiki]     |     | [install][ioc-raw] | [site][ioc-gf] | 2017.03.15 | 2017.03.25 |
-	| [GitHub issue comments][ic1-wiki]      |     | [install][ic1-raw] | [site][ic1-gf] | 2016.04.04 | 2017.03.25 |
-	| [GitHub issue counts][ic2-wiki]        |     | [install][ic2-raw] | [site][ic2-gf] | 2012.01.16 | 2017.03.25 |
-	| [GitHub issue highlighter][gih-wiki]   |     | [install][gih-raw] | [site][gih-gf] | 2016.05.21 | 2017.03.25 |
-	| [GitHub label color picker][glc-wiki]  |     | [install][glc-raw] | [site][glc-gf] | 2016.09.16 | 2017.03.25 |
-	| [GitHub remove diff signs][rds-wiki]   |     | [install][rds-raw] | [site][rds-gf] | 2016.04.05 | 2017.03.25 |
-	| [GitHub rtl comments][rtl-wiki]        |     | [install][rtl-raw] | [site][rtl-gf] | 2016.06.13 | 2017.03.25 |
-	| [GitHub search autocomplete][sac-wiki] |     | [install][sac-raw] | [site][sac-gf] | 2017.03.31 | 2017.03.31 |
-	| [GitHub sort content][srt-wiki]        |     | [install][srt-raw] | [site][srt-gf] | 2016.07.13 | 2017.03.25 |
-	| [GitHub table of contents][toc-wiki]   |     | [install][toc-raw] | [site][toc-gf] | 2016.03.28 | 2017.04.04 |
-	| [GitHub title notification][tbn-wiki]  |     | [install][tbn-raw] | [site][tbn-gf] | 2016.03.24 | 2017.03.25 |
-	| [GitHub toggle expanders][tex-wiki]    |     | [install][tex-raw] | [site][tex-gf] | 2016.09.17 | 2017.03.25 |
-	| [GitHub toggle wiki sidebar][tws-wiki] |     | [install][tws-raw] | [site][tws-gf] | 2016.04.01 | 2017.03.25 |
-	| [Gist to dabblet][g2d-wiki]            |     | [install][g2d-raw] | [site][g2d-gf] | 2012.01.26 | 2017.03.25 |
+	| Userscript Wiki                        | ![][ico] | Direct<br>Install | Sites                 | Created    | Updated    |
+	|----------------------------------------|:---:|:------------------:|:-------------------------:|:----------:|:----------:|
+	| [GitHub code colors][ccs-wiki]         |     | [install][ccs-raw] | [GF][ccs-gf] [OU][ccs-ou] | 2016.03.20 | 2017.03.29 |
+	| [GitHub code folding][cfd-wiki]        |     | [install][cfd-raw] | [GF][cfd-gf] [OU][cfd-ou] | 2016.12.28 | 2017.03.25 |
+	| [GitHub code guides][cgl-wiki]         |     | [install][cgl-raw] | [GF][cgl-gf] [OU][cgl-ou] | 2016.08.27 | 2017.03.25 |
+	| [GitHub code show whitespace][csw-wiki]|     | [install][csw-raw] | [GF][csw-gf] [OU][csw-ou] | 2017.03.26 | 2017.03.27 |
+	| [GitHub collapse in comment][cic-wiki] |  *  | [install][cic-raw] | [GF][cic-gf] [OU][cic-ou] | 2016.06.27 | 2017.03.25 |
+	| [GitHub collapse markdown][cmd-wiki]   |  *  | [install][cmd-raw] | [GF][cmd-gf] [OU][cmd-ou] | 2016.06.27 | 2017.03.25 |
+	| [GitHub custom hotkeys][chk-wiki]      |     | [install][chk-raw] | [GF][chk-gf] [OU][chk-ou] | 2016.04.10 | 2017.03.25 |
+	| [GitHub custom navigation][cnv-wiki]   |     | [install][cnv-raw] | [GF][cnv-gf] [OU][cnv-ou] | 2016.06.22 | 2017.03.31 |
+	| [GitHub diff files filter][dff-wiki]   |     | [install][dff-raw] | [GF][dff-gf] [OU][dff-ou] | 2016.12.31 | 2017.03.25 |
+	| [GitHub diff links][dfl-wiki]          |     | [install][dfl-raw] | [GF][dfl-gf] [OU][dfl-ou] | 2016.07.21 | 2017.03.25 |
+	| [GitHub font preview][fpv-wiki]        |     | [install][fpv-raw] | [GF][fpv-gf] [OU][fpv-ou] | 2016.06.11 | 2017.03.25 |
+	| [GitHub image preview][ipv-wiki]       |     | [install][ipv-raw] | [GF][ipv-gf] [OU][ipv-ou] | 2016.05.17 | 2017.03.25 |
+	| [GitHub indent comments][ioc-wiki]     |     | [install][ioc-raw] | [GF][ioc-gf] [OU][ioc-ou] | 2017.03.15 | 2017.03.25 |
+	| [GitHub issue comments][ic1-wiki]      |     | [install][ic1-raw] | [GF][ic1-gf] [OU][ic1-ou] | 2016.04.04 | 2017.03.25 |
+	| [GitHub issue counts][ic2-wiki]        |     | [install][ic2-raw] | [GF][ic2-gf] [OU][ic2-ou] | 2012.01.16 | 2017.03.25 |
+	| [GitHub issue highlighter][gih-wiki]   |     | [install][gih-raw] | [GF][gih-gf] [OU][gih-ou] | 2016.05.21 | 2017.03.25 |
+	| [GitHub label color picker][glc-wiki]  |     | [install][glc-raw] | [GF][glc-gf] [OU][glc-ou] | 2016.09.16 | 2017.03.25 |
+	| [GitHub remove diff signs][rds-wiki]   |     | [install][rds-raw] | [GF][rds-gf] [OU][rds-ou] | 2016.04.05 | 2017.03.25 |
+	| [GitHub rtl comments][rtl-wiki]        |     | [install][rtl-raw] | [GF][rtl-gf] [OU][rtl-ou] | 2016.06.13 | 2017.03.25 |
+	| [GitHub search autocomplete][sac-wiki] |     | [install][sac-raw] | [GF][sac-gf] [OU][sac-ou] | 2017.03.31 | 2017.03.31 |
+	| [GitHub sort content][srt-wiki]        |     | [install][srt-raw] | [GF][srt-gf] [OU][srt-ou] | 2016.07.13 | 2017.03.25 |
+	| [GitHub table of contents][toc-wiki]   |     | [install][toc-raw] | [GF][toc-gf] [OU][toc-ou] | 2016.03.28 | 2017.04.04 |
+	| [GitHub title notification][tbn-wiki]  |     | [install][tbn-raw] | [GF][tbn-gf] [OU][tbn-ou] | 2016.03.24 | 2017.03.25 |
+	| [GitHub toggle expanders][tex-wiki]    |     | [install][tex-raw] | [GF][tex-gf] [OU][tex-ou] | 2016.09.17 | 2017.03.25 |
+	| [GitHub toggle wiki sidebar][tws-wiki] |     | [install][tws-raw] | [GF][tws-gf] [OU][tws-ou] | 2016.04.01 | 2017.03.25 |
+	| [Gist to dabblet][g2d-wiki]            |     | [install][g2d-raw] | [GF][g2d-gf] [OU][g2d-ou] | 2012.01.26 | 2017.03.25 |
 
-\* "Ext" column indicates that the userscript has been included in the [Octopatcher](https://github.com/Mottie/Octopatcher) browser extension/addon.
+\* The ![][ico] column indicates that the userscript has been included in the [Octopatcher](https://github.com/Mottie/Octopatcher) browser extension/addon.
 
 [ccs-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-code-colors
 [cfd-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-code-folding
@@ -130,6 +130,35 @@ Userscripts to add functionality to GitHub.
 [tex-gf]: https://greasyfork.org/en/scripts/23303-github-toggle-expanders
 [toc-gf]: https://greasyfork.org/en/scripts/18344-github-toc
 [tws-gf]: https://greasyfork.org/en/scripts/18433-github-toggle-wiki-sidebar
+
+[ccs-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Code_Colors
+[cfd-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Code_Folding
+[cgl-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Code_Guides
+[chk-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Custom_Hotkeys
+[cic-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Collapse_In_Comment
+[cmd-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Collapse_Markdown
+[cnv-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Custom_Navigation
+[csw-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Code_Show_Whitespace
+[dff-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Diff_Files_Filter
+[dfl-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Diff_Links
+[fpv-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Font_Preview
+[g2d-ou]: https://openuserjs.org/scripts/Mottie/Gist_to_dabblet
+[gih-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Issue_Highlighter
+[glc-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Label_Color_Picker
+[ic1-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Toggle_Issue_Comments
+[ic2-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Show_Repo_Issues
+[ioc-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Indent_Comment_Blocks
+[ipv-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Image_Preview
+[rds-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Remove_Diff_Signs
+[rtl-ou]: https://openuserjs.org/scripts/Mottie/GitHub_RTL_Comment_Blocks
+[sac-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Search_Autocomplete
+[srt-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Sort_Content
+[tbn-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Title_Notification
+[tex-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Toggle_Expanders
+[toc-ou]: https://openuserjs.org/scripts/Mottie/GitHub_TOC
+[tws-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Toggle_Wiki_Sidebar
+
+[ico]: https://raw.githubusercontent.com/Mottie/Octopatcher/master/src/images/icon16.png
 
 ## Updating
 
