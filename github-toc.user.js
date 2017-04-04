@@ -1,10 +1,11 @@
 // ==UserScript==
 // @name          GitHub TOC
-// @version       1.2.3
+// @version       1.2.4
 // @description   A userscript that adds a table of contents to readme & wiki pages
 // @license       https://creativecommons.org/licenses/by-sa/4.0/
 // @namespace     https://github.com/Mottie
 // @include       https://github.com/*
+// @include       https://gist.github.com/*
 // @run-at        document-idle
 // @grant         GM_registerMenuCommand
 // @grant         GM_getValue
