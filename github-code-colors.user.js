@@ -70,7 +70,7 @@
 			let indx = 0;
 			const regexNamed = new RegExp("^(" + namedColors + ")$", "i"),
 				// #123, #123456 or 0x123456 (unix style colors, used by three.js)
-				regexHex = /^(#|0x)([0-9A-F]{6}|[0-9A-F]{3})$/i,
+				regexHex = /^(#|0x)([0-9A-F]{6,8}|[0-9A-F]{3,4})$/i,
 				// rgb(0,0,0) or rgba(0,0,0,0.2)
 				regexRGB = /^rgba?(\([^\)]+\))?/i,
 				regexRGBA = /rgba/i,
