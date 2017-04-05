@@ -1,19 +1,20 @@
 // ==UserScript==
-// @name          GitHub Custom Navigation
-// @version       1.0.9
-// @description   A userscript that allows you to customize GitHub's main navigation bar
-// @license       https://creativecommons.org/licenses/by-sa/4.0/
-// @namespace     https://github.com/Mottie
-// @include       https://github.com/*
-// @include       https://gist.github.com/*
-// @grant         GM_addStyle
-// @grant         GM_getValue
-// @grant         GM_setValue
-// @require       https://cdnjs.cloudflare.com/ajax/libs/dragula/3.7.1/dragula.js
-// @run-at        document-end
-// @author        Rob Garrison
-// @updateURL     https://raw.githubusercontent.com/Mottie/Github-userscripts/master/github-custom-navigation.user.js
-// @downloadURL   https://raw.githubusercontent.com/Mottie/Github-userscripts/master/github-custom-navigation.user.js
+// @name        GitHub Custom Navigation
+// @version     1.0.9
+// @description A userscript that allows you to customize GitHub's main navigation bar
+// @license     https://creativecommons.org/licenses/by-sa/4.0/
+// @author      Rob Garrison
+// @namespace   https://github.com/Mottie
+// @include     https://github.com/*
+// @include     https://gist.github.com/*
+// @run-at      document-end
+// @grant       GM_addStyle
+// @grant       GM_getValue
+// @grant       GM_setValue
+// @icon        https://github.com/fluidicon.png
+// @require     https://cdnjs.cloudflare.com/ajax/libs/dragula/3.7.1/dragula.js
+// @updateURL   https://raw.githubusercontent.com/Mottie/Github-userscripts/master/github-custom-navigation.user.js
+// @downloadURL https://raw.githubusercontent.com/Mottie/Github-userscripts/master/github-custom-navigation.user.js
 // ==/UserScript==
 (() => {
 	"use strict";

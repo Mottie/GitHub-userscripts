@@ -1,16 +1,17 @@
 // ==UserScript==
-// @name          GitHub Sort Content
-// @version       1.1.5
-// @description   A userscript that makes some lists & markdown tables sortable
-// @license       https://creativecommons.org/licenses/by-sa/4.0/
-// @namespace     https://github.com/Mottie
-// @include       https://github.com/*
-// @grant         GM_addStyle
-// @require       https://cdnjs.cloudflare.com/ajax/libs/tinysort/2.3.6/tinysort.min.js
-// @run-at        document-idle
-// @author        Rob Garrison
-// @updateURL     https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-sort-content.user.js
-// @downloadURL   https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-sort-content.user.js
+// @name        GitHub Sort Content
+// @version     1.1.5
+// @description A userscript that makes some lists & markdown tables sortable
+// @license     https://creativecommons.org/licenses/by-sa/4.0/
+// @author      Rob Garrison
+// @namespace   https://github.com/Mottie
+// @include     https://github.com/*
+// @run-at      document-idle
+// @grant       GM_addStyle
+// @require     https://cdnjs.cloudflare.com/ajax/libs/tinysort/2.3.6/tinysort.min.js
+// @icon        https://github.com/fluidicon.png
+// @updateURL   https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-sort-content.user.js
+// @downloadURL https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-sort-content.user.js
 // ==/UserScript==
 (() => {
 	"use strict";

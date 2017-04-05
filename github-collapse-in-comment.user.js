@@ -1,19 +1,20 @@
 // ==UserScript==
-// @name         GitHub Collapse In Comment
-// @version      1.0.6
-// @description  A userscript that adds a header that can toggle long code and quote blocks in comments
-// @license      https://creativecommons.org/licenses/by-sa/4.0/
-// @namespace    https://github.com/Mottie
-// @include      https://github.com/*
-// @include      https://gist.github.com/*
-// @run-at       document-idle
-// @grant        GM_addStyle
-// @grant        GM_getValue
-// @grant        GM_setValue
-// @grant        GM_registerMenuCommand
-// @author       Rob Garrison
-// @updateURL    https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-collapse-in-comment.user.js
-// @downloadURL  https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-collapse-in-comment.user.js
+// @name        GitHub Collapse In Comment
+// @version     1.0.6
+// @description A userscript that adds a header that can toggle long code and quote blocks in comments
+// @license     https://creativecommons.org/licenses/by-sa/4.0/
+// @author      Rob Garrison
+// @namespace   https://github.com/Mottie
+// @include     https://github.com/*
+// @include     https://gist.github.com/*
+// @run-at      document-idle
+// @grant       GM_addStyle
+// @grant       GM_getValue
+// @grant       GM_setValue
+// @grant       GM_registerMenuCommand
+// @icon        https://github.com/fluidicon.png
+// @updateURL   https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-collapse-in-comment.user.js
+// @downloadURL https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-collapse-in-comment.user.js
 // ==/UserScript==
 (() => {
 	"use strict";

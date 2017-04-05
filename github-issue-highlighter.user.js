@@ -1,15 +1,16 @@
 // ==UserScript==
-// @name          GitHub Issue Highlighter
-// @version       1.0.3
-// @description   A userscript that highlights the linked-to comment
-// @license       https://creativecommons.org/licenses/by-sa/4.0/
-// @namespace     https://github.com/Mottie
-// @include       https://github.com/*
-// @run-at        document-idle
-// @grant         GM_addStyle
-// @author        Rob Garrison
-// @updateURL     https://raw.githubusercontent.com/Mottie/Github-userscripts/master/github-highlight-comment.user.js
-// @downloadURL   https://raw.githubusercontent.com/Mottie/Github-userscripts/master/github-highlight-comment.user.js
+// @name        GitHub Issue Highlighter
+// @version     1.0.3
+// @description A userscript that highlights the linked-to comment
+// @license     https://creativecommons.org/licenses/by-sa/4.0/
+// @author      Rob Garrison
+// @namespace   https://github.com/Mottie
+// @include     https://github.com/*
+// @run-at      document-idle
+// @grant       GM_addStyle
+// @icon        https://github.com/fluidicon.png
+// @updateURL   https://raw.githubusercontent.com/Mottie/Github-userscripts/master/github-highlight-comment.user.js
+// @downloadURL https://raw.githubusercontent.com/Mottie/Github-userscripts/master/github-highlight-comment.user.js
 // ==/UserScript==
 (() => {
 	"use strict";

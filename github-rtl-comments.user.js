@@ -1,18 +1,19 @@
 // ==UserScript==
-// @name          GitHub RTL Comment Blocks
-// @version       1.2.4
-// @description   A userscript that adds a button to insert RTL text blocks in comments
-// @license       https://creativecommons.org/licenses/by-sa/4.0/
-// @namespace     https://github.com/Mottie
-// @include       https://github.com/*
-// @include       https://gist.github.com/*
-// @require       https://greasyfork.org/scripts/28239-rangy-inputs-mod-js/code/rangy-inputs-modjs.js?version=181769
-// @run-at        document-idle
-// @grant         GM_addStyle
-// @connect       github.com
-// @author        Rob Garrison
-// @updateURL     https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-rtl-comments.user.js
-// @downloadURL   https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-rtl-comments.user.js
+// @name        GitHub RTL Comment Blocks
+// @version     1.2.4
+// @description A userscript that adds a button to insert RTL text blocks in comments
+// @license     https://creativecommons.org/licenses/by-sa/4.0/
+// @author      Rob Garrison
+// @namespace   https://github.com/Mottie
+// @include     https://github.com/*
+// @include     https://gist.github.com/*
+// @run-at      document-idle
+// @grant       GM_addStyle
+// @connect     github.com
+// @require     https://greasyfork.org/scripts/28239-rangy-inputs-mod-js/code/rangy-inputs-modjs.js?version=181769
+// @icon        https://github.com/fluidicon.png
+// @updateURL   https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-rtl-comments.user.js
+// @downloadURL https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-rtl-comments.user.js
 // ==/UserScript==
 (() => {
 	"use strict";

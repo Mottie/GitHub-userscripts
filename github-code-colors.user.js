@@ -1,15 +1,16 @@
 // ==UserScript==
-// @name          GitHub Code Colors
-// @version       1.1.3
-// @description   A userscript that adds a color swatch next to the code color definition
-// @license       https://creativecommons.org/licenses/by-sa/4.0/
-// @namespace     https://github.com/Mottie
-// @include       https://github.com/*
-// @grant         GM_addStyle
-// @run-at        document-idle
-// @author        Rob Garrison
-// @updateURL     https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-code-colors.user.js
-// @downloadURL   https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-code-colors.user.js
+// @name        GitHub Code Colors
+// @version     1.1.3
+// @description A userscript that adds a color swatch next to the code color definition
+// @license     https://creativecommons.org/licenses/by-sa/4.0/
+// @author      Rob Garrison
+// @namespace   https://github.com/Mottie
+// @include     https://github.com/*
+// @run-at      document-idle
+// @grant       GM_addStyle
+// @icon        https://github.com/fluidicon.png
+// @updateURL   https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-code-colors.user.js
+// @downloadURL https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-code-colors.user.js
 // ==/UserScript==
 (() => {
 	"use strict";

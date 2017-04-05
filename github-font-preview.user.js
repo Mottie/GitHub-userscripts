@@ -1,21 +1,22 @@
 // ==UserScript==
-// @name          GitHub Font Preview
-// @version       1.0.8
-// @description   A userscript that adds a font file preview
-// @license       https://creativecommons.org/licenses/by-sa/4.0/
-// @namespace     https://github.com/Mottie
-// @include       https://github.com/*
-// @run-at        document-idle
-// @grant         GM_addStyle
-// @grant         GM_getValue
-// @grant         GM_setValue
-// @grant         GM_xmlhttpRequest
-// @connect       github.com
-// @connect       githubusercontent.com
-// @require       https://greasyfork.org/scripts/20469-opentype-js/code/opentypejs.js?version=130870
-// @author        Rob Garrison
-// @updateURL     https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-font-preview.user.js
-// @downloadURL   https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-font-preview.user.js
+// @name        GitHub Font Preview
+// @version     1.0.8
+// @description A userscript that adds a font file preview
+// @license     https://creativecommons.org/licenses/by-sa/4.0/
+// @author      Rob Garrison
+// @namespace   https://github.com/Mottie
+// @include     https://github.com/*
+// @run-at      document-idle
+// @grant       GM_addStyle
+// @grant       GM_getValue
+// @grant       GM_setValue
+// @grant       GM_xmlhttpRequest
+// @connect     github.com
+// @connect     githubusercontent.com
+// @require     https://greasyfork.org/scripts/20469-opentype-js/code/opentypejs.js?version=130870
+// @icon        https://github.com/fluidicon.png
+// @updateURL   https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-font-preview.user.js
+// @downloadURL https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-font-preview.user.js
 // ==/UserScript==
 (() => {
 	"use strict";

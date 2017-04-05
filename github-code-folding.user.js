@@ -3,11 +3,12 @@
 // @version     1.0.0
 // @description A userscript that adds code folding to GitHub files
 // @license     https://opensource.org/licenses/MIT
+// @author      Rob Garrison
 // @namespace   https://github.com/Mottie
 // @include     https://github.com/*
 // @run-at      document-idle
 // @grant       GM_addStyle
-// @author      Rob Garrison
+// @icon        https://github.com/fluidicon.png
 // @updateURL   https://raw.githubusercontent.com/Mottie/Github-userscripts/master/github-code-folding.user.js
 // @downloadURL https://raw.githubusercontent.com/Mottie/Github-userscripts/master/github-code-folding.user.js
 // ==/UserScript==

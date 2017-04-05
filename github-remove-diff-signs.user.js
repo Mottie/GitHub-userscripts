@@ -1,15 +1,16 @@
 // ==UserScript==
-// @name          GitHub Remove Diff Signs
-// @version       1.1.1
-// @description   A userscript that removes the "+" and "-" from code diffs
-// @license       https://creativecommons.org/licenses/by-sa/4.0/
-// @namespace     https://github.com/Mottie
-// @include       https://github.com/*
-// @grant         none
-// @run-at        document-idle
-// @author        Rob Garrison
-// @updateURL     https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-remove-diff-signs.user.js
-// @downloadURL   https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-remove-diff-signs.user.js
+// @name        GitHub Remove Diff Signs
+// @version     1.1.1
+// @description A userscript that removes the "+" and "-" from code diffs
+// @license     https://creativecommons.org/licenses/by-sa/4.0/
+// @author      Rob Garrison
+// @namespace   https://github.com/Mottie
+// @include     https://github.com/*
+// @run-at      document-idle
+// @grant       none
+// @icon        https://github.com/fluidicon.png
+// @updateURL   https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-remove-diff-signs.user.js
+// @downloadURL https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-remove-diff-signs.user.js
 // ==/UserScript==
 (() => {
 	"use strict";

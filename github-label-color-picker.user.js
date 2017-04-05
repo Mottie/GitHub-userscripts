@@ -1,19 +1,20 @@
 // ==UserScript==
-// @name          GitHub Label Color Picker
-// @version       1.0.2
-// @description   A userscript that adds a color picker to the label color input
-// @license       https://creativecommons.org/licenses/by-sa/4.0/
-// @namespace     https://github.com/Mottie
-// @include       https://github.com/*
-// @grant         GM_addStyle
-// @grant         GM_getValue
-// @grant         GM_setValue
-// @grant         GM_registerMenuCommand
-// @require       https://greasyfork.org/scripts/23181-colorpicker/code/colorPicker.js?version=147862
-// @run-at        document-idle
-// @author        Rob Garrison
-// @updateURL     https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-label-color-picker.user.js
-// @downloadURL   https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-label-color-picker.user.js
+// @name        GitHub Label Color Picker
+// @version     1.0.2
+// @description A userscript that adds a color picker to the label color input
+// @license     https://creativecommons.org/licenses/by-sa/4.0/
+// @author      Rob Garrison
+// @namespace   https://github.com/Mottie
+// @include     https://github.com/*
+// @run-at      document-idle
+// @grant       GM_addStyle
+// @grant       GM_getValue
+// @grant       GM_setValue
+// @grant       GM_registerMenuCommand
+// @require     https://greasyfork.org/scripts/23181-colorpicker/code/colorPicker.js?version=147862
+// @icon        https://github.com/fluidicon.png
+// @updateURL   https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-label-color-picker.user.js
+// @downloadURL https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-label-color-picker.user.js
 // ==/UserScript==
 (() => {
 	"use strict";

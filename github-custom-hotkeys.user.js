@@ -1,18 +1,19 @@
 // ==UserScript==
-// @name          GitHub Custom Hotkeys
-// @version       1.0.3
-// @description   A userscript that allows you to add custom GitHub keyboard hotkeys
-// @license       https://creativecommons.org/licenses/by-sa/4.0/
-// @namespace     https://github.com/Mottie
-// @include       https://github.com/*
-// @include       https://*.github.com/*
-// @grant         GM_addStyle
-// @grant         GM_getValue
-// @grant         GM_setValue
-// @run-at        document-idle
-// @author        Rob Garrison
-// @updateURL     https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-custom-hotkeys.user.js
-// @downloadURL   https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-custom-hotkeys.user.js
+// @name        GitHub Custom Hotkeys
+// @version     1.0.3
+// @description A userscript that allows you to add custom GitHub keyboard hotkeys
+// @license     https://creativecommons.org/licenses/by-sa/4.0/
+// @author      Rob Garrison
+// @namespace   https://github.com/Mottie
+// @include     https://github.com/*
+// @include     https://*.github.com/*
+// @run-at      document-idle
+// @grant       GM_addStyle
+// @grant       GM_getValue
+// @grant       GM_setValue
+// @icon        https://github.com/fluidicon.png
+// @updateURL   https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-custom-hotkeys.user.js
+// @downloadURL https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-custom-hotkeys.user.js
 // ==/UserScript==
 (() => {
 	"use strict";

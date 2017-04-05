@@ -1,17 +1,18 @@
 // ==UserScript==
-// @name          GitHub Show Repo Issues
-// @version       3.0.2
-// @description   A userscript that adds a repo issues count to the repository tab & organization page (https://github.com/:user)
-// @license       https://creativecommons.org/licenses/by-sa/4.0/
-// @namespace     https://github.com/Mottie
-// @include       https://github.com/*
-// @grant         GM_addStyle
-// @grant         GM_xmlhttpRequest
-// @connect       api.github.com
-// @run-at        document-idle
-// @author        Rob Garrison
-// @updateURL     https://raw.githubusercontent.com/Mottie/Github-userscripts/master/github-issue-counts.user.js
-// @downloadURL   https://raw.githubusercontent.com/Mottie/Github-userscripts/master/github-issue-counts.user.js
+// @name        GitHub Show Repo Issues
+// @version     3.0.2
+// @description A userscript that adds a repo issues count to the repository tab & organization page (https://github.com/:user)
+// @license     https://creativecommons.org/licenses/by-sa/4.0/
+// @author      Rob Garrison
+// @namespace   https://github.com/Mottie
+// @include     https://github.com/*
+// @run-at      document-idle
+// @grant       GM_addStyle
+// @grant       GM_xmlhttpRequest
+// @connect     api.github.com
+// @icon        https://github.com/fluidicon.png
+// @updateURL   https://raw.githubusercontent.com/Mottie/Github-userscripts/master/github-issue-counts.user.js
+// @downloadURL https://raw.githubusercontent.com/Mottie/Github-userscripts/master/github-issue-counts.user.js
 // ==/UserScript==
 (() => {
 	"use strict";

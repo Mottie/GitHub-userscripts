@@ -1,20 +1,21 @@
 // ==UserScript==
-// @name          GitHub Image Preview
-// @version       1.1.4
-// @description   A userscript that adds clickable image thumbnails
-// @license       https://creativecommons.org/licenses/by-sa/4.0/
-// @namespace     https://github.com/Mottie
-// @include       https://github.com/*
-// @run-at        document-idle
-// @grant         GM_addStyle
-// @grant         GM_getValue
-// @grant         GM_setValue
-// @grant         GM_xmlhttpRequest
-// @connect       github.com
-// @connect       githubusercontent.com
-// @author        Rob Garrison
-// @updateURL     https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-image-preview.user.js
-// @downloadURL   https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-image-preview.user.js
+// @name        GitHub Image Preview
+// @version     1.1.4
+// @description A userscript that adds clickable image thumbnails
+// @license     https://creativecommons.org/licenses/by-sa/4.0/
+// @author      Rob Garrison
+// @namespace   https://github.com/Mottie
+// @include     https://github.com/*
+// @run-at      document-idle
+// @grant       GM_addStyle
+// @grant       GM_getValue
+// @grant       GM_setValue
+// @grant       GM_xmlhttpRequest
+// @connect     github.com
+// @connect     githubusercontent.com
+// @icon        https://github.com/fluidicon.png
+// @updateURL   https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-image-preview.user.js
+// @downloadURL https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-image-preview.user.js
 // ==/UserScript==
 (() => {
 	"use strict";

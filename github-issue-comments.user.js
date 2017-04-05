@@ -1,17 +1,18 @@
 // ==UserScript==
-// @name          GitHub Toggle Issue Comments
-// @version       1.0.21
-// @description   A userscript that toggles issues/pull request comments & messages
-// @license       https://creativecommons.org/licenses/by-sa/4.0/
-// @namespace     https://github.com/Mottie
-// @include       https://github.com/*
-// @run-at        document-idle
-// @grant         GM_addStyle
-// @grant         GM_getValue
-// @grant         GM_setValue
-// @author        Rob Garrison
-// @updateURL     https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-issue-comments.user.js
-// @downloadURL   https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-issue-comments.user.js
+// @name        GitHub Toggle Issue Comments
+// @version     1.0.21
+// @description A userscript that toggles issues/pull request comments & messages
+// @license     https://creativecommons.org/licenses/by-sa/4.0/
+// @author      Rob Garrison
+// @namespace   https://github.com/Mottie
+// @include     https://github.com/*
+// @run-at      document-idle
+// @grant       GM_addStyle
+// @grant       GM_getValue
+// @grant       GM_setValue
+// @icon        https://github.com/fluidicon.png
+// @updateURL   https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-issue-comments.user.js
+// @downloadURL https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-issue-comments.user.js
 // ==/UserScript==
 (() => {
 	"use strict";

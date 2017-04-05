@@ -1,21 +1,22 @@
 // ==UserScript==
-// @name          GitHub Indent Comment Blocks
-// @version       1.0.1
-// @description   A userscript that allows you to indent & outdent blocks in the comment editor
-// @license       https://creativecommons.org/licenses/by-sa/4.0/
-// @namespace     https://github.com/Mottie
-// @include       https://github.com/*
-// @include       https://gist.github.com/*
-// @require       https://greasyfork.org/scripts/28239-rangy-inputs-mod-js/code/rangy-inputs-modjs.js?version=181769
-// @run-at        document-idle
-// @grant         GM_addStyle
-// @grant         GM_getValue
-// @grant         GM_setValue
-// @grant         GM_registerMenuCommand
-// @connect       github.com
-// @author        Rob Garrison
-// @updateURL     https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-indent-comments.user.js
-// @downloadURL   https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-indent-comments.user.js
+// @name        GitHub Indent Comment Blocks
+// @version     1.0.1
+// @description A userscript that allows you to indent & outdent blocks in the comment editor
+// @license     https://creativecommons.org/licenses/by-sa/4.0/
+// @author      Rob Garrison
+// @namespace   https://github.com/Mottie
+// @include     https://github.com/*
+// @include     https://gist.github.com/*
+// @run-at      document-idle
+// @grant       GM_addStyle
+// @grant       GM_getValue
+// @grant       GM_setValue
+// @grant       GM_registerMenuCommand
+// @connect     github.com
+// @require     https://greasyfork.org/scripts/28239-rangy-inputs-mod-js/code/rangy-inputs-modjs.js?version=181769
+// @icon        https://github.com/fluidicon.png
+// @updateURL   https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-indent-comments.user.js
+// @downloadURL https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-indent-comments.user.js
 // ==/UserScript==
 (() => {
 	"use strict";

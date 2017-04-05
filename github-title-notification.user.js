@@ -1,17 +1,18 @@
 // ==UserScript==
-// @name          GitHub Title Notification
-// @version       1.0.2
-// @description   A userscript that changes the document title if there are unread messages
-// @license       https://creativecommons.org/licenses/by-sa/4.0/
-// @namespace     https://github.com/Mottie
-// @include       https://github.com/*
-// @run-at        document-idle
-// @grant         GM_registerMenuCommand
-// @grant         GM_getValue
-// @grant         GM_setValue
-// @author        Rob Garrison
-// @updateURL     https://raw.githubusercontent.com/Mottie/Github-userscripts/master/github-title-notification.user.js
-// @downloadURL   https://raw.githubusercontent.com/Mottie/Github-userscripts/master/github-title-notification.user.js
+// @name        GitHub Title Notification
+// @version     1.0.2
+// @description A userscript that changes the document title if there are unread messages
+// @license     https://creativecommons.org/licenses/by-sa/4.0/
+// @author      Rob Garrison
+// @namespace   https://github.com/Mottie
+// @include     https://github.com/*
+// @run-at      document-idle
+// @grant       GM_registerMenuCommand
+// @grant       GM_getValue
+// @grant       GM_setValue
+// @icon        https://github.com/fluidicon.png
+// @updateURL   https://raw.githubusercontent.com/Mottie/Github-userscripts/master/github-title-notification.user.js
+// @downloadURL https://raw.githubusercontent.com/Mottie/Github-userscripts/master/github-title-notification.user.js
 // ==/UserScript==
 (() => {
 	"use strict";
