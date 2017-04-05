@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name          GitHub Code Colors
-// @version       1.1.2
+// @version       1.1.3
 // @description   A userscript that adds a color swatch next to the code color definition
 // @license       https://creativecommons.org/licenses/by-sa/4.0/
 // @namespace     https://github.com/Mottie
@@ -73,6 +73,7 @@
 				regexHex = /^(#|0x)([0-9A-F]{6}|[0-9A-F]{3})$/i,
 				// rgb(0,0,0) or rgba(0,0,0,0.2)
 				regexRGB = /^rgba?(\([^\)]+\))?/i,
+				regexRGBA = /rgba/i,
 				// hsl(0,0%,0%) or hsla(0,0%,0%,0.2);
 				regexHSL = /^hsla?(\([^\)]+\))?/i,
 
@@ -87,7 +88,7 @@
 
 			// loop with delay to allow user interaction
 			const loop = () => {
-				let el, txt, tmp,
+				let el, txt, tmp, indx2,
 					// max number of DOM insertions per loop
 					max = 0;
 				while (max < 20 && indx < len) {
@@ -106,10 +107,19 @@
 						}
 					} else if (regexRGB.test(txt)) {
 						if (!el.querySelector(".ghcc-block")) {
-							txt = el.classList.contains("pl-s") ?
-								// color in a string contains everything
-								txt.match(regexRGB)[0] :
-								txt + "(" + els[++indx].textContent + ")";
+							// color in a string contains everything
+							if (el.classList.contains("pl-s")) {
+								txt = txt.match(regexRGB)[0];
+							} else {
+								// rgb(a) colors contained in multiple "pl-c1" spans
+								indx2 = regexRGBA.test(txt) ? 4 : 3;
+								tmp = [];
+								while (indx2) {
+									tmp.push(els[++indx].textContent);
+									indx2--;
+								}
+								txt += "(" + tmp.join(",") + ")";
+							}
 							addNode(el, txt);
 							max++;
 						}
