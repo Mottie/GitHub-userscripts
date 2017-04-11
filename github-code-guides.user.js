@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Code Guides
-// @version     1.1.3
+// @version     1.1.4
 // @description A userscript that allows you to add one or more vertical guidelines to the code
 // @license     https://creativecommons.org/licenses/by-sa/4.0/
 // @author      Rob Garrison
@@ -27,7 +27,8 @@
 			color: "rgba(0, 0, 0, .3)",
 			width: 0.2
 		}]),
-		font = GM_getValue("ghcg-font", "Menlo");
+		font = GM_getValue("ghcg-font", "Menlo"),
+		tabSize = GM_getValue("ghcg-tabs", 2);
 
 	function adjust(val) {
 		return `calc(13px + ${val.toFixed(1)}ch)`;
@@ -60,15 +61,25 @@
 			diff += addDefinition(adjust(start), adjust(start + size), color);
 		});
 		style.textContent = `
-			td.blob-code.blob-code-context .blob-code-inner,
-			td.blob-code.blob-code-addition .blob-code-inner,
-			td.blob-code.blob-code-deletion .blob-code-inner {
+			table.tab-size[data-tab-size] {
+				tab-size: ${tabSize};
+			}
+			/* repo file view uses padding-left: 10px */
+			table:not(.diff-table) .blob-code,
+			table.diff-table tr.blob-expanded .blob-code,
+			.blob-code span.blob-code-inner {
+				padding-left: 13px;
+			}
+			table.diff-table .blob-code {
 				padding-left: 0;
+			}
+			.blob-code-context .blob-code-inner,
+			.blob-code-addition .blob-code-inner,
+			.blob-code-deletion .blob-code-inner {
 				background: linear-gradient(to right, transparent 0%, ${diff} transparent 100%) !important;
 			}
-			span.blob-code-inner {
+			.blob-code span.blob-code-inner {
 				display: block !important;
-				padding-left: 13px;
 			}
 			span.blob-code-inner, td.blob-code-inner:not(.blob-code-hunk) {
 				font-family: "${font}", Consolas, "Liberation Mono", Menlo, Courier, monospace !important;
@@ -98,6 +109,7 @@
 			guides = valid;
 			GM_setValue("ghcg-guides", valid);
 			GM_setValue("ghcg-font", font);
+			GM_setValue("ghcg-tabs", tabSize);
 			addGuides(valid);
 		}
 	}
@@ -125,6 +137,14 @@
 		const val = prompt("Enter code font (monospaced)", font);
 		if (val !== null) {
 			font = val;
+			validateGuides(guides);
+		}
+	});
+
+	GM_registerMenuCommand("Set code tab size", () => {
+		const val = prompt("Enter code tab size", tabSize);
+		if (val !== null) {
+			tabSize = val;
 			validateGuides(guides);
 		}
 	});
