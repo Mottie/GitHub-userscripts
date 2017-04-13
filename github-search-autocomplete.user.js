@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Search Autocomplete
-// @version     0.1.1
+// @version     0.1.2
 // @description A userscript that adds autocomplete search filters to GitHub
 // @license     https://opensource.org/licenses/MIT
 // @author      Rob Garrison
@@ -9,7 +9,7 @@
 // @include     https://gist.github.com/*
 // @run-at      document-idle
 // @grant       GM_addStyle
-// @require     https://code.jquery.com/jquery-3.1.1.min.js
+// @require     https://code.jquery.com/jquery-3.2.1.min.js
 // @require     https://cdnjs.cloudflare.com/ajax/libs/Caret.js/0.3.1/jquery.caret.min.js
 // @require     https://cdnjs.cloudflare.com/ajax/libs/at.js/1.5.3/js/jquery.atwho.min.js
 // @icon        https://github.com/fluidicon.png
