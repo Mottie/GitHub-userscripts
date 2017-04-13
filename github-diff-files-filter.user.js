@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Diff Files Filter
-// @version     0.1.3
+// @version     0.1.4
 // @description A userscript that adds filters that toggle diff & PR files by extension
 // @license     https://creativecommons.org/licenses/by-sa/4.0/
 // @author      Rob Garrison
@@ -66,7 +66,7 @@
 		list[noExtLabel] = [];
 		list[dotExtLabel] = [];
 		// TOC in file diffs and pr-toolbar in Pull requests
-		$$("#toc > ol > li > a, .pr-toolbar .filename").forEach(file => {
+		$$(".file-header .file-info > a").forEach(file => {
 			let ext,
 				txt = (file.textContent || "").trim(),
 				filename = txt.split("/").slice(-1)[0];
@@ -97,39 +97,49 @@
 		let filters = 0,
 			keys = Object.keys(list),
 			html = "Filter file extension: <div class='BtnGroup gdf-filter'>",
-			btnClass = "btn btn-sm selected BtnGroup-item";
+			btnClass = "btn btn-sm selected BtnGroup-item tooltipped tooltipped-n";
 		// get length, but don't count empty arrays
 		keys.forEach(ext => {
 			filters += list[ext].length > 0 ? 1 : 0;
 		});
 		// Don't bother if only one extension is found
 		if (files && filters > 1) {
-			filters = document.createElement("p");
+			filters = $(".gdf-filter-wrapper");
+			if (!filters) {
+				filters = document.createElement("p");
+				filters.className = "gdf-filter-wrapper";
+				files.insertBefore(filters, files.firstChild);
+				filters.addEventListener("click", event => {
+					event.preventDefault();
+					event.stopPropagation();
+					const el = event.target;
+					el.classList.toggle("selected");
+					toggleBlocks(
+						el.textContent.trim(),
+						el.classList.contains("selected") ? "show" : "hide"
+					);
+				});
+			}
 			// add a filter "all" button to the beginning
-			html += `<a class="${btnClass} gdf-all" href="#">${allExtLabel}</a>`;
+			html += `
+				<a class="${btnClass} gdf-all" aria-label="Toggle all files" href="#">
+					${allExtLabel}
+				</a>`;
 			keys.forEach(ext => {
 				if (list[ext].length) {
-					html += `<a class="${btnClass}" href="#">${ext}</a>`;
+					html += `
+						<a class="${btnClass}" aria-label="${list[ext].length}" href="#">
+							${ext}
+						</a>`;
 				}
 			});
 			// prepend filter buttons
 			filters.innerHTML = html + "</div>";
-			files.insertBefore(filters, files.firstChild);
-			filters.addEventListener("click", event => {
-				event.preventDefault();
-				event.stopPropagation();
-				const el = event.target;
-				el.classList.toggle("selected");
-				toggleBlocks(
-					el.textContent.trim(),
-					el.classList.contains("selected") ? "show" : "hide"
-				);
-			});
 		}
 	}
 
 	function init() {
-		if (($("#files.diff-view") || $(".pr-toolbar")) && !$(".gdf-filter")) {
+		if ($("#files.diff-view") || $(".pr-toolbar")) {
 			makeFilter();
 		}
 	}
