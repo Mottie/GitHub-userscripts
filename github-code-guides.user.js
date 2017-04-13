@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Code Guides
-// @version     1.1.4
+// @version     1.1.5
 // @description A userscript that allows you to add one or more vertical guidelines to the code
 // @license     https://creativecommons.org/licenses/by-sa/4.0/
 // @author      Rob Garrison
@@ -141,8 +141,8 @@
 		}
 	});
 
-	GM_registerMenuCommand("Set code tab size", () => {
-		const val = prompt("Enter code tab size", tabSize);
+	GM_registerMenuCommand("Set code guideline tab size", () => {
+		const val = prompt("Enter code guideline tab size", tabSize);
 		if (val !== null) {
 			tabSize = val;
 			validateGuides(guides);
