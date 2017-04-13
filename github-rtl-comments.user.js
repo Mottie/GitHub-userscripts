@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub RTL Comment Blocks
-// @version     1.2.4
+// @version     1.2.5
 // @description A userscript that adds a button to insert RTL text blocks in comments
 // @license     https://creativecommons.org/licenses/by-sa/4.0/
 // @author      Rob Garrison
@@ -10,6 +10,7 @@
 // @run-at      document-idle
 // @grant       GM_addStyle
 // @connect     github.com
+// @require     https://greasyfork.org/scripts/28721-mutations/code/mutations.js?version=188043
 // @require     https://greasyfork.org/scripts/28239-rangy-inputs-mod-js/code/rangy-inputs-modjs.js?version=181769
 // @icon        https://github.com/fluidicon.png
 // @updateURL   https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-rtl-comments.user.js
@@ -160,18 +161,9 @@
 		return null;
 	}
 
-	document.addEventListener("pjax:end", addRtlButton);
-	// "preview:render" only fires when using the hotkey :(
-	// "preview:setup" fires on hover & click
-	document.addEventListener("preview:setup", event => {
-		if (event.target && event.target.classList.contains("preview-selected")) {
-			// must include some rendering time...
-			// 200 ms seems to be enough for a 1100+ line markdown file
-			setTimeout(() => {
-				checkRTL();
-			}, 500);
-		}
-	});
+	document.addEventListener("ghmo:container", addRtlButton);
+	document.addEventListener("ghmo:preview", checkRTL);
 	addBindings();
 	addRtlButton();
+
 })();

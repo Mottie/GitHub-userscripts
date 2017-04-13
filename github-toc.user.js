@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub TOC
-// @version     1.2.4
+// @version     1.2.5
 // @description A userscript that adds a table of contents to readme & wiki pages
 // @license     https://creativecommons.org/licenses/by-sa/4.0/
 // @author      Rob Garrison
@@ -12,6 +12,7 @@
 // @grant       GM_getValue
 // @grant       GM_setValue
 // @grant       GM_addStyle
+// @require     https://greasyfork.org/scripts/28721-mutations/code/mutations.js?version=188043
 // @icon        https://github.com/fluidicon.png
 // @updateURL   https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-toc.user.js
 // @downloadURL https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-toc.user.js
@@ -397,16 +398,8 @@
 		$("h3 span", container).textContent = title;
 	});
 
-	on(document, "pjax:end", tocAdd);
-	// "preview:render" only fires when using the hotkey :(
-	// "preview:setup" fires on hover & click
-	on(document, "preview:setup", () => {
-		setTimeout(() => {
-			// must include some rendering time...
-			// 200 ms seems to be enough for a 1100+ line markdown file
-			tocAdd();
-		}, 500);
-	});
+	on(document, "ghmo:container", tocAdd);
+	on(document, "ghmo:preview", tocAdd);
 	tocAdd();
 
 })();

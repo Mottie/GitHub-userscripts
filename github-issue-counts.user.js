@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Show Repo Issues
-// @version     3.0.3
+// @version     3.0.4
 // @description A userscript that adds a repo issues count to the repository tab & organization page (https://github.com/:user)
 // @license     https://creativecommons.org/licenses/by-sa/4.0/
 // @author      Rob Garrison
@@ -10,6 +10,7 @@
 // @grant       GM_addStyle
 // @grant       GM_xmlhttpRequest
 // @connect     api.github.com
+// @require     https://greasyfork.org/scripts/28721-mutations/code/mutations.js?version=188043
 // @icon        https://github.com/fluidicon.png
 // @updateURL   https://raw.githubusercontent.com/Mottie/Github-userscripts/master/github-issue-counts.user.js
 // @downloadURL https://raw.githubusercontent.com/Mottie/Github-userscripts/master/github-issue-counts.user.js
@@ -132,7 +133,6 @@
 						}
 					});
 				}
-			} else {
 			}
 		}
 	}
@@ -145,7 +145,7 @@
 		return Array.from((el || document).querySelectorAll(str));
 	}
 
-	document.addEventListener("pjax:end", addIssues);
+	document.addEventListener("ghmo:container", addIssues);
 	addIssues();
 
 })();

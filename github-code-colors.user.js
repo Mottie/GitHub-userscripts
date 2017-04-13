@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Code Colors
-// @version     1.1.3
+// @version     1.1.4
 // @description A userscript that adds a color swatch next to the code color definition
 // @license     https://creativecommons.org/licenses/by-sa/4.0/
 // @author      Rob Garrison
@@ -8,6 +8,7 @@
 // @include     https://github.com/*
 // @run-at      document-idle
 // @grant       GM_addStyle
+// @require     https://greasyfork.org/scripts/28721-mutations/code/mutations.js?version=188043
 // @icon        https://github.com/fluidicon.png
 // @updateURL   https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-code-colors.user.js
 // @downloadURL https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-code-colors.user.js
@@ -157,15 +158,8 @@
 		}
 	}
 
-	document.addEventListener("pjax:end", addColors);
-	// "preview:render" only fires when using the hotkey :(
-	// "preview:setup" fires on hover & click of comment preview tab
-	document.addEventListener("preview:setup", () => {
-		setTimeout(() => {
-			// must include some rendering time...
-			// 200 ms seems to be enough for a 1100+ line markdown file
-			addColors();
-		}, 500);
-	});
+	document.addEventListener("ghmo:container", addColors);
+	document.addEventListener("ghmo:preview", addColors);
 	addColors();
+
 })();

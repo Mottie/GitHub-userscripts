@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Toggle Issue Comments
-// @version     1.0.21
+// @version     1.0.22
 // @description A userscript that toggles issues/pull request comments & messages
 // @license     https://creativecommons.org/licenses/by-sa/4.0/
 // @author      Rob Garrison
@@ -10,6 +10,7 @@
 // @grant       GM_addStyle
 // @grant       GM_getValue
 // @grant       GM_setValue
+// @require     https://greasyfork.org/scripts/28721-mutations/code/mutations.js?version=188043
 // @icon        https://github.com/fluidicon.png
 // @updateURL   https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-issue-comments.user.js
 // @downloadURL https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-issue-comments.user.js
@@ -41,10 +42,6 @@
 		.ghic-hidden, .ghic-hidden-participant, .ghic-avatar svg, .ghic-button .ghic-right > *,
 			.ghic-hideReactions .comment-reactions { display:none; }
 	`);
-
-	let debounce,
-		busy = false,
-		observers = [];
 
 	const regex = /(svg|path)/i,
 		// ZenHub addon active (include ZenHub Enterprise)
@@ -153,9 +150,7 @@
 		plus1Icon = `<img src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f44d.png" class="emoji" title=":+1:" alt=":+1:" height="20" width="20" align="absmiddle">`;
 
 	function addMenu() {
-		busy = true;
 		if ($("#discussion_bucket") && !$(".ghic-button")) {
-			addObservers();
 			// update "isHidden" values
 			getSettings();
 			let name, bright, isHidden, isChecked,
@@ -209,7 +204,6 @@
 			addAvatars();
 		}
 		update();
-		busy = false;
 	}
 
 	function addAvatars() {
@@ -489,7 +483,6 @@
 	}
 
 	function update() {
-		busy = true;
 		if ($("#discussion_bucket") && $(".ghic-button")) {
 			let keys = Object.keys(settings),
 				indx = keys.length;
@@ -498,11 +491,9 @@
 				hideStuff(keys[indx], true);
 			}
 		}
-		busy = false;
 	}
 
 	function checkItem(event) {
-		busy = true;
 		if (document.getElementById("discussion_bucket")) {
 			let name,
 				target = event.target,
@@ -525,40 +516,6 @@
 				}
 			}
 		}
-		busy = false;
-	}
-
-	function removeObservers() {
-		observers.forEach(observer => {
-			if (observer) {
-				observer.disconnect();
-			}
-		});
-		observers = [];
-	}
-
-	function addObservers() {
-		// DOM targets - to detect GitHub dynamic ajax page loading
-		// Observe progressively loaded content
-		$$(".js-discussion").forEach(target => {
-			const obsrvr = new MutationObserver(mutations => {
-				mutations.forEach(mutation => {
-					// preform checks before adding code wrap to minimize function calls
-					const tar = mutation.target;
-					if (!busy && tar === target) {
-						clearTimeout(debounce);
-						debounce = setTimeout(() => {
-							update();
-						}, 500);
-					}
-				});
-			});
-			obsrvr.observe(target, {
-				childList: true,
-				subtree: true
-			});
-			observers.push(obsrvr);
-		});
 	}
 
 	function $(selector, el) {
@@ -616,18 +573,16 @@
 	}
 
 	function init() {
-		busy = true;
-		removeObservers();
 		getSettings();
 		addMenu();
 		$("body").addEventListener("input", checkItem);
 		$("body").addEventListener("click", checkItem);
 		update();
-		busy = false;
 	}
 
 	// update TOC when content changes
-	document.addEventListener("pjax:end", addMenu);
+	document.addEventListener("ghmo:container", addMenu);
+	document.addEventListener("ghmo:comments", update);
 	init();
 
 })();

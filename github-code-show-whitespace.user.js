@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Code Show Whitespace
-// @version     0.1.1
+// @version     0.1.2
 // @description A userscript that shows whitespace (space, tabs and carriage returns) in code blocks
 // @license     https://opensource.org/licenses/MIT
 // @author      Rob Garrison
@@ -9,6 +9,7 @@
 // @include     https://gist.github.com/*
 // @run-at      document-idle
 // @grant       GM_addStyle
+// @require     https://greasyfork.org/scripts/28721-mutations/code/mutations.js?version=188043
 // @icon        https://github.com/fluidicon.png
 // @updateURL   https://raw.githubusercontent.com/Mottie/Github-userscripts/master/github-code-show-whitespace.user.js
 // @downloadURL https://raw.githubusercontent.com/Mottie/Github-userscripts/master/github-code-show-whitespace.user.js
@@ -71,10 +72,6 @@
 			top: -.75em;
 		}
 	`);
-
-	let debounce,
-		busy = false,
-		observers = [];
 
 	function addToggle() {
 		$$(".file-actions").forEach(el => {
@@ -139,56 +136,6 @@
 		block.classList.add(`tab-size-${len}`);
 	}
 
-	function removeObservers() {
-		// remove saved observers
-		observers.forEach(observer => {
-			if (observer) {
-				observer.disconnect();
-			}
-		});
-		observers = [];
-	}
-
-	function addObservers() {
-		// Observe progressively loaded content
-		$$(`
-			.js-diff-progressive-container,
-			.js-diff-load-container`
-		).forEach(target => {
-			const obsrvr = new MutationObserver(mutations => {
-				mutations.forEach(mutation => {
-					// preform checks before adding code wrap to minimize function calls
-					const tar = mutation.target;
-					if (!busy && tar && (
-							tar.classList.contains("js-diff-progressive-container") ||
-							tar.classList.contains("js-diff-load-container") ||
-							tar.classList.contains("blob-wrapper")
-						)
-					) {
-						clearTimeout(debounce);
-						debounce = setTimeout(() => {
-							addToggle();
-						}, 500);
-					}
-				});
-			});
-			obsrvr.observe(target, {
-				childList: true,
-				subtree: true
-			});
-			observers.push(obsrvr);
-		});
-	}
-
-	function init() {
-		// toggle added to diff & file view
-		addToggle();
-		removeObservers();
-		if (document.querySelector("#files.diff-view")) {
-			addObservers();
-		}
-	}
-
 	function $(selector, el) {
 		return (el || document).querySelector(selector);
 	}
@@ -223,10 +170,10 @@
 			}
 		}
 	});
-	document.addEventListener("pjax:end", init);
 
-	setTimeout(() => {
-		init();
-	}, 500);
+	document.addEventListener("ghmo:container", addToggle);
+	document.addEventListener("ghmo:diff", addToggle);
+	// toggle added to diff & file view
+	addToggle();
 
 })();

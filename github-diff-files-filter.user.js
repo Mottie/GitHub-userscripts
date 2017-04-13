@@ -8,6 +8,7 @@
 // @include     https://github.com/*
 // @run-at      document-idle
 // @grant       none
+// @require     https://greasyfork.org/scripts/28721-mutations/code/mutations.js?version=188043
 // @icon        https://github.com/fluidicon.png
 // @updateURL   https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-diff-files-filter.user.js
 // @downloadURL https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-diff-files-filter.user.js
@@ -162,7 +163,8 @@
 		return null;
 	}
 
-	document.addEventListener("pjax:end", init);
+	document.addEventListener("ghmo:container", init);
+	document.addEventListener("ghmo:diff", init);
 	init();
 
 })();

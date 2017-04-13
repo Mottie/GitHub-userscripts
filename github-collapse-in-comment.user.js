@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Collapse In Comment
-// @version     1.0.6
+// @version     1.0.7
 // @description A userscript that adds a header that can toggle long code and quote blocks in comments
 // @license     https://creativecommons.org/licenses/by-sa/4.0/
 // @author      Rob Garrison
@@ -12,6 +12,7 @@
 // @grant       GM_getValue
 // @grant       GM_setValue
 // @grant       GM_registerMenuCommand
+// @require     https://greasyfork.org/scripts/28721-mutations/code/mutations.js?version=188043
 // @icon        https://github.com/fluidicon.png
 // @updateURL   https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-collapse-in-comment.user.js
 // @downloadURL https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-collapse-in-comment.user.js
@@ -157,7 +158,10 @@
 				// shift + click = toggle all blocks in a single comment
 				// shift + ctrl + click = toggle all blocks on page
 				if (event.shiftKey) {
-					els = $$(".gcic-block", event.ctrlKey ? "" : (el, ".markdown-body"));
+					els = $$(
+						".gcic-block",
+						event.ctrlKey ? "" : closest(".markdown-body", el)
+					);
 					indx = els.length;
 					flag = el.classList.contains("gcic-block-closed");
 					while (indx--) {
@@ -239,16 +243,9 @@
 		}
 	});
 
-	document.addEventListener("pjax:end", addToggles);
-	// "preview:render" only fires when using the hotkey :(
-	// "preview:setup" fires on hover & click of comment preview tab
-	document.addEventListener("preview:setup", () => {
-		setTimeout(() => {
-			// must include some rendering time...
-			// 200 ms seems to be enough for a 1100+ line markdown file
-			addToggles();
-		}, 500);
-	});
+	document.addEventListener("ghmo:container", addToggles);
+	document.addEventListener("ghmo:preview", addToggles);
 	addBindings();
 	addToggles();
+
 })();

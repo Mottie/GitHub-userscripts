@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Remove Diff Signs
-// @version     1.1.1
+// @version     1.1.2
 // @description A userscript that removes the "+" and "-" from code diffs
 // @license     https://creativecommons.org/licenses/by-sa/4.0/
 // @author      Rob Garrison
@@ -8,6 +8,7 @@
 // @include     https://github.com/*
 // @run-at      document-idle
 // @grant       none
+// @require     https://greasyfork.org/scripts/28721-mutations/code/mutations.js?version=188043
 // @icon        https://github.com/fluidicon.png
 // @updateURL   https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-remove-diff-signs.user.js
 // @downloadURL https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-remove-diff-signs.user.js
@@ -15,12 +16,7 @@
 (() => {
 	"use strict";
 
-	let debounce,
-		busy = false,
-		observers = [];
-
 	function processDiff() {
-		busy = true;
 		if (document.querySelector(".highlight")) {
 			let indx = 0,
 
@@ -56,59 +52,14 @@
 				};
 			loop();
 		}
-		busy = false;
 	}
 
-	// GitHub pjax
-	document.addEventListener("pjax:end", init);
-
-	function removeObservers() {
-		observers.forEach(observer => {
-			if (observer) {
-				observer.disconnect();
-			}
-		});
-		observers = [];
-	}
-
-	function addObservers() {
-		// DOM targets - to detect GitHub dynamic ajax page loading
-		Array.from(
-			// Observe progressively loaded content
-			document.querySelectorAll(`
-				.js-diff-progressive-container,
-				.js-diff-load-container`
-			)
-		).forEach(target => {
-			const obsrvr = new MutationObserver(mutations => {
-				mutations.forEach(mutation => {
-					// preform checks before adding code wrap to minimize function calls
-					const tar = mutation.target;
-					if (!busy && tar && (
-							tar.classList.contains("js-diff-progressive-container") ||
-							tar.classList.contains("js-diff-load-container") ||
-							tar.classList.contains("blob-wrapper")
-						)
-					) {
-						clearTimeout(debounce);
-						debounce = setTimeout(() => {
-							processDiff();
-						}, 500);
-					}
-				});
-			});
-			obsrvr.observe(target, {
-				childList: true,
-				subtree: true
-			});
-			observers.push(obsrvr);
-		});
-	}
+	// Observe GitHub dynamic content
+	document.addEventListener("ghmo:container", init);
+	document.addEventListener("ghmo:diff", processDiff);
 
 	function init() {
-		removeObservers();
 		if (document.querySelector("#files.diff-view")) {
-			addObservers();
 			processDiff();
 		}
 	}
