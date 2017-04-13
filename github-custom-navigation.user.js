@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Custom Navigation
-// @version     1.0.9
+// @version     1.0.10
 // @description A userscript that allows you to customize GitHub's main navigation bar
 // @license     https://creativecommons.org/licenses/by-sa/4.0/
 // @author      Rob Garrison
@@ -12,7 +12,7 @@
 // @grant       GM_getValue
 // @grant       GM_setValue
 // @icon        https://github.com/fluidicon.png
-// @require     https://cdnjs.cloudflare.com/ajax/libs/dragula/3.7.1/dragula.js
+// @require     https://cdnjs.cloudflare.com/ajax/libs/dragula/3.7.2/dragula.js
 // @updateURL   https://raw.githubusercontent.com/Mottie/Github-userscripts/master/github-custom-navigation.user.js
 // @downloadURL https://raw.githubusercontent.com/Mottie/Github-userscripts/master/github-custom-navigation.user.js
 // ==/UserScript==
@@ -217,7 +217,7 @@
 			.ghcn-visible { display:block; position:absolute; top:38px; bottom:0;
 				left:2px; right:2px; z-index:1;
 				width:476px; max-width:476px; }
-			/* Dragula.min.css v3.7.1 (Microsoft definitions removed) */
+			/* Dragula.min.css v3.7.2 (Microsoft definitions removed) */
 			.gu-mirror { position:fixed !important; margin:0 !important;
 				z-index:9999 !important; opacity:.8; list-style:none; }
 			.gu-hide { display:none !important; }
