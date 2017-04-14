@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Diff Links
-// @version     1.2.1
+// @version     1.2.2
 // @description A userscript that adds links to diff and pull request headers to jump back & forth between files
 // @license     https://creativecommons.org/licenses/by-sa/4.0/
 // @author      Rob Garrison
@@ -8,7 +8,7 @@
 // @include     https://github.com/*
 // @run-at      document-idle
 // @grant       GM_addStyle
-// @require     https://greasyfork.org/scripts/28721-mutations/code/mutations.js?version=188043
+// @require     https://greasyfork.org/scripts/28721-mutations/code/mutations.js?version=188072
 // @icon        https://github.com/fluidicon.png
 // @updateURL   https://raw.githubusercontent.com/Mottie/Github-userscripts/master/github-diff-links.user.js
 // @downloadURL https://raw.githubusercontent.com/Mottie/Github-userscripts/master/github-diff-links.user.js

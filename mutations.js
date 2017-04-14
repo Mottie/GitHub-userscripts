@@ -1,4 +1,4 @@
-/* GitHub mutations observer library script v0.1.4
+/* GitHub mutations observer library script v0.1.5
  * Detect changes to various elements and trigger an event
  * Copyright © 2017 Rob Garrison
  * License: MIT
@@ -57,7 +57,7 @@
 		new MutationObserver(mutations => {
 			clearTimeout(timer);
 			let mindx, target, lindx,
-				llen = list.length;
+				llen = list.length,
 				mlen = mutations.length;
 			for (mindx = 0; mindx < mlen; mindx++) {
 				target = mutations[mindx].target;
