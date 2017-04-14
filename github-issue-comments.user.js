@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Toggle Issue Comments
-// @version     1.0.23
+// @version     1.0.24
 // @description A userscript that toggles issues/pull request comments & messages
 // @license     https://creativecommons.org/licenses/by-sa/4.0/
 // @author      Rob Garrison
@@ -10,7 +10,7 @@
 // @grant       GM_addStyle
 // @grant       GM_getValue
 // @grant       GM_setValue
-// @require     https://greasyfork.org/scripts/28721-mutations/code/mutations.js?version=188072
+// @require     https://greasyfork.org/scripts/28721-mutations/code/mutations.js?version=188090
 // @icon        https://github.com/fluidicon.png
 // @updateURL   https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-issue-comments.user.js
 // @downloadURL https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-issue-comments.user.js

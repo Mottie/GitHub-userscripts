@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Indent Comment Blocks
-// @version     1.0.3
+// @version     1.0.4
 // @description A userscript that allows you to indent & outdent blocks in the comment editor
 // @license     https://creativecommons.org/licenses/by-sa/4.0/
 // @author      Rob Garrison
@@ -13,7 +13,7 @@
 // @grant       GM_setValue
 // @grant       GM_registerMenuCommand
 // @connect     github.com
-// @require     https://greasyfork.org/scripts/28721-mutations/code/mutations.js?version=188072
+// @require     https://greasyfork.org/scripts/28721-mutations/code/mutations.js?version=188090
 // @require     https://greasyfork.org/scripts/28239-rangy-inputs-mod-js/code/rangy-inputs-modjs.js?version=181769
 // @icon        https://github.com/fluidicon.png
 // @updateURL   https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-indent-comments.user.js

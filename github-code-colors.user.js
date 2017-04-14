@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Code Colors
-// @version     1.1.5
+// @version     1.1.6
 // @description A userscript that adds a color swatch next to the code color definition
 // @license     https://creativecommons.org/licenses/by-sa/4.0/
 // @author      Rob Garrison
@@ -8,7 +8,7 @@
 // @include     https://github.com/*
 // @run-at      document-idle
 // @grant       GM_addStyle
-// @require     https://greasyfork.org/scripts/28721-mutations/code/mutations.js?version=188072
+// @require     https://greasyfork.org/scripts/28721-mutations/code/mutations.js?version=188090
 // @icon        https://github.com/fluidicon.png
 // @updateURL   https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-code-colors.user.js
 // @downloadURL https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-code-colors.user.js

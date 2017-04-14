@@ -1,4 +1,4 @@
-/* GitHub mutations observer library script v0.1.5
+/* GitHub mutations observer library script v0.1.6
  * Detect changes to various elements and trigger an event
  * Copyright © 2017 Rob Garrison
  * License: MIT
@@ -64,7 +64,7 @@
 				if (target) {
 					for (lindx = 0; lindx < llen; lindx++) {
 						if (target.matches(list[lindx])) {
-							targets[lindx].count++;
+							targets[list[lindx]].count++;
 						}
 					}
 				}

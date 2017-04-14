@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub RTL Comment Blocks
-// @version     1.2.6
+// @version     1.2.7
 // @description A userscript that adds a button to insert RTL text blocks in comments
 // @license     https://creativecommons.org/licenses/by-sa/4.0/
 // @author      Rob Garrison
@@ -10,7 +10,7 @@
 // @run-at      document-idle
 // @grant       GM_addStyle
 // @connect     github.com
-// @require     https://greasyfork.org/scripts/28721-mutations/code/mutations.js?version=188072
+// @require     https://greasyfork.org/scripts/28721-mutations/code/mutations.js?version=188090
 // @require     https://greasyfork.org/scripts/28239-rangy-inputs-mod-js/code/rangy-inputs-modjs.js?version=181769
 // @icon        https://github.com/fluidicon.png
 // @updateURL   https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-rtl-comments.user.js
