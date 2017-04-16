@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Diff Links
-// @version     1.2.3
+// @version     1.2.4
 // @description A userscript that adds links to diff and pull request headers to jump back & forth between files
 // @license     https://creativecommons.org/licenses/by-sa/4.0/
 // @author      Rob Garrison
@@ -17,7 +17,16 @@
 	"use strict";
 
 	// sometimes tooltips are too narrow...
-	GM_addStyle(".gh-diff-links:after { min-width: 120px; }");
+	// and move diff anchors below sticky header
+	GM_addStyle(`
+		.gh-diff-links:after { min-width: 120px; }
+		a[name*="diff-"]:before {
+			padding-top: 60px !important;
+			margin-top: -60px !important;
+			content: "";
+			position: absolute;
+		}`
+	);
 
 	const button = document.createElement("a"),
 		// button [ InnerHTML, tooltip ]
