@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Font Preview
-// @version     1.0.11
+// @version     1.0.12
 // @description A userscript that adds a font file preview
 // @license     https://creativecommons.org/licenses/by-sa/4.0/
 // @author      Rob Garrison
@@ -13,7 +13,7 @@
 // @grant       GM_xmlhttpRequest
 // @connect     github.com
 // @connect     githubusercontent.com
-// @require     https://greasyfork.org/scripts/28721-mutations/code/mutations.js?version=188090
+// @require     https://greasyfork.org/scripts/28721-mutations/code/mutations.js?version=189706
 // @require     https://greasyfork.org/scripts/20469-opentype-js/code/opentypejs.js?version=130870
 // @icon        https://github.com/fluidicon.png
 // @updateURL   https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-font-preview.user.js

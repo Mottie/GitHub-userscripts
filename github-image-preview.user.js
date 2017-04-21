@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Image Preview
-// @version     1.1.7
+// @version     1.1.8
 // @description A userscript that adds clickable image thumbnails
 // @license     https://creativecommons.org/licenses/by-sa/4.0/
 // @author      Rob Garrison
@@ -13,7 +13,7 @@
 // @grant       GM_xmlhttpRequest
 // @connect     github.com
 // @connect     githubusercontent.com
-// @require     https://greasyfork.org/scripts/28721-mutations/code/mutations.js?version=188090
+// @require     https://greasyfork.org/scripts/28721-mutations/code/mutations.js?version=189706
 // @icon        https://github.com/fluidicon.png
 // @updateURL   https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-image-preview.user.js
 // @downloadURL https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-image-preview.user.js
