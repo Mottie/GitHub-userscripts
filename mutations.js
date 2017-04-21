@@ -1,5 +1,6 @@
-/* GitHub mutations observer library script v0.1.6
+/* GitHub mutations observer library script v0.2.0
  * Detect changes to various elements and trigger an event
+ * This script is meant to be used as a library for GitHub-based userscripts
  * Copyright © 2017 Rob Garrison
  * License: MIT
  */
@@ -9,6 +10,8 @@
 
 	// prefix for event & document body class name, e.g. "ghmo:container"
 	const prefix = "ghmo",
+		disableAttr = `data-${prefix}-disable`,
+		debounceInterval = 200,
 		targets = {
 			// pjax container (covers general, repo & gists)
 			"[data-pjax-container]": {
@@ -32,10 +35,7 @@
 				name: "diff"
 			}
 		},
-		list = Object.keys(targets),
-		container = document.querySelector("body");
-
-	let timer;
+		list = Object.keys(targets);
 
 	function fireEvents() {
 		list.forEach(selector => {
@@ -48,35 +48,49 @@
 		});
 	}
 
-	// prevent script from installing more than once
-	if (!container.classList.contains(prefix + "-enabled")) {
-		container.classList.add(prefix + "-enabled");
+	// prevent error when library is loaded at document-start & no body exists
+	document.addEventListener("DOMContentLoaded", () => {
+		const container = document.querySelector("body");
+		let timer;
+		// prevent script from installing more than once
+		if (container && !container.classList.contains(prefix + "-enabled")) {
+			container.classList.add(prefix + "-enabled");
 
-		// bound to document.body... this may be bad for performance
-		// http://stackoverflow.com/a/39332340/145346
-		new MutationObserver(mutations => {
-			clearTimeout(timer);
-			let mindx, target, lindx,
-				llen = list.length,
-				mlen = mutations.length;
-			for (mindx = 0; mindx < mlen; mindx++) {
-				target = mutations[mindx].target;
-				if (target) {
-					for (lindx = 0; lindx < llen; lindx++) {
-						if (target.matches(list[lindx])) {
-							targets[list[lindx]].count++;
+			// bound to document.body... this may be bad for performance
+			// http://stackoverflow.com/a/39332340/145346
+			new MutationObserver(mutations => {
+				clearTimeout(timer);
+				/* document.body attribute used to disable updates; it *should not*
+				 * be used regularly as multiple scripts may enable or disable the
+				 * observers at inappropriate times. It is best that each script handles
+				 * the mutation events triggered by this library on its own
+				 */
+				if (container.getAttribute(disableAttr)) {
+					return;
+				}
+				let mindx, target, lindx,
+					llen = list.length,
+					mlen = mutations.length;
+				// avoiding use of forEach loops for performance reasons
+				for (mindx = 0; mindx < mlen; mindx++) {
+					target = mutations[mindx].target;
+					if (target) {
+						for (lindx = 0; lindx < llen; lindx++) {
+							if (target.matches(list[lindx])) {
+								targets[list[lindx]].count++;
+							}
 						}
 					}
+					timer = setTimeout(() => {
+						fireEvents();
+					}, debounceInterval);
 				}
-				timer = setTimeout(() => {
-					fireEvents();
-				}, 200);
-			}
-		}).observe(container, {
-			childList: true,
-			subtree: true
-		});
+			}).observe(container, {
+				childList: true,
+				subtree: true
+			});
 
-	}
+		}
+	});
 
 })();
