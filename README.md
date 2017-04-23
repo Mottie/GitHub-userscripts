@@ -164,7 +164,7 @@ Userscripts to add functionality to GitHub.
 
 Userscripts are set up to automatically update. You can check for updates from within the Greasemonkey or Tampermonkey menu, or click on the install link again to get the update.
 
-Each individual userscript's change log is contained on its wiki documentation page.
+Each individual userscript's change log is contained on its individual wiki page.
 
 ## Issues
 
