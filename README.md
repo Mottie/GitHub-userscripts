@@ -42,6 +42,7 @@ Userscripts to add functionality to GitHub.
 	| [GitHub rtl comments][rtl-wiki]        |     | [install][rtl-raw] | [GF][rtl-gf] [OU][rtl-ou] | 2016.06.13 | 2017.04.21 |
 	| [GitHub search autocomplete][sac-wiki] |     | [install][sac-raw] | [GF][sac-gf] [OU][sac-ou] | 2017.03.31 | 2017.04.13 |
 	| [GitHub sort content][srt-wiki]        |     | [install][srt-raw] | [GF][srt-gf] [OU][srt-ou] | 2016.07.13 | 2017.03.25 |
+	| [GitHub static time][stt-wiki]         |     | [install][stt-raw] | [GF][stt-gf] [OU][stt-ou] | 2017.04.24 | 2017.04.24 |
 	| [GitHub table of contents][toc-wiki]   |     | [install][toc-raw] | [GF][toc-gf] [OU][toc-ou] | 2016.03.28 | 2017.04.21 |
 	| [GitHub title notification][tbn-wiki]  |     | [install][tbn-raw] | [GF][tbn-gf] [OU][tbn-ou] | 2016.03.24 | 2017.03.25 |
 	| [GitHub toggle expanders][tex-wiki]    |     | [install][tex-raw] | [GF][tex-gf] [OU][tex-ou] | 2016.09.17 | 2017.03.25 |
@@ -72,6 +73,7 @@ Userscripts to add functionality to GitHub.
 [rtl-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-rtl-comments
 [sac-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-search-autocomplete
 [srt-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-sort-content
+[stt-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-static-time
 [tbn-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-title-notification
 [tex-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-toggle-expanders
 [toc-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-table-of-contents
@@ -99,6 +101,7 @@ Userscripts to add functionality to GitHub.
 [rtl-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-rtl-comments.user.js
 [sac-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-search-autocomplete.user.js
 [srt-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-sort-content.user.js
+[stt-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-static-time.user.js
 [tbn-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-title-notification.user.js
 [tex-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-toggle-expanders.user.js
 [toc-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-toc.user.js
@@ -126,6 +129,7 @@ Userscripts to add functionality to GitHub.
 [rtl-gf]: https://greasyfork.org/en/scripts/20542-github-rtl-comment-blocks
 [sac-gf]: https://greasyfork.org/en/scripts/28592-github-search-autocomplete
 [srt-gf]: https://greasyfork.org/en/scripts/21373-github-sort-content
+[stt-gf]: https://greasyfork.org/en/scripts/29239-github-static-time
 [tbn-gf]: https://greasyfork.org/en/scripts/18253-github-title-notification
 [tex-gf]: https://greasyfork.org/en/scripts/23303-github-toggle-expanders
 [toc-gf]: https://greasyfork.org/en/scripts/18344-github-toc
@@ -153,6 +157,7 @@ Userscripts to add functionality to GitHub.
 [rtl-ou]: https://openuserjs.org/scripts/Mottie/GitHub_RTL_Comment_Blocks
 [sac-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Search_Autocomplete
 [srt-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Sort_Content
+[stt-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Static_Time
 [tbn-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Title_Notification
 [tex-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Toggle_Expanders
 [toc-ou]: https://openuserjs.org/scripts/Mottie/GitHub_TOC
