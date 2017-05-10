@@ -478,6 +478,12 @@
 				"github": "search does not include github organization repos"
 			}
 		},
+		// array containing items that should not include a trailing colon
+		noTrailingColon = [
+			"AND",
+			"OR",
+			"NOT"
+		],
 		list = Object.keys(filters);
 
 	function updateYear(string) {
@@ -517,23 +523,28 @@
 
 	function addAtJs() {
 		const $selectors = $(selectors);
+
 		// add "?" to open list of filters
 		$selectors.atwho({
 			at: "?",
 			data: list,
-			insertTpl: "${name}:",
+			insertTpl: "${name}",
 			// show everything in dropdown
 			limit: list.length,
 			suffix: "",
 			callbacks: {
-				highlighter: highlighter
-			}
+				highlighter: highlighter,
+				beforeInsert: function(value) {
+					// add colon suffix, as needed
+					return value + (noTrailingColon.includes(value) ? " " : ":");
+				}
+			},
 		});
 
 		// Add specific filter examples
 		list.forEach(label => {
 			$selectors.atwho({
-				at: label + ":",
+				at: label + (noTrailingColon.includes(label) ? " " : ":"),
 				data: data[label],
 				limit: 20,
 				startWithSpace: false,
