@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Search Autocomplete
-// @version     0.1.2
+// @version     0.1.3
 // @description A userscript that adds autocomplete search filters to GitHub
 // @license     https://opensource.org/licenses/MIT
 // @author      Rob Garrison
@@ -20,6 +20,15 @@
 	"use strict";
 
 	const data = {},
+
+		// search input classes used by GitHub
+		selectors = [
+			".header-search-input",   // main header search
+			"[aria-label*='Search']", // https://github.com/search
+			".search-page-input",     // https://github.com/search/advanced
+			"#js-issues-search"       // https://github.com/:user/:repo/issues & pulls
+		].join(","),
+
 		// update examples using current & previous year
 		year = new Date().getFullYear(),
 		/**
@@ -506,10 +515,10 @@
 		});
 	}
 
-	function addAtJs(selectors) {
-		initialized = true;
+	function addAtJs() {
+		const $selectors = $(selectors);
 		// add "?" to open list of filters
-		$(selectors).atwho({
+		$selectors.atwho({
 			at: "?",
 			data: list,
 			insertTpl: "${name}:",
@@ -523,7 +532,7 @@
 
 		// Add specific filter examples
 		list.forEach(label => {
-			$(selectors).atwho({
+			$selectors.atwho({
 				at: label + ":",
 				data: data[label],
 				limit: 20,
@@ -566,16 +575,7 @@
 	}
 
 	// prevent reinitializing if user clicks in the input multiple times
-	let initialized = false;
 	function init() {
-		// search input classes used by GitHub
-		const selectors = [
-			".header-search-input",   // main header search
-			"[aria-label*='Search']", // https://github.com/search
-			".search-page-input",     // https://github.com/search/advanced
-			"#js-issues-search"       // https://github.com/:user/:repo/issues & pulls
-		].join(",");
-
 		// build data for At.js
 		let array;
 		list.forEach(label => {
@@ -598,12 +598,11 @@
 		document.querySelector("body").addEventListener("click", event => {
 			const target = event.target;
 			if (
-				!initialized &&
 				target.nodeName === "INPUT" &&
 				target.matches(selectors)
 			) {
 				$(selectors).atwho("destroy");
-				addAtJs(selectors);
+				addAtJs();
 			}
 		});
 		// remove At.js before the page refreshes
@@ -611,7 +610,6 @@
 			const target = event.target;
 			if (target.nodeName === "INPUT" && target.matches(selectors)) {
 				$(selectors).atwho("destroy");
-				initialized = false;
 			}
 		});
 	}
