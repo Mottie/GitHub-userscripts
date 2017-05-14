@@ -18,7 +18,7 @@
 		const state = closest(".commits-list-item, .js-details-container", el)
 			.classList.contains("open"),
 			// target buttons inside commits_bucket - fixes #8
-			selector = `.commits-listing .commits-list-item, #commits_bucket .js-details-container`;
+			selector = `.commits-listing .commits-list-item, #commits_bucket .js-details-container, .release-timeline-tags  .js-details-container`;
 		Array.from(document.querySelectorAll(selector)).forEach(el => {
 			el.classList.toggle("open", state);
 		});
