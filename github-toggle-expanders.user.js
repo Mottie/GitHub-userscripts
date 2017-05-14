@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Toggle Expanders
-// @version     1.0.4
+// @version     1.0.5
 // @description A userscript that toggles all expanders when one expander is shift-clicked
 // @license     https://creativecommons.org/licenses/by-sa/4.0/
 // @author      Rob Garrison
@@ -18,8 +18,11 @@
 		const state = closest(".commits-list-item, .js-details-container", el)
 			.classList.contains("open"),
 			// target buttons inside commits_bucket - fixes #8
-			selector = `.commits-listing .commits-list-item, #commits_bucket .js-details-container, .release-timeline-tags  .js-details-container`;
-		Array.from(document.querySelectorAll(selector)).forEach(el => {
+			selectors = `
+				.commits-listing .commits-list-item,
+				#commits_bucket .js-details-container,
+				.release-timeline-tags .js-details-container`;
+		Array.from(document.querySelectorAll(selectors)).forEach(el => {
 			el.classList.toggle("open", state);
 		});
 	}
