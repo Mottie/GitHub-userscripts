@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name        GitHub Static Time
-// @version     0.1.0
+// @version     0.1.1
 // @description A userscript that replaces relative times with a static time formatted as you like it
-// @license     https://creativecommons.org/licenses/by-sa/4.0/
+// @license     MIT
 // @author      Rob Garrison
 // @namespace   https://github.com/Mottie
 // @include     https://github.com/*
@@ -152,8 +152,7 @@
 			return;
 		}
 		busy = true;
-		let indx = 0,
-			selector = tempFormat ? ".ghst-time" : "relative-time, time-ago";
+		let selector = tempFormat ? ".ghst-time" : "relative-time, time-ago";
 		if ($(selector)) {
 			let indx = 0;
 			const els = $$(selector),
@@ -161,7 +160,7 @@
 
 			// loop with delay to allow user interaction
 			const loop = () => {
-				let el, time, node, indx2,
+				let el, time, node,
 					// max number of DOM insertions per loop
 					max = 0;
 				while (max < 20 && indx < len) {
