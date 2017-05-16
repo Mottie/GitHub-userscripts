@@ -2,7 +2,7 @@
 	"name": "github-userscripts",
 	"version": "1.0.112",
 	"description": "Userscripts to add functionality to GitHub",
-	"license": "CC-BY-SA-4.0",
+	"license": "MIT",
 	"repository": "Mottie/GitHub-userscripts",
 	"author": {
 		"name": "Rob Garrison",
