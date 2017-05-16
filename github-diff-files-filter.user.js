@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name        GitHub Diff Files Filter
-// @version     0.1.7
+// @version     0.1.8
 // @description A userscript that adds filters that toggle diff & PR files by extension
-// @license     https://creativecommons.org/licenses/by-sa/4.0/
+// @license     MIT
 // @author      Rob Garrison
 // @namespace   https://github.com/Mottie
 // @include     https://github.com/*

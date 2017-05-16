@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name        GitHub Issue Highlighter
-// @version     1.0.3
+// @version     1.0.4
 // @description A userscript that highlights the linked-to comment
-// @license     https://creativecommons.org/licenses/by-sa/4.0/
+// @license     MIT
 // @author      Rob Garrison
 // @namespace   https://github.com/Mottie
 // @include     https://github.com/*

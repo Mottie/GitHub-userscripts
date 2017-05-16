@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name        GitHub Remove Diff Signs
-// @version     1.1.5
+// @version     1.1.6
 // @description A userscript that removes the "+" and "-" from code diffs
-// @license     https://creativecommons.org/licenses/by-sa/4.0/
+// @license     MIT
 // @author      Rob Garrison
 // @namespace   https://github.com/Mottie
 // @include     https://github.com/*

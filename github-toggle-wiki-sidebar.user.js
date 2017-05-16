@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name        GitHub Toggle Wiki Sidebar
-// @version     1.0.7
+// @version     1.0.8
 // @description A userscript that adds a button to toggle the GitHub Wiki sidebar
-// @license     https://creativecommons.org/licenses/by-sa/4.0/
+// @license     MIT
 // @author      Rob Garrison
 // @namespace   https://github.com/Mottie
 // @include     https://github.com/*

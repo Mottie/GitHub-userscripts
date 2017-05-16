@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name        GitHub RTL Comment Blocks
-// @version     1.2.8
+// @version     1.2.9
 // @description A userscript that adds a button to insert RTL text blocks in comments
-// @license     https://creativecommons.org/licenses/by-sa/4.0/
+// @license     MIT
 // @author      Rob Garrison
 // @namespace   https://github.com/Mottie
 // @include     https://github.com/*

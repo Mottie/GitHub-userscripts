@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name        Gist to dabblet
-// @version     2.1.2
+// @version     2.1.3
 // @description Add a dabblet.com link button to any gist with dabblet information
-// @license     https://creativecommons.org/licenses/by-sa/4.0/
+// @license     MIT
 // @author      Rob Garrison
 // @namespace   https://github.com/Mottie
 // @include     https://gist.github.com/*

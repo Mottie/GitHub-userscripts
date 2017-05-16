@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name        GitHub Custom Navigation
-// @version     1.0.10
+// @version     1.0.11
 // @description A userscript that allows you to customize GitHub's main navigation bar
-// @license     https://creativecommons.org/licenses/by-sa/4.0/
+// @license     MIT
 // @author      Rob Garrison
 // @namespace   https://github.com/Mottie
 // @include     https://github.com/*

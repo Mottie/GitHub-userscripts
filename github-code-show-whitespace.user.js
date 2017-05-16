@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name        GitHub Code Show Whitespace
-// @version     0.1.5
+// @version     0.1.6
 // @description A userscript that shows whitespace (space, tabs and carriage returns) in code blocks
-// @license     https://opensource.org/licenses/MIT
+// @license     MIT
 // @author      Rob Garrison
 // @namespace   https://github.com/Mottie
 // @include     https://github.com/*

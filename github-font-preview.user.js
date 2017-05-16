@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name        GitHub Font Preview
-// @version     1.0.12
+// @version     1.0.13
 // @description A userscript that adds a font file preview
-// @license     https://creativecommons.org/licenses/by-sa/4.0/
+// @license     MIT
 // @author      Rob Garrison
 // @namespace   https://github.com/Mottie
 // @include     https://github.com/*

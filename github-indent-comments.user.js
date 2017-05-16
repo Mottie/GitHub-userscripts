@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name        GitHub Indent Comment Blocks
-// @version     1.0.5
+// @version     1.0.6
 // @description A userscript that allows you to indent & outdent blocks in the comment editor
-// @license     https://creativecommons.org/licenses/by-sa/4.0/
+// @license     MIT
 // @author      Rob Garrison
 // @namespace   https://github.com/Mottie
 // @include     https://github.com/*

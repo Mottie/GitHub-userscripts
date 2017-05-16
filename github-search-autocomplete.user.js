@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name        GitHub Search Autocomplete
-// @version     0.1.3
+// @version     0.1.4
 // @description A userscript that adds autocomplete search filters to GitHub
-// @license     https://opensource.org/licenses/MIT
+// @license     MIT
 // @author      Rob Garrison
 // @namespace   https://github.com/Mottie
 // @include     https://github.com/*
