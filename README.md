@@ -40,7 +40,7 @@ Userscripts to add functionality to GitHub.
 	| [GitHub label color picker][glc-wiki]  |     | [install][glc-raw] | [GF][glc-gf] [OU][glc-ou] | 2016.09.16 | 2017.05.16 |
 	| [GitHub remove diff signs][rds-wiki]   |     | [install][rds-raw] | [GF][rds-gf] [OU][rds-ou] | 2016.04.05 | 2017.05.16 |
 	| [GitHub rtl comments][rtl-wiki]        |     | [install][rtl-raw] | [GF][rtl-gf] [OU][rtl-ou] | 2016.06.13 | 2017.05.16 |
-	| [GitHub search autocomplete][sac-wiki] |     | [install][sac-raw] | [GF][sac-gf] [OU][sac-ou] | 2017.03.31 | 2017.05.16 |
+	| [GitHub search autocomplete][sac-wiki] |     | [install][sac-raw] | [GF][sac-gf] [OU][sac-ou] | 2017.03.31 | 2017.05.17 |
 	| [GitHub sort content][srt-wiki]        |     | [install][srt-raw] | [GF][srt-gf] [OU][srt-ou] | 2016.07.13 | 2017.05.16 |
 	| [GitHub static time][stt-wiki]         |     | [install][stt-raw] | [GF][stt-gf] [OU][stt-ou] | 2017.04.24 | 2017.05.16 |
 	| [GitHub table of contents][toc-wiki]   |     | [install][toc-raw] | [GF][toc-gf] [OU][toc-ou] | 2016.03.28 | 2017.05.16 |
