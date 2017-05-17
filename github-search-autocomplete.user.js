@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Search Autocomplete
-// @version     0.1.4
+// @version     0.1.5
 // @description A userscript that adds autocomplete search filters to GitHub
 // @license     MIT
 // @author      Rob Garrison
@@ -26,7 +26,8 @@
 			".header-search-input",   // main header search
 			"[aria-label*='Search']", // https://github.com/search
 			".search-page-input",     // https://github.com/search/advanced
-			"#js-issues-search"       // https://github.com/:user/:repo/issues & pulls
+			"#js-issues-search",      // https://github.com/:user/:repo/issues & pulls
+			".js-search-query"        // https://gist.github.com/search?q=css
 		].join(","),
 
 		// update examples using current & previous year
