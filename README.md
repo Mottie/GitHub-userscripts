@@ -47,6 +47,7 @@ Userscripts to add functionality to GitHub.
 	| [GitHub title notification][tbn-wiki]  |     | [install][tbn-raw] | [GF][tbn-gf] [OU][tbn-ou] | 2016.03.24 | 2017.05.16 |
 	| [GitHub toggle expanders][tex-wiki]    |     | [install][tex-raw] | [GF][tex-gf] [OU][tex-ou] | 2016.09.17 | 2017.05.16 |
 	| [GitHub toggle wiki sidebar][tws-wiki] |     | [install][tws-raw] | [GF][tws-gf] [OU][tws-ou] | 2016.04.01 | 2017.05.16 |
+	| [Gist raw links][grl-wiki]             |     | [install][grl-raw] | [GF][grl-gf] [OU][grl-ou] | 2017.05.19 | 2017.05.19 |
 	| [Gist to dabblet][g2d-wiki]            |     | [install][g2d-raw] | [GF][g2d-gf] [OU][g2d-ou] | 2012.01.26 | 2017.05.16 |
 
 \* The ![][ico] column indicates that the userscript has been included in the [Octopatcher](https://github.com/Mottie/Octopatcher) browser extension/addon.
@@ -65,6 +66,7 @@ Userscripts to add functionality to GitHub.
 [g2d-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/Gist-to-dabblet
 [gih-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-issue-highlighter
 [glc-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-label-color-picker
+[grl-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/Gist-raw-links
 [ic1-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-issue-comments
 [ic2-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-issue-counts
 [ioc-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-indent-comments
@@ -93,6 +95,7 @@ Userscripts to add functionality to GitHub.
 [g2d-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/gist-to-dabblet.user.js
 [gih-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-issue-highlighter.user.js
 [glc-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-label-color-picker.user.js
+[grl-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/gist-raw-links.user.js
 [ic1-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-issue-comments.user.js
 [ic2-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-issue-counts.user.js
 [ioc-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-indent-comments.user.js
@@ -120,6 +123,7 @@ Userscripts to add functionality to GitHub.
 [fpv-gf]: https://greasyfork.org/en/scripts/20479-github-font-preview
 [g2d-gf]: https://greasyfork.org/en/scripts/18254-gist-to-dabblet
 [gih-gf]: https://greasyfork.org/en/scripts/19867-github-issue-highlighter
+[grl-gf]: https://greasyfork.org/en/scripts/29888-gist-raw-links
 [glc-gf]: https://greasyfork.org/en/scripts/23270-github-label-color-picker
 [ic1-gf]: https://greasyfork.org/en/scripts/18503-github-toggle-issue-comments
 [ic2-gf]: https://greasyfork.org/en/scripts/15560-github-show-repo-issues
@@ -149,6 +153,7 @@ Userscripts to add functionality to GitHub.
 [g2d-ou]: https://openuserjs.org/scripts/Mottie/Gist_to_dabblet
 [gih-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Issue_Highlighter
 [glc-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Label_Color_Picker
+[grl-ou]: https://openuserjs.org/scripts/Mottie/Gist_Raw_Links
 [ic1-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Toggle_Issue_Comments
 [ic2-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Show_Repo_Issues
 [ioc-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Indent_Comment_Blocks
