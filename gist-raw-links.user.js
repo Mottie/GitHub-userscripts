@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        Gist Raw Links
-// @version     0.1.2
+// @version     0.1.3
 // @description Add a button that contains a list of gist raw file links
 // @license     MIT
 // @author      Rob Garrison
@@ -56,6 +56,21 @@
 		}
 	}
 
+	function addList(link, files) {
+		let url,
+			html = "";
+		Object.keys(files).forEach(file => {
+			// remove version sha from raw_url to always point at
+			// the latest version of the file - see #18
+			url = files[file].raw_url.replace(/raw\/\w+\//, "raw/");
+			html += `
+				<a class="dropdown-item ghrl-file" href="${url}">
+					${file}
+				</a>`;
+		});
+		$(".ghrl-files", link.parentNode).innerHTML = html;
+	}
+
 	function loadFileList(link) {
 		let url,
 			el = closest(".dropdown", link);
@@ -79,17 +94,6 @@
 				}
 			});
 		}
-	}
-
-	function addList(link, files) {
-		let html = "";
-		Object.keys(files).forEach(file => {
-			html += `
-				<a class="dropdown-item ghrl-file" href="${files[file].raw_url}">
-					${file}
-				</a>`;
-		});
-		$(".ghrl-files", link.parentNode).innerHTML = html;
 	}
 
 	function removeBackdrop(event) {
