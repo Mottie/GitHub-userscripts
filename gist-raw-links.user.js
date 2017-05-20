@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        Gist Raw Links
-// @version     0.1.1
+// @version     0.1.2
 // @description Add a button that contains a list of gist raw file links
 // @license     MIT
 // @author      Rob Garrison
@@ -21,6 +21,7 @@
 		.ghrl-get-list * { pointer-events:none; }
 		.ghrl-files > div { text-align:center; pointer-events:none; }
 		.ghrl-files a { cursor:pointer; }
+		.gist-count-links { z-index: 20; }
 	`);
 
 	const item = document.createElement("li");
