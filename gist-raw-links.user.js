@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        Gist Raw Links
-// @version     0.1.0
+// @version     0.1.1
 // @description Add a button that contains a list of gist raw file links
 // @license     MIT
 // @author      Rob Garrison
@@ -35,7 +35,7 @@
 			<div class="dropdown-menu-content">
 				<ul class="dropdown-menu dropdown-menu-sw ghrl-files">
 					<div>
-						<img class="dots" src="https://assets-cdn.github.com/images/spinners/octocat-spinner-32.gif" width="32" alt="">
+						<img src="https://assets-cdn.github.com/images/spinners/octocat-spinner-32.gif" width="32" alt="">
 					</div>
 				</ul>
 			</div>`;
@@ -73,7 +73,6 @@
 						return false;
 					}
 					if (json && json.files) {
-						console.log(link);
 						addList(link, json.files);
 					}
 				}
@@ -84,9 +83,11 @@
 	function addList(link, files) {
 		let html = "";
 		Object.keys(files).forEach(file => {
-			html += `<a class="dropdown-item" href="${files[file].raw_url}">${file}</a>`;
+			html += `
+				<a class="dropdown-item ghrl-file" href="${files[file].raw_url}">
+					${file}
+				</a>`;
 		});
-		console.log('updating list', link);
 		$(".ghrl-files", link.parentNode).innerHTML = html;
 	}
 
@@ -120,6 +121,16 @@
 						el.addEventListener("click", removeBackdrop);
 					}
 				}, 100);
+			} else if (
+				target.classList.contains("ghrl-file") &&
+				// left mouse click only
+				event.button === 0 &&
+				// check for keyboard modifier + left click - the browser handles these
+				// clicks differently
+				!(event.shiftKey || event.ctrlKey || event.metaKey)
+			) {
+				// allow left click to pass through
+				window.location.href = target.href;
 			}
 		}, false);
 	}
