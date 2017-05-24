@@ -8,6 +8,7 @@
 // @include     https://github.com/*
 // @include     https://gist.github.com/*
 // @include     https://help.github.com/*
+// @include     https://gitlab.com/*
 // @run-at      document-idle
 // @grant       GM_addStyle
 // @grant       GM_getValue
@@ -37,7 +38,9 @@
 		.markdown-body h1, .markdown-body h2, .markdown-body h3,
 		.markdown-body h4, .markdown-body h5, .markdown-body h6,
 		.markdown-format h1, .markdown-format h2, .markdown-format h3,
-		.markdown-format h4, .markdown-format h5, .markdown-format h6 {
+		.markdown-format h4, .markdown-format h5, .markdown-format h6,
+		#content-body h1, #content-body h2, #content-body h3,
+		#content-body h4, #content-body h5, #content-body h6 {
 			position:relative;
 			padding-right:.8em;
 			cursor:pointer;
@@ -45,7 +48,9 @@
 		.markdown-body h1:after, .markdown-body h2:after, .markdown-body h3:after,
 		.markdown-body h4:after, .markdown-body h5:after, .markdown-body h6:after,
 		.markdown-format h1:after, .markdown-format h2:after, .markdown-format h3:after,
-		.markdown-format h4:after, .markdown-format h5:after, .markdown-format h6:after {
+		.markdown-format h4:after, .markdown-format h5:after, .markdown-format h6:after,
+		#content-body h1:after, #content-body h2:after, #content-body h3:after,
+		#content-body h4:after, #content-body h5:after, #content-body h6:after {
 			display:inline-block;
 			position:absolute;
 			right:0;
@@ -53,7 +58,7 @@
 			font-size:.8em;
 			content:"\u25bc";
 		}
-		.markdown-body .${collapsed}:after, .markdown-format .${collapsed}:after {
+		.markdown-body .${collapsed}:after, .markdown-format .${collapsed}:after, #content-body .${collapsed}:after {
 			transform: rotate(90deg);
 		}
 		/* clicking on header link won't pass svg as the event.target */
@@ -67,12 +72,12 @@
 
 	function addColors() {
 		arrowColors.textContent = `
-			.markdown-body h1:after, .markdown-format h1:after { color:${colors[0]} }
-			.markdown-body h2:after, .markdown-format h2:after { color:${colors[1]} }
-			.markdown-body h3:after, .markdown-format h3:after { color:${colors[2]} }
-			.markdown-body h4:after, .markdown-format h4:after { color:${colors[3]} }
-			.markdown-body h5:after, .markdown-format h5:after { color:${colors[4]} }
-			.markdown-body h6:after, .markdown-format h6:after { color:${colors[5]} }
+			.markdown-body h1:after, .markdown-format h1:after, #content-body h1:after { color:${colors[0]} }
+			.markdown-body h2:after, .markdown-format h2:after, #content-body h2:after { color:${colors[1]} }
+			.markdown-body h3:after, .markdown-format h3:after, #content-body h3:after { color:${colors[2]} }
+			.markdown-body h4:after, .markdown-format h4:after, #content-body h4:after { color:${colors[3]} }
+			.markdown-body h5:after, .markdown-format h5:after, #content-body h5:after { color:${colors[4]} }
+			.markdown-body h6:after, .markdown-format h6:after, #content-body h6:after { color:${colors[5]} }
 		`;
 	}
 
@@ -85,7 +90,7 @@
 				isCollapsed = el.classList.contains(collapsed);
 			if (shifted) {
 				// collapse all same level anchors
-				els = $$(`.markdown-body ${name}, .markdown-format ${name}`);
+				els = $$(`.markdown-body ${name}, .markdown-format ${name}, #content-body ${name}`);
 				for (el of els) {
 					nextHeader(el, level, isCollapsed);
 				}
@@ -173,7 +178,7 @@
 			target = closest(headers.join(","), event.target);
 			if (target && headers.indexOf(target.nodeName || "") > -1) {
 				// make sure the header is inside of markdown
-				if (closest(".markdown-body, .markdown-format", target)) {
+				if (closest(".markdown-body, .markdown-format, #content-body", target)) {
 					toggle(target, event.shiftKey);
 				}
 			}
@@ -182,7 +187,7 @@
 
 	function checkHash() {
 		let el, els, md;
-		const mds = $$(".markdown-body, .markdown-format"),
+		const mds = $$(".markdown-body, .markdown-format, #content-body"),
 			tmp = (window.location.hash || "").replace(/#/, "");
 		for (md of mds) {
 			els = $$(headers.join(","), md);
@@ -211,6 +216,19 @@
 		}
 	}
 
+	function waitForkMarkdownContent() {
+		let observer = new MutationObserver(function () {
+			setTimeout(checkHash, 100);
+		})
+
+		let observerConfig = {
+			childList: true,
+			subtree: true
+		};
+
+		observer.observe($("#content-body"), observerConfig);
+	}
+
 	function checkColors() {
 		if (!colors || colors.length !== 6) {
 			colors = [].concat(defaultColors);
@@ -223,7 +241,13 @@
 		addColors();
 		addBinding();
 		if (startCollapsed) {
-			checkHash();
+			let currentUrl = window.location.href;
+			// Wait for markdown content loaded on GitLab
+			if (currentUrl.indexOf("//gitlab.com/") !== -1 && currentUrl.indexOf("//gitlab.com/help/") === -1) {
+				waitForkMarkdownContent();
+			} else {
+				checkHash();
+			}
 		}
 	}
 
