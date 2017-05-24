@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Collapse Markdown
-// @version     1.1.8
+// @version     1.1.9
 // @description A userscript that collapses markdown headers
 // @license     MIT
 // @author      Rob Garrison
@@ -138,7 +138,9 @@
 			els = els.filter(el => {
 				return el.nodeName === target.nodeName;
 			});
-			removeClass(els, "ghcm-hidden");
+			for (el of els) {
+				el.classList.remove("glcm-hidden");
+			}
 		}
 		nextHeader(target, level, false);
 	}
