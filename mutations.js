@@ -1,4 +1,4 @@
-/* GitHub mutations observer library script v0.2.0
+/* GitHub mutations observer library script v0.2.1
  * Detect changes to various elements and trigger an event
  * This script is meant to be used as a library for GitHub-based userscripts
  * Copyright © 2017 Rob Garrison
@@ -23,9 +23,10 @@
 				count: 0,
 				name: "preview"
 			},
-			// progressively loaded comments; "# items not shown"
-			// example: https://github.com/isaacs/github/issues/18
-			".js-discussion": {
+			// .js-discussion = wrapper for progressively loaded comments;
+			// "# items not shown" example: https://github.com/isaacs/github/issues/18
+			// .discussion-item = issue status changed (github-issue-show-status)
+			".js-discussion, .discussion-item": {
 				count: 0,
 				name: "comments"
 			},
