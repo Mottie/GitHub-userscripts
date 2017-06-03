@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        Gist Raw Links
-// @version     0.1.3
+// @version     0.1.4
 // @description Add a button that contains a list of gist raw file links
 // @license     MIT
 // @author      Rob Garrison
@@ -78,10 +78,10 @@
 		if (el) {
 			url = el.href.split("/");
 			GM_xmlhttpRequest({
-				method : 'GET',
+				method : "GET",
 				url : `https://api.github.com/gists/${url.pop()}`,
 				onload : function(response) {
-					var json = false;
+					let json = false;
 					try {
 						json = JSON.parse(response.responseText);
 					} catch (err) {
@@ -111,7 +111,6 @@
 
 	function addBindings() {
 		document.addEventListener("click", function(event) {
-			let flag;
 			const target = event.target;
 			if (target.classList.contains("ghrl-get-list")) {
 				event.preventDefault();
@@ -120,7 +119,6 @@
 				}
 				// let GitHub process the elements
 				setTimeout(() => {
-					flag = !target.classList.contains("selected");
 					const el = $(".modal-backdrop");
 					if (el) {
 						el.addEventListener("click", removeBackdrop);
