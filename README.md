@@ -37,9 +37,10 @@ Userscripts to add functionality to GitHub.
 	| [GitHub issue comments][ic1-wiki]      |     | [install][ic1-raw] | [GF][ic1-gf] [OU][ic1-ou] | 2016.04.04 | 2017.05.16 |
 	| [GitHub issue counts][ic2-wiki]        |     | [install][ic2-raw] | [GF][ic2-gf] [OU][ic2-ou] | 2012.01.16 | 2017.05.16 |
 	| [GitHub issue highlighter][gih-wiki]   |     | [install][gih-raw] | [GF][gih-gf] [OU][gih-ou] | 2016.05.21 | 2017.05.16 |
-	| [GitHub issue show status][iss-wiki]   |     | [install][iss-raw] | [GF][iss-gf] [OU][iss-ou] | 2016.06.02 | 2017.06.02 |
+	| [GitHub issue show status][iss-wiki]   |     | [install][iss-raw] | [GF][iss-gf] [OU][iss-ou] | 2016.06.02 | 2017.06.03 |
 	| [GitHub label color picker][glc-wiki]  |     | [install][glc-raw] | [GF][glc-gf] [OU][glc-ou] | 2016.09.16 | 2017.05.16 |
 	| [GitHub remove diff signs][rds-wiki]   |     | [install][rds-raw] | [GF][rds-gf] [OU][rds-ou] | 2016.04.05 | 2017.05.16 |
+	| [GitHub reveal header][rhd-wiki]       |     | [install][rhd-raw] | [GF][rhd-gf] [OU][rhd-ou] | 2016.06.03 | 2017.06.03 |
 	| [GitHub rtl comments][rtl-wiki]        |     | [install][rtl-raw] | [GF][rtl-gf] [OU][rtl-ou] | 2016.06.13 | 2017.05.16 |
 	| [GitHub search autocomplete][sac-wiki] |     | [install][sac-raw] | [GF][sac-gf] [OU][sac-ou] | 2017.03.31 | 2017.05.17 |
 	| [GitHub sort content][srt-wiki]        |     | [install][srt-raw] | [GF][srt-gf] [OU][srt-ou] | 2016.07.13 | 2017.05.16 |
@@ -48,7 +49,7 @@ Userscripts to add functionality to GitHub.
 	| [GitHub title notification][tbn-wiki]  |     | [install][tbn-raw] | [GF][tbn-gf] [OU][tbn-ou] | 2016.03.24 | 2017.05.16 |
 	| [GitHub toggle expanders][tex-wiki]    |     | [install][tex-raw] | [GF][tex-gf] [OU][tex-ou] | 2016.09.17 | 2017.05.16 |
 	| [GitHub toggle wiki sidebar][tws-wiki] |     | [install][tws-raw] | [GF][tws-gf] [OU][tws-ou] | 2016.04.01 | 2017.05.16 |
-	| [Gist raw links][grl-wiki]             |     | [install][grl-raw] | [GF][grl-gf] [OU][grl-ou] | 2017.05.19 | 2017.05.20 |
+	| [Gist raw links][grl-wiki]             |     | [install][grl-raw] | [GF][grl-gf] [OU][grl-ou] | 2017.05.19 | 2017.06.03 |
 	| [Gist to dabblet][g2d-wiki]            |     | [install][g2d-raw] | [GF][g2d-gf] [OU][g2d-ou] | 2012.01.26 | 2017.05.16 |
 
 \* The ![][ico] column indicates that the userscript has been included in the [Octopatcher](https://github.com/Mottie/Octopatcher) browser extension/addon.
@@ -74,6 +75,7 @@ Userscripts to add functionality to GitHub.
 [ipv-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-image-preview
 [iss-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-issue-show-status
 [rds-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-remove-diff-signs
+[rhd-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-reveal-header
 [rtl-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-rtl-comments
 [sac-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-search-autocomplete
 [srt-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-sort-content
@@ -104,6 +106,7 @@ Userscripts to add functionality to GitHub.
 [ipv-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-image-preview.user.js
 [iss-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-issue-show-status.user.js
 [rds-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-remove-diff-signs.user.js
+[rhd-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-reveal-header.user.js
 [rtl-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-rtl-comments.user.js
 [sac-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-search-autocomplete.user.js
 [srt-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-sort-content.user.js
@@ -134,6 +137,7 @@ Userscripts to add functionality to GitHub.
 [ipv-gf]: https://greasyfork.org/en/scripts/19773-github-image-preview
 [iss-gf]: https://greasyfork.org/en/scripts/30268-github-issue-show-status
 [rds-gf]: https://greasyfork.org/en/scripts/18520-github-remove-diff-signs
+[rhd-gf]: https://greasyfork.org/en/scripts/30308-github-reveal-header
 [rtl-gf]: https://greasyfork.org/en/scripts/20542-github-rtl-comment-blocks
 [sac-gf]: https://greasyfork.org/en/scripts/28592-github-search-autocomplete
 [srt-gf]: https://greasyfork.org/en/scripts/21373-github-sort-content
@@ -164,6 +168,7 @@ Userscripts to add functionality to GitHub.
 [ipv-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Image_Preview
 [iss-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Issue_Show_Status
 [rds-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Remove_Diff_Signs
+[rhd-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Reveal_Header
 [rtl-ou]: https://openuserjs.org/scripts/Mottie/GitHub_RTL_Comment_Blocks
 [sac-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Search_Autocomplete
 [srt-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Sort_Content
