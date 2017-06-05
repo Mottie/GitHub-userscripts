@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Toggle Issue Comments
-// @version     1.0.26
+// @version     1.0.27
 // @description A userscript that toggles issues/pull request comments & messages
 // @license     MIT
 // @author      Rob Garrison
@@ -212,7 +212,7 @@
 			str = "<h3>Hide Comments from</h3>",
 			unique = [],
 			// get all avatars
-			avatars = $$(".timeline-comment-avatar"),
+			avatars = $$(".timeline-comment-avatar img"),
 			len = avatars.length - 1, // last avatar is the new comment with the current user
 
 			loop = (callback) => {
@@ -224,7 +224,7 @@
 					}
 					el = avatars[indx];
 					name = (el.getAttribute("alt") || "").replace("@", "");
-					if (unique.indexOf(name) < 0) {
+					if (!unique.includes(name)) {
 						str += `<span class="ghic-avatar tooltipped tooltipped-n" aria-label="${name}">
 								${iconHidden}
 								<img class="ghic-avatar avatar" width="24" height="24" src="${el.src}"/>
@@ -455,7 +455,7 @@
 	}
 
 	function hideParticipant(el) {
-		let els, indx, len, name,
+		let els, indx, len, name, hide,
 			results = [];
 		if (el) {
 			el.classList.toggle("comments-hidden");
