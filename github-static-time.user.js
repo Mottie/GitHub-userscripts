@@ -331,7 +331,12 @@
 		$("#ghst-settings").classList.add("ghst-open");
 	});
 
-	document.addEventListener("ghmo:container", staticTime);
+	// repo file list needs additional time to render
+	document.addEventListener("ghmo:container", () => {
+		setTimeout(() => {
+			staticTime();
+		}, 100);
+	});
 	document.addEventListener("ghmo:preview", staticTime);
 	init();
 
