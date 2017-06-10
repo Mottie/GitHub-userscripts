@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Static Time
-// @version     0.1.1
+// @version     0.1.2
 // @description A userscript that replaces relative times with a static time formatted as you like it
 // @license     MIT
 // @author      Rob Garrison
@@ -152,7 +152,11 @@
 			return;
 		}
 		busy = true;
-		let selector = tempFormat ? ".ghst-time" : "relative-time, time-ago";
+		let selector = typeof tempFormat === "string" ?
+			// update existing timestamps
+			".ghst-time" :
+			// process html elements
+			"relative-time, time-ago";
 		if ($(selector)) {
 			let indx = 0;
 			const els = $$(selector),
@@ -169,15 +173,19 @@
 					}
 					el = els[indx];
 					time = el.getAttribute("datetime") || "";
-					if (time) {
+					if (el && time) {
 						if (tempFormat) {
 							el.textContent = moment(time).format(tempFormat);
 						} else {
 							node = block.cloneNode(true);
 							node.setAttribute("datetime", time);
 							node.textContent = moment(time).format(timeFormat);
-							// replace relative-time element
-							el.parentNode.replaceChild(node, el);
+							// el.parentElement may be null sometimes when using browser
+							// back arrow
+							if (el.parentElement) {
+								// replace relative-time/time-ago element
+								el.parentElement.replaceChild(node, el);
+							}
 						}
 						max++;
 					}
