@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Issue Highlighter
-// @version     1.0.4
+// @version     1.0.5
 // @description A userscript that highlights the linked-to comment
 // @license     MIT
 // @author      Rob Garrison
@@ -28,6 +28,8 @@
 		}
 	`);
 
+	const regex = /^#issue(comment)?-\d+/;
+
 	function init(event) {
 		if (document.querySelector("#discussion_bucket")) {
 			let target, indx,
@@ -41,8 +43,8 @@
 				}
 			}
 			// add "selected" class
-			if (/^#issue(comment)?-\d+/.test(hash)) {
-				target = document.querySelector(hash);
+			if (regex.test(hash)) {
+				target = document.querySelector(hash.match(regex)[0]);
 				if (target) {
 					target.classList.add("selected");
 				}
