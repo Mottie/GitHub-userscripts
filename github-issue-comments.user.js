@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Toggle Issue Comments
-// @version     1.0.27
+// @version     1.0.28
 // @description A userscript that toggles issues/pull request comments & messages
 // @license     MIT
 // @author      Rob Garrison
@@ -455,7 +455,7 @@
 	}
 
 	function hideParticipant(el) {
-		let els, indx, len, name, hide,
+		let els, indx, len, name,
 			results = [];
 		if (el) {
 			el.classList.toggle("comments-hidden");
