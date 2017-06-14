@@ -10,7 +10,7 @@
 		"url": "https://github.com/Mottie"
 	},
 	"devDependencies": {
-		"eslint": "^3.18.0"
+		"eslint": "^4.0.0"
 	},
 	"scripts": {
 		"lint": "eslint *.js || true"
