@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Search Autocomplete
-// @version     0.1.5
+// @version     0.1.6
 // @description A userscript that adds autocomplete search filters to GitHub
 // @license     MIT
 // @author      Rob Garrison
@@ -315,7 +315,8 @@
 			},
 			"path": {
 				"": "search code within the specific file path (directory)",
-				"cgi-bin": 'search code within the "cgi-bin" folder'
+				"cgi-bin": 'search code within the "cgi-bin" folder',
+				"test/spec": "search code within sub-folders"
 			},
 			"project": {
 				"": "search issues within a specified repository project board",
