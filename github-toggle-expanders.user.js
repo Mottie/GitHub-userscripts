@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Toggle Expanders
-// @version     1.0.6
+// @version     1.1.0
 // @description A userscript that toggles all expanders when one expander is shift-clicked
 // @license     MIT
 // @author      Rob Garrison
@@ -14,16 +14,18 @@
 (() => {
 	"use strict";
 
-	function toggle(el) {
-		const state = closest(".commits-list-item, .js-details-container", el)
-			.classList.contains("open"),
-			// target buttons inside commits_bucket - fixes #8
-			selectors = `
-				.commits-listing .commits-list-item,
-				#commits_bucket .js-details-container,
-				.release-timeline-tags .js-details-container`;
-		Array.from(document.querySelectorAll(selectors)).forEach(el => {
-			el.classList.toggle("open", state);
+	function toggle(el, ctrlKeyPressed) {
+		const stateNode = closest(".js-details-container", el),
+			state = stateNode.classList.contains("open"),
+			parentNode = closest(ctrlKeyPressed ?
+				".container, .js-discussion" :
+				".commits-listing, .discussion-item-body, .release-timeline-tags",
+				stateNode
+			),
+			containerNodes = parentNode.querySelectorAll(".js-details-container");
+
+		Array.from(containerNodes).forEach(node => {
+			node.classList.toggle("open", state);
 		});
 	}
 
@@ -41,11 +43,11 @@
 		const target = event.target;
 		if (
 			target && event.getModifierState("Shift") &&
-			target.matches(".ellipsis-expander")
+			target.matches(".js-details-target")
 		) {
 			// give GitHub time to add the class
 			setTimeout(() => {
-				toggle(target);
+				toggle(target, event.ctrlKey);
 			}, 100);
 		}
 	});
