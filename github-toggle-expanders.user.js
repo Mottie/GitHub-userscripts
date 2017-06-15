@@ -19,8 +19,9 @@
 			.classList.contains("open"),
 			// target buttons inside commits_bucket - fixes #8
 			selectors = `
-				.commits-listing .commits-list-item,
 				#commits_bucket .js-details-container,
+				.commits-listing .commits-list-item,
+				.discussion-item-body .js-details-container,
 				.release-timeline-tags .js-details-container`;
 		Array.from(document.querySelectorAll(selectors)).forEach(el => {
 			el.classList.toggle("open", state);
@@ -39,10 +40,10 @@
 
 	document.body.addEventListener("click", event => {
 		const target = event.target;
-		if (
-			target && event.getModifierState("Shift") &&
-			target.matches(".ellipsis-expander")
-		) {
+		if (target && event.getModifierState("Shift") && (
+			target.matches(".ellipsis-expander") ||
+			target.matches(".js-details-target")
+		)) {
 			// give GitHub time to add the class
 			setTimeout(() => {
 				toggle(target);
