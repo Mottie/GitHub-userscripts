@@ -13,6 +13,7 @@
 		"eslint": "^4.0.0"
 	},
 	"scripts": {
-		"lint": "eslint *.js || true"
+		"lint": "eslint *.js || true",
+		"authors": "bash tools/authors.sh"
 	}
 }
