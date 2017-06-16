@@ -190,6 +190,16 @@ Each individual userscript's change log is contained on its individual wiki page
 
 Please report any userscript issues within this repository's [issue section](https://github.com/Mottie/GitHub-userscripts/issues). Greasyfork messages are also received, but not as easily tracked. Thanks!
 
+## Contributions
+
+If you would like to contribute to this repository, please...
+
+1. Fork
+2. Make changes (please read the [contribution guidelines](./CONTRIBUTING.md) and abide by them)
+3. Create a pull request!
+
+Thanks to all that have [contributed](./AUTHORS) so far!
+
 ## Other userscripts not hosted here:
 
 * [GitHub Dark Script](https://github.com/StylishThemes/GitHub-Dark-Script)
