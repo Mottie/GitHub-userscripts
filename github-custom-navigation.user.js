@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Custom Navigation
-// @version     1.0.11
+// @version     1.0.12
 // @description A userscript that allows you to customize GitHub's main navigation bar
 // @license     MIT
 // @author      Rob Garrison
@@ -26,7 +26,8 @@
 		// when search input width is adjusted, this is the minimum width
 		minSearchInputWidth = 200,
 		// get user name; or empty string if not logged in
-		user = $("meta[name='user-login']").getAttribute("content") || "",
+		user = $("meta[name='user-login']") &&
+			$("meta[name='user-login']").getAttribute("content") || "",
 
 		defaults = {
 			github: [
