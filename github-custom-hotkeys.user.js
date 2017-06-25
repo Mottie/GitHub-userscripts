@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Custom Hotkeys
-// @version     1.0.5
+// @version     1.0.6
 // @description A userscript that allows you to add custom GitHub keyboard hotkeys
 // @license     MIT
 // @author      Rob Garrison
@@ -52,42 +52,31 @@
 		},
 
 		// https://github.com/{nonUser}
-		// see https://github.com/buunguyen/octotree/blob/master/src/adapters/github.js#L1-L10
-		// (https://github.com/buunguyen/octotree/issues/304)
-		// and https://github.com/Justineo/github-hovercard/blob/master/src/hovercard.js
+		// see https://github.com/Mottie/github-reserved-names
 		nonUser = new RegExp("(" + [
-			"about",
-			"account",
-			"blog",
-			"business",
-			"contact",
-			"dashboard",
-			"developer",
-			"explore",
-			"features",
-			"integrations",
-			"issues",
-			"join",
-			"login",
-			"mirrors",
-			"new",
-			"notifications",
-			"organizations",
-			"orgs",
-			"open-source",
-			"pages",
-			"personal",
-			"pricing",
-			"pulls",
-			"search",
-			"security",
-			"settings",
-			"showcases",
-			"site",
-			"stars",
-			"styleguide",
-			"trending",
-			"watching"
+			"400", "401", "402", "403", "404", "405", "406", "407", "408", "409",
+			"410", "411", "412", "413", "414", "415", "416", "417", "418", "419",
+			"420", "421", "422", "423", "424", "425", "426", "427", "428", "429",
+			"430", "431", "500", "501", "502", "503", "504", "505", "506", "507",
+			"508", "509", "510", "511", "about", "access", "account", "admin",
+			"anonymous", "api", "apps", "auth", "billing", "blog", "business",
+			"cache", "categories", "changelog", "codereview", "comments", "community",
+			"compare", "contact", "dashboard", "design", "developer", "docs",
+			"downloads", "editor", "edu", "enterprise", "events", "explore",
+			"features", "files", "gist", "gists", "graphs", "help", "home", "hosting",
+			"images", "info", "integrations", "issues", "jobs", "join", "languages",
+			"legal", "linux", "lists", "login", "logout", "mac", "maintenance",
+			"marketplace", "mine", "mirrors", "mobile", "navigation", "network",
+			"new", "news", "notifications", "oauth", "offer", "open-source",
+			"organizations", "orgs", "pages", "payments", "personal", "plans",
+			"plugins", "popular", "posts", "press", "pricing", "projects", "pulls",
+			"readme", "releases", "repositories", "search", "security", "services",
+			"sessions", "settings", "shop", "showcases", "signin", "signup", "site",
+			"ssh", "staff", "stars", "static", "status", "store", "stories",
+			"styleguide", "subscriptions", "support", "talks", "teams", "terms",
+			"tos", "tour", "translations", "trending", "updates", "username", "users",
+			"watching", "wiki", "windows", "works-with", "www1", "www2", "www3",
+			"www4", "www5", "www6", "www7", "www8", "www9"
 		].join("|") + ")");
 
 	function getUrlParts() {
