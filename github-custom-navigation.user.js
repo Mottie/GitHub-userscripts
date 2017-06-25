@@ -19,22 +19,24 @@
 (() => {
 	"use strict";
 
-	let drake,
-		editMode = false,
-		// remember scrollTop when settings panel opens (if using sticky nav header style)
-		scrollTop = 0,
+	// open menu via hash
+	const panelHash = "#github-custom-nav-settings",
 		// when the bar gets wider than this number, adjust the width of the search input
 		adjustWidth = 460,
 		// when search input width is adjusted, this is the minimum width
 		minSearchInputWidth = 200,
-
-		// open menu via hash
-		panelHash = "#github-custom-nav-settings",
-		panelHashTriggered = false,
+		// get user name; or empty string if not logged in
+		user = $("meta[name='user-login']").getAttribute("content") || "",
 
 		defaults = {
-			github: ["pr", "issues", "gist", "separator", "stars", "watching", "separator", "profile", "blog", "menu"],
-			gists: ["gistall", "giststars", "github", "separator", "pr", "issues", "stars", "watching", "separator", "profile", "blog", "menu"],
+			github: [
+				"pr", "issues", "gist", "separator", "stars", "watching", "separator",
+				"profile", "blog", "menu"
+			],
+			gists: [
+				"gistall", "giststars", "github", "separator", "pr", "issues", "stars",
+				"watching", "separator", "profile", "blog", "menu"
+			],
 
 			currentLink: "pr",
 			// using full length url so the links work from any subdomain (e.g. gist pages)
@@ -143,17 +145,20 @@
 				}
 			}
 		},
-
-		// get user name; or empty string if not logged in
-		user = $("meta[name='user-login']").getAttribute("content") || "",
-		settings = GM_getValue("custom-links", defaults),
-
 		icons = {
 			add: "<svg class='octicon' xmlns='http://www.w3.org/2000/svg' aria-hidden='true' height='14' viewBox='0 0 12 16' width='12'><path d='M12 9H7v5H5V9H0V7h5V2h2v5h5'/></svg>",
 			close: "<svg class='octicon' xmlns='http://www.w3.org/2000/svg' width='9' height='9' viewBox='0 0 9 9'><path d='M9 1L5.4 4.4 9 8 8 9 4.6 5.4 1 9 0 8l3.6-3.5L0 1l1-1 3.5 3.6L8 0l1 1z'></path></svg>",
 			info: "<svg class='octicon' xmlns='http://www.w3.org/2000/svg' height='16' width='14' viewBox='0 0 16 14'><path d='M6 10h2v2H6V10z m4-3.5c0 2.14-2 2.5-2 2.5H6c0-0.55 0.45-1 1-1h0.5c0.28 0 0.5-0.22 0.5-0.5v-1c0-0.28-0.22-0.5-0.5-0.5h-1c-0.28 0-0.5 0.22-0.5 0.5v0.5H4c0-1.5 1.5-3 3-3s3 1 3 2.5zM7 2.3c3.14 0 5.7 2.56 5.7 5.7S10.14 13.7 7 13.7 1.3 11.14 1.3 8s2.56-5.7 5.7-5.7m0-1.3C3.14 1 0 4.14 0 8s3.14 7 7 7 7-3.14 7-7S10.86 1 7 1z'/></svg>",
 			separator: "<svg class='octicon' xmlns='http://www.w3.org/2000/svg' aria-hidden='true' height='16' viewBox='0 0 12 16' width='12'><path d='M7 16H5V0h2'/></svg>"
 		};
+
+	let drake,
+		editMode = false,
+		panelHashTriggered = false,
+		// remember scrollTop when settings panel opens (if using sticky nav header
+		// style)
+		scrollTop = 0,
+		settings = GM_getValue("custom-links", defaults);
 
 	function addPanel() {
 		GM_addStyle(`
@@ -309,9 +314,9 @@
 		if (!panelHashTriggered && window.location.hash === panelHash) {
 			panelHashTriggered = true;
 			openPanel();
-			// immediately remove the hash because I noticed issues where the "#" was removed; and upon
-			// reload, a 404 page is shown because "https://github.com/github-custom-navigation-settings"
-			// does not exist
+			// immediately remove the hash because I noticed issues where the "#" was
+			// removed; and upon reload, a 404 page is shown because
+			// "https://github.com/github-custom-navigation-settings" does not exist
 			history.pushState("", document.title, window.location.pathname);
 			panelHashTriggered = false;
 		}
@@ -364,7 +369,8 @@
 		// highlight current link
 		let temp = $$(".header-nav-link.focus");
 		removeClass(temp, "focus");
-		temp = $$(".header-nav-item[data-ghcn='" + (settings.currentLink || "") + "'] .header-nav-link");
+		temp = $$(".header-nav-item[data-ghcn='" + (settings.currentLink || "") +
+			"'] .header-nav-link");
 		if (temp[0]) {
 			addClass(temp, "focus");
 			updateLink(temp[0].parentNode);
@@ -457,7 +463,8 @@
 			settings = JSON.parse(str);
 		}
 		GM_setValue("custom-links", settings);
-		// remove extra items individually; dragula doesn't seem to like it when we use innerHTML = ""
+		// remove extra items individually; dragula doesn't seem to like it when we
+		// use innerHTML = ""
 		let item,
 			els = $$(".header-nav-item"),
 			indx = els.length;
@@ -481,7 +488,9 @@
 		$(".ghcn-content").value = link.content || "";
 
 		// "separator" shouldn't show options
-		$(".ghcn-settings-wrapper form").style.visibility = item === "separator" ? "hidden" : "visible";
+		$(".ghcn-settings-wrapper form").style.visibility = item === "separator" ?
+			"hidden" :
+			"visible";
 	}
 
 	// save changes on-the-fly
@@ -498,9 +507,13 @@
 			GM_setValue("custom-links", settings);
 			// update item (should be unique)
 			if (item) {
-				// "\n" is the only thing that works as a carriage return for javascript's setAttribute
-				// See http://wowmotty.blogspot.com/2014/04/methods-to-add-multi-line-css-content.html
-				item.setAttribute("aria-label", settings.items[name].tooltip.replace(/(&#10;|&#xA;)/g, "\n"));
+				// "\n" is the only thing that works as a carriage return for
+				// javascript's setAttribute; see
+				// http://wowmotty.blogspot.com/2014/04/methods-to-add-multi-line-css-content.html
+				item.setAttribute(
+					"aria-label",
+					settings.items[name].tooltip.replace(/(&#10;|&#xA;)/g, "\n")
+				);
 				item.innerHTML = settings.items[name].content;
 			}
 		}
@@ -537,7 +550,8 @@
 			.header .dropdown-item[href='/settings/profile'],
 			.header .dropdown-item[data-ga-click*='go to profile']`
 		);
-		// get last found item - gists only have the "go to profile" item; GitHub has both
+		// get last found item - gists only have the "go to profile" item; GitHub
+		// has both
 		el = el[el.length - 1];
 		if (el) {
 			// insert after
@@ -564,9 +578,10 @@
 			}
 		});
 		on($("body"), "click", event => {
-			if (editMode && event.target.classList.contains("header-nav-link")) {
+			const target = event.target;
+			if (editMode && target.classList.contains("header-nav-link")) {
 				// header-nav-link is a child of header-nav-item, but is the same size
-				settings.currentLink = event.target.parentNode.getAttribute("data-ghcn");
+				settings.currentLink = target.parentNode.getAttribute("data-ghcn");
 				selectItem();
 			}
 		});
@@ -582,7 +597,8 @@
 		on($(".ghcn-reset"), "click", () => {
 			resetLinks();
 		});
-		// close panel when hotkey link is clicked or the page scrolls on the documentation wiki
+		// close panel when hotkey link is clicked or the page scrolls on the
+		// documentation wiki
 		on($$(".ghcn-close, .ghcn-hotkey-link"), "click", () => {
 			closePanel();
 		});
@@ -681,10 +697,15 @@
 				// add delay to allow browser to complete reflow
 				setTimeout(() => {
 					let width = nav.offsetWidth,
-						// don't let search bar get narrower than 200px; 360 = starting width
+						// don't let search bar get narrower than 200px; 360 = starting
+						// width
 						adjust = width > adjustWidth ?
-						Math.round(Math.max(minSearchInputWidth, 360 - (width - adjustWidth))) + "px" : "";
-					// default search width is 360px; we don't want to get narrower than 200px
+							Math.round(
+								Math.max(minSearchInputWidth, 360 - (width - adjustWidth))
+							) + "px" :
+							"";
+					// default search width is 360px; we don't want to get narrower than
+					// 200px
 					$(".header-search").style.width = adjust;
 				}, 100);
 
