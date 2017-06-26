@@ -31,6 +31,7 @@ Userscripts to add functionality to GitHub.
 	| [GitHub custom navigation][cnv-wiki]   |     | [install][cnv-raw] | [GF][cnv-gf] [OU][cnv-ou] | 2016.06.22 | 2017.06.24 |
 	| [GitHub diff files filter][dff-wiki]   |     | [install][dff-raw] | [GF][dff-gf] [OU][dff-ou] | 2016.12.31 | 2017.05.16 |
 	| [GitHub diff links][dfl-wiki]          |     | [install][dfl-raw] | [GF][dfl-gf] [OU][dfl-ou] | 2016.07.21 | 2017.05.16 |
+	| [GitHub files filter][gff-wiki]        |     | [install][gff-raw] | [GF][gff-gf] [OU][gff-ou] | 2017.06.26 | 2017.06.26 |
 	| [GitHub font preview][fpv-wiki]        |     | [install][fpv-raw] | [GF][fpv-gf] [OU][fpv-ou] | 2016.06.11 | 2017.05.16 |
 	| [GitHub image preview][ipv-wiki]       |     | [install][ipv-raw] | [GF][ipv-gf] [OU][ipv-ou] | 2016.05.17 | 2017.05.16 |
 	| [GitHub indent comments][ioc-wiki]     |     | [install][ioc-raw] | [GF][ioc-gf] [OU][ioc-ou] | 2017.03.15 | 2017.05.16 |
@@ -66,6 +67,7 @@ Userscripts to add functionality to GitHub.
 [dfl-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-diff-links
 [fpv-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-font-preview
 [g2d-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/Gist-to-dabblet
+[gff-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-files-filter
 [gih-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-issue-highlighter
 [glc-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-label-color-picker
 [grl-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/Gist-raw-links
@@ -97,6 +99,7 @@ Userscripts to add functionality to GitHub.
 [dfl-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-diff-links.user.js
 [fpv-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-font-preview.user.js
 [g2d-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/gist-to-dabblet.user.js
+[gff-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-files-filter.user.js
 [gih-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-issue-highlighter.user.js
 [glc-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-label-color-picker.user.js
 [grl-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/gist-raw-links.user.js
@@ -128,6 +131,7 @@ Userscripts to add functionality to GitHub.
 [dfl-gf]: https://greasyfork.org/en/scripts/21559-github-diff-links
 [fpv-gf]: https://greasyfork.org/en/scripts/20479-github-font-preview
 [g2d-gf]: https://greasyfork.org/en/scripts/18254-gist-to-dabblet
+[gff-gf]: https://greasyfork.org/en/scripts/30940-github-files-filter
 [gih-gf]: https://greasyfork.org/en/scripts/19867-github-issue-highlighter
 [grl-gf]: https://greasyfork.org/en/scripts/29888-gist-raw-links
 [glc-gf]: https://greasyfork.org/en/scripts/23270-github-label-color-picker
@@ -159,6 +163,7 @@ Userscripts to add functionality to GitHub.
 [dfl-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Diff_Links
 [fpv-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Font_Preview
 [g2d-ou]: https://openuserjs.org/scripts/Mottie/Gist_to_dabblet
+[gff-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Files_Filter
 [gih-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Issue_Highlighter
 [glc-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Label_Color_Picker
 [grl-ou]: https://openuserjs.org/scripts/Mottie/Gist_Raw_Links
