@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Image Preview
-// @version     1.1.9
+// @version     1.1.10
 // @description A userscript that adds clickable image thumbnails
 // @license     MIT
 // @author      Rob Garrison
@@ -58,6 +58,12 @@
 	// supported img types
 	const imgExt = /(png|jpg|jpeg|gif|tif|tiff|bmp|webp)$/i,
 		svgExt = /svg$/i,
+
+		folderIconClasses = [
+			".octicon-file-directory",
+			".octicon-file-symlink-directory",
+			".octicon-file-submodule"
+		].join(","),
 
 		tiled = `
 			<svg class="octicon" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 16 16">
@@ -188,10 +194,8 @@
 					// *** non-images (file/folder icons) ***
 					temp = $("td.icon svg", files[indx]);
 					if (temp) {
-						// non-files svg class: "octicon-file-directory" or
-						// "octicon-file-submodule"
-						noExt = temp.classList.contains("octicon-file-directory") ||
-							temp.classList.contains("octicon-file-submodule");
+						// non-files svg class: "directory", "submodule" or "symlink"
+						noExt = temp.matches(folderIconClasses);
 						// add xmlns otherwise the svg won't work inside an img
 						// GitHub doesn't include this attribute on any svg octicons
 						temp = temp.outerHTML
