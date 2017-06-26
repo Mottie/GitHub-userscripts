@@ -195,16 +195,16 @@
 					temp = $("td.icon svg", files[indx]);
 					if (temp) {
 						// non-files svg class: "directory", "submodule" or "symlink"
-						noExt = temp.matches(folderIconClasses);
+						// add "ghip-folder" class for file-filters userscript
+						noExt = temp.matches(folderIconClasses) ? " ghip-folder" : "";
 						// add xmlns otherwise the svg won't work inside an img
 						// GitHub doesn't include this attribute on any svg octicons
 						temp = temp.outerHTML
 							.replace("<svg", "<svg xmlns='http://www.w3.org/2000/svg'");
 						// include "leaflet-tile-container" to invert icon for GitHub-Dark
-						template += "<span class='leaflet-tile-container'>" +
-							"<img class='ghip-non-image' src='data:image/svg+xml;base64," +
-							window.btoa(temp) + "'/>" +
-							"</span>";
+						template += `<span class="leaflet-tile-container${noExt}">` +
+							`<img class="ghip-non-image" src="data:image/svg+xml;base64,` +
+							window.btoa(temp) + `"/></span>`;
 						// get file name + extension
 						temp = url.substring(url.lastIndexOf("/") + 1, url.length);
 						// don't include extension for folders, or files with no extension,
