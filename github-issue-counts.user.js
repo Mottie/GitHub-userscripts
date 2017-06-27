@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Show Repo Issues
-// @version     3.0.8
+// @version     3.0.9
 // @description A userscript that adds a repo issues count to the repository tab & organization page (https://github.com/:user)
 // @license     MIT
 // @author      Rob Garrison
@@ -82,7 +82,7 @@
 			}
 			if (el) {
 				if (result && typeof result.open_issues_count === "number") {
-					html = `<a class="${setClass}" href="${url}/issues" aria-label="Issues">
+					html = `<a class="${setClass}" href="/${url}/issues" aria-label="Issues">
 							${icon} ${result.open_issues_count}
 						</a>`;
 					// target the last "a"
