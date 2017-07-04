@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Sort Content
-// @version     1.1.6
+// @version     1.2.0
 // @description A userscript that makes some lists & markdown tables sortable
 // @license     MIT
 // @author      Rob Garrison
@@ -9,6 +9,7 @@
 // @run-at      document-idle
 // @grant       GM_addStyle
 // @require     https://cdnjs.cloudflare.com/ajax/libs/tinysort/2.3.6/tinysort.min.js
+// @require     https://greasyfork.org/scripts/28721-mutations/code/mutations.js?version=189706
 // @icon        https://github.com/fluidicon.png
 // @updateURL   https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-sort-content.user.js
 // @downloadURL https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-sort-content.user.js
@@ -52,15 +53,35 @@
 			")\\b"
 		);
 
+	function addRepoFileThead() {
+		const $table = $("table.files");
+		if ($table) {
+			const thead = document.createElement("thead");
+			thead.innerHTML = `<tr class="ghsc-header">
+					<td></td>
+					<th>Content</th>
+					<th>Message</th>
+					<th class="ghsc-age">Age</th>
+				</tr>`;
+			$table.insertBefore(thead, $table.childNodes[0]);
+		}
+	}
+
 	function initSortTable(el) {
 		removeSelection();
 		const dir = el.classList.contains(sorts[0]) ? sorts[1] : sorts[0],
-			table = closest("table", el);
-		tinysort($$("tbody tr", table), {
-			order: dir,
-			natural: true,
-			selector: `td:nth-child(${el.cellIndex + 1})`
-		});
+			table = closest("table", el),
+			options = {
+				order: dir,
+				natural: true,
+				selector: `td:nth-child(${el.cellIndex + 1})`
+			};
+		if (el.classList.contains("ghsc-age")) {
+			// sort repo age column using ISO 8601 datetime format
+			options.selector += " [datetime]";
+			options.attr = "datetime";
+		}
+		tinysort($$("tbody tr:not(.up-tree)", table), options);
 		$$("th", table).forEach(elm => {
 			elm.classList.remove(...sorts);
 		});
@@ -142,12 +163,17 @@
 
 		GM_addStyle(`
 			/* unsorted icon */
-			.markdown-body table thead th {
+			.markdown-body table thead th, table.files thead th {
 				cursor:pointer;
 				padding-right:22px !important;
 				background-image:url(${styles.unsorted}) !important;
 				background-repeat:no-repeat !important;
 				background-position:calc(100% - 5px) center !important;
+				text-align:left;
+			}
+			tr.ghsc-header th, tr.ghsc-header td {
+				border-bottom:#eee 1px solid;
+				padding:2px 2px 2px 10px;
 			}
 			div.js-pinned-repos-reorder-container > h3,
 			.dashboard-sidebar .boxed-group > h3,
@@ -229,8 +255,14 @@
 					// https://github.com/:user?tab=followering (user-profile-nav)
 					regexBars.test(target.className)
 			)) {
-				// don't sort tables not inside of markdown
-				if (name === "TH" && closest(".markdown-body", target)) {
+				// don't sort tables not inside of markdown,
+				// except for the repo "code" tab file list
+				if (
+					name === "TH" && (
+						closest(".markdown-body", target) ||
+						closest("table.files", target)
+					)
+				) {
 					return initSortTable(target);
 				}
 
@@ -292,7 +324,14 @@
 				}
 			}
 		});
+		addRepoFileThead();
 	}
 
+	document.addEventListener("ghmo:container", () => {
+		// init after a short delay to allow rendering of file list
+		setTimeout(() => {
+			addRepoFileThead();
+		}, 200);
+	});
 	init();
 })();
