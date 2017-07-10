@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Files Filter
-// @version     0.1.0
+// @version     0.1.1
 // @description A userscript that adds filters that toggle the view of repo files by extension
 // @license     MIT
 // @author      Rob Garrison
@@ -177,6 +177,21 @@
 		});
 	}
 
+	function sortList() {
+		return Object.keys(list).sort((a, b) => {
+			// move ":" filters to the beginning, then sort the rest of the
+			// extensions; test on https://github.com/rbsec/sslscan, where
+			// the ".1" extension *was* appearing between ":" filters
+			if (a[0] === ":") {
+				return -1;
+			}
+			if (b[0] === ":") {
+				return 1;
+			}
+			return a > b;
+		});
+	}
+
 	function makeFilter() {
 		let filters = 0;
 		// get length, but don't count empty arrays
@@ -213,7 +228,7 @@
 			html = `<div class="BtnGroup gff-filter">` +
 				// add a filter "all" button to the beginning
 				buildButton(" gff-all", "Toggle all files", ":all", types[":all"].text);
-		Object.keys(list).forEach(ext => {
+		sortList().forEach(ext => {
 			len = list[ext].length;
 			if (len) {
 				html += buildButton("", len, ext, types[ext] && types[ext].text || ext);
