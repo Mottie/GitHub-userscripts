@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Custom Navigation
-// @version     1.0.12
+// @version     1.0.13
 // @description A userscript that allows you to customize GitHub's main navigation bar
 // @license     MIT
 // @author      Rob Garrison
@@ -164,7 +164,7 @@
 	function addPanel() {
 		GM_addStyle(`
 			/* Use border right when a vertical bar is added */
-			.header-nav-link.ghcn-separator { border-right:#777 1px solid;
+			.header-navlink.ghcn-separator { border-right:#777 1px solid;
 				padding:4px 0; }
 			/* settings panel */
 			#ghcn-overlay { position:fixed; top:50px; left:0; right:0; bottom:0;
@@ -183,11 +183,11 @@
 			#ghcn-nav-items .header-nav-item { margin-bottom:4px; }
 			.ghcn-settings-wrapper hr { margin: 10px 0; }
 			.ghcn-footer { margin-top:4px; border-top:#555 solid 1px; }
-			.header-nav-link { height:28px; }
-			.header-nav.float-left .header-nav-link svg,
-				.header-nav.float-left .header-nav-link img,
-				#ghcn-nav-items .header-nav-link svg,
-				#ghcn-nav-items .header-nav-link img, .gu-mirror svg, .gu-mirror img {
+			.header-navlink { height:28px; }
+			ul.header-nav .header-navlink svg,
+				ul.header-nav .header-navlink img,
+				#ghcn-nav-items .header-navlink svg,
+				#ghcn-nav-items .header-navlink img, .gu-mirror svg, .gu-mirror img {
 				max-height:16px; fill:currentColor; vertical-align:middle;
 				overflow:visible; }
 			/* override white text when settings panel is open*/
@@ -198,24 +198,24 @@
 				overflow:hidden !important; /* !important overrides wiki style */ }
 			/* hide other header elements while settings is open (overflow issues) */
 			body.ghcn-settings-open .header-search,
-				body.ghcn-settings-open .header-nav.float-right,
+				body.ghcn-settings-open #user-links,
 				body.ghcn-settings-open .header-logo-invertocat,
 				body.ghcn-settings-open .header-logo-wordmark,
 				.gist-header .octicon-logo-github, /* hide GitHub logo on Gist page */
 				.zh-todo-link { display:none; }
-			body.ghcn-settings-open .header-nav.float-left { width:100%; }
-			body.ghcn-settings-open .header-nav-link > * { pointer-events:none; }
+			body.ghcn-settings-open ul.header-nav { width:100%; }
+			body.ghcn-settings-open .header-navlink > * { pointer-events:none; }
 			body.ghcn-settings-open #ghcn-overlay,
 			body.ghcn-settings-open #ghcn-settings-inner,
 			#ghcn-nav-items { display:block; }
-			body.ghcn-settings-open .header-nav.float-left .header-nav-item,
+			body.ghcn-settings-open ul.header-nav .header-nav-item,
 			.ghcn-settings-wrapper .header-nav-item { cursor:move;
-					border:#555 1px solid; border-radius:4px;
-				margin-left: 2px; }
-			body.ghcn-settings-open .header-nav-link,
-				.ghcn-settings-wrapper .header-nav-link { min-height:auto;
+				border:#555 1px solid; border-radius:4px; margin-left: 2px;
+				display:inline-block; }
+			body.ghcn-settings-open .header-navlink,
+				.ghcn-settings-wrapper .header-navlink { min-height:auto;
 				min-width:16px; padding-top:1px; }
-			body.ghcn-settings-open .header .header-nav-link.form-control {
+			body.ghcn-settings-open .header .header-navlink.form-control {
 				background-color: transparent; border: 1px solid #444; }
 			/* JSON code block */
 			.ghcn-json-code { display:none; font-family:Menlo, Inconsolata,
@@ -368,10 +368,10 @@
 	// Clicked item; show selection
 	function selectItem() {
 		// highlight current link
-		let temp = $$(".header-nav-link.focus");
+		let temp = $$(".header-navlink.focus");
 		removeClass(temp, "focus");
 		temp = $$(".header-nav-item[data-ghcn='" + (settings.currentLink || "") +
-			"'] .header-nav-link");
+			"'] .header-navlink");
 		if (temp[0]) {
 			addClass(temp, "focus");
 			updateLink(temp[0].parentNode);
@@ -397,8 +397,8 @@
 		let html,
 			item = settings.items[name] || {},
 			url = (item.url || "").replace(/\$\{me\}/g, user),
-			linkClass = "text-emphasized header-nav-link " +
-				(editMode ? "form-control" : "js-selected-navigation-item");
+			linkClass = "text-emphasized header-navlink " +
+				(editMode ? "" : "js-selected-navigation-item");
 		// only show tooltip if defined
 		if (item.tooltip) {
 			linkClass += " tooltipped tooltipped-s";
@@ -410,7 +410,7 @@
 			html = editMode ?
 				// *** Separator (icon in editMode; zero-width-space when not)
 				`<span class="${linkClass} tooltipped tooltipped-s" aria-label="Menu separator">${icons.separator}</span>` :
-				`<span class="header-nav-link ghcn-separator linkable-line-number">&#8203;</span>`;
+				`<span class="header-navlink ghcn-separator linkable-line-number">&#8203;</span>`;
 		} else {
 			html = editMode ?
 				`<span class="${linkClass}" aria-label="${item.tooltip}">${item.content}</span>` :
@@ -497,7 +497,7 @@
 	// save changes on-the-fly
 	function saveLink() {
 		let name = settings.currentLink || "",
-			item = $(`.header-nav-item[data-ghcn="${name}"] .header-nav-link`);
+			item = $(`.header-nav-item[data-ghcn="${name}"] .header-navlink`);
 		if (name) {
 			settings.items[name] = {
 				url: $(".ghcn-url").value,
@@ -580,8 +580,8 @@
 		});
 		on($("body"), "click", event => {
 			const target = event.target;
-			if (editMode && target.classList.contains("header-nav-link")) {
-				// header-nav-link is a child of header-nav-item, but is the same size
+			if (editMode && target.classList.contains("header-navlink")) {
+				// header-navlink is a child of header-nav-item, but is the same size
 				settings.currentLink = target.parentNode.getAttribute("data-ghcn");
 				selectItem();
 			}
@@ -669,8 +669,9 @@
 
 	// Main process - adds links to header navigation
 	function customize() {
-		let nav = $(".header-nav");
+		let nav = $(".header ul[role='navigation']");
 		if (nav) {
+			nav.classList.add("header-nav");
 			let indx, els,
 				navStr = ".header-nav",
 				setItems = settings[getLocation()],
@@ -707,7 +708,7 @@
 							"";
 					// default search width is 360px; we don't want to get narrower than
 					// 200px
-					$(".header-search").style.width = adjust;
+					$(".header-search-input").style.width = adjust;
 				}, 100);
 
 			}
