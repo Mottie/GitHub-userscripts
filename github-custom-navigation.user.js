@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Custom Navigation
-// @version     1.0.13
+// @version     1.0.14
 // @description A userscript that allows you to customize GitHub's main navigation bar
 // @license     MIT
 // @author      Rob Garrison
@@ -21,10 +21,7 @@
 
 	// open menu via hash
 	const panelHash = "#github-custom-nav-settings",
-		// when the bar gets wider than this number, adjust the width of the search input
-		adjustWidth = 460,
-		// when search input width is adjusted, this is the minimum width
-		minSearchInputWidth = 200,
+
 		// get user name; or empty string if not logged in
 		user = $("meta[name='user-login']") &&
 			$("meta[name='user-login']").getAttribute("content") || "",
@@ -173,7 +170,7 @@
 			.ghcn-close, .ghcn-code { float:right; cursor:pointer; font-size:.8em;
 				margin-left:3px; padding:0 6px 2px 6px; }
 			.ghcn-close .octicon { vertical-align:middle; fill:currentColor; }
-			#ghcn-settings-inner { position:fixed; left:50%; top:55px; z-index:50;
+			#ghcn-settings-inner { position:fixed; left:50%; top:60px; z-index:50;
 				width:30rem; transform:translate(-50%,0); box-shadow:0 .5rem 1rem #111;
 				color:#c0c0c0; display:none; }
 			#ghcn-settings-inner input { width:85%; float:right; border-style:solid;
@@ -198,11 +195,11 @@
 				overflow:hidden !important; /* !important overrides wiki style */ }
 			/* hide other header elements while settings is open (overflow issues) */
 			body.ghcn-settings-open .header-search,
-				body.ghcn-settings-open #user-links,
+				body.ghcn-settings-open #user-links.d-flex,
 				body.ghcn-settings-open .header-logo-invertocat,
 				body.ghcn-settings-open .header-logo-wordmark,
 				.gist-header .octicon-logo-github, /* hide GitHub logo on Gist page */
-				.zh-todo-link { display:none; }
+				.zh-todo-link { display:none !important; }
 			body.ghcn-settings-open ul.header-nav { width:100%; }
 			body.ghcn-settings-open .header-navlink > * { pointer-events:none; }
 			body.ghcn-settings-open #ghcn-overlay,
@@ -694,23 +691,6 @@
 
 			if (editMode) {
 				updatePanel();
-			} else {
-				// narrow the search bar when there are a bunch of links added
-				// add delay to allow browser to complete reflow
-				setTimeout(() => {
-					let width = nav.offsetWidth,
-						// don't let search bar get narrower than 200px; 360 = starting
-						// width
-						adjust = width > adjustWidth ?
-							Math.round(
-								Math.max(minSearchInputWidth, 360 - (width - adjustWidth))
-							) + "px" :
-							"";
-					// default search width is 360px; we don't want to get narrower than
-					// 200px
-					$(".header-search-input").style.width = adjust;
-				}, 100);
-
 			}
 		}
 	}
