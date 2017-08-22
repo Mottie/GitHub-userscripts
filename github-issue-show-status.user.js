@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Issue Show Status
-// @version     0.1.1
+// @version     0.1.2
 // @description A userscript that adds an obvious indicator showing if an issue or pull request is open or closed
 // @license     MIT
 // @author      Rob Garrison
@@ -59,7 +59,7 @@
 		if (el) {
 			el.parentNode.removeChild(el);
 		}
-		if (status) {
+		if (status && sidebar) {
 			el = document.createElement("div");
 			el.className = "github-issue-show-status State " + status;
 			el.textContent = txt;
