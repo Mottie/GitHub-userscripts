@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub TOC
-// @version     1.2.9
+// @version     1.2.10
 // @description A userscript that adds a table of contents to readme & wiki pages
 // @license     MIT
 // @author      Rob Garrison
@@ -314,7 +314,7 @@
 
 	function init() {
 		// there is no ".header" on github.com/contact; and some other pages
-		if (!$(".header") || tocInit) {
+		if (!$(".header, .Header") || tocInit) {
 			return;
 		}
 		// insert TOC after header
@@ -347,7 +347,7 @@
 		`;
 
 		// add container
-		tmp = $(".header");
+		tmp = $(".header, .Header");
 		tmp.parentNode.insertBefore(container, tmp);
 
 		// make draggable
