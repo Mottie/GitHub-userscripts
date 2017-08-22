@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Custom Navigation
-// @version     1.0.14
+// @version     1.0.15
 // @description A userscript that allows you to customize GitHub's main navigation bar
 // @license     MIT
 // @author      Rob Garrison
@@ -161,7 +161,7 @@
 	function addPanel() {
 		GM_addStyle(`
 			/* Use border right when a vertical bar is added */
-			.header-navlink.ghcn-separator { border-right:#777 1px solid;
+			.HeaderNavlink.ghcn-separator { border-right:#777 1px solid;
 				padding:4px 0; }
 			/* settings panel */
 			#ghcn-overlay { position:fixed; top:50px; left:0; right:0; bottom:0;
@@ -177,14 +177,14 @@
 				border-width:1px; max-height:35px; }
 			.ghcn-settings-wrapper div { line-height:38px; }
 			#ghcn-nav-items { min-height: 38px; }
-			#ghcn-nav-items .header-nav-item { margin-bottom:4px; }
+			#ghcn-nav-items .HeaderNavitem { margin-bottom:4px; }
 			.ghcn-settings-wrapper hr { margin: 10px 0; }
 			.ghcn-footer { margin-top:4px; border-top:#555 solid 1px; }
-			.header-navlink { height:28px; }
-			ul.header-nav .header-navlink svg,
-				ul.header-nav .header-navlink img,
-				#ghcn-nav-items .header-navlink svg,
-				#ghcn-nav-items .header-navlink img, .gu-mirror svg, .gu-mirror img {
+			.HeaderNavlink { height:28px; padding:2px 5px; }
+			ul.HeaderNav .HeaderNavlink svg,
+				ul.HeaderNav .HeaderNavlink img,
+				#ghcn-nav-items .HeaderNavlink svg,
+				#ghcn-nav-items .HeaderNavlink img, .gu-mirror svg, .gu-mirror img {
 				max-height:16px; fill:currentColor; vertical-align:middle;
 				overflow:visible; }
 			/* override white text when settings panel is open*/
@@ -200,19 +200,19 @@
 				body.ghcn-settings-open .header-logo-wordmark,
 				.gist-header .octicon-logo-github, /* hide GitHub logo on Gist page */
 				.zh-todo-link { display:none !important; }
-			body.ghcn-settings-open ul.header-nav { width:100%; }
-			body.ghcn-settings-open .header-navlink > * { pointer-events:none; }
+			body.ghcn-settings-open ul.HeaderNav { width:100%; }
+			body.ghcn-settings-open .HeaderNavlink > * { pointer-events:none; }
 			body.ghcn-settings-open #ghcn-overlay,
 			body.ghcn-settings-open #ghcn-settings-inner,
 			#ghcn-nav-items { display:block; }
-			body.ghcn-settings-open ul.header-nav .header-nav-item,
-			.ghcn-settings-wrapper .header-nav-item { cursor:move;
+			body.ghcn-settings-open ul.HeaderNav .HeaderNavitem,
+			.ghcn-settings-wrapper .HeaderNavitem { cursor:move;
 				border:#555 1px solid; border-radius:4px; margin-left: 2px;
 				display:inline-block; }
-			body.ghcn-settings-open .header-navlink,
-				.ghcn-settings-wrapper .header-navlink { min-height:auto;
+			body.ghcn-settings-open .HeaderNavlink,
+				.ghcn-settings-wrapper .HeaderNavlink { min-height:auto;
 				min-width:16px; padding-top:1px; }
-			body.ghcn-settings-open .header .header-navlink.form-control {
+			body.ghcn-settings-open .Header .HeaderNavlink.form-control {
 				background-color: transparent; border: 1px solid #444; }
 			/* JSON code block */
 			.ghcn-json-code { display:none; font-family:Menlo, Inconsolata,
@@ -243,7 +243,7 @@
 						<button type="button" class="ghcn-code btn btn-sm tooltipped tooltipped-n" aria-label="Toggle JSON data view">{ }</button>
 					</h3>
 					<div class="ghcn-settings-wrapper boxed-group-inner">
-						<ul id="ghcn-nav-items" class="BtnGroup header-nav"></ul>
+						<ul id="ghcn-nav-items" class="BtnGroup HeaderNav"></ul>
 						<hr>
 						<form>
 							<p>Click an link above to edit its properties
@@ -284,7 +284,7 @@
 		for (indx = 0; indx < len; indx++) {
 			item = keys[indx];
 			inNav = setItems.indexOf(item) > -1;
-			inSettings = $(panelStr + ` .header-nav-item[data-ghcn="${item}"]`);
+			inSettings = $(panelStr + ` .HeaderNavitem[data-ghcn="${item}"]`);
 			// customize adds stuff to main nav
 			if (inNav && inSettings) {
 				panel.removeChild(inSettings);
@@ -292,7 +292,7 @@
 				addToMenu(item, panelStr);
 			}
 		}
-		if (!$(panelStr + " .header-nav-item[data-ghcn='separator']")) {
+		if (!$(panelStr + " .HeaderNavitem[data-ghcn='separator']")) {
 			addToMenu("separator", panelStr);
 		}
 		selectItem();
@@ -338,8 +338,8 @@
 	// continually destroying & reapplying Dragula sometimes ignores elements;
 	// so just leave it always applied
 	function addDragula() {
-		let topNav = $(".header-nav");
-		drake = dragula($$(".header-nav, #ghcn-nav-items"), {
+		let topNav = $(".HeaderNav");
+		drake = dragula($$(".HeaderNav, #ghcn-nav-items"), {
 			invalid: () => {
 				return !editMode;
 			}
@@ -365,10 +365,10 @@
 	// Clicked item; show selection
 	function selectItem() {
 		// highlight current link
-		let temp = $$(".header-navlink.focus");
+		let temp = $$(".HeaderNavlink.focus");
 		removeClass(temp, "focus");
-		temp = $$(".header-nav-item[data-ghcn='" + (settings.currentLink || "") +
-			"'] .header-navlink");
+		temp = $$(".HeaderNavitem[data-ghcn='" + (settings.currentLink || "") +
+			"'] .HeaderNavlink");
 		if (temp[0]) {
 			addClass(temp, "focus");
 			updateLink(temp[0].parentNode);
@@ -394,7 +394,7 @@
 		let html,
 			item = settings.items[name] || {},
 			url = (item.url || "").replace(/\$\{me\}/g, user),
-			linkClass = "text-emphasized header-navlink " +
+			linkClass = "text-emphasized HeaderNavlink " +
 				(editMode ? "" : "js-selected-navigation-item");
 		// only show tooltip if defined
 		if (item.tooltip) {
@@ -407,7 +407,7 @@
 			html = editMode ?
 				// *** Separator (icon in editMode; zero-width-space when not)
 				`<span class="${linkClass} tooltipped tooltipped-s" aria-label="Menu separator">${icons.separator}</span>` :
-				`<span class="header-navlink ghcn-separator linkable-line-number">&#8203;</span>`;
+				`<span class="HeaderNavlink ghcn-separator linkable-line-number">&#8203;</span>`;
 		} else {
 			html = editMode ?
 				`<span class="${linkClass}" aria-label="${item.tooltip}">${item.content}</span>` :
@@ -423,7 +423,7 @@
 			attr: {
 				"data-ghcn": name
 			},
-			cl4ss: "header-nav-item",
+			cl4ss: "HeaderNavitem",
 			html: html
 		});
 	}
@@ -442,7 +442,7 @@
 			if (indx >= 0) {
 				settings.gists.splice(indx, 1);
 			}
-			el = $(`.header-nav-item[data-ghcn="${item}"]`);
+			el = $(`.HeaderNavitem[data-ghcn="${item}"]`);
 			el.parentNode.removeChild(el);
 			if ((settings.currentLink || "") === item) {
 				settings.currentLink = "";
@@ -464,7 +464,7 @@
 		// remove extra items individually; dragula doesn't seem to like it when we
 		// use innerHTML = ""
 		let item,
-			els = $$(".header-nav-item"),
+			els = $$(".HeaderNavitem"),
 			indx = els.length;
 		while (indx--) {
 			item = els[indx].getAttribute("data-ghcn");
@@ -494,7 +494,7 @@
 	// save changes on-the-fly
 	function saveLink() {
 		let name = settings.currentLink || "",
-			item = $(`.header-nav-item[data-ghcn="${name}"] .header-navlink`);
+			item = $(`.HeaderNavitem[data-ghcn="${name}"] .HeaderNavlink`);
 		if (name) {
 			settings.items[name] = {
 				url: $(".ghcn-url").value,
@@ -545,8 +545,8 @@
 			});
 
 		el = $$(`
-			.header .dropdown-item[href='/settings/profile'],
-			.header .dropdown-item[data-ga-click*='go to profile']`
+			.Header .dropdown-item[href='/settings/profile'],
+			.Header .dropdown-item[data-ga-click*='go to profile']`
 		);
 		// get last found item - gists only have the "go to profile" item; GitHub
 		// has both
@@ -577,8 +577,8 @@
 		});
 		on($("body"), "click", event => {
 			const target = event.target;
-			if (editMode && target.classList.contains("header-navlink")) {
-				// header-navlink is a child of header-nav-item, but is the same size
+			if (editMode && target.classList.contains("HeaderNavlink")) {
+				// HeaderNavlink is a child of HeaderNavitem, but is the same size
 				settings.currentLink = target.parentNode.getAttribute("data-ghcn");
 				selectItem();
 			}
@@ -666,11 +666,11 @@
 
 	// Main process - adds links to header navigation
 	function customize() {
-		let nav = $(".header ul[role='navigation']");
+		let nav = $(".Header ul[role='navigation']");
 		if (nav) {
-			nav.classList.add("header-nav");
+			nav.classList.add("HeaderNav");
 			let indx, els,
-				navStr = ".header-nav",
+				navStr = ".HeaderNav",
 				setItems = settings[getLocation()],
 				len = setItems.length;
 			if (!len) {
