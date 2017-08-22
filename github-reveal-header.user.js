@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Reveal Header
-// @version     0.1.0
+// @version     0.1.1
 // @description A userscript that reveals the header when hovering near the top of the screen
 // @license     MIT
 // @author      Rob Garrison
@@ -28,8 +28,10 @@
 		headers = [
 			// .header = logged-in
 			"body{attr}.logged-in .header",
-			// .site-header = not-logged-in
+			// .site-header = not-logged-in (removed 8/2017)
 			"{attr} .site-header",
+			// .Header = logged-in or not-logged-in (added 8/2017)
+			"{attr} .Header",
 			// #com #header = help.github.com
 			"{attr} #com #header"
 			// extra
