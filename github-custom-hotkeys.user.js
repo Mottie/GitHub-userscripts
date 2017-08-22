@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Custom Hotkeys
-// @version     1.0.6
+// @version     1.0.7
 // @description A userscript that allows you to add custom GitHub keyboard hotkeys
 // @license     MIT
 // @author      Rob Garrison
@@ -279,7 +279,9 @@
 
 		const els = $$(`
 			.header .dropdown-item[href="/settings/profile"],
-			.header .dropdown-item[data-ga-click*="go to profile"]
+			.header .dropdown-item[data-ga-click*="go to profile"],
+			.Header .dropdown-item[href="/settings/profile"],
+			.Header .dropdown-item[data-ga-click*="go to profile"]
 		`);
 		if (els.length) {
 			els[els.length - 1].parentNode.insertBefore(menu, els[els.length - 1].nextSibling);
