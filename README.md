@@ -29,6 +29,7 @@ Userscripts to add functionality to GitHub.
 	| [GitHub collapse markdown][cmd-wiki]   |  *  | [install][cmd-raw] | [GF][cmd-gf] [OU][cmd-ou] | 2016.06.27 | 2017.05.24 |
 	| [GitHub custom hotkeys][chk-wiki]      |     | [install][chk-raw] | [GF][chk-gf] [OU][chk-ou] | 2016.04.10 | 2017.08.22 |
 	| [GitHub custom navigation][cnv-wiki]   |     | [install][cnv-raw] | [GF][cnv-gf] [OU][cnv-ou] | 2016.06.22 | 2017.08.22 |
+	| [GitHub diff filename][dfn-wiki]       |     | [install][dfn-raw] | [GF][dfn-gf] [OU][dfn-ou] | 2017.08.27 | 2017.08.27 |
 	| [GitHub diff files filter][dff-wiki]   |     | [install][dff-raw] | [GF][dff-gf] [OU][dff-ou] | 2016.12.31 | 2017.05.16 |
 	| [GitHub diff links][dfl-wiki]          |     | [install][dfl-raw] | [GF][dfl-gf] [OU][dfl-ou] | 2016.07.21 | 2017.05.16 |
 	| [GitHub files filter][gff-wiki]        |     | [install][gff-raw] | [GF][gff-gf] [OU][gff-ou] | 2017.06.26 | 2017.07.10 |
@@ -65,6 +66,7 @@ Userscripts to add functionality to GitHub.
 [csw-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-code-show-whitespace
 [dff-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-diff-files-filter
 [dfl-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-diff-links
+[dfn-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-diff-filename
 [fpv-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-font-preview
 [g2d-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/Gist-to-dabblet
 [gff-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-files-filter
@@ -97,6 +99,7 @@ Userscripts to add functionality to GitHub.
 [csw-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-code-show-whitespace.user.js
 [dff-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-diff-files-filter.user.js
 [dfl-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-diff-links.user.js
+[dfn-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-diff-filename.user.js
 [fpv-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-font-preview.user.js
 [g2d-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/gist-to-dabblet.user.js
 [gff-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-files-filter.user.js
@@ -129,6 +132,7 @@ Userscripts to add functionality to GitHub.
 [csw-gf]: https://greasyfork.org/en/scripts/28454-github-code-show-whitespace
 [dff-gf]: https://greasyfork.org/en/scripts/26191-github-diff-files-filter
 [dfl-gf]: https://greasyfork.org/en/scripts/21559-github-diff-links
+[dfn-gf]: https://greasyfork.org/en/scripts/32634-github-diff-filename
 [fpv-gf]: https://greasyfork.org/en/scripts/20479-github-font-preview
 [g2d-gf]: https://greasyfork.org/en/scripts/18254-gist-to-dabblet
 [gff-gf]: https://greasyfork.org/en/scripts/30940-github-files-filter
@@ -161,6 +165,7 @@ Userscripts to add functionality to GitHub.
 [csw-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Code_Show_Whitespace
 [dff-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Diff_Files_Filter
 [dfl-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Diff_Links
+[dfn-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Diff_Filename
 [fpv-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Font_Preview
 [g2d-ou]: https://openuserjs.org/scripts/Mottie/Gist_to_dabblet
 [gff-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Files_Filter
