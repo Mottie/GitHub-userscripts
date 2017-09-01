@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Title Notification
-// @version     1.0.3
+// @version     1.0.4
 // @description A userscript that changes the document title if there are unread messages
 // @license     MIT
 // @author      Rob Garrison
@@ -46,14 +46,18 @@
 
 	// Add GM options
 	GM_registerMenuCommand("Set GitHub Title Notification Indicator", () => {
-		indicator = prompt("Indicator Value (it will be wrapped in parentheses)?", indicator);
-		GM_setValue("indicator", indicator);
-		check();
+		const val = prompt("Indicator Value (it will be wrapped in parentheses)?", indicator);
+		if (val !== null) {
+			GM_setValue("indicator", indicator);
+			check();
+		}
 	});
 	GM_registerMenuCommand("Set GitHub Title Notification Interval", () => {
-		interval = prompt("Interval Value (in seconds)?", interval);
-		GM_setValue("interval", interval);
-		setTimer();
+		const val = prompt("Interval Value (in seconds)?", interval);
+		if (val !== null) {
+			GM_setValue("interval", interval);
+			setTimer();
+		}
 	});
 
 	setTimer();
