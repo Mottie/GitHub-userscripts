@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Code Show Whitespace
-// @version     0.1.6
+// @version     0.1.7
 // @description A userscript that shows whitespace (space, tabs and carriage returns) in code blocks
 // @license     MIT
 // @author      Rob Garrison
@@ -81,6 +81,19 @@
 		});
 	}
 
+	function replaceWhitespace(html) {
+		return html
+			.replace(regexWS, s => {
+				let idx = 0,
+					ln = s.length,
+					result = "";
+				for (idx = 0; idx < ln; idx++) {
+					result += whitespace[encodeURI(s[idx])] || s[idx] || "";
+				}
+				return result;
+			});
+	}
+
 	function addWhitespace(block) {
 		let lines, indx, len;
 		if (block && !block.classList.contains("ghcw-processed")) {
@@ -94,7 +107,7 @@
 
 			// loop with delay to allow user interaction
 			const loop = () => {
-				let line,
+				let el, line,
 					// max number of DOM insertions per loop
 					max = 0;
 				while (max < 50 && indx < len) {
@@ -102,26 +115,26 @@
 						return;
 					}
 					line = lines[indx];
-					line.innerHTML = line.innerHTML
-						.replace(regexWS, s => {
-							let idx = 0,
-								ln = s.length,
-								result = "";
-							for (idx = 0; idx < ln; idx++) {
-								result += whitespace[encodeURI(s[idx])] || s[idx] || "";
-							}
-							return result;
-						})
+					el = line.firstChild;
+					// first node is a syntax string and may have leading whitespace
+					if (
+						el &&
+						el.nodeType === 1 &&
+						el.classList.contains("pl-s") &&
+						el.firstChild.nodeType === 3
+					) {
+						el.innerHTML = replaceWhitespace(el.innerHTML);
+					}
+					line.innerHTML = replaceWhitespace(line.innerHTML)
 						// remove end CRLF if it exists
-						.replace(regexCR, "") +
-						whitespace.CRLF;
+						.replace(regexCR, "") + whitespace.CRLF;
 					max++;
 					indx++;
 				}
 				if (indx < len) {
 					setTimeout(() => {
 						loop();
-					}, 200);
+					}, 100);
 				}
 			};
 			loop();
