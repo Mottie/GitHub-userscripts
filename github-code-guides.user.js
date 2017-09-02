@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Code Guides
-// @version     1.1.6
+// @version     1.1.7
 // @description A userscript that allows you to add one or more vertical guidelines to the code
 // @license     MIT
 // @author      Rob Garrison
@@ -31,7 +31,7 @@
 		tabSize = GM_getValue("ghcg-tabs", 2);
 
 	function adjust(val) {
-		return `calc(13px + ${val.toFixed(1)}ch)`;
+		return `${val.toFixed(1)}ch`;
 	}
 
 	function addDefinition(start, end, color) {
@@ -44,8 +44,7 @@
 	}
 
 	function addGuides(vals) {
-		let css = "",
-			diff = "";
+		let css = "";
 		// to align the guides *after* the setting, we need to add 1, then add
 		// another 0.1 to give the guide a tiny bit of white space to the left
 		vals.forEach(guide => {
@@ -55,34 +54,35 @@
 			// each line needs to be at least 0.2ch in width to be visible
 			size = size > 0.2 ? size : 0.2;
 			css += addDefinition(adjust(start), adjust(start + size), color);
-
-			// shift start to the left 1ch for diff block alignment
-			start += 1;
-			diff += addDefinition(adjust(start), adjust(start + size), color);
 		});
 		style.textContent = `
 			table.tab-size[data-tab-size] {
 				tab-size: ${tabSize};
+				-moz-tab-size: ${tabSize};
 			}
-			/* repo file view uses padding-left: 10px */
-			table:not(.diff-table) .blob-code,
-			table.diff-table tr.blob-expanded .blob-code,
-			.blob-code span.blob-code-inner {
-				padding-left: 13px;
-			}
-			table.diff-table .blob-code {
-				padding-left: 0;
-			}
-			.blob-code-context .blob-code-inner,
-			.blob-code-addition .blob-code-inner,
-			.blob-code-deletion .blob-code-inner {
-				background: linear-gradient(to right, transparent 0%, ${diff} transparent 100%) !important;
+			span.blob-code-inner:after,
+			td.blob-code-inner:not(.blob-code-hunk):after,
+			.blob-code-context .blob-code-inner:after,
+			.blob-code-addition .blob-code-inner:after,
+			.blob-code-deletion .blob-code-inner:after {
+				content: " ";
+				display: block;
+				position: absolute;
+				top: 0;
+				left: 1em;
+				width: 100%;
+				height: 100%;
 			}
 			.blob-code span.blob-code-inner {
 				display: block !important;
 			}
-			span.blob-code-inner, td.blob-code-inner:not(.blob-code-hunk) {
+			span.blob-code-inner,
+			td.blob-code-inner:not(.blob-code-hunk),
+			.blob-code-inner:after {
 				font-family: "${font}", Consolas, "Liberation Mono", Menlo, Courier, monospace !important;
+			}
+			span.blob-code-inner:after,
+			td.blob-code-inner:not(.blob-code-hunk):after {
 				background: linear-gradient(to right, transparent 0%, ${css} transparent 100%) !important;
 			}
 		`;
