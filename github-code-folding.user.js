@@ -87,15 +87,20 @@
 
 		if (action === "hide") {
 			lineNums.forEach(start => {
-				let end = pairs.get(start - 1);
+				let elm,
+					end = pairs.get(start - 1);
 				codeLines.slice(start, end).forEach(el => {
-					let elm = closest("tr", el);
+					elm = closest("tr", el);
 					if (elm) {
 						elm.classList.add("hidden-line");
 					}
 				});
 				if (!$(".ellipsis", codeLines[start - 1])) {
-					codeLines[start - 1].appendChild(ellipsis.cloneNode(true));
+					elm = $(".collapser", codeLines[start - 1]);
+					elm.parentNode.insertBefore(
+						ellipsis.cloneNode(true),
+						elm.nextSibling
+					);
 				}
 			});
 		} else if (action === "show") {
@@ -191,7 +196,7 @@
 						// prepend triangle
 						el = triangle.cloneNode();
 						el.setAttribute("data-depth", count + 1);
-						codeLines[top].insertBefore(el, codeLines[top].childNodes[0]);
+						codeLines[top].appendChild(el, codeLines[top].childNodes[0]);
 						stack.pop();
 						return tryPair();
 					}
