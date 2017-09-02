@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Code Guides
-// @version     1.1.7
+// @version     1.1.8
 // @description A userscript that allows you to add one or more vertical guidelines to the code
 // @license     MIT
 // @author      Rob Garrison
@@ -48,7 +48,7 @@
 		// to align the guides *after* the setting, we need to add 1, then add
 		// another 0.1 to give the guide a tiny bit of white space to the left
 		vals.forEach(guide => {
-			let start = parseFloat(guide.chars),
+			let start = parseFloat(guide.chars) + 1,
 				size = parseFloat(guide.width) || 0.2;
 			const color = guide.color || "rgba(0, 0, 0, .3)";
 			// each line needs to be at least 0.2ch in width to be visible
