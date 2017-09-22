@@ -52,14 +52,14 @@
 		},
 
 		// https://github.com/{nonUser}
-		// see https://github.com/Mottie/github-reserved-names v1.0.5
+		// see https://github.com/Mottie/github-reserved-names v1.0.6
 		nonUser = new RegExp("(" + [
 			"400", "401", "402", "403", "404", "405", "406", "407", "408", "409",
 			"410", "411", "412", "413", "414", "415", "416", "417", "418", "419",
 			"420", "421", "422", "423", "424", "425", "426", "427", "428", "429",
 			"430", "431", "500", "501", "502", "503", "504", "505", "506", "507",
 			"508", "509", "510", "511", "about", "access", "account", "admin",
-			"anonymous", "api", "apps", "auth", "billing", "blog", "business",
+			"anonymous", "api", "apps", "auth", "billing", "blog", "business", "c",
 			"cache", "categories", "changelog", "codereview", "comments", "community",
 			"compare", "contact", "dashboard", "design", "developer", "docs",
 			"downloads", "editor", "edu", "enterprise", "events", "explore",
@@ -75,7 +75,7 @@
 			"ssh", "staff", "stars", "static", "status", "store", "stories",
 			"styleguide", "subscriptions", "support", "talks", "teams", "terms",
 			"tos", "tour", "translations", "trending", "updates", "username", "users",
-			"watching", "wiki", "windows", "works-with", "www1", "www2", "www3",
+			"w", "watching", "wiki", "windows", "works-with", "www1", "www2", "www3",
 			"www4", "www5", "www6", "www7", "www8", "www9"
 		].join("|") + ")");
 
