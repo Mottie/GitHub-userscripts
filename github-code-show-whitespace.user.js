@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Code Show Whitespace
-// @version     0.1.7
+// @version     0.1.8
 // @description A userscript that shows whitespace (space, tabs and carriage returns) in code blocks
 // @license     MIT
 // @author      Rob Garrison
@@ -25,8 +25,10 @@
 			// non-matching key; applied manually
 			"CRLF" : "<span class='pl-crlf ghcw-whitespace'></span>\n"
 		},
+		span = document.createElement("span"),
 		// ignore +/- in diff code blocks
-		regexWS = /^(?:[+-]*)(\x20|&nbsp;|\x09)+/g,
+		regexWS = /^(?:[+-]*)(\x20|&nbsp;|\x09)+|(\x20|&nbsp;|\x09)+$/g,
+		regexTrailingWS = /(\x20|&nbsp;|\x09)+$/,
 		regexCR = /\r*\n$/,
 		regexTabSize = /\btab-size-\d\b/g,
 
@@ -94,6 +96,19 @@
 			});
 	}
 
+	function replaceTextNode(el) {
+		let indx = el.textContent.search(regexTrailingWS);
+		if (indx > -1) {
+			let node = el.splitText(indx);
+			const elm = span.cloneNode();
+			elm.innerHTML = replaceWhitespace(
+				node.textContent.replace(regexCR, "")
+			);
+			node.parentNode.insertBefore(elm, node);
+			node.parentNode.removeChild(node);
+		}
+	}
+
 	function addWhitespace(block) {
 		let lines, indx, len;
 		if (block && !block.classList.contains("ghcw-processed")) {
@@ -105,9 +120,24 @@
 			lines = $$(".blob-code-inner:not(.blob-code-hunk)", block);
 			len = lines.length;
 
+			const checkNode = el => {
+				if (el) {
+					if (el.nodeType === 3 && el.textContent) {
+						replaceTextNode(el);
+					} else if (
+						el.nodeType === 1 &&
+						el.matches(".pl-s, .pl-s1, .pl-c") &&
+						el.firstChild &&
+						el.firstChild.nodeType === 3
+					) {
+						el.innerHTML = replaceWhitespace(el.innerHTML);
+					}
+				}
+			};
+
 			// loop with delay to allow user interaction
 			const loop = () => {
-				let el, line,
+				let line,
 					// max number of DOM insertions per loop
 					max = 0;
 				while (max < 50 && indx < len) {
@@ -115,15 +145,12 @@
 						return;
 					}
 					line = lines[indx];
-					el = line.firstChild;
 					// first node is a syntax string and may have leading whitespace
-					if (
-						el &&
-						el.nodeType === 1 &&
-						el.classList.contains("pl-s") &&
-						el.firstChild.nodeType === 3
-					) {
-						el.innerHTML = replaceWhitespace(el.innerHTML);
+					checkNode(line.firstChild);
+					checkNode(line.lastChild);
+					// trailing whitespace inside a comment text node
+					if (line.lastChild.children) {
+						checkNode(line.lastChild.lastChild);
 					}
 					line.innerHTML = replaceWhitespace(line.innerHTML)
 						// remove end CRLF if it exists
