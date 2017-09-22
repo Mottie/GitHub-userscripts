@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Code Colors
-// @version     1.1.8
+// @version     1.1.9
 // @description A userscript that adds a color swatch next to the code color definition
 // @license     MIT
 // @author      Rob Garrison
@@ -67,6 +67,10 @@
 		}
 	}
 
+	function getTextContent(el) {
+		return el ? el.textContent : "";
+	}
+
 	function addColors() {
 		if (document.querySelector(".highlight")) {
 			let indx = 0;
@@ -117,7 +121,7 @@
 								indx2 = regexRGBA.test(txt) ? 4 : 3;
 								tmp = [];
 								while (indx2) {
-									tmp.push(els[++indx].textContent);
+									tmp.push(getTextContent(els[++indx]));
 									indx2--;
 								}
 								txt += "(" + tmp.join(",") + ")";
@@ -128,18 +132,21 @@
 					} else if (regexHSL.test(txt)) {
 						if (!el.querySelector(".ghcc-block")) {
 							tmp = /a$/i.test(txt);
-							txt = el.classList.contains("pl-s") ?
+							if (el.classList.contains("pl-s")) {
 								// color in a string contains everything
-								txt.match(regexHSL)[0] :
+								txt = txt.match(regexHSL)[0];
+							} else {
 								// traverse this HTML... & els only contains the pl-c1 nodes
 								// <span class="pl-c1">hsl</span>(<span class="pl-c1">1</span>,
 								// <span class="pl-c1">1</span><span class="pl-k">%</span>,
 								// <span class="pl-c1">1</span><span class="pl-k">%</span>);
-								txt + "(" + els[++indx].textContent + "," +
-								els[++indx].textContent + "%," +
+								// using getTextContent in case of invalid css
+								txt = txt + "(" + getTextContent(els[++indx]) + "," +
+								getTextContent(els[++indx]) + "%," +
 								// hsla needs one more parameter
-								els[++indx].textContent + "%" +
-								(tmp ? "," + els[++indx].textContent : "") + ")";
+								getTextContent(els[++indx]) + "%" +
+								(tmp ? "," + getTextContent(els[++indx]) : "") + ")";
+							}
 							// sometimes (previews only?) the .pl-k span is nested inside
 							// the .pl-c1 span, so we end up with "%%"
 							addNode(el, txt.replace(regexPercent, "%"));
