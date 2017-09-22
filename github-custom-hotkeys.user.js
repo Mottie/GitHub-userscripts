@@ -90,7 +90,7 @@
 		// me
 		let tmp = $("meta[name='user-login']");
 		parts.m = tmp && tmp.getAttribute("content") || "";
-		parts.me = parts.me ? parts.root + "/" + parts.m : "";
+		parts.me = parts.m ? parts.root + "/" + parts.m : "";
 
 		// pathname "should" always start with a "/"
 		tmp = loc.pathname.split("/");
