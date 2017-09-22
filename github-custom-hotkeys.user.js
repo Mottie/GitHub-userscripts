@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Custom Hotkeys
-// @version     1.0.8
+// @version     1.0.9
 // @description A userscript that allows you to add custom GitHub keyboard hotkeys
 // @license     MIT
 // @author      Rob Garrison
@@ -108,7 +108,7 @@
 		// tab?
 		parts.t = tmp[3] || "";
 		parts.tab = tmp[3] ? parts.repo + "/" + tmp[3] : "";
-		if (parts.t === "issues") {
+		if (parts.t === "issues" || parts.t === "pulls") {
 			// issue number
 			parts.issue = tmp[4] || "";
 		}
@@ -116,10 +116,8 @@
 		tmp = $(".repohead .fork-flag a");
 		parts.upstream = tmp ? tmp.getAttribute("href") : "";
 		// current page
-		if (loc.search.match(/[&?]q=/)) {
-			tmp = loc.search.match(/[&?]p=(\d+)/);
-			parts.page = tmp ? tmp[1] || "1" : "1";
-		}
+		tmp = loc.search.match(/[&?]p(?:age)?=(\d+)/);
+		parts.page = tmp ? tmp[1] || "1" : "";
 		return parts;
 	}
 
