@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Collapse Markdown
-// @version     1.1.9
+// @version     1.1.10
 // @description A userscript that collapses markdown headers
 // @license     MIT
 // @author      Rob Garrison
@@ -26,6 +26,12 @@
 			"#6778d0", "#ac9c3d", "#b94a73", "#56ae6c", "#9750a1", "#ba543d"
 		],
 
+		blocks = [
+			".markdown-body",
+			".markdown-format",
+			"" // leave empty string at the end
+		],
+
 		headers = "H1 H2 H3 H4 H5 H6".split(" "),
 		collapsed = "ghcm-collapsed",
 		arrowColors = document.createElement("style");
@@ -33,19 +39,18 @@
 	let startCollapsed = GM_getValue("ghcm-collapsed", false),
 		colors = GM_getValue("ghcm-colors", defaultColors);
 
+	// .markdown-body h1:after, .markdown-format h1:after, ... {}
 	GM_addStyle(`
-		.markdown-body h1, .markdown-body h2, .markdown-body h3,
-		.markdown-body h4, .markdown-body h5, .markdown-body h6,
-		.markdown-format h1, .markdown-format h2, .markdown-format h3,
-		.markdown-format h4, .markdown-format h5, .markdown-format h6 {
+		${blocks.join(" h1,")} ${blocks.join(" h2,")}
+		${blocks.join(" h3,")} ${blocks.join(" h4,")}
+		${blocks.join(" h5,")} ${blocks.join(" h6,").slice(0, -1)} {
 			position:relative;
 			padding-right:.8em;
 			cursor:pointer;
 		}
-		.markdown-body h1:after, .markdown-body h2:after, .markdown-body h3:after,
-		.markdown-body h4:after, .markdown-body h5:after, .markdown-body h6:after,
-		.markdown-format h1:after, .markdown-format h2:after, .markdown-format h3:after,
-		.markdown-format h4:after, .markdown-format h5:after, .markdown-format h6:after {
+		${blocks.join(" h1:after,")} ${blocks.join(" h2:after,")}
+		${blocks.join(" h3:after,")} ${blocks.join(" h4:after,")}
+		${blocks.join(" h5:after,")} ${blocks.join(" h6:after,").slice(0, -1)} {
 			display:inline-block;
 			position:absolute;
 			right:0;
@@ -53,7 +58,7 @@
 			font-size:.8em;
 			content:"\u25bc";
 		}
-		.markdown-body .${collapsed}:after, .markdown-format .${collapsed}:after {
+		${blocks.join(" ." + collapsed + ":after,").slice(0, -1)} {
 			transform: rotate(90deg);
 		}
 		/* clicking on header link won't pass svg as the event.target */
@@ -66,14 +71,13 @@
 	`);
 
 	function addColors() {
-		arrowColors.textContent = `
-			.markdown-body h1:after, .markdown-format h1:after { color:${colors[0]} }
-			.markdown-body h2:after, .markdown-format h2:after { color:${colors[1]} }
-			.markdown-body h3:after, .markdown-format h3:after { color:${colors[2]} }
-			.markdown-body h4:after, .markdown-format h4:after { color:${colors[3]} }
-			.markdown-body h5:after, .markdown-format h5:after { color:${colors[4]} }
-			.markdown-body h6:after, .markdown-format h6:after { color:${colors[5]} }
-		`;
+		let sel,
+			styles = "";
+		headers.forEach((header, indx) => {
+			sel = `${blocks.join(" " + header + ":after,").slice(0, -1)}`;
+			styles += `${sel} { color:${colors[indx]} }`; 
+		});
+		arrowColors.textContent = styles;
 	}
 
 	function toggle(el, shifted) {
@@ -81,11 +85,12 @@
 			el.classList.toggle(collapsed);
 			let els;
 			const name = el.nodeName || "",
+				// convert H# to #
 				level = parseInt(name.replace(/[^\d]/, ""), 10),
 				isCollapsed = el.classList.contains(collapsed);
 			if (shifted) {
 				// collapse all same level anchors
-				els = $$(`.markdown-body ${name}, .markdown-format ${name}`);
+				els = $$(`${blocks.join(" " + name + ",").slice(0, -1)}`);
 				for (el of els) {
 					nextHeader(el, level, isCollapsed);
 				}
@@ -175,7 +180,7 @@
 			target = closest(headers.join(","), event.target);
 			if (target && headers.indexOf(target.nodeName || "") > -1) {
 				// make sure the header is inside of markdown
-				if (closest(".markdown-body, .markdown-format", target)) {
+				if (closest(blocks.slice(0, -1).join(","), target)) {
 					toggle(target, event.shiftKey);
 				}
 			}
@@ -184,8 +189,8 @@
 
 	function checkHash() {
 		let el, els, md;
-		const mds = $$(".markdown-body, .markdown-format"),
-			tmp = (window.location.hash || "").replace(/#/, "");
+		const mds = $$(blocks.slice(0, -1).join(",")),
+			id = (window.location.hash || "").replace(/#/, "");
 		for (md of mds) {
 			els = $$(headers.join(","), md);
 			if (els.length > 1) {
@@ -196,19 +201,23 @@
 				}
 			}
 		}
-		// open up
-		if (tmp) {
-			els = $(`#user-content-${tmp}`);
-			if (els && els.classList.contains("anchor")) {
-				el = els.parentNode;
-				if (el.matches(headers.join(","))) {
-					siblings(el);
+		if (id) {
+			openHash(id);
+		}
+	}
+
+	// open header matching hash
+	function openHash(id) {
+		const els = $(`#user-content-${tmp}`);
+		if (els && els.classList.contains("anchor")) {
+			let el = els.parentNode;
+			if (el.matches(headers.join(","))) {
+				siblings(el);
+				document.documentElement.scrollTop = el.offsetTop;
+				// set scrollTop a second time, in case of browser lag
+				setTimeout(() => {
 					document.documentElement.scrollTop = el.offsetTop;
-					// set scrollTop a second time, in case of browser lag
-					setTimeout(() => {
-						document.documentElement.scrollTop = el.offsetTop;
-					}, 500);
-				}
+				}, 500);
 			}
 		}
 	}
@@ -234,7 +243,7 @@
 	}
 
 	function $$(selectors, el) {
-		return Array.from((el || document).querySelectorAll(selectors));
+		return [...(el || document).querySelectorAll(selectors)];
 	}
 
 	function closest(selector, el) {
