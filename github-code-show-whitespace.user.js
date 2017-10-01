@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Code Show Whitespace
-// @version     0.1.8
+// @version     1.0.0
 // @description A userscript that shows whitespace (space, tabs and carriage returns) in code blocks
 // @license     MIT
 // @author      Rob Garrison
@@ -27,8 +27,7 @@
 		},
 		span = document.createElement("span"),
 		// ignore +/- in diff code blocks
-		regexWS = /^(?:[+-]*)(\x20|&nbsp;|\x09)+|(\x20|&nbsp;|\x09)+$/g,
-		regexTrailingWS = /(\x20|&nbsp;|\x09)+$/,
+		regexWS = /(\x20|&nbsp;|\x09)/g,
 		regexCR = /\r*\n$/,
 		regexTabSize = /\btab-size-\d\b/g,
 
@@ -52,9 +51,10 @@
 		}
 		.ghcw-active .ghcw-whitespace:before {
 			position: absolute;
-			overflow: hidden;
-			opacity: .4;
+			opacity: .5;
 			user-select: none;
+			font-weight: bold;
+			color: #777 !important;
 		}
 		.ghcw-toggle .pl-tab {
 			pointer-events: none;
@@ -83,29 +83,58 @@
 		});
 	}
 
-	function replaceWhitespace(html) {
-		return html
-			.replace(regexWS, s => {
-				let idx = 0,
-					ln = s.length,
-					result = "";
-				for (idx = 0; idx < ln; idx++) {
-					result += whitespace[encodeURI(s[idx])] || s[idx] || "";
-				}
-				return result;
-			});
+	function getNodes(line) {
+		const nodeIterator = document.createNodeIterator(
+			line,
+			NodeFilter.SHOW_TEXT,
+			node => NodeFilter.FILTER_ACCEPT
+		);
+		let currentNode,
+			nodes = [];
+		while ((currentNode = nodeIterator.nextNode())) {
+			nodes.push(currentNode);
+		}
+		return nodes;
 	}
 
-	function replaceTextNode(el) {
-		let indx = el.textContent.search(regexTrailingWS);
-		if (indx > -1) {
-			let node = el.splitText(indx);
-			const elm = span.cloneNode();
-			elm.innerHTML = replaceWhitespace(
-				node.textContent.replace(regexCR, "")
-			);
-			node.parentNode.insertBefore(elm, node);
-			node.parentNode.removeChild(node);
+	function escapeHTML(html) {
+		return html.replace(/[<>"'&]/g, m => ({
+			"<": "&lt;",
+			">": "&gt;",
+			"&": "&amp;",
+			"'": "&#39;",
+			"\"": "&quot;"
+		}[m]));
+	}
+
+	function replaceWhitespace(html) {
+		return escapeHTML(html).replace(regexWS, s => {
+			let idx = 0,
+				ln = s.length,
+				result = "";
+			for (idx = 0; idx < ln; idx++) {
+				result += whitespace[encodeURI(s[idx])] || s[idx] || "";
+			}
+			return result;
+		});
+	}
+
+	function replaceTextNode(nodes) {
+		let node, indx, el,
+			ln = nodes.length;
+		for (indx = 0; indx < ln; indx++) {
+			node = nodes[indx];
+			if (
+				node &&
+				node.nodeType === 3 &&
+				node.textContent &&
+				node.textContent.search(regexWS) > -1
+			) {
+				el = span.cloneNode();
+				el.innerHTML = replaceWhitespace(node.textContent.replace(regexCR, ""));
+				node.parentNode.insertBefore(el, node);
+				node.parentNode.removeChild(node);
+			}
 		}
 	}
 
@@ -120,24 +149,9 @@
 			lines = $$(".blob-code-inner:not(.blob-code-hunk)", block);
 			len = lines.length;
 
-			const checkNode = el => {
-				if (el) {
-					if (el.nodeType === 3 && el.textContent) {
-						replaceTextNode(el);
-					} else if (
-						el.nodeType === 1 &&
-						el.matches(".pl-s, .pl-s1, .pl-c") &&
-						el.firstChild &&
-						el.firstChild.nodeType === 3
-					) {
-						el.innerHTML = replaceWhitespace(el.innerHTML);
-					}
-				}
-			};
-
 			// loop with delay to allow user interaction
 			const loop = () => {
-				let line,
+				let line, nodes,
 					// max number of DOM insertions per loop
 					max = 0;
 				while (max < 50 && indx < len) {
@@ -146,15 +160,10 @@
 					}
 					line = lines[indx];
 					// first node is a syntax string and may have leading whitespace
-					checkNode(line.firstChild);
-					checkNode(line.lastChild);
-					// trailing whitespace inside a comment text node
-					if (line.lastChild.children) {
-						checkNode(line.lastChild.lastChild);
-					}
-					line.innerHTML = replaceWhitespace(line.innerHTML)
-						// remove end CRLF if it exists
-						.replace(regexCR, "") + whitespace.CRLF;
+					nodes = getNodes(line);
+					replaceTextNode(nodes);
+					// remove end CRLF if it exists; then add a line ending
+					line.innerHTML = line.innerHTML.replace(regexCR, "") + whitespace.CRLF;
 					max++;
 					indx++;
 				}
@@ -181,7 +190,7 @@
 	}
 
 	function $$(selector, el) {
-		return Array.from((el || document).querySelectorAll(selector));
+		return [...(el || document).querySelectorAll(selector)];
 	}
 
 	function closest(selector, el) {
