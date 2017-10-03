@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Collapse Markdown
-// @version     1.1.10
+// @version     1.1.11
 // @description A userscript that collapses markdown headers
 // @license     MIT
 // @author      Rob Garrison
@@ -75,7 +75,7 @@
 			styles = "";
 		headers.forEach((header, indx) => {
 			sel = `${blocks.join(" " + header + ":after,").slice(0, -1)}`;
-			styles += `${sel} { color:${colors[indx]} }`; 
+			styles += `${sel} { color:${colors[indx]} }`;
 		});
 		arrowColors.textContent = styles;
 	}
@@ -208,7 +208,7 @@
 
 	// open header matching hash
 	function openHash(id) {
-		const els = $(`#user-content-${tmp}`);
+		const els = $(`#user-content-${id}`);
 		if (els && els.classList.contains("anchor")) {
 			let el = els.parentNode;
 			if (el.matches(headers.join(","))) {
