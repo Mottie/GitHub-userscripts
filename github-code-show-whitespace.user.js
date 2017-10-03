@@ -35,6 +35,7 @@
 		regexWS = /(\x20|&nbsp;|\x09)/g,
 		regexCR = /\r*\n$/,
 		regexTabSize = /\btab-size-\d\b/g,
+		regexExceptions = /(\.md)$/i,
 
 		toggleButton = document.createElement("div");
 	toggleButton.className = "ghcw-toggle btn btn-sm tooltipped tooltipped-n";
@@ -81,7 +82,7 @@
 			top: .1em;
 		}
 		/* weird tweak for diff markdown files - see #27 */
-		.file-header[data-path$=".md"] + div .ghcw-active .diff-table .ghcw-whitespace:before {
+		.ghcw-adjust .ghcw-active .ghcw-whitespace:before {
 			left: .6em;
 		}
 	`);
@@ -196,6 +197,23 @@
 		block.classList.add(`tab-size-${len}`);
 	}
 
+	function detectDiff(wrap) {
+		const header = $(".file-header", wrap);
+		if ($(".diff-table", wrap) && header) {
+			const file = header.getAttribute("data-path");
+			if (
+				// File Exceptions that need tweaking (e.g. ".md")
+				regexExceptions.test(file) ||
+				// files with no extension (e.g. LICENSE)
+				file.indexOf(".") === -1
+			) {
+				// This class is added to adjust the position of the whitespace
+				// markers for specific files; See issue #27
+				wrap.classList.add("ghcw-adjust");
+			}
+		}
+	}
+
 	function $(selector, el) {
 		return (el || document).querySelector(selector);
 	}
@@ -221,10 +239,12 @@
 			target.nodeName === "DIV" &&
 			target.classList.contains("ghcw-toggle")
 		) {
-			let block = $(".highlight", closest(".file", target));
+			const wrap = closest(".file", target);
+			const block = $(".highlight", wrap);
 			if (block) {
 				target.classList.toggle("selected");
 				block.classList.toggle("ghcw-active");
+				detectDiff(wrap);
 				updateTabSize(block);
 				addWhitespace(block);
 			}
