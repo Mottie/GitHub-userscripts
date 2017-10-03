@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Code Show Whitespace
-// @version     1.0.0
+// @version     1.1.0
 // @description A userscript that shows whitespace (space, tabs and carriage returns) in code blocks
 // @license     MIT
 // @author      Rob Garrison
@@ -9,7 +9,7 @@
 // @include     https://gist.github.com/*
 // @run-at      document-idle
 // @grant       GM_addStyle
-// @require     https://greasyfork.org/scripts/28721-mutations/code/mutations.js?version=189706
+// @require     https://greasyfork.org/scripts/28721-mutations/code/mutations.js?version=198500
 // @icon        https://github.com/fluidicon.png
 // @updateURL   https://raw.githubusercontent.com/Mottie/Github-userscripts/master/github-code-show-whitespace.user.js
 // @downloadURL https://raw.githubusercontent.com/Mottie/Github-userscripts/master/github-code-show-whitespace.user.js
@@ -19,10 +19,15 @@
 
 	// include em-space & en-space?
 	const whitespace = {
+			// Applies \xb7 (·) to every space
 			"%20"  : "<span class='pl-space ghcw-whitespace'> </span>",
+			// Applies \xb7 (·) to every non-breaking space (alternative: \u2423 (␣))
 			"%A0"  : "<span class='pl-nbsp ghcw-whitespace'>&nbsp;</span>",
+			// Applies \xbb (») to every tab
 			"%09"  : "<span class='pl-tab ghcw-whitespace'>\x09</span>",
 			// non-matching key; applied manually
+			// Applies \u231d (⌝) to the end of every line
+			// (alternatives: \u21b5 (↵) or \u2938 (⤸))
 			"CRLF" : "<span class='pl-crlf ghcw-whitespace'></span>\n"
 		},
 		span = document.createElement("span"),
@@ -47,7 +52,7 @@
 		.ghcw-active .ghcw-whitespace,
 		.gist-content-wrapper .file-actions .btn-group {
 			position: relative;
-			display: inline-block;
+			display: inline;
 		}
 		.ghcw-active .ghcw-whitespace:before {
 			position: absolute;
@@ -55,6 +60,8 @@
 			user-select: none;
 			font-weight: bold;
 			color: #777 !important;
+			top: -.25em;
+			left: 0;
 		}
 		.ghcw-toggle .pl-tab {
 			pointer-events: none;
@@ -71,7 +78,11 @@
 		}
 		.ghcw-active .pl-crlf:before {
 			content: "\\231d";
-			top: -.75em;
+			top: .1em;
+		}
+		/* weird tweak for diff markdown files - see #27 */
+		.file-header[data-path$=".md"] + div .ghcw-active .diff-table .ghcw-whitespace:before {
+			left: .6em;
 		}
 	`);
 
@@ -87,7 +98,7 @@
 		const nodeIterator = document.createNodeIterator(
 			line,
 			NodeFilter.SHOW_TEXT,
-			node => NodeFilter.FILTER_ACCEPT
+			() => NodeFilter.FILTER_ACCEPT
 		);
 		let currentNode,
 			nodes = [];
