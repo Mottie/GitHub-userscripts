@@ -34,7 +34,6 @@
 		// ignore +/- in diff code blocks
 		regexWS = /(\x20|&nbsp;|\x09)/g,
 		regexCR = /\r*\n$/,
-		regexTabSize = /\btab-size-\d\b/g,
 		regexExceptions = /(\.md)$/i,
 
 		toggleButton = document.createElement("div");
@@ -43,13 +42,6 @@
 	toggleButton.innerHTML = "<span class='pl-tab'></span>";
 
 	GM_addStyle(`
-		.highlight .blob-code-inner { tab-size: 2; }
-		/* GitHub-Dark overrides the above setting */
-		.highlight.ghcw-active.tab-size-2 .pl-tab { width: 1.1em; }
-		.highlight.ghcw-active.tab-size-4 .pl-tab { width: 2.2em; }
-		.highlight.ghcw-active.tab-size-6 .pl-tab { width: 3.3em; }
-		.highlight.ghcw-active.tab-size-8 .pl-tab { width: 4.4em; }
-
 		.ghcw-active .ghcw-whitespace,
 		.gist-content-wrapper .file-actions .btn-group {
 			position: relative;
@@ -154,7 +146,6 @@
 		let lines, indx, len;
 		if (block && !block.classList.contains("ghcw-processed")) {
 			block.classList.add("ghcw-processed");
-			updateTabSize(block);
 			indx = 0;
 
 			// class name of each code row
@@ -187,14 +178,6 @@
 			};
 			loop();
 		}
-	}
-
-	function updateTabSize(block) {
-		// remove previous tab-size setting
-		block.className = block.className.replace(regexTabSize, " ");
-		// calculate tab-size; GitHub-Dark allows user modification
-		const len = window.getComputedStyle($(".blob-code-inner", block)).tabSize;
-		block.classList.add(`tab-size-${len}`);
 	}
 
 	function detectDiff(wrap) {
@@ -245,7 +228,6 @@
 				target.classList.toggle("selected");
 				block.classList.toggle("ghcw-active");
 				detectDiff(wrap);
-				updateTabSize(block);
 				addWhitespace(block);
 			}
 		}
