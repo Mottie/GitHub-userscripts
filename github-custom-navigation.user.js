@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Custom Navigation
-// @version     1.0.16
+// @version     1.0.17
 // @description A userscript that allows you to customize GitHub's main navigation bar
 // @license     MIT
 // @author      Rob Garrison
@@ -405,10 +405,10 @@
 			}
 		}
 		if (name === "separator") {
-			html = editMode ?
+			html = editMode
 				// *** Separator (icon in editMode; zero-width-space when not)
-				`<span class="${linkClass} tooltipped tooltipped-s" aria-label="Menu separator">${icons.separator}</span>` :
-				`<span class="HeaderNavlink ghcn-separator linkable-line-number">&#8203;</span>`;
+				? `<span class="${linkClass} tooltipped tooltipped-s" aria-label="Menu separator">${icons.separator}</span>`
+				: `<span class="HeaderNavlink ghcn-separator linkable-line-number">&#8203;</span>`;
 		} else {
 			html = editMode ?
 				`<span class="${linkClass}" aria-label="${item.tooltip}">${item.content}</span>` :
