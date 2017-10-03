@@ -1,14 +1,14 @@
 // ==UserScript==
 // @name        GitHub Remove Diff Signs
-// @version     1.1.6
+// @version     1.2.0
 // @description A userscript that removes the "+" and "-" from code diffs
 // @license     MIT
 // @author      Rob Garrison
 // @namespace   https://github.com/Mottie
 // @include     https://github.com/*
 // @run-at      document-idle
-// @grant       none
-// @require     https://greasyfork.org/scripts/28721-mutations/code/mutations.js?version=189706
+// @grant       GM_addStyle
+// @require     https://greasyfork.org/scripts/28721-mutations/code/mutations.js?version=198500
 // @icon        https://github.com/fluidicon.png
 // @updateURL   https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-remove-diff-signs.user.js
 // @downloadURL https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-remove-diff-signs.user.js
@@ -16,40 +16,44 @@
 (() => {
 	"use strict";
 
+	GM_addStyle(`.diff-table .blob-code-inner:before {
+		user-select: none;
+		content: "\\a0";
+	}`);
+
 	function processDiff() {
 		if (document.querySelector(".highlight")) {
 			let indx = 0,
+				els = document.querySelectorAll(`span.blob-code-inner:not([data-ghrds])`),
+				len = els.length;
 
-				els = document.querySelectorAll(`
-					.blob-code-deletion .blob-code-inner,
-					.blob-code-addition .blob-code-inner`
-				),
-				len = els.length,
-
-				// target "+" and "-" at start
-				regex = /^[+-]/,
-
-				// loop with delay to allow user interaction
-				loop = () => {
-					let el, txt,
-						// max number of DOM insertions per loop
-						max = 0;
-					while ( max < 50 && indx < len ) {
-						if (indx >= len) {
-							return;
-						}
-						el = els[indx];
-						txt = el.childNodes[0].textContent;
-						el.childNodes[0].textContent = txt.replace(regex, " ");
-						max++;
-						indx++;
+			// loop with delay to allow user interaction
+			function loop() {
+				let el, txt, firstNode,
+					// max number of DOM insertions per loop
+					max = 0;
+				while ( max < 50 && indx < len ) {
+					if (indx >= len) {
+						return;
 					}
-					if (indx < len) {
-						setTimeout(() => {
-							loop();
-						}, 200);
+					el = els[indx];
+					if (!el.getAttribute("data-ghrds")) {
+						firstNode = el.childNodes[0];
+						txt = firstNode.textContent || "";
+						// remove the leading +, - or first space
+						// the github-code-show-whitespace.user.js script is applied
+						firstNode.textContent = txt.slice(1);
+						el.setAttribute("data-ghrds", true);
 					}
-				};
+					max++;
+					indx++;
+				}
+				if (indx < len) {
+					setTimeout(() => {
+						loop();
+					}, 200);
+				}
+			}
 			loop();
 		}
 	}
