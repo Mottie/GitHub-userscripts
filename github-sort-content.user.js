@@ -242,18 +242,18 @@
 			const target = event.target,
 				name = target.nodeName;
 			if (target && target.nodeType === 1 && (
-					// nodes th|h3 & form for stars page
-					name === "H3" || name === "TH" || name === "FORM" ||
-					// https://github.com/:organization filter bar
-					//   filter: .TableObject-item--primary, repo wrapper: .org-profile
-					// https://github.com/stars (sort-bar)
-					// https://github.com/:user/followers (tabnav-tabs)
-					// https://github.com/:user/following (tabnav-tabs)
-					// https://github.com/:user?tab=repositories (user-profile-nav)
-					// https://github.com/:user?tab=stars (user-profile-nav)
-					// https://github.com/:user?tab=followers (user-profile-nav)
-					// https://github.com/:user?tab=followering (user-profile-nav)
-					regexBars.test(target.className)
+				// nodes th|h3 & form for stars page
+				name === "H3" || name === "TH" || name === "FORM" ||
+				// https://github.com/:organization filter bar
+				//   filter: .TableObject-item--primary, repo wrapper: .org-profile
+				// https://github.com/stars (sort-bar)
+				// https://github.com/:user/followers (tabnav-tabs)
+				// https://github.com/:user/following (tabnav-tabs)
+				// https://github.com/:user?tab=repositories (user-profile-nav)
+				// https://github.com/:user?tab=stars (user-profile-nav)
+				// https://github.com/:user?tab=followers (user-profile-nav)
+				// https://github.com/:user?tab=followering (user-profile-nav)
+				regexBars.test(target.className)
 			)) {
 				// don't sort tables not inside of markdown,
 				// except for the repo "code" tab file list
@@ -301,9 +301,9 @@
 				el = closest(".boxed-group", target);
 				// prevent clicking on the H3 header of filtered repos
 				if (el && name === "H3" && (
-						el.classList.contains("js-repo-filter") ||
-						el.classList.contains("js-pinned-repos-reorder-container")
-					)) {
+					el.classList.contains("js-repo-filter") ||
+					el.classList.contains("js-pinned-repos-reorder-container")
+				)) {
 					return initSortUl(target, $(".mini-repo-list", el));
 				}
 

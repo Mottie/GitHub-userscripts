@@ -152,11 +152,11 @@
 			return;
 		}
 		busy = true;
-		let selector = typeof tempFormat === "string" ?
+		let selector = typeof tempFormat === "string"
 			// update existing timestamps
-			".ghst-time" :
+			? ".ghst-time"
 			// process html elements
-			"relative-time, time-ago";
+			: "relative-time, time-ago";
 		if ($(selector)) {
 			let indx = 0;
 			const els = $$(selector),

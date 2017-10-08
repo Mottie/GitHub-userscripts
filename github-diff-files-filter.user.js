@@ -82,11 +82,11 @@
 					list[ext] = [];
 				}
 				list[ext].push(
-					file.hash ?
+					file.hash
 						// #toc points to "a"
-						file.hash.slice(1) :
+						? file.hash.slice(1)
 						// .pr-toolbar points to "a > div > div.filename"
-						closest("a", file).hash.slice(1)
+						: closest("a", file).hash.slice(1)
 				);
 			}
 		});
