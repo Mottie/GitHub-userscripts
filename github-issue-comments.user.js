@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Toggle Issue Comments
-// @version     1.0.28
+// @version     1.1.0
 // @description A userscript that toggles issues/pull request comments & messages
 // @license     MIT
 // @author      Rob Garrison
@@ -94,6 +94,19 @@
 				name: "ghic-commits",
 				selector: ".discussion-commits",
 				label: "Commits"
+			},
+			reviews: {
+				isHidden: false,
+				name: "ghic-reviews",
+				selector: ".discussion-item-review, .discussion-item-review_requested",
+				label: "Reviews (All)"
+			},
+			outdated: {
+				isHidden: false,
+				name: "ghic-outdated",
+				selector: ".discussion-item-review",
+				contains: ".outdated-comment-label",
+				label: "Reviews (Outdated)"
 			},
 			// example: https://github.com/jquery/jquery/pull/3014
 			diffOld: {
@@ -277,12 +290,17 @@
 	}
 
 	function hideStuff(name, init) {
+		const obj = settings[name],
+			isHidden = obj.isHidden;
 		let count, results,
-			obj = settings[name],
-			isHidden = obj.isHidden,
 			item = closest(".dropdown-item", $(".ghic-menu ." + obj.name));
 		if (obj.selector) {
 			results = $$(obj.selector);
+			if (obj.contains) {
+				results = results.filter(el => {
+					return !!$(obj.contains, el);
+				});
+			}
 			toggleClass(item, "ghic-checked", isHidden);
 			if (isHidden) {
 				count = addClass(results, "ghic-hidden");
