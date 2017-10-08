@@ -10,7 +10,7 @@
 // @grant       GM_addStyle
 // @grant       GM_getValue
 // @grant       GM_setValue
-// @require     https://greasyfork.org/scripts/28721-mutations/code/mutations.js?version=189706
+// @require     https://greasyfork.org/scripts/28721-mutations/code/mutations.js?version=198500
 // @icon        https://github.com/fluidicon.png
 // @updateURL   https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-issue-comments.user.js
 // @downloadURL https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-issue-comments.user.js
@@ -533,6 +533,9 @@
 					hideParticipant(closest(".ghic-avatar", target));
 				}
 			}
+			// Make button show if it is active
+			const active = $$(".ghic-hidden, .ghic-hidden-participant").length > 0;
+			$(".ghic-button .btn").classList.toggle("btn-outline", active);
 		}
 	}
 
