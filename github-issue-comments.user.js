@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Toggle Issue Comments
-// @version     1.1.0
+// @version     1.1.1
 // @description A userscript that toggles issues/pull request comments & messages
 // @license     MIT
 // @author      Rob Garrison
@@ -222,7 +222,7 @@
 	function addAvatars() {
 		let indx = 0,
 
-			str = "<h3>Hide Comments from</h3>",
+			str = "<p><strong>Hide Comments from</strong></p>",
 			unique = [],
 			// get all avatars
 			avatars = $$(".timeline-comment-avatar img"),
@@ -534,8 +534,11 @@
 				}
 			}
 			// Make button show if it is active
-			const active = $$(".ghic-hidden, .ghic-hidden-participant").length > 0;
-			$(".ghic-button .btn").classList.toggle("btn-outline", active);
+			target = $(".ghic-button .btn");
+			if (target) {
+				const active = $$(".ghic-hidden, .ghic-hidden-participant").length > 0;
+				target.classList.toggle("btn-outline", active);
+			}
 		}
 	}
 
