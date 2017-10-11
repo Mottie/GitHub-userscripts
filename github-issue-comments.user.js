@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Toggle Issue Comments
-// @version     1.1.1
+// @version     1.1.2
 // @description A userscript that toggles issues/pull request comments & messages
 // @license     MIT
 // @author      Rob Garrison
@@ -473,22 +473,15 @@
 	}
 
 	function hideParticipant(el) {
-		let els, indx, len, name,
-			results = [];
 		if (el) {
 			el.classList.toggle("comments-hidden");
-			hide = el.classList.contains("comments-hidden");
-			name = el.getAttribute("aria-label");
-			els = $$(".js-discussion .author");
-			len = els.length;
-			for (indx = 0; indx < len; indx++) {
-				if (els[indx].textContent.trim() === name) {
-					results[results.length] = closest(
-						".timeline-comment-wrapper, .commit-comment, .discussion-item",
-						els[indx]
-					);
-				}
-			}
+			let name = el.getAttribute("aria-label"),
+				results = $$(
+					".timeline-comment-wrapper, .commit-comment, .discussion-item"
+				).filter(el => {
+					const author = $(".js-discussion .author", el);
+					return author ? name === author.textContent.trim() : false;
+				});
 			// use a different participant class name to hide timeline events
 			// or unselecting all users will show everything
 			if (el.classList.contains("comments-hidden")) {
