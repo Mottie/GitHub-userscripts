@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Sort Content
-// @version     1.2.2
+// @version     1.2.3
 // @description A userscript that makes some lists & markdown tables sortable
 // @license     MIT
 // @author      Rob Garrison
@@ -301,7 +301,9 @@
 				el = closest(".boxed-group", target);
 				// prevent clicking on the H3 header of filtered repos
 				if (el && name === "H3" && (
-					el.classList.contains("js-repo-filter") ||
+					el.parentNode.id === "your_repos" ||
+					el.classList.contains("js-repos-container") ||
+					el.classList.contains("js-repo-filter") || // still valid?
 					el.classList.contains("js-pinned-repos-reorder-container")
 				)) {
 					return initSortUl(target, $(".mini-repo-list", el));
@@ -314,11 +316,11 @@
 						if (el.textContent.indexOf("Overview") > -1) {
 							return initSortUl(target, $(".pinned-repos-list"), ".repo");
 						} else if (el.href.indexOf("tab=repo") > -1) {
-							return initSortUl(target, $(".js-repo-list"), "h3 a");
+							return initSortUl(target, $("#user-repositories-list ul"), "h3 a");
 						} else if (el.href.indexOf("tab=stars") > -1) {
-							return initSortUl(target, $(".js-repo-filter"), "h3 a");
+							return initSortUl(target, target.nextElementSibling, "h3 a");
 						} else if (el.href.indexOf("tab=follow") > -1) {
-							return initSortUl(target, $(".js-repo-filter"), "a .f4");
+							return initSortUl(target, target.nextElementSibling, "a .f4");
 						}
 					}
 				}
