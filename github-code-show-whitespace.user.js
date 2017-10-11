@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Code Show Whitespace
-// @version     1.1.0
+// @version     1.1.1
 // @description A userscript that shows whitespace (space, tabs and carriage returns) in code blocks
 // @license     MIT
 // @author      Rob Garrison
@@ -76,6 +76,10 @@
 		/* weird tweak for diff markdown files - see #27 */
 		.ghcw-adjust .ghcw-active .ghcw-whitespace:before {
 			left: .6em;
+		}
+		/* hide extra leading space added to diffs - see #27 */
+		.diff-table .blob-code-inner .pl-space:first-child {
+			opacity: 0;
 		}
 	`);
 
