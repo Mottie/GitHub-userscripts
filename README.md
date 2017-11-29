@@ -1,4 +1,4 @@
-# GitHub userscripts [![tag](https://img.shields.io/github/tag/Mottie/GitHub-userscripts.svg)](https://github.com/Mottie/GitHub-userscripts/tags)
+# GitHub userscripts [![tag](https://img.shields.io/github/tag/Mottie/GitHub-userscripts.svg)](https://github.com/Mottie/GitHub-userscripts/tags) [![Mentioned in Awesome Userscripts](https://awesome.re/mentioned-badge.svg)](https://github.com/brunocvcunha/awesome-userscripts#readme)
 
 Userscripts to add functionality to GitHub.
 
