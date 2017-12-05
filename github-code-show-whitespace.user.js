@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Code Show Whitespace
-// @version     1.1.3
+// @version     1.1.4
 // @description A userscript that shows whitespace (space, tabs and carriage returns) in code blocks
 // @license     MIT
 // @author      Rob Garrison
@@ -10,7 +10,7 @@
 // @run-at      document-idle
 // @grant       GM_addStyle
 // @require     https://greasyfork.org/scripts/28721-mutations/code/mutations.js?version=234970
-// @icon        https://github.com/fluidicon.png
+// @icon        https://user-images.githubusercontent.com/136959/33633295-f1547d62-d9d5-11e7-9fa1-f2777ec3c745.png
 // @updateURL   https://raw.githubusercontent.com/Mottie/Github-userscripts/master/github-code-show-whitespace.user.js
 // @downloadURL https://raw.githubusercontent.com/Mottie/Github-userscripts/master/github-code-show-whitespace.user.js
 // ==/UserScript==
