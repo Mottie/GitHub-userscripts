@@ -49,6 +49,7 @@ Userscripts to add functionality to GitHub.
 	| [GitHub static time][stt-wiki]         |     | [install][stt-raw] | [GF][stt-gf] [OU][stt-ou] | 2017.04.24 | 2017.10.08 |
 	| [GitHub table of contents][toc-wiki]   |     | [install][toc-raw] | [GF][toc-gf] [OU][toc-ou] | 2016.03.28 | 2017.10.08 |
 	| [GitHub title notification][tbn-wiki]  |     | [install][tbn-raw] | [GF][tbn-gf] [OU][tbn-ou] | 2016.03.24 | 2017.09.02 |
+	| [GitHub toggle diff comments][tdc-wiki]|     | [install][tdc-raw] | [GF][tdc-gf] [OU][tdc-ou] | 2017.12.10 | 2017.12.10 |
 	| [GitHub toggle expanders][tex-wiki]    |     | [install][tex-raw] | [GF][tex-gf] [OU][tex-ou] | 2016.09.17 | 2017.06.15 |
 	| [GitHub toggle wiki sidebar][tws-wiki] |     | [install][tws-raw] | [GF][tws-gf] [OU][tws-ou] | 2016.04.01 | 2017.10.08 |
 	| [Gist raw links][grl-wiki]             |     | [install][grl-raw] | [GF][grl-gf] [OU][grl-ou] | 2017.05.19 | 2017.06.03 |
@@ -85,6 +86,7 @@ Userscripts to add functionality to GitHub.
 [srt-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-sort-content
 [stt-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-static-time
 [tbn-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-title-notification
+[tdc-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-toggle-diff-comments
 [tex-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-toggle-expanders
 [toc-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-table-of-contents
 [tws-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-toggle-wiki-sidebar
@@ -118,6 +120,7 @@ Userscripts to add functionality to GitHub.
 [srt-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-sort-content.user.js
 [stt-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-static-time.user.js
 [tbn-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-title-notification.user.js
+[tdc-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-toggle-diff-comments.user.js
 [tex-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-toggle-expanders.user.js
 [toc-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-toc.user.js
 [tws-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-toggle-wiki-sidebar.user.js
@@ -151,6 +154,7 @@ Userscripts to add functionality to GitHub.
 [srt-gf]: https://greasyfork.org/en/scripts/21373-github-sort-content
 [stt-gf]: https://greasyfork.org/en/scripts/29239-github-static-time
 [tbn-gf]: https://greasyfork.org/en/scripts/18253-github-title-notification
+[tdc-gf]: https://greasyfork.org/en/scripts/36237-github-toggle-diff-comments
 [tex-gf]: https://greasyfork.org/en/scripts/23303-github-toggle-expanders
 [toc-gf]: https://greasyfork.org/en/scripts/18344-github-toc
 [tws-gf]: https://greasyfork.org/en/scripts/18433-github-toggle-wiki-sidebar
@@ -184,6 +188,7 @@ Userscripts to add functionality to GitHub.
 [srt-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Sort_Content
 [stt-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Static_Time
 [tbn-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Title_Notification
+[tdc-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Toggle_Diff_Comments
 [tex-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Toggle_Expanders
 [toc-ou]: https://openuserjs.org/scripts/Mottie/GitHub_TOC
 [tws-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Toggle_Wiki_Sidebar
