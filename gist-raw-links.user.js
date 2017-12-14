@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        Gist Raw Links
-// @version     0.1.4
+// @version     0.1.5
 // @description Add a button that contains a list of gist raw file links
 // @license     MIT
 // @author      Rob Garrison
@@ -8,16 +8,19 @@
 // @include     https://gist.github.com/*
 // @run-at      document-idle
 // @grant       GM_addStyle
+// @grant       GM.addStyle
 // @grant       GM_xmlhttpRequest
+// @grant       GM.xmlHttpRequest
 // @connect     api.github.com
-// @icon        https://github.com/fluidicon.png
+// @require     https://greasemonkey.github.io/gm4-polyfill/gm4-polyfill.js
+// @icon        https://assets-cdn.github.com/pinned-octocat.svg
 // @updateURL   https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/gist-raw-links.user.js
 // @downloadURL https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/gist-raw-links.user.js
 // ==/UserScript==
 (() => {
 	"use strict";
 
-	GM_addStyle(`
+	GM.addStyle(`
 		.ghrl-get-list * { pointer-events:none; }
 		.ghrl-files > div { text-align:center; pointer-events:none; }
 		.ghrl-files a { cursor:pointer; }
@@ -73,11 +76,11 @@
 
 	function loadFileList(link) {
 		let url,
-			el = closest(".dropdown", link);
+			el = link.closest(".dropdown");
 		el = $("a", el.nextElementSibling);
 		if (el) {
 			url = el.href.split("/");
-			GM_xmlhttpRequest({
+			GM.xmlHttpRequest({
 				method : "GET",
 				url : `https://api.github.com/gists/${url.pop()}`,
 				onload : function(response) {
@@ -144,16 +147,6 @@
 
 	function $$(str, el) {
 		return Array.from((el || document).querySelectorAll(str));
-	}
-
-	function closest(selector, el) {
-		while (el && el.nodeType === 1) {
-			if (el.matches(selector)) {
-				return el;
-			}
-			el = el.parentNode;
-		}
-		return null;
 	}
 
 	document.addEventListener("pjax:end", update);
