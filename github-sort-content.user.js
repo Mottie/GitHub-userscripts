@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Sort Content
-// @version     1.2.3
+// @version     1.2.4
 // @description A userscript that makes some lists & markdown tables sortable
 // @license     MIT
 // @author      Rob Garrison
@@ -20,7 +20,7 @@
 	"use strict";
 	/* example pages:
 	tables - https://github.com/Mottie/GitHub-userscripts
-	Contribute repos & Your Repos - https://github.com/
+	Contribute repos, Your Repos & Your Teams - https://github.com/
 	organization repos - https://github.com/jquery
 	organization members - https://github.com/orgs/jquery/people
 	pinned & no pinned repos - https://github.com/addyosmani
@@ -189,7 +189,7 @@
 				background-position:calc(100% - 5px) center !important;
 			}
 			/* https://github.com/ -> your repositories */
-			.dashboard-sidebar .user-repos h3 {
+			#your_repos h3 {
 				background-position: 175px 10px !important;
 			}
 			/* https://github.com/:user?tab=repositories */
@@ -303,6 +303,7 @@
 				el = closest(".boxed-group", target);
 				// prevent clicking on the H3 header of filtered repos
 				if (el && name === "H3" && (
+					el.parentNode.id === "your_teams" ||
 					el.parentNode.id === "your_repos" ||
 					el.classList.contains("js-repos-container") ||
 					el.classList.contains("js-repo-filter") || // still valid?
