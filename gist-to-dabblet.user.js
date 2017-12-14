@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        Gist to dabblet
-// @version     2.1.3
+// @version     2.1.4
 // @description Add a dabblet.com link button to any gist with dabblet information
 // @license     MIT
 // @author      Rob Garrison
@@ -8,7 +8,7 @@
 // @include     https://gist.github.com/*
 // @run-at      document-idle
 // @grant       none
-// @icon        https://github.com/fluidicon.png
+// @icon        https://assets-cdn.github.com/pinned-octocat.svg
 // @updateURL   https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/gist-to-dabblet.user.js
 // @downloadURL https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/gist-to-dabblet.user.js
 // ==/UserScript==
