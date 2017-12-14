@@ -22,26 +22,32 @@
 
 	GM.addStyle(`
 		.ghrl-get-list * { pointer-events:none; }
-		.ghrl-files > div { text-align:center; pointer-events:none; }
-		.ghrl-files a { cursor:pointer; }
-		.gist-count-links { z-index: 20; }
+		.ghrl-get-list, .ghrl-files a { cursor:pointer; }
+		.ghrl-files div { text-align:center; }
+		.gist-count-links { z-index: 21; }
 	`);
 
 	const item = document.createElement("li");
-	item.className = "dropdown js-menu-container";
+	item.className = "select-menu js-menu-container js-select-menu";
 
 	function addButton(node) {
 		const button = item.cloneNode();
 		button.innerHTML = `
-			<a href="#" class="js-menu-target tooltipped tooltipped-n ghrl-get-list" aria-label="Open list of raw urls">
-				🍣 Raw urls <span class="dropdown-caret"></span>
+			<a class="select-menu-button js-menu-target ghrl-get-list" aria-expanded="false" aria-haspopup="true">
+				🍣 Raw urls
 			</a>
-			<div class="dropdown-menu-content">
-				<ul class="dropdown-menu dropdown-menu-sw ghrl-files">
-					<div>
-						<img src="https://assets-cdn.github.com/images/spinners/octocat-spinner-32.gif" width="32" alt="">
+			<div class="select-menu-modal-holder">
+				<div class="select-menu-modal js-menu-content">
+					<div class="select-menu-header">
+						<svg aria-label="Close" class="octicon octicon-x js-menu-close" height="16" role="img" version="1.1" viewBox="0 0 12 16" width="12"><path fill-rule="evenodd" d="M7.48 8l3.75 3.75-1.48 1.48L6 9.48l-3.75 3.75-1.48-1.48L4.52 8 .77 4.25l1.48-1.48L6 6.52l3.75-3.75 1.48 1.48z"/></svg>
+						<span class="select-menu-title">Files</span>
 					</div>
-				</ul>
+					<div class="js-select-menu-deferred-content ghrl-files">
+						<div>
+							<img src="https://assets-cdn.github.com/images/spinners/octocat-spinner-32.gif" width="32" alt="">
+						</div>
+					</div>
+				</div>
 			</div>`;
 		node.insertBefore(button, node.childNodes[0]);
 	}
@@ -67,7 +73,7 @@
 			// the latest version of the file - see #18
 			url = files[file].raw_url.replace(/raw\/\w+\//, "raw/");
 			html += `
-				<a class="dropdown-item ghrl-file" href="${url}">
+				<a class="dropdown-item ghrl-file" role="menuitem" href="${url}">
 					${file}
 				</a>`;
 		});
@@ -76,7 +82,7 @@
 
 	function loadFileList(link) {
 		let url,
-			el = link.closest(".dropdown");
+			el = link.closest(".select-menu");
 		el = $("a", el.nextElementSibling);
 		if (el) {
 			url = el.href.split("/");
@@ -92,22 +98,10 @@
 						return false;
 					}
 					if (json && json.files) {
+
 						addList(link, json.files);
 					}
 				}
-			});
-		}
-	}
-
-	function removeBackdrop(event) {
-		event.preventDefault();
-		const el = $(".modal-backdrop");
-		if (el) {
-			el.removeEventListener("click", removeBackdrop);
-			el.parentNode.removeChild(el);
-			$$(".ghrl-get-list").forEach(el => {
-				el.classList.remove("selected");
-				el.parentNode.classList.remove("active");
 			});
 		}
 	}
@@ -117,28 +111,12 @@
 			const target = event.target;
 			if (target.classList.contains("ghrl-get-list")) {
 				event.preventDefault();
+			 event.stopPropagation();
 				if (!$(".dropdown-item", target.parentNode)) {
 					loadFileList(target);
 				}
-				// let GitHub process the elements
-				setTimeout(() => {
-					const el = $(".modal-backdrop");
-					if (el) {
-						el.addEventListener("click", removeBackdrop);
-					}
-				}, 100);
-			} else if (
-				target.classList.contains("ghrl-file") &&
-				// left mouse click only
-				event.button === 0 &&
-				// check for keyboard modifier + left click - the browser handles these
-				// clicks differently
-				!(event.shiftKey || event.ctrlKey || event.metaKey)
-			) {
-				// allow left click to pass through
-				window.location.href = target.href;
 			}
-		}, false);
+		});
 	}
 
 	function $(str, el) {
