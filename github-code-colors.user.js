@@ -1,22 +1,24 @@
 // ==UserScript==
 // @name        GitHub Code Colors
-// @version     1.1.11
+// @version     1.1.12
 // @description A userscript that adds a color swatch next to the code color definition
 // @license     MIT
 // @author      Rob Garrison
 // @namespace   https://github.com/Mottie
 // @include     https://github.com/*
 // @run-at      document-idle
+// @grant       GM.addStyle
 // @grant       GM_addStyle
-// @require     https://greasyfork.org/scripts/28721-mutations/code/mutations.js?version=198500
-// @icon        https://github.com/fluidicon.png
+// @require     https://greasemonkey.github.io/gm4-polyfill/gm4-polyfill.js
+// @require     https://greasyfork.org/scripts/28721-mutations/code/mutations.js?version=234970
+// @icon        https://assets-cdn.github.com/pinned-octocat.svg
 // @updateURL   https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-code-colors.user.js
 // @downloadURL https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-code-colors.user.js
 // ==/UserScript==
 (() => {
 	"use strict";
 
-	GM_addStyle(`
+	GM.addStyle(`
 		.ghcc-block { width:12px; height:12px; display:inline-block;
 			vertical-align:middle; margin-right:4px; border:1px solid #555; }
 	`);
