@@ -7,10 +7,12 @@
 // @namespace   https://github.com/Mottie
 // @include     https://github.com/*
 // @run-at      document-idle
+// @grant       GM.addStyle
 // @grant       GM_addStyle
+// @require     https://greasemonkey.github.io/gm4-polyfill/gm4-polyfill.js
 // @require     https://cdnjs.cloudflare.com/ajax/libs/tinysort/2.3.6/tinysort.min.js
-// @require     https://greasyfork.org/scripts/28721-mutations/code/mutations.js?version=198500
-// @icon        https://github.com/fluidicon.png
+// @require     https://greasyfork.org/scripts/28721-mutations/code/mutations.js?version=234970
+// @icon        https://assets-cdn.github.com/pinned-octocat.svg
 // @updateURL   https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-sort-content.user.js
 // @downloadURL https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-sort-content.user.js
 // ==/UserScript==
@@ -161,7 +163,7 @@
 	function init() {
 		const styles = needDarkTheme() ? icons.white : icons.black;
 
-		GM_addStyle(`
+		GM.addStyle(`
 			/* unsorted icon */
 			.markdown-body table thead th, table.files thead th {
 				cursor:pointer;
