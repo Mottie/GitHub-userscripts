@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Code Show Whitespace
-// @version     1.1.4
+// @version     1.1.5
 // @description A userscript that shows whitespace (space, tabs and carriage returns) in code blocks
 // @license     MIT
 // @author      Rob Garrison
@@ -8,9 +8,11 @@
 // @include     https://github.com/*
 // @include     https://gist.github.com/*
 // @run-at      document-idle
+// @grant       GM.addStyle
 // @grant       GM_addStyle
+// @require     https://greasemonkey.github.io/gm4-polyfill/gm4-polyfill.js
 // @require     https://greasyfork.org/scripts/28721-mutations/code/mutations.js?version=234970
-// @icon        https://user-images.githubusercontent.com/136959/33633295-f1547d62-d9d5-11e7-9fa1-f2777ec3c745.png
+// @icon        https://assets-cdn.github.com/pinned-octocat.svg
 // @updateURL   https://raw.githubusercontent.com/Mottie/Github-userscripts/master/github-code-show-whitespace.user.js
 // @downloadURL https://raw.githubusercontent.com/Mottie/Github-userscripts/master/github-code-show-whitespace.user.js
 // ==/UserScript==
@@ -41,7 +43,7 @@
 	toggleButton.setAttribute("aria-label", "Toggle Whitespace");
 	toggleButton.innerHTML = "<span class='pl-tab'></span>";
 
-	GM_addStyle(`
+	GM.addStyle(`
 		.ghcw-active .ghcw-whitespace,
 		.gist-content-wrapper .file-actions .btn-group {
 			position: relative;
@@ -210,16 +212,6 @@
 		return [...(el || document).querySelectorAll(selector)];
 	}
 
-	function closest(selector, el) {
-		while (el && el.nodeType === 1) {
-			if (el.matches(selector)) {
-				return el;
-			}
-			el = el.parentNode;
-		}
-		return null;
-	}
-
 	// bind whitespace toggle button
 	document.addEventListener("click", event => {
 		const target = event.target;
@@ -227,7 +219,7 @@
 			target.nodeName === "DIV" &&
 			target.classList.contains("ghcw-toggle")
 		) {
-			const wrap = closest(".file", target);
+			const wrap = target.closest(".file");
 			const block = $(".highlight", wrap);
 			if (block) {
 				target.classList.toggle("selected");
