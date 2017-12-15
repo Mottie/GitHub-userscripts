@@ -1,15 +1,17 @@
 // ==UserScript==
 // @name        GitHub Code Folding
-// @version     1.0.8
+// @version     1.0.9
 // @description A userscript that adds code folding to GitHub files
 // @license     MIT
 // @author      Rob Garrison
 // @namespace   https://github.com/Mottie
 // @include     https://github.com/*
 // @run-at      document-idle
+// @grant       GM.addStyle
 // @grant       GM_addStyle
-// @require     https://greasyfork.org/scripts/28721-mutations/code/mutations.js?version=198500
-// @icon        https://github.com/fluidicon.png
+// @require     https://greasemonkey.github.io/gm4-polyfill/gm4-polyfill.js
+// @require     https://greasyfork.org/scripts/28721-mutations/code/mutations.js?version=234970
+// @icon        https://assets-cdn.github.com/pinned-octocat.svg
 // @updateURL   https://raw.githubusercontent.com/Mottie/Github-userscripts/master/github-code-folding.user.js
 // @downloadURL https://raw.githubusercontent.com/Mottie/Github-userscripts/master/github-code-folding.user.js
 // ==/UserScript==
@@ -21,7 +23,7 @@
 (() => {
 	"use strict";
 
-	GM_addStyle(`
+	GM.addStyle(`
 		td.blob-code.blob-code-inner { padding-left:10px; }
 		.collapser { position:absolute; left:2px; width:22px; opacity:.5;
 			transition:.15s; cursor:pointer; }
@@ -63,7 +65,7 @@
 	}
 
 	function getLineNumber(el) {
-		let elm = closest("td", el),
+		let elm = el.closest("td"),
 			index = elm ? elm.id : "";
 		if (index) {
 			return parseInt(index.slice(2), 10);
@@ -90,7 +92,7 @@
 				let elm,
 					end = pairs.get(start - 1);
 				codeLines.slice(start, end).forEach(el => {
-					elm = closest("tr", el);
+					elm = el.closest("tr");
 					if (elm) {
 						elm.classList.add("hidden-line");
 					}
@@ -107,7 +109,7 @@
 			lineNums.forEach(start => {
 				let end = pairs.get(start - 1);
 				codeLines.slice(start, end).forEach(el => {
-					let elm = closest("tr", el);
+					let elm = el.closest("tr");
 					if (elm) {
 						elm.classList.remove("hidden-line");
 						remove(".ellipsis", elm);
@@ -217,16 +219,6 @@
 
 	function $$(selector, el) {
 		return Array.from((el || document).querySelectorAll(selector));
-	}
-
-	function closest(selector, el) {
-		while (el && el.nodeType === 1) {
-			if (el.matches(selector)) {
-				return el;
-			}
-			el = el.parentNode;
-		}
-		return null;
 	}
 
 	function remove(selector, el) {
