@@ -4,6 +4,9 @@
     "es6": true,
     "greasemonkey": true
   },
+  "parserOptions": {
+    "ecmaVersion": 2017
+  },
   "rules": {
     "curly": 1,
     "dot-location": [2,"property"],
