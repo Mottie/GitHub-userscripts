@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Code Show Whitespace
-// @version     1.1.5
+// @version     1.1.6
 // @description A userscript that shows whitespace (space, tabs and carriage returns) in code blocks
 // @license     MIT
 // @author      Rob Garrison
@@ -39,7 +39,7 @@
 		regexExceptions = /(\.md)$/i,
 
 		toggleButton = document.createElement("div");
-	toggleButton.className = "ghcw-toggle btn btn-sm tooltipped tooltipped-n";
+	toggleButton.className = "ghcw-toggle btn btn-sm tooltipped tooltipped-s";
 	toggleButton.setAttribute("aria-label", "Toggle Whitespace");
 	toggleButton.innerHTML = "<span class='pl-tab'></span>";
 
