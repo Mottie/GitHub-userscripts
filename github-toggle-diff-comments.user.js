@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        GitHub Toggle Diff Comments
 // @version     0.1.1
-// @description A userscript that toggles diff/PR comments
+// @description A userscript that toggles diff/PR and commit comments
 // @license     MIT
 // @author      Rob Garrison
 // @namespace   https://github.com/Mottie
@@ -59,6 +59,9 @@
 		.ghtc-collapsed .review-thread {
 			padding: 0 0 5px;
 			border: 0;
+		}
+		.ghtc-collapsed .review-thread:last-child {
+			margin-bottom: 16px;
 		}
 		.ghtc-toggle .ghtc-secondary,
 		.ghtc-toggle.${activeClass} .ghtc-primary,
@@ -128,7 +131,7 @@
 		// Show/hide all comments on page
 		const state = getState(el);
 		$("#ghtc-show-toggle-all").classList.toggle(activeClass, state);
-		$$("#files_bucket .js-toggle-file-notes").forEach(el => {
+		$$("#files .js-toggle-file-notes").forEach(el => {
 			el.checked = state;
 			el.dispatchEvent(new Event("change", {bubbles: true}));
 		});
@@ -157,13 +160,13 @@
 	}
 
 	function addListeners() {
-		$("#files_bucket").addEventListener("change", event => {
+		$(".repository-content").addEventListener("change", event => {
 			const el = event.target;
 			if (el && el.classList.contains(targets.headerCheckbox)) {
 				el.parentNode.classList.toggle(activeClass, el.checked);
 			}
 		});
-		$("#files_bucket").addEventListener("click", event => {
+		$(".repository-content").addEventListener("click", event => {
 			const el = event.target;
 			if (!ignoreEvents && el) {
 				const shift = event.shiftKey,
@@ -214,12 +217,14 @@
 		});
 		// Add collapse all comments on the page - test adding global toggle on
 		// https://github.com/openstyles/stylus/pull/150/files (edit.js)
-		if (!$("#ghtc-collapse-toggle-all") && $(targets.headerHasNotes)) {
+		if (!$("#ghtc-collapse-toggle-all")) {
 			const wrapper = document.createElement("div"),
 				// insert before Unified/Split button group
-				diffmode = $(".pr-review-tools .diffbar-item");
+				diffmode = $(".pr-review-tools .diffbar-item, #toc .toc-diff-stats");
 			let btn;
-			wrapper.className = "BtnGroup diffbar-item";
+			wrapper.className = "BtnGroup " +
+				// PR: diffbar-item; commit: toc-diff-stats
+				(diffmode.classList.contains("diffbar-item") ? "diffbar-item" : "float-right pr-2");
 			diffmode.parentNode.insertBefore(wrapper, diffmode);
 			// collapse/expand all comments
 			btn = createButton({
@@ -248,7 +253,7 @@
 	}
 
 	function init() {
-		if ($("#files_bucket") && $(".pr-toolbar")) {
+		if ($("#files") && $(targets.headerHasNotes)) {
 			addButtons();
 			addListeners();
 		}
