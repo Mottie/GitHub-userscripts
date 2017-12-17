@@ -7,7 +7,8 @@
 // @namespace   https://github.com/Mottie
 // @include     https://github.com/*
 // @run-at      document-idle
-// @grant       none
+// @grant       GM.addStyle
+// @grant       GM_addStyle
 // @require     https://greasemonkey.github.io/gm4-polyfill/gm4-polyfill.js
 // @require     https://greasyfork.org/scripts/28721-mutations/code/mutations.js?version=234970
 // @icon        https://assets-cdn.github.com/pinned-octocat.svg
