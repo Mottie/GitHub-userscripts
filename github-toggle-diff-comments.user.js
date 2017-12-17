@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Toggle Diff Comments
-// @version     0.1.0
+// @version     0.1.1
 // @description A userscript that toggles diff/PR comments
 // @license     MIT
 // @author      Rob Garrison
@@ -9,7 +9,7 @@
 // @run-at      document-idle
 // @grant       none
 // @require     https://greasemonkey.github.io/gm4-polyfill/gm4-polyfill.js
-// @require     https://greasyfork.org/scripts/28721-mutations/code/mutations.js?version=198500
+// @require     https://greasyfork.org/scripts/28721-mutations/code/mutations.js?version=234970
 // @icon        https://assets-cdn.github.com/pinned-octocat.svg
 // @updateURL   https://raw.githubusercontent.com/Mottie/Github-userscripts/master/github-toggle-diff-comments.user.js
 // @downloadURL https://raw.githubusercontent.com/Mottie/Github-userscripts/master/github-toggle-diff-comments.user.js
@@ -20,6 +20,8 @@
 	let timer,
 		ignoreEvents = false;
 	const targets = {
+			// PR has notes (added to <div id="diff-00" class="file ...">)
+			headerHasNotes: ".has-inline-notes:not(.hide-file-notes-toggle)",
 			// show comments wrapper for each file
 			headerComment: "show-file-notes",
 			// show comments checkbox
@@ -209,8 +211,9 @@
 				checkbox.setAttribute("hidden", true);
 			}
 		});
-		// Add collapse all comments on the page
-		if (!$("#ghtc-collapse-toggle-all")) {
+		// Add collapse all comments on the page - test adding global toggle on
+		// https://github.com/openstyles/stylus/pull/150/files (edit.js)
+		if (!$("#ghtc-collapse-toggle-all") && $(targets.headerHasNotes)) {
 			const wrapper = document.createElement("div"),
 				// insert before Unified/Split button group
 				diffmode = $(".pr-review-tools .diffbar-item");
