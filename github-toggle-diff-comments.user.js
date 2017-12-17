@@ -36,7 +36,7 @@
 		},
 		activeClass = "ghtc-active",
 		button = document.createElement("div");
-	button.className = "btn btn-sm BtnGroup-item ghtc-toggle";
+	button.className = "btn btn-sm BtnGroup-item ghtc-toggle tooltipped tooltipped-s";
 
 	// Using small black triangles because Windows doesn't
 	// replace them with ugly emoji images
@@ -139,7 +139,7 @@
 			btn.id = id;
 		}
 		btn.className += ` ${className || ""}`;
-		btn.title = title;
+		btn.setAttribute("aria-label", title);
 		btn.innerHTML = icons[icon];
 		return btn;
 	}
@@ -194,8 +194,8 @@
 				wrapper.classList.remove("pt-1");
 
 				// Convert "Show Comments" label wrapping checkbox into a button
-				label.className = "btn btn-sm BtnGroup-item ghtc-toggle";
-				label.title = "Show or hide all comments in this file";
+				label.className = "btn btn-sm BtnGroup-item ghtc-toggle tooltipped tooltipped-s";
+				label.setAttribute("aria-label", "Show or hide all comments in this file");
 				label.innerHTML = `
 					<input type="checkbox" checked="checked" class="js-toggle-file-notes" hidden="true">
 					${icons.show}`;
