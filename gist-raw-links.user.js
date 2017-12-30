@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        Gist Raw Links
-// @version     0.1.5
+// @version     0.1.6
 // @description Add a button that contains a list of gist raw file links
 // @license     MIT
 // @author      Rob Garrison
@@ -89,16 +89,18 @@
 			GM.xmlHttpRequest({
 				method : "GET",
 				url : `https://api.github.com/gists/${url.pop()}`,
-				onload : function(response) {
+				onload : response => {
+					if (response.status !== 200) {
+						$(".ghrl-files", link.parentNode).innerHTML = response.message;
+						return console.error(response);
+					}
 					let json = false;
 					try {
 						json = JSON.parse(response.responseText);
 					} catch (err) {
-						console.error(`Invalid JSON for gist ${gistid}`);
-						return false;
+						return console.error(`Invalid JSON for gist ${gistid}`);
 					}
 					if (json && json.files) {
-
 						addList(link, json.files);
 					}
 				}
