@@ -1,23 +1,25 @@
 // ==UserScript==
 // @name        GitHub Issue Highlighter
-// @version     1.0.5
+// @version     1.0.6
 // @description A userscript that highlights the linked-to comment
 // @license     MIT
 // @author      Rob Garrison
 // @namespace   https://github.com/Mottie
 // @include     https://github.com/*
 // @run-at      document-idle
+// @grant       GM.addStyle
 // @grant       GM_addStyle
-// @icon        https://github.com/fluidicon.png
-// @updateURL   https://raw.githubusercontent.com/Mottie/Github-userscripts/master/github-highlight-comment.user.js
-// @downloadURL https://raw.githubusercontent.com/Mottie/Github-userscripts/master/github-highlight-comment.user.js
+// @require     https://greasemonkey.github.io/gm4-polyfill/gm4-polyfill.js
+// @icon        https://assets-cdn.github.com/pinned-octocat.svg
+// @updateURL   https://raw.githubusercontent.com/Mottie/Github-userscripts/master/github-issue-highlighter.user.js
+// @downloadURL https://raw.githubusercontent.com/Mottie/Github-userscripts/master/github-issue-highlighter.user.js
 // ==/UserScript==
 (() => {
 	"use strict";
 
 	// !important needed to override styles added by
 	// https://github.com/StylishThemes/GitHub-Dark
-	GM_addStyle(`
+	GM.addStyle(`
 		.timeline-comment.selected,
 		.timeline-comment.current-user.selected {
 			border-color: #4183C4 !important;
