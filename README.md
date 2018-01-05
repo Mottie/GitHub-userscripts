@@ -6,7 +6,7 @@ Userscripts to add functionality to GitHub.
 
 1. Make sure you have user scripts enabled in your browser (these instructions refer to the latest versions of the browser):
 
-	* Firefox - install [Greasemonkey](https://addons.mozilla.org/en-US/firefox/addon/greasemonkey/).
+	* Firefox - install [Tampermonkey](https://tampermonkey.net/?ext=dhdg&browser=firefox) or [Greasemonkey](https://addons.mozilla.org/en-US/firefox/addon/greasemonkey/) (GM v4+ is **not supported**!).
 	* Chrome - install [Tampermonkey](https://tampermonkey.net/?ext=dhdg&browser=chrome).
 	* Opera - install [Tampermonkey](https://tampermonkey.net/?ext=dhdg&browser=opera) or [Violent Monkey](https://addons.opera.com/en/extensions/details/violent-monkey/).
 	* Safari - install [Tampermonkey](https://tampermonkey.net/?ext=dhdg&browser=safari).
@@ -37,6 +37,7 @@ Userscripts to add functionality to GitHub.
 	| [GitHub hide own feed meta][hof-wiki]  |     | [install][hof-raw] | [GF][hof-gf] [OU][hof-ou] | 2017.12.21 | 2017.12.21 |
 	| [GitHub image preview][ipv-wiki]       |     | [install][ipv-raw] | [GF][ipv-gf] [OU][ipv-ou] | 2016.05.17 | 2017.10.08 |
 	| [GitHub indent comments][ioc-wiki]     |     | [install][ioc-raw] | [GF][ioc-gf] [OU][ioc-ou] | 2017.03.15 | 2017.10.08 |
+	| [GitHub Issue Add Details][iad-wiki]   |     | [install][iad-raw] | [GF][iad-gf] [OU][iad-ou] | 2018.01.05 | 2018.01.05 |
 	| [GitHub issue comments][ic1-wiki]      |     | [install][ic1-raw] | [GF][ic1-gf] [OU][ic1-ou] | 2016.04.04 | 2017.10.20 |
 	| [GitHub issue counts][ic2-wiki]        |     | [install][ic2-raw] | [GF][ic2-gf] [OU][ic2-ou] | 2012.01.16 | 2017.10.08 |
 	| [GitHub issue highlighter][gih-wiki]   |     | [install][gih-raw] | [GF][gih-gf] [OU][gih-ou] | 2016.05.21 | 2017.12.30 |
@@ -76,6 +77,7 @@ Userscripts to add functionality to GitHub.
 [gih-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-issue-highlighter
 [glc-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-label-color-picker
 [grl-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/Gist-raw-links
+[iad-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-issue-add-details
 [ic1-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-issue-comments
 [ic2-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-issue-counts
 [ioc-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-indent-comments
@@ -111,6 +113,7 @@ Userscripts to add functionality to GitHub.
 [gih-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-issue-highlighter.user.js
 [glc-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-label-color-picker.user.js
 [grl-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/gist-raw-links.user.js
+[iad-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-issue-add-details.user.js
 [ic1-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-issue-comments.user.js
 [ic2-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-issue-counts.user.js
 [ioc-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-indent-comments.user.js
@@ -146,6 +149,7 @@ Userscripts to add functionality to GitHub.
 [gih-gf]: https://greasyfork.org/en/scripts/19867-github-issue-highlighter
 [grl-gf]: https://greasyfork.org/en/scripts/29888-gist-raw-links
 [glc-gf]: https://greasyfork.org/en/scripts/23270-github-label-color-picker
+[iad-gf]: https://greasyfork.org/en/scripts/37056-github-issue-add-details
 [ic1-gf]: https://greasyfork.org/en/scripts/18503-github-toggle-issue-comments
 [ic2-gf]: https://greasyfork.org/en/scripts/15560-github-show-repo-issues
 [ioc-gf]: https://greasyfork.org/en/scripts/28176-github-indent-comment-blocks
@@ -181,6 +185,7 @@ Userscripts to add functionality to GitHub.
 [gih-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Issue_Highlighter
 [glc-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Label_Color_Picker
 [grl-ou]: https://openuserjs.org/scripts/Mottie/Gist_Raw_Links
+[iad-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Issue_Add_Details
 [ic1-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Toggle_Issue_Comments
 [ic2-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Show_Repo_Issues
 [ioc-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Indent_Comment_Blocks
