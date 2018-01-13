@@ -27,7 +27,7 @@ Userscripts to add functionality to GitHub.
 	| [GitHub code show whitespace][csw-wiki]|     | [install][csw-raw] | [GF][csw-gf] [OU][csw-ou] | 2017.03.26 | 2017.12.17 |
 	| [GitHub collapse in comment][cic-wiki] |  *  | [install][cic-raw] | [GF][cic-gf] [OU][cic-ou] | 2016.06.27 | 2017.10.08 |
 	| [GitHub collapse markdown][cmd-wiki]   |  *  | [install][cmd-raw] | [GF][cmd-gf] [OU][cmd-ou] | 2016.06.27 | 2017.10.03 |
-	| [GitHub copy code snippet][csc-wiki]   |  *  | [install][csc-raw] | [GF][csc-gf] [OU][csc-ou] | 2018.01.12 | 2018.01.12 |
+	| [GitHub copy code snippet][csc-wiki]   |     | [install][csc-raw] | [GF][csc-gf] [OU][csc-ou] | 2018.01.12 | 2018.01.12 |
 	| [GitHub custom hotkeys][chk-wiki]      |     | [install][chk-raw] | [GF][chk-gf] [OU][chk-ou] | 2016.04.10 | 2017.09.22 |
 	| [GitHub custom navigation][cnv-wiki]   |     | [install][cnv-raw] | [GF][cnv-gf] [OU][cnv-ou] | 2016.06.22 | 2017.10.03 |
 	| [GitHub diff filename][dfn-wiki]       |     | [install][dfn-raw] | [GF][dfn-gf] [OU][dfn-ou] | 2017.08.27 | 2017.10.08 |
