@@ -27,6 +27,7 @@ Userscripts to add functionality to GitHub.
 	| [GitHub code show whitespace][csw-wiki]|     | [install][csw-raw] | [GF][csw-gf] [OU][csw-ou] | 2017.03.26 | 2017.12.17 |
 	| [GitHub collapse in comment][cic-wiki] |  *  | [install][cic-raw] | [GF][cic-gf] [OU][cic-ou] | 2016.06.27 | 2017.10.08 |
 	| [GitHub collapse markdown][cmd-wiki]   |  *  | [install][cmd-raw] | [GF][cmd-gf] [OU][cmd-ou] | 2016.06.27 | 2017.10.03 |
+	| [GitHub copy code snippet][csc-wiki]   |  *  | [install][csc-raw] | [GF][csc-gf] [OU][csc-ou] | 2018.01.12 | 2018.01.12 |
 	| [GitHub custom hotkeys][chk-wiki]      |     | [install][chk-raw] | [GF][chk-gf] [OU][chk-ou] | 2016.04.10 | 2017.09.22 |
 	| [GitHub custom navigation][cnv-wiki]   |     | [install][cnv-raw] | [GF][cnv-gf] [OU][cnv-ou] | 2016.06.22 | 2017.10.03 |
 	| [GitHub diff filename][dfn-wiki]       |     | [install][dfn-raw] | [GF][dfn-gf] [OU][dfn-ou] | 2017.08.27 | 2017.10.08 |
@@ -66,6 +67,7 @@ Userscripts to add functionality to GitHub.
 [cic-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-collapse-in-comment
 [cmd-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-collapse-markdown
 [cnv-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-custom-navigation
+[csc-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-copy-code-snippet
 [csw-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-code-show-whitespace
 [dff-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-diff-files-filter
 [dfl-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-diff-links
@@ -102,6 +104,7 @@ Userscripts to add functionality to GitHub.
 [cic-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-collapse-in-comment.user.js
 [cmd-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-collapse-markdown.user.js
 [cnv-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-custom-navigation.user.js
+[csc-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-copy-code-snippet.user.js
 [csw-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-code-show-whitespace.user.js
 [dff-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-diff-files-filter.user.js
 [dfl-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-diff-links.user.js
@@ -138,6 +141,7 @@ Userscripts to add functionality to GitHub.
 [cic-gf]: https://greasyfork.org/en/scripts/20973-github-collapse-in-comment
 [cmd-gf]: https://greasyfork.org/en/scripts/20974-github-collapse-markdown
 [cnv-gf]: https://greasyfork.org/en/scripts/20830-github-custom-navigation
+[csc-gf]: https://greasyfork.org/en/scripts/37307-github-copy-code-snippet
 [csw-gf]: https://greasyfork.org/en/scripts/28454-github-code-show-whitespace
 [dff-gf]: https://greasyfork.org/en/scripts/26191-github-diff-files-filter
 [dfl-gf]: https://greasyfork.org/en/scripts/21559-github-diff-links
@@ -174,6 +178,7 @@ Userscripts to add functionality to GitHub.
 [cic-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Collapse_In_Comment
 [cmd-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Collapse_Markdown
 [cnv-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Custom_Navigation
+[csc-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Copy_Code_Snippet
 [csw-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Code_Show_Whitespace
 [dff-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Diff_Files_Filter
 [dfl-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Diff_Links
