@@ -10,8 +10,8 @@
 // @grant       GM_addStyle
 // @require     https://greasyfork.org/scripts/28721-mutations/code/mutations.js?version=234970
 // @icon        https://assets-cdn.github.com/pinned-octocat.svg
-// @updateURL   https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-copy-code-snippet-meta.user.js
-// @downloadURL https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-copy-code-snippet-meta.user.js
+// @updateURL   https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-copy-code-snippet.user.js
+// @downloadURL https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-copy-code-snippet.user.js
 // ==/UserScript==
 (() => {
 	"use strict";
