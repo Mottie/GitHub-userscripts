@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Collapse In Comment
-// @version     1.0.12
+// @version     1.0.13
 // @description A userscript that adds a header that can toggle long code and quote blocks in comments
 // @license     MIT
 // @author      Rob Garrison
@@ -12,8 +12,8 @@
 // @grant       GM_getValue
 // @grant       GM_setValue
 // @grant       GM_registerMenuCommand
-// @require     https://greasyfork.org/scripts/28721-mutations/code/mutations.js?version=198500
-// @icon        https://github.com/fluidicon.png
+// @require     https://greasyfork.org/scripts/28721-mutations/code/mutations.js?version=234970
+// @icon        https://assets-cdn.github.com/pinned-octocat.svg
 // @updateURL   https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-collapse-in-comment.user.js
 // @downloadURL https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-collapse-in-comment.user.js
 // ==/UserScript==
@@ -29,6 +29,8 @@
 	// hide code/quotes longer than this number of lines
 	let minLines = GM_getValue("gcic-max-lines", 10),
 		startCollapsed = GM_getValue("gcic-start-collapsed", true);
+	// extract syntax type from class name
+	const regex = /highlight(?:-[^\s]+)+/;
 
 	// syntax highlight class name lookup table
 	const syntaxClass = {
@@ -85,10 +87,13 @@
 			highlight-source-fortran-modern
 			highlight-text-tex
 		*/
-		let n = (name || "").replace(
-			/(highlight[-\s]|(source-)|(text-)|(html-)|(markdown-)|(-modern))/g, ""
-		);
-		n = (syntaxClass[n] || n).toUpperCase().trim();
+		let n = (name || "").match(regex);
+		if (n && n[0]) {
+			n = n[0].replace(
+				/(highlight[-\s]|(source-)|(text-)|(html-)|(markdown-)|(-modern))/g, ""
+			);
+			n = (syntaxClass[n] || n).toUpperCase().trim();
+		}
 		return `${n || "Block"} (${lines} lines)`;
 	}
 
