@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Title Notification
-// @version     1.0.4
+// @version     1.0.5
 // @description A userscript that changes the document title if there are unread messages
 // @license     MIT
 // @author      Rob Garrison
@@ -10,7 +10,7 @@
 // @grant       GM_registerMenuCommand
 // @grant       GM_getValue
 // @grant       GM_setValue
-// @icon        https://github.com/fluidicon.png
+// @icon        https://assets-cdn.github.com/pinned-octocat.svg
 // @updateURL   https://raw.githubusercontent.com/Mottie/Github-userscripts/master/github-title-notification.user.js
 // @downloadURL https://raw.githubusercontent.com/Mottie/Github-userscripts/master/github-title-notification.user.js
 // ==/UserScript==

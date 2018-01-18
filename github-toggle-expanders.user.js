@@ -1,13 +1,13 @@
 // ==UserScript==
 // @name        GitHub Toggle Expanders
-// @version     1.1.0
+// @version     1.1.1
 // @description A userscript that toggles all expanders when one expander is shift-clicked
 // @license     MIT
 // @author      Rob Garrison
 // @namespace   https://github.com/Mottie
 // @include     https://github.com/*
 // @run-at      document-idle
-// @icon        https://github.com/fluidicon.png
+// @icon        https://assets-cdn.github.com/pinned-octocat.svg
 // @updateURL   https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-toggle-expanders.user.js
 // @downloadURL https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-toggle-expanders.user.js
 // ==/UserScript==
@@ -20,7 +20,7 @@
 			parentNode = closest(ctrlKeyPressed ?
 				".container, .js-discussion" :
 				".commits-listing, .discussion-item-body, .release-timeline-tags",
-				stateNode
+			stateNode
 			),
 			containerNodes = parentNode.querySelectorAll(".js-details-container");
 

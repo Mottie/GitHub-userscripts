@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Show Repo Issues
-// @version     3.0.10
+// @version     3.0.11
 // @description A userscript that adds a repo issues count to the repository tab & organization page (https://github.com/:user)
 // @license     MIT
 // @author      Rob Garrison
@@ -10,8 +10,8 @@
 // @grant       GM_addStyle
 // @grant       GM_xmlhttpRequest
 // @connect     api.github.com
-// @require     https://greasyfork.org/scripts/28721-mutations/code/mutations.js?version=198500
-// @icon        https://github.com/fluidicon.png
+// @require     https://greasyfork.org/scripts/28721-mutations/code/mutations.js?version=234970
+// @icon        https://assets-cdn.github.com/pinned-octocat.svg
 // @updateURL   https://raw.githubusercontent.com/Mottie/Github-userscripts/master/github-issue-counts.user.js
 // @downloadURL https://raw.githubusercontent.com/Mottie/Github-userscripts/master/github-issue-counts.user.js
 // ==/UserScript==

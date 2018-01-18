@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Issue Show Status
-// @version     0.1.2
+// @version     1.0.0
 // @description A userscript that adds an obvious indicator showing if an issue or pull request is open or closed
 // @license     MIT
 // @author      Rob Garrison
@@ -8,8 +8,8 @@
 // @include     https://github.com/*
 // @run-at      document-end
 // @grant       GM_addStyle
-// @require     https://greasyfork.org/scripts/28721-mutations/code/mutations.js?version=198500
-// @icon        https://github.com/fluidicon.png
+// @require     https://greasyfork.org/scripts/28721-mutations/code/mutations.js?version=234970
+// @icon        https://assets-cdn.github.com/pinned-octocat.svg
 // @updateURL   https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-issue-show-status.user.js
 // @downloadURL https://raw.githubusercontent.com/Mottie/Github-userscripts/master/github-issue-show-status.user.js
 // ==/UserScript==

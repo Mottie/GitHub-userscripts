@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Static Time
-// @version     0.1.3
+// @version     1.0.0
 // @description A userscript that replaces relative times with a static time formatted as you like it
 // @license     MIT
 // @author      Rob Garrison
@@ -12,8 +12,8 @@
 // @grant       GM_setValue
 // @grant       GM_registerMenuCommand
 // @require     https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment-with-locales.min.js
-// @require     https://greasyfork.org/scripts/28721-mutations/code/mutations.js?version=198500
-// @icon        https://github.com/fluidicon.png
+// @require     https://greasyfork.org/scripts/28721-mutations/code/mutations.js?version=234970
+// @icon        https://assets-cdn.github.com/pinned-octocat.svg
 // @updateURL   https://raw.githubusercontent.com/Mottie/Github-userscripts/master/github-static-time.user.js
 // @downloadURL https://raw.githubusercontent.com/Mottie/Github-userscripts/master/github-static-time.user.js
 // ==/UserScript==
