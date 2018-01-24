@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Copy Code Snippet
-// @version     0.1.0
+// @version     0.2.0
 // @description A userscript adds a copy to clipboard button on hover of markdown code snippets
 // @license     MIT
 // @author      Rob Garrison
@@ -19,7 +19,6 @@
 	const markdown = ".markdown-body, .markdown-format",
 		code = `:any(${markdown}) pre:not(.gh-csc-pre)`,
 
-		wrapper = document.createElement("div"),
 		copyButton = document.createElement("button");
 
 	addAttr(copyButton, {
@@ -34,10 +33,10 @@
 	});
 
 	GM_addStyle(`
-		.gh-csc-div {
+		.gh-csc-wrap {
 			position: relative;
 		}
-		.gh-csc-div:hover .gh-csc-button {
+		.gh-csc-wrap:hover .gh-csc-button {
 			display: block;
 		}
 		.gh-csc-button {
@@ -70,18 +69,24 @@
 		});
 	}
 
+	function addButton(wrap, code) {
+		wrap.classList.add("gh-csc-wrap", "js-zeroclipboard-container");
+		code.classList.add("gh-csc-code", "js-zeroclipboard-target");
+		wrap.insertBefore(copyButton.cloneNode(true), wrap.childNodes[0]);
+	}
+
 	function init() {
 		if (document.querySelector(markdown)) {
 			[...document.querySelectorAll(fixAnySelector(code))].forEach(pre => {
-				let div = pre.parentNode;
-				if (!div.classList.contains("highlight")) {
-					div = wrapper.cloneNode();
-					pre.parentNode.insertBefore(div, pre);
-					div.appendChild(pre);
+				let code = pre.firstElementChild;
+				let wrap = pre.parentNode;
+				if (code && code.nodeName === "CODE") {
+					// pre > code
+					addButton(pre, code);
+				} else if (wrap.classList.contains("highlight")) {
+					// div.highlight > pre
+					addButton(wrap, pre);
 				}
-				div.classList.add("gh-csc-div", "js-zeroclipboard-container");
-				pre.classList.add("gh-csc-pre", "js-zeroclipboard-target");
-				div.insertBefore(copyButton.cloneNode(true), div.childNodes[0]);
 			});
 		}
 	}
