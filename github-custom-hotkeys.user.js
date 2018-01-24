@@ -231,7 +231,7 @@
 			.ghch-remove, .ghch-remove svg, #ghch-settings-inner .ghch-close svg { vertical-align:middle; cursor:pointer; }
 			.ghch-menu-inner { max-height:60vh; overflow-y:auto; }
 			.ghch-menu-inner ul { list-style:none; }
-			.ghch-menu-inner li { margin-bottom:4px; }
+			.ghch-menu-inner li { white-space:pre; margin-bottom:4px; }
 			.ghch-scope-all, .ghch-scope-add, .ghch-scope-custom { width:100%; border:2px solid rgba(85,85,85,0.5); border-radius:4px; padding:10px; margin:0; }
 			.ghch-scope-add, .ghch-hotkey-add { border:2px dashed #555; border-radius:4px; opacity:0.6; text-align:center; cursor:pointer; margin-top:10px; }
 			.ghch-scope-add:hover, .ghch-hotkey-add:hover { opacity:1;  }
