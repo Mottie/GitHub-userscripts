@@ -21,13 +21,13 @@ Userscripts to add functionality to GitHub.
 
 	| Userscript Wiki                        | ![][ico] | Direct<br>Install | Sites                 | Created    | Updated    |
 	|----------------------------------------|:---:|:------------------:|:-------------------------:|:----------:|:----------:|
-	| [GitHub code colors][ccs-wiki]         |     | [install][ccs-raw] | [GF][ccs-gf] [OU][ccs-ou] | 2016.03.20 | 2017.12.14 |
+	| [GitHub code colors][ccr-wiki]         |     | [install][ccr-raw] | [GF][ccr-gf] [OU][ccr-ou] | 2016.03.20 | 2017.12.14 |
 	| [GitHub code folding][cfd-wiki]        |     | [install][cfd-raw] | [GF][cfd-gf] [OU][cfd-ou] | 2016.12.28 | 2017.12.14 |
 	| [GitHub code guides][cgl-wiki]         |     | [install][cgl-raw] | [GF][cgl-gf] [OU][cgl-ou] | 2016.08.27 | 2018.01.18 |
 	| [GitHub code show whitespace][csw-wiki]|     | [install][csw-raw] | [GF][csw-gf] [OU][csw-ou] | 2017.03.26 | 2017.12.17 |
 	| [GitHub collapse in comment][cic-wiki] |  *  | [install][cic-raw] | [GF][cic-gf] [OU][cic-ou] | 2016.06.27 | 2018.01.18 |
 	| [GitHub collapse markdown][cmd-wiki]   |  *  | [install][cmd-raw] | [GF][cmd-gf] [OU][cmd-ou] | 2016.06.27 | 2018.01.18 |
-	| [GitHub copy code snippet][csc-wiki]   |     | [install][csc-raw] | [GF][csc-gf] [OU][csc-ou] | 2018.01.12 | 2018.01.24 |
+	| [GitHub copy code snippet][ccs-wiki]   |     | [install][ccs-raw] | [GF][ccs-gf] [OU][ccs-ou] | 2018.01.12 | 2018.01.28 |
 	| [GitHub custom hotkeys][chk-wiki]      |     | [install][chk-raw] | [GF][chk-gf] [OU][chk-ou] | 2016.04.10 | 2018.01.24 |
 	| [GitHub custom navigation][cnv-wiki]   |     | [install][cnv-raw] | [GF][cnv-gf] [OU][cnv-ou] | 2016.06.22 | 2018.01.18 |
 	| [GitHub diff filename][dfn-wiki]       |     | [install][dfn-raw] | [GF][dfn-gf] [OU][dfn-ou] | 2017.08.27 | 2018.01.18 |
@@ -60,14 +60,14 @@ Userscripts to add functionality to GitHub.
 
 \* The ![][ico] column indicates that the userscript has been included in the [Octopatcher](https://github.com/Mottie/Octopatcher) browser extension/addon.
 
-[ccs-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-code-colors
+[ccr-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-code-colors
 [cfd-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-code-folding
 [cgl-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-code-guides
 [chk-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-custom-hotkeys
 [cic-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-collapse-in-comment
 [cmd-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-collapse-markdown
 [cnv-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-custom-navigation
-[csc-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-copy-code-snippet
+[ccs-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-copy-code-snippet
 [csw-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-code-show-whitespace
 [dff-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-diff-files-filter
 [dfl-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-diff-links
@@ -97,14 +97,14 @@ Userscripts to add functionality to GitHub.
 [toc-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-table-of-contents
 [tws-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-toggle-wiki-sidebar
 
-[ccs-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-code-colors.user.js
+[ccr-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-code-colors.user.js
 [cfd-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-code-folding.user.js
 [cgl-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-code-guides.user.js
 [chk-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-custom-hotkeys.user.js
 [cic-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-collapse-in-comment.user.js
 [cmd-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-collapse-markdown.user.js
 [cnv-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-custom-navigation.user.js
-[csc-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-copy-code-snippet.user.js
+[ccs-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-copy-code-snippet.user.js
 [csw-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-code-show-whitespace.user.js
 [dff-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-diff-files-filter.user.js
 [dfl-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-diff-links.user.js
@@ -134,14 +134,14 @@ Userscripts to add functionality to GitHub.
 [toc-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-toc.user.js
 [tws-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-toggle-wiki-sidebar.user.js
 
-[ccs-gf]: https://greasyfork.org/en/scripts/18141-github-code-colors
+[ccr-gf]: https://greasyfork.org/en/scripts/18141-github-code-colors
 [cfd-gf]: https://greasyfork.org/en/scripts/26109-github-code-folding
 [cgl-gf]: https://greasyfork.org/en/scripts/22674-github-code-guides
 [chk-gf]: https://greasyfork.org/en/scripts/18675-github-custom-hotkeys
 [cic-gf]: https://greasyfork.org/en/scripts/20973-github-collapse-in-comment
 [cmd-gf]: https://greasyfork.org/en/scripts/20974-github-collapse-markdown
 [cnv-gf]: https://greasyfork.org/en/scripts/20830-github-custom-navigation
-[csc-gf]: https://greasyfork.org/en/scripts/37307-github-copy-code-snippet
+[ccs-gf]: https://greasyfork.org/en/scripts/37307-github-copy-code-snippet
 [csw-gf]: https://greasyfork.org/en/scripts/28454-github-code-show-whitespace
 [dff-gf]: https://greasyfork.org/en/scripts/26191-github-diff-files-filter
 [dfl-gf]: https://greasyfork.org/en/scripts/21559-github-diff-links
@@ -171,14 +171,14 @@ Userscripts to add functionality to GitHub.
 [toc-gf]: https://greasyfork.org/en/scripts/18344-github-toc
 [tws-gf]: https://greasyfork.org/en/scripts/18433-github-toggle-wiki-sidebar
 
-[ccs-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Code_Colors
+[ccr-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Code_Colors
 [cfd-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Code_Folding
 [cgl-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Code_Guides
 [chk-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Custom_Hotkeys
 [cic-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Collapse_In_Comment
 [cmd-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Collapse_Markdown
 [cnv-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Custom_Navigation
-[csc-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Copy_Code_Snippet
+[ccs-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Copy_Code_Snippet
 [csw-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Code_Show_Whitespace
 [dff-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Diff_Files_Filter
 [dfl-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Diff_Links
