@@ -1,11 +1,12 @@
 // ==UserScript==
 // @name        GitHub Copy Code Snippet
-// @version     0.2.0
+// @version     0.2.1
 // @description A userscript adds a copy to clipboard button on hover of markdown code snippets
 // @license     MIT
 // @author      Rob Garrison
 // @namespace   https://github.com/Mottie
 // @include     https://github.com/*
+// @include     https://gist.github.com/*
 // @run-at      document-idle
 // @grant       GM_addStyle
 // @require     https://greasyfork.org/scripts/28721-mutations/code/mutations.js?version=234970
@@ -44,6 +45,13 @@
 			position: absolute;
 			top: 3px;
 			right: 3px;
+			z-index: 20;
+		}
+		.gh-csc-wrap.ghd-code-wrapper .gh-csc-button {
+			right: 31px;
+		}
+		.gh-csc-button svg {
+			vertical-align: text-bottom;
 		}
 	`);
 
@@ -78,9 +86,9 @@
 	function init() {
 		if (document.querySelector(markdown)) {
 			[...document.querySelectorAll(fixAnySelector(code))].forEach(pre => {
-				let code = pre.firstElementChild;
+				let code = pre.querySelector("code");
 				let wrap = pre.parentNode;
-				if (code && code.nodeName === "CODE") {
+				if (code) {
 					// pre > code
 					addButton(pre, code);
 				} else if (wrap.classList.contains("highlight")) {
