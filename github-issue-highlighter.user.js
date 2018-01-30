@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Issue Highlighter
-// @version     1.0.6
+// @version     1.0.7
 // @description A userscript that highlights the linked-to comment
 // @license     MIT
 // @author      Rob Garrison
@@ -9,7 +9,7 @@
 // @run-at      document-idle
 // @grant       GM.addStyle
 // @grant       GM_addStyle
-// @require     https://greasemonkey.github.io/gm4-polyfill/gm4-polyfill.js
+// @require     https://greasemonkey.github.io/gm4-polyfill/gm4-polyfill.js?updated=20180103
 // @icon        https://assets-cdn.github.com/pinned-octocat.svg
 // @updateURL   https://raw.githubusercontent.com/Mottie/Github-userscripts/master/github-issue-highlighter.user.js
 // @downloadURL https://raw.githubusercontent.com/Mottie/Github-userscripts/master/github-issue-highlighter.user.js
