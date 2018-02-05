@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Files Filter
-// @version     1.0.0
+// @version     1.0.1
 // @description A userscript that adds filters that toggle the view of repo files by extension
 // @license     MIT
 // @author      Rob Garrison
@@ -158,7 +158,7 @@
 		});
 		// get all files
 		$$("table.files tr.js-navigation-item").forEach(file => {
-			if ($("td.icon .octicon-file-text", file)) {
+			if ($("td.icon .octicon-file", file)) {
 				let ext,
 					link = $("td.content .js-navigation-open", file),
 					txt = (link.title || link.textContent || "").trim(),
