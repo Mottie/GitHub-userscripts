@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Custom Hotkeys
-// @version     1.0.11
+// @version     1.0.12
 // @description A userscript that allows you to add custom GitHub keyboard hotkeys
 // @license     MIT
 // @author      Rob Garrison
@@ -52,7 +52,7 @@
 		},
 
 		// https://github.com/{nonUser}
-		// see https://github.com/Mottie/github-reserved-names v1.0.6
+		// see https://github.com/Mottie/github-reserved-names v1.0.9
 		nonUser = new RegExp("^(" + [
 			"400", "401", "402", "403", "404", "405", "406", "407", "408", "409",
 			"410", "411", "412", "413", "414", "415", "416", "417", "418", "419",
@@ -60,23 +60,24 @@
 			"430", "431", "500", "501", "502", "503", "504", "505", "506", "507",
 			"508", "509", "510", "511", "about", "access", "account", "admin",
 			"anonymous", "api", "apps", "auth", "billing", "blog", "business", "c",
-			"cache", "categories", "changelog", "codereview", "comments", "community",
-			"compare", "contact", "dashboard", "design", "developer", "docs",
-			"downloads", "editor", "edu", "enterprise", "events", "explore",
-			"features", "files", "gist", "gists", "graphs", "help", "home", "hosting",
-			"images", "info", "integrations", "issues", "jobs", "join", "languages",
-			"legal", "linux", "lists", "login", "logout", "mac", "maintenance",
-			"marketplace", "mine", "mirrors", "mobile", "navigation", "network",
-			"new", "news", "notifications", "oauth", "offer", "open-source",
-			"organizations", "orgs", "pages", "payments", "personal", "plans",
-			"plugins", "popular", "posts", "press", "pricing", "projects", "pulls",
-			"readme", "releases", "repositories", "search", "security", "services",
-			"sessions", "settings", "shop", "showcases", "signin", "signup", "site",
-			"ssh", "staff", "stars", "static", "status", "store", "stories",
-			"styleguide", "subscriptions", "support", "talks", "teams", "terms",
-			"tos", "tour", "translations", "trending", "updates", "username", "users",
-			"w", "watching", "wiki", "windows", "works-with", "www1", "www2", "www3",
-			"www4", "www5", "www6", "www7", "www8", "www9"
+			"cache", "categories", "changelog", "codereview", "collections",
+			"comments", "community", "compare", "contact", "dashboard", "design",
+			"developer", "docs", "downloads", "editor", "edu", "enterprise", "events",
+			"explore", "features", "files", "gist", "gists", "graphs", "help", "home",
+			"hosting", "images", "info", "integrations", "issues", "jobs", "join",
+			"languages", "legal", "linux", "lists", "login", "logout", "mac",
+			"maintenance", "marketplace", "mine", "mirrors", "mobile", "navigation",
+			"network", "new", "news", "notifications", "oauth", "offer",
+			"open-source", "organizations", "orgs", "pages", "payments", "personal",
+			"plans", "plugins", "popular", "posts", "press", "pricing", "projects",
+			"pulls", "readme", "releases", "repositories", "save-net-neutrality",
+			"search", "security", "services", "sessions", "settings", "shop",
+			"showcases", "signin", "signup", "site", "ssh", "staff", "stars",
+			"static", "status", "store", "stories", "styleguide", "subscriptions",
+			"support", "talks", "teams", "terms", "timeline", "tos", "tour",
+			"translations", "trending", "updates", "username", "users", "w",
+			"watching", "wiki", "windows", "works-with", "www0", "www1", "www2",
+			"www3", "www4", "www5", "www6", "www7", "www8", "www9"
 		].join("|") + ")$");
 
 	function getUrlParts() {
