@@ -81,17 +81,17 @@
 					hotkey: "",
 					content: "<svg class='octicon' xmlns='http://www.w3.org/2000/svg' aria-hidden='true' height='16' viewBox='0 0 16 16' width='16'><path d='M14.7 5.34c.13-.32.55-1.59-.13-3.31 0 0-1.05-.33-3.44 1.3-1-.28-2.07-.32-3.13-.32s-2.13.04-3.13.32c-2.39-1.64-3.44-1.3-3.44-1.3-.68 1.72-.26 2.99-.13 3.31C.49 6.21 0 7.33 0 8.69 0 13.84 3.33 15 7.98 15S16 13.84 16 8.69c0-1.36-.49-2.48-1.3-3.35zM8 14.02c-3.3 0-5.98-.15-5.98-3.35 0-.76.38-1.48 1.02-2.07 1.07-.98 2.9-.46 4.96-.46 2.07 0 3.88-.52 4.96.46.65.59 1.02 1.3 1.02 2.07 0 3.19-2.68 3.35-5.98 3.35zM5.49 9.01c-.66 0-1.2.8-1.2 1.78s.54 1.79 1.2 1.79c.66 0 1.2-.8 1.2-1.79s-.54-1.78-1.2-1.78zm5.02 0c-.66 0-1.2.79-1.2 1.78s.54 1.79 1.2 1.79c.66 0 1.2-.8 1.2-1.79s-.53-1.78-1.2-1.78z'/></svg>"
 				},
-				"marketplace": {
-					url: "https://github.com/marketplace",
-					tooltip: "Marketplace",
-					hotkey: "",
-					content: "<svg class='octicon' xmlns='http://www.w3.org/2000/svg' aria-hidden='true' width='16' height='16'><path d='M4 5l2 2m2.5-2l2 2m3 0l1-1L12 3H2.5M8 15.5H.5V.5H12v1m.6 8.1a3 3 0 0 1 3 3 3 3 0 0 1-3 3 3 3 0 0 1-3-3 3 3 0 0 1 3-3zm-2.8 1.8l-.7-.8 1.3-1.2.6.6m1.4 1v1.7m1.3 0h-1.3' fill='none' stroke='currentColor'/></svg>"
-				},
 				"issues": {
 					url: "https://github.com/issues",
 					tooltip: "Issues",
 					hotkey: "g i",
 					content: "<svg class='octicon' xmlns='http://www.w3.org/2000/svg' aria-hidden='true' height='16' viewBox='0 0 14 16' width='14'><path d='M7 2.3c3.14 0 5.7 2.56 5.7 5.7s-2.56 5.7-5.7 5.7A5.71 5.71 0 0 1 1.3 8c0-3.14 2.56-5.7 5.7-5.7zM7 1C3.14 1 0 4.14 0 8s3.14 7 7 7 7-3.14 7-7-3.14-7-7-7zm1 3H6v5h2V4zm0 6H6v2h2v-2z'></path></svg>"
+				},
+				"marketplace": {
+					url: "https://github.com/marketplace",
+					tooltip: "Marketplace",
+					hotkey: "",
+					content: "<svg class='octicon' xmlns='http://www.w3.org/2000/svg' aria-hidden='true' width='16' height='16'><path d='M4 5l2 2m2.5-2l2 2m3 0l1-1L12 3H2.5M8 15.5H.5V.5H12v1m.6 8.1a3 3 0 0 1 3 3 3 3 0 0 1-3 3 3 3 0 0 1-3-3 3 3 0 0 1 3-3zm-2.8 1.8l-.7-.8 1.3-1.2.6.6m1.4 1v1.7m1.3 0h-1.3' fill='none' stroke='currentColor'/></svg>"
 				},
 				"menu": {
 					url: panelHash,
