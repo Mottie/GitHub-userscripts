@@ -55,7 +55,7 @@
 					url: "https://github.com/explore",
 					tooltip: "Explore",
 					hotkey: "",
-					content: "<svg class='octicon' xmlns='http://www.w3.org/2000/svg' aria-hidden='true' height='16' viewBox='0 0 12 16' width='12'><path d='M5.05.31c.81 2.17.41 3.38-.52 4.31C3.55 5.67 1.98 6.45.9 7.98c-1.45 2.05-1.7 6.53 3.53 7.7-2.2-1.16-2.67-4.52-.3-6.61-.61 2.03.53 3.33 1.94 2.86 1.39-.47 2.3.53 2.27 1.67-.02.78-.31 1.44-1.13 1.81 3.42-.59 4.78-3.42 4.78-5.56 0-2.84-2.53-3.22-1.25-5.61-1.52.13-2.03 1.13-1.89 2.75.09 1.08-1.02 1.8-1.86 1.33-.67-.41-.66-1.19-.06-1.78C8.18 5.31 8.68 2.45 5.05.32L5.03.3l.02.01z'></path></svg>"
+					content: "<svg class='octicon' xmlns='http://www.w3.org/2000/svg' aria-hidden='true' height='16' viewBox='0 0 16 16' width='16'><path d='M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0zm.6 14.5v-1H7.2v1a6.5 6.5 0 0 1-5.7-6h1V7.4h-1a6.5 6.5 0 0 1 5.7-5.8v1h1.4v-1a6.6 6.6 0 0 1 6 5.8h-1v1.3h1a6.5 6.5 0 0 1-6 6zm2.7-10.8l-4.5 3-2.2 4.8 4.7-3z'/></svg>"
 				},
 				"gist": {
 					url: "https://gist.github.com/",
@@ -91,7 +91,7 @@
 					url: "https://github.com/marketplace",
 					tooltip: "Marketplace",
 					hotkey: "",
-					content: "<svg class='octicon' xmlns='http://www.w3.org/2000/svg' aria-hidden='true' width='16' height='16'><path d='M4 5l2 2m2.5-2l2 2m3 0l1-1L12 3H2.5M8 15.5H.5V.5H12v1m.6 8.1a3 3 0 0 1 3 3 3 3 0 0 1-3 3 3 3 0 0 1-3-3 3 3 0 0 1 3-3zm-2.8 1.8l-.7-.8 1.3-1.2.6.6m1.4 1v1.7m1.3 0h-1.3' fill='none' stroke='currentColor'/></svg>"
+					content: "<svg class='octicon' xmlns='http://www.w3.org/2000/svg' aria-hidden='true' height='16' viewBox='0 0 16 16' width='16'><path d='M0 0v16h7.5v-1H1V1h10.5v.5h1V0zm3 3v1h8.8l2.5 2.5-.7.6.8.8 1.3-1.4L12.2 3zm1.4 2.1l-.8.8 2 2 .8-.8zm4.5 0L8 6l2 2L11 7zM12 9c-1.1 0-2 .4-2.6 1.1-.6.7-.9 1.5-.9 2.4A3.4 3.4 0 0 0 12 16c1.1 0 2-.4 2.6-1.1.6-.7.9-1.5.9-2.4A3.4 3.4 0 0 0 12 9zm0 1c.9 0 1.5.3 1.9.8.4.4.6 1 .6 1.7 0 .6-.2 1.3-.6 1.7-.4.5-1 .8-1.9.8-.9 0-1.5-.3-1.9-.8-.4-.4-.6-1-.6-1.7 0-.6.2-1.3.6-1.7.4-.5 1-.8 1.9-.8zm-.9 1.2v2h2v-1h-1v-1z'/></svg>"
 				},
 				"menu": {
 					url: panelHash,
