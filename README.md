@@ -29,7 +29,7 @@ Userscripts to add functionality to GitHub.
 	| [GitHub collapse markdown][cmd-wiki]   |  *  | [install][cmd-raw] | [GF][cmd-gf] [OU][cmd-ou] | 2016.06.27 | 2018.01.18 |
 	| [GitHub copy code snippet][ccs-wiki]   |     | [install][ccs-raw] | [GF][ccs-gf] [OU][ccs-ou] | 2018.01.12 | 2018.01.28 |
 	| [GitHub custom hotkeys][chk-wiki]      |     | [install][chk-raw] | [GF][chk-gf] [OU][chk-ou] | 2016.04.10 | 2018.02.10 |
-	| [GitHub custom navigation][cnv-wiki]   |     | [install][cnv-raw] | [GF][cnv-gf] [OU][cnv-ou] | 2016.06.22 | 2018.01.18 |
+	| [GitHub custom navigation][cnv-wiki]   |     | [install][cnv-raw] | [GF][cnv-gf] [OU][cnv-ou] | 2016.06.22 | 2018.02.10 |
 	| [GitHub diff filename][dfn-wiki]       |     | [install][dfn-raw] | [GF][dfn-gf] [OU][dfn-ou] | 2017.08.27 | 2018.01.18 |
 	| [GitHub diff files filter][dff-wiki]   |     | [install][dff-raw] | [GF][dff-gf] [OU][dff-ou] | 2016.12.31 | 2018.01.18 |
 	| [GitHub diff links][dfl-wiki]          |     | [install][dfl-raw] | [GF][dfl-gf] [OU][dfl-ou] | 2016.07.21 | 2018.01.18 |
@@ -49,6 +49,7 @@ Userscripts to add functionality to GitHub.
 	| [GitHub rtl comments][rtl-wiki]        |     | [install][rtl-raw] | [GF][rtl-gf] [OU][rtl-ou] | 2016.06.13 | 2018.01.18 |
 	| [GitHub search autocomplete][sac-wiki] |     | [install][sac-raw] | [GF][sac-gf] [OU][sac-ou] | 2017.03.31 | 2018.01.18 |
 	| [GitHub sort content][srt-wiki]        |     | [install][srt-raw] | [GF][srt-gf] [OU][srt-ou] | 2016.07.13 | 2018.01.30 |
+	| [GitHub sort reactions][gsr-wiki]      |     | [install][gsr-raw] | [GF][gsr-gf] [OU][gsr-ou] | 2018.02.10 | 2018.02.10 |
 	| [GitHub static time][stt-wiki]         |     | [install][stt-raw] | [GF][stt-gf] [OU][stt-ou] | 2017.04.24 | 2018.01.18 |
 	| [GitHub table of contents][toc-wiki]   |     | [install][toc-raw] | [GF][toc-gf] [OU][toc-ou] | 2016.03.28 | 2018.01.18 |
 	| [GitHub title notification][tbn-wiki]  |     | [install][tbn-raw] | [GF][tbn-gf] [OU][tbn-ou] | 2016.03.24 | 2018.01.18 |
@@ -79,6 +80,7 @@ Userscripts to add functionality to GitHub.
 [gih-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-issue-highlighter
 [glc-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-label-color-picker
 [grl-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/Gist-raw-links
+[gsr-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-sort-reactions
 [iad-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-issue-add-details
 [ic1-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-issue-comments
 [ic2-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-issue-counts
@@ -116,6 +118,7 @@ Userscripts to add functionality to GitHub.
 [gih-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-issue-highlighter.user.js
 [glc-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-label-color-picker.user.js
 [grl-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/gist-raw-links.user.js
+[gsr-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-sort-reactions.user.js
 [iad-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-issue-add-details.user.js
 [ic1-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-issue-comments.user.js
 [ic2-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-issue-counts.user.js
@@ -152,6 +155,7 @@ Userscripts to add functionality to GitHub.
 [gff-gf]: https://greasyfork.org/en/scripts/30940-github-files-filter
 [gih-gf]: https://greasyfork.org/en/scripts/19867-github-issue-highlighter
 [grl-gf]: https://greasyfork.org/en/scripts/29888-gist-raw-links
+[gsr-gf]: https://greasyfork.org/en/scripts/38354-github-sort-reactions
 [glc-gf]: https://greasyfork.org/en/scripts/23270-github-label-color-picker
 [iad-gf]: https://greasyfork.org/en/scripts/37056-github-issue-add-details
 [ic1-gf]: https://greasyfork.org/en/scripts/18503-github-toggle-issue-comments
@@ -190,6 +194,7 @@ Userscripts to add functionality to GitHub.
 [gih-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Issue_Highlighter
 [glc-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Label_Color_Picker
 [grl-ou]: https://openuserjs.org/scripts/Mottie/Gist_Raw_Links
+[gsr-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Sort_Reactions
 [iad-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Issue_Add_Details
 [ic1-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Toggle_Issue_Comments
 [ic2-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Show_Repo_Issues
