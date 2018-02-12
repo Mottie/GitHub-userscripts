@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Custom Navigation
-// @version     1.0.19
+// @version     1.1.0
 // @description A userscript that allows you to customize GitHub's main navigation bar
 // @license     MIT
 // @author      Rob Garrison
@@ -262,7 +262,9 @@
 						<div class="ghcn-footer">
 							<span class="btn btn-sm ghcn-add">${icons.add} New Link</span>
 							<span class="btn btn-sm ghcn-destroy btn-danger tooltipped tooltipped-n" aria-label="Completely remove selected link">Destroy</span>
-							<span class="btn btn-sm ghcn-reset tooltipped tooltipped-n" aria-label="Restore Defaults">Reset</span>
+							<span class="btn btn-sm ghcn-reset btn-danger tooltipped tooltipped-n tooltipped-multiline" aria-label="Reset to default
+(Removes all custom entries!)">Reset</span>
+							<span class="btn btn-sm ghcn-restore tooltipped tooltipped-n" aria-label="Restore missing default entries">Restore</span>
 						</div>
 					</div>
 				</div>`
@@ -438,7 +440,9 @@
 				settings.gists.splice(indx, 1);
 			}
 			el = $(`.HeaderNavitem[data-ghcn="${item}"]`);
-			el.parentNode.removeChild(el);
+			if (el) {
+				el.parentNode.removeChild(el);
+			}
 			if ((settings.currentLink || "") === item) {
 				settings.currentLink = "";
 			}
@@ -468,6 +472,12 @@
 			}
 		}
 		customize();
+	}
+
+	function restoreLinks() {
+		Object.assign(settings.items, defaults.items);
+		GM_setValue("custom-links", settings);
+		updatePanel();
 	}
 
 	// Clicked item; update input values
@@ -549,15 +559,10 @@
 		if (el) {
 			// insert after
 			el.parentNode.insertBefore(menu, el.nextSibling);
-			on($("#ghcn-menu"), "click", () => {
-				openPanel();
-			});
+			on($("#ghcn-menu"), "click", openPanel);
 		}
 
-		on(window, "hashchange", () => {
-			openPanelOnHash();
-		});
-
+		on(window, "hashchange", openPanelOnHash);
 		on($("#ghcn-overlay"), "click", event => {
 			// ignore bubbled up events
 			if (event.target.id === "ghcn-overlay") {
@@ -578,23 +583,14 @@
 				selectItem();
 			}
 		});
-		on($$(".ghcn-settings-wrapper input"), "input change", () => {
-			saveLink();
-		});
-		on($(".ghcn-add"), "click", () => {
-			createLink();
-		});
-		on($(".ghcn-destroy"), "click", () => {
-			destroyLink(settings.currentLink);
-		});
-		on($(".ghcn-reset"), "click", () => {
-			resetLinks();
-		});
+		on($$(".ghcn-settings-wrapper input"), "input change", saveLink);
+		on($(".ghcn-add"), "click", createLink);
+		on($(".ghcn-destroy"), "click", () => destroyLink(settings.currentLink));
+		on($(".ghcn-reset"), "click", resetLinks);
+		on($(".ghcn-restore"), "click", restoreLinks);
 		// close panel when hotkey link is clicked or the page scrolls on the
 		// documentation wiki
-		on($$(".ghcn-close, .ghcn-hotkey-link"), "click", () => {
-			closePanel();
-		});
+		on($$(".ghcn-close, .ghcn-hotkey-link"), "click", closePanel);
 
 		// Code
 		on($(".ghcn-code"), "click", () => {
