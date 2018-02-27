@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Code Folding
-// @version     1.0.10
+// @version     1.0.11
 // @description A userscript that adds code folding to GitHub files
 // @license     MIT
 // @author      Rob Garrison
@@ -24,7 +24,7 @@
 	"use strict";
 
 	GM.addStyle(`
-		td.blob-code.blob-code-inner { padding-left:10px; }
+		td.blob-code.blob-code-inner { position:relative; padding-left:10px; }
 		.collapser { position:absolute; left:2px; width:22px; opacity:.5;
 			transition:.15s; cursor:pointer; }
 		.collapser:after { content:"\u25bc"; }
