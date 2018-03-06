@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Sort Reactions
-// @version     0.1.0
+// @version     0.2.0
 // @description A userscript that sorts comments by reaction
 // @license     MIT
 // @author      Rob Garrison
@@ -8,6 +8,8 @@
 // @include     https://github.com/*
 // @run-at      document-idle
 // @grant       GM_addStyle
+// @grant       GM_getValue
+// @grant       GM_setValue
 // @require     https://greasyfork.org/scripts/28721-mutations/code/mutations.js?version=198500
 // @icon        https://assets-cdn.github.com/pinned-octocat.svg
 // @updateURL   https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-sort-reactions.user.js
@@ -29,42 +31,49 @@
 			init: false,
 			el: null,
 			dir: 0, // 0 = unsorted, 1 = desc, 2 = asc
-			busy: false
+			busy: false,
+			type: GM_getValue("selected-reaction", "NONE")
 		},
 
 		sortBlock = `
-<div class="timeline-comment-wrapper ghsc-sort-block">
+<div class="timeline-comment-wrapper ghsc-sort-block ghsc-is-collapsed">
 	<div class="timeline-comment">
-		<div class="avatar-parent-child timeline-comment-avatar position-relative">
-			<svg aria-hidden="true" class="octicon ghsc-sort-icon" xmlns="http://www.w3.org/2000/svg" width="32" height="44" viewBox="0 0 16 16">
-				<path d="M15 8 1 8 8 0zM15 9 1 9 8 16z"/>
-			</svg>
+		<div class="avatar-parent-child timeline-comment-avatar border ghsc-sort-avatar ghsc-no-selection">
+			<div class="ghsc-icon-wrap tooltipped tooltipped-n" aria-label="Click to toggle reaction sort menu">
+				<svg aria-hidden="true" class="octicon ghsc-sort-icon" xmlns="http://www.w3.org/2000/svg" width="25" height="40" viewBox="0 0 16 16">
+					<path d="M15 8 1 8 8 0zM15 9 1 9 8 16z"/>
+				</svg>
+			</div>
+			<g-emoji></g-emoji>
+			<button class="ghsc-sort-button ghsc-avatar-sort btn btn-sm tooltipped tooltipped-n" aria-label="Toggle selected reaction sort direction">
+				<span></span>
+			</button>
 		</div>
 		<div class="timeline-comment-header comment comment-body">
 			<h3 class="timeline-comment-header-text f5 text-normal">
 				<button class="ghsc-sort-button btn btn-sm tooltipped tooltipped-n" type="button" aria-label="Sort by +1 reaction" data-sort="THUMBS_UP">
-					<g-emoji alias="+1" class="emoji mr-1" fallback-src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f44d.png">👍</g-emoji>
+					<g-emoji alias="+1" class="emoji" fallback-src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f44d.png">👍</g-emoji>
 				</button>
 				<button class="ghsc-sort-button btn btn-sm tooltipped tooltipped-n" type="button" aria-label="Sort by -1 reaction" data-sort="THUMBS_DOWN">
-					<g-emoji alias="-1" class="emoji mr-1" fallback-src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f44e.png">👎</g-emoji>
+					<g-emoji alias="-1" class="emoji" fallback-src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f44e.png">👎</g-emoji>
 				</button>
 				<button class="ghsc-sort-button btn btn-sm tooltipped tooltipped-n" type="button" aria-label="Sort by laugh reaction" data-sort="LAUGH">
-					<g-emoji alias="smile" class="emoji mr-1" fallback-src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f604.png">😄</g-emoji>
+					<g-emoji alias="smile" class="emoji" fallback-src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f604.png">😄</g-emoji>
 				</button>
 				<button class="ghsc-sort-button btn btn-sm tooltipped tooltipped-n" type="button" aria-label="Sort by hooray reaction" data-sort="HOORAY">
-					<g-emoji alias="tada" class="emoji mr-1" fallback-src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f389.png">🎉</g-emoji>
+					<g-emoji alias="tada" class="emoji" fallback-src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f389.png">🎉</g-emoji>
 				</button>
 				<button class="ghsc-sort-button btn btn-sm tooltipped tooltipped-n" type="button" aria-label="Sort by confused reaction" data-sort="CONFUSED">
-					<g-emoji alias="thinking_face" class="emoji mr-1" fallback-src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f615.png">😕</g-emoji>
+					<g-emoji alias="thinking_face" class="emoji" fallback-src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f615.png">😕</g-emoji>
 				</button>
 				<button class="ghsc-sort-button btn btn-sm tooltipped tooltipped-n" type="button" aria-label="Sort by heart reaction" data-sort="HEART">
-					<g-emoji alias="heart" class="emoji mr-1" fallback-src="https://assets-cdn.github.com/images/icons/emoji/unicode/2764.png">❤️</g-emoji>
+					<g-emoji alias="heart" class="emoji" fallback-src="https://assets-cdn.github.com/images/icons/emoji/unicode/2764.png">❤️</g-emoji>
 				</button>
 				<button class="ghsc-sort-button btn btn-sm tooltipped tooltipped-n tooltipped-multiline" type="button" aria-label="Sort by reaction evaluation
 (thumbs up, hooray & heart = +1;
 laugh = +0.5; confused = -0.5;
 thumbs down = -1)" data-sort="ACTIVE">
-					<g-emoji class="g-emoji" alias="speak_no_evil" fallback-src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f64a.png" ios-version="6.0">🙊</g-emoji>
+					<g-emoji alias="speak_no_evil" class="emoji" fallback-src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f64a.png">🙊</g-emoji>
 				</button>
 			</h3>
 		</div>
@@ -97,6 +106,28 @@ thumbs down = -1)" data-sort="ACTIVE">
 		return parseInt(elm.dataset.sortCommentDate, 10);
 	}
 
+	function updateAvatar() {
+		GM_setValue("selected-reaction", currentSort.type);
+		const block = $(".ghsc-sort-block"),
+			avatar = $(".ghsc-sort-avatar", block),
+			icon = $(".ghsc-sort-button span", avatar);
+		let current = $(`.comment-body [data-sort=${currentSort.type}]`, block);
+		avatar.classList.remove("ghsc-no-selection");
+		avatar.replaceChild(
+			$("g-emoji", current).cloneNode(true),
+			$("g-emoji", avatar)
+		);
+		if (currentSort.dir === 0) {
+			// use unsorted svg in sort button
+			current = $(".ghsc-sort-icon", avatar).cloneNode(true);
+			current.classList.remove("ghsc-sort-icon");
+			icon.textContent = "";
+			icon.appendChild(current);
+		} else {
+			icon.textContent = currentSort.dir !== 1 ? "▲" : "▼";
+		}
+	}
+
 	function sort() {
 		currentSort.busy = true;
 		const fragment = document.createDocumentFragment(),
@@ -105,6 +136,10 @@ thumbs down = -1)" data-sort="ACTIVE">
 			loadMore = $("#progressive-timeline-item-container"),
 			dir = currentSort.dir !== 1,
 			type = currentSort.el ? currentSort.el.dataset.sort : "NONE";
+
+		currentSort.type = type;
+		updateAvatar();
+
 		$$(".js-timeline-item")
 			.sort((a, b) => {
 				const av = extractSortValue(a, type),
@@ -150,10 +185,16 @@ thumbs down = -1)" data-sort="ACTIVE">
 	}
 
 	function initSort(event) {
-		const target = event.target;
+		let direction,
+			target = event.target;
 		if (target.classList.contains("ghsc-sort-button")) {
 			event.preventDefault();
 			event.stopPropagation();
+			if (target.classList.contains("ghsc-avatar-sort")) {
+				// Using avatar sort button; retarget button
+				target = $(`.ghsc-sort-button[data-sort="${currentSort.type}"]`);
+				currentSort.el = target;
+			}
 			$$(".ghsc-sort-button").forEach(el => {
 				el.classList.toggle("selected", el === target);
 				el.classList.remove("asc", "desc");
@@ -164,26 +205,28 @@ thumbs down = -1)" data-sort="ACTIVE">
 				currentSort.el = target;
 				currentSort.dir = 1;
 			}
-			if (currentSort.dir === 0) {
-				currentSort.el.classList.remove("asc", "desc", "selected");
-				currentSort.el = null;
-			} else {
-				currentSort.el.classList.add(currentSort.dir === 1 ? "desc" : "asc");
+			if (currentSort.dir !== 0) {
+				direction = currentSort.dir === 1 ? "desc" : "asc";
+				currentSort.el.classList.add(direction);
+				$(".ghsc-avatar-sort").classList.add(direction);
 			}
 			sort();
+		} else if (target.matches(".ghsc-sort-avatar, .ghsc-icon-wrap")) {
+			$(".ghsc-sort-block").classList.toggle("ghsc-is-collapsed");
 		}
 	}
 
 	function toggleSortBlock(status) {
+		const block = $(".ghsc-sort-block");
 		if (status) {
-			if ($(".ghsc-sort-block")) {
-				$(".ghsc-sort-block").style.display = "block";
+			if (block) {
+				block.style.display = "block";
 			} else {
 				addSortBlock();
 			}
 		} else {
-			if ($(".ghsc-sort-block")) {
-				$(".ghsc-sort-block").style.display = "none";
+			if (block) {
+				block.style.display = "none";
 			}
 		}
 	}
@@ -199,17 +242,37 @@ thumbs down = -1)" data-sort="ACTIVE">
 	function init() {
 		if (!currentSort.init) {
 			GM_addStyle(`
-				.ghsc-sort-icon { padding-left: 5px; }
 				.ghsc-sort-block .comment-body { padding: 0 10px; }
-				.ghsc-sort-block g-emoji { vertical-align: baseline; pointer-events: none; }
-				.ghsc-sort-block .btn.asc g-emoji:after { content: "▲"; }
-				.ghsc-sort-block .btn.desc g-emoji:after { content: "▼"; }
+				.ghsc-sort-block .emoji { vertical-align: baseline; pointer-events: none; }
+				.ghsc-sort-block .btn.asc .emoji:after { content: "▲"; }
+				.ghsc-sort-block .btn.desc .emoji:after { content: "▼"; }
+				.ghsc-sort-avatar, .ghsc-icon-wrap { height: 44px; width: 44px; text-align: center; }
+				.ghsc-sort-avatar { background: rgba(128, 128, 128, 0.2); border: #777 1px solid; }
+				.ghsc-sort-avatar .emoji { position: relative; top: -36px; }
+				.ghsc-sort-avatar svg { pointer-events: none; }
+				.ghsc-sort-avatar.ghsc-no-selection { cursor: pointer; padding: 0 4px 0 0; }
+				.ghsc-sort-avatar.ghsc-no-selection .emoji,
+				.ghsc-sort-avatar.ghsc-no-selection .btn,
+				.ghsc-sort-avatar:not(.ghsc-no-selection) svg.ghsc-sort-icon { display: none; }
+				.ghsc-sort-avatar .btn { border-radius: 20px; width: 20px; height: 20px; position: absolute; bottom: -5px; right: -5px; }
+				.ghsc-sort-avatar .btn span { position: absolute; left: 5px; top: 0; pointer-events: none; }
+				.ghsc-sort-avatar .btn.asc span { top: -3px; }
+				.ghsc-sort-avatar .btn span svg { height: 10px; width: 10px; vertical-align: unset; }
+				.ghsc-sort-block.ghsc-is-collapsed h3,
+				.ghsc-sort-block.ghsc-is-collapsed .timeline-comment:before,
+				.ghsc-sort-block.ghsc-is-collapsed .timeline-comment:after { display: none; }
+				.ghsc-sort-block.ghsc-is-collapsed .timeline-comment { margin: 10px 0; }
+				.ghsc-sort-block.ghsc-is-collapsed .timeline-comment-avatar { top: -22px; }
 			`);
 			document.addEventListener("ghmo:container", update);
 			document.addEventListener("ghmo:comments", update);
 			document.addEventListener("click", initSort);
 			currentSort.init = true;
 			update();
+			// "NONE" can only be seen on userscript init/factory reset
+			if (currentSort.type !== "NONE") {
+				updateAvatar();
+			}
 		}
 	}
 
