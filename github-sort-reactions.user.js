@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Sort Reactions
-// @version     0.2.0
+// @version     0.2.1
 // @description A userscript that sorts comments by reaction
 // @license     MIT
 // @author      Rob Garrison
@@ -111,20 +111,22 @@ thumbs down = -1)" data-sort="ACTIVE">
 		const block = $(".ghsc-sort-block"),
 			avatar = $(".ghsc-sort-avatar", block),
 			icon = $(".ghsc-sort-button span", avatar);
-		let current = $(`.comment-body [data-sort=${currentSort.type}]`, block);
-		avatar.classList.remove("ghsc-no-selection");
-		avatar.replaceChild(
-			$("g-emoji", current).cloneNode(true),
-			$("g-emoji", avatar)
-		);
-		if (currentSort.dir === 0) {
-			// use unsorted svg in sort button
-			current = $(".ghsc-sort-icon", avatar).cloneNode(true);
-			current.classList.remove("ghsc-sort-icon");
-			icon.textContent = "";
-			icon.appendChild(current);
-		} else {
-			icon.textContent = currentSort.dir !== 1 ? "▲" : "▼";
+		if (avatar) {
+			let current = $(`.comment-body [data-sort=${currentSort.type}]`, block);
+			avatar.classList.remove("ghsc-no-selection");
+			avatar.replaceChild(
+				$("g-emoji", current).cloneNode(true),
+				$("g-emoji", avatar)
+			);
+			if (currentSort.dir === 0) {
+				// use unsorted svg in sort button
+				current = $(".ghsc-sort-icon", avatar).cloneNode(true);
+				current.classList.remove("ghsc-sort-icon");
+				icon.textContent = "";
+				icon.appendChild(current);
+			} else {
+				icon.textContent = currentSort.dir !== 1 ? "▲" : "▼";
+			}
 		}
 	}
 
@@ -216,18 +218,12 @@ thumbs down = -1)" data-sort="ACTIVE">
 		}
 	}
 
-	function toggleSortBlock(status) {
+	function toggleSortBlock(show) {
 		const block = $(".ghsc-sort-block");
-		if (status) {
-			if (block) {
-				block.style.display = "block";
-			} else {
-				addSortBlock();
-			}
-		} else {
-			if (block) {
-				block.style.display = "none";
-			}
+		if (block) {
+			block.style.display = show ? "block" : "none";
+		} else if (show) {
+			addSortBlock();
 		}
 	}
 
@@ -270,7 +266,7 @@ thumbs down = -1)" data-sort="ACTIVE">
 			currentSort.init = true;
 			update();
 			// "NONE" can only be seen on userscript init/factory reset
-			if (currentSort.type !== "NONE") {
+			if ($(".ghsc-sort-block") && currentSort.type !== "NONE") {
 				updateAvatar();
 			}
 		}
