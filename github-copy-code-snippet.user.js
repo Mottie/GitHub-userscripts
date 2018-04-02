@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Copy Code Snippet
-// @version     0.2.1
+// @version     0.2.2
 // @description A userscript adds a copy to clipboard button on hover of markdown code snippets
 // @license     MIT
 // @author      Rob Garrison
@@ -17,8 +17,8 @@
 (() => {
 	"use strict";
 
-	const markdown = ".markdown-body, .markdown-format",
-		code = `:any(${markdown}) pre:not(.gh-csc-pre)`,
+	const markdownSelector = ".markdown-body, .markdown-format",
+		codeSelector = "pre:not(.gh-csc-pre)",
 
 		copyButton = document.createElement("button");
 
@@ -55,12 +55,6 @@
 		}
 	`);
 
-	// https://caniuse.com/#search=%3Aany
-	function fixAnySelector(sel) {
-		const prefix = document.head.style.MozOrient === "" ? "-moz-" : "-webkit-";
-		return sel.replace(/:any\(/g, `:${prefix}any(`);
-	}
-
 	function addAttr(el, attrs) {
 		Object.keys(attrs).forEach(attr => {
 			const value = attrs[attr];
@@ -84,8 +78,9 @@
 	}
 
 	function init() {
-		if (document.querySelector(markdown)) {
-			[...document.querySelectorAll(fixAnySelector(code))].forEach(pre => {
+		const markdown = document.querySelector(markdownSelector);
+		if (markdown) {
+			[...markdown.querySelectorAll(codeSelector)].forEach(pre => {
 				let code = pre.querySelector("code");
 				let wrap = pre.parentNode;
 				if (code) {
