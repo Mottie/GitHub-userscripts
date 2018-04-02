@@ -10,9 +10,11 @@
 		"url": "https://github.com/Mottie"
 	},
 	"devDependencies": {
-		"eslint": "^4.2.0"
+		"eslint": "^4.2.0",
+		"github-reserved-names": "^1.0.10"
 	},
 	"scripts": {
+		"build": "node tools/build.js",
 		"lint": "eslint *.js || true",
 		"authors": "bash tools/authors.sh"
 	}
