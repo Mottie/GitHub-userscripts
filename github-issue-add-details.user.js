@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Issue Add Details
-// @version     1.0.0
+// @version     1.0.1
 // @description A userscript that adds a button to insert a details block into comments
 // @license     MIT
 // @author      Rob Garrison
@@ -8,7 +8,7 @@
 // @include     https://github.com/*
 // @run-at      document-idle
 // @grant       none
-// @require     https://greasyfork.org/scripts/28721-mutations/code/mutations.js?version=234970
+// @require     https://greasyfork.org/scripts/28721-mutations/code/mutations.js?version=264157
 // @require     https://greasyfork.org/scripts/28239-rangy-inputs-mod-js/code/rangy-inputs-modjs.js?version=181769
 // @icon        https://assets-cdn.github.com/pinned-octocat.svg
 // @updateURL   https://raw.githubusercontent.com/Mottie/Github-userscripts/master/github-issue-add-details.user.js
@@ -39,7 +39,7 @@
 		button.innerHTML = icon;
 		$$(".toolbar-commenting").forEach(el => {
 			if (el && !$(".ghad-details", el)) {
-				const btn =  $("[aria-label='Add a task list']", el);
+				const btn = $("[aria-label='Add a task list']", el);
 				btn.parentNode.insertBefore(button.cloneNode(true), btn.nextSibling);
 			}
 		});
@@ -57,7 +57,7 @@
 				window.rangyInput.surroundSelectedText(
 					textarea,
 					detailsBlock[0], // prefix
-					detailsBlock[1]  // suffix
+					detailsBlock[1] // suffix
 				);
 				return false;
 			}
