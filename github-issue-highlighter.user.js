@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Issue Highlighter
-// @version     1.0.7
+// @version     1.0.8
 // @description A userscript that highlights the linked-to comment
 // @license     MIT
 // @author      Rob Garrison
@@ -55,6 +55,7 @@
 	}
 
 	window.addEventListener("hashchange", init);
+	document.addEventListener("pjax:end", init);
 	init();
 
 })();
