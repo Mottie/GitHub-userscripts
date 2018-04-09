@@ -1,10 +1,9 @@
-/* GitHub mutations observer library script v0.2.2
+/* GitHub mutations observer library script v0.2.3
  * Detect changes to various elements and trigger an event
  * This script is meant to be used as a library for GitHub-based userscripts
  * Copyright © 2017 Rob Garrison
  * License: MIT
  */
-/* jshint esnext:true, unused:true */
 (() => {
 	"use strict";
 
@@ -26,7 +25,7 @@
 			// .js-discussion = wrapper for progressively loaded comments;
 			// "# items not shown" example: https://github.com/isaacs/github/issues/18
 			// .discussion-item = issue status changed (github-issue-show-status)
-			".js-discussion, .discussion-item": {
+			".js-discussion, .discussion-item, .toolbar-item": {
 				count: 0,
 				name: "comments"
 			},
@@ -56,7 +55,6 @@
 		// prevent script from installing more than once
 		if (container && !container.classList.contains(prefix + "-enabled")) {
 			container.classList.add(prefix + "-enabled");
-
 			// bound to document.body... this may be bad for performance
 			// http://stackoverflow.com/a/39332340/145346
 			new MutationObserver(mutations => {
