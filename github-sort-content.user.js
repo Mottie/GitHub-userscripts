@@ -72,7 +72,7 @@
 	function initSortTable(el) {
 		removeSelection();
 		const dir = el.classList.contains(sorts[0]) ? sorts[1] : sorts[0],
-			table = closest("table", el),
+			table = el.closest("table"),
 			options = {
 				order: dir,
 				natural: true,
@@ -109,18 +109,16 @@
 	}
 
 	function needDarkTheme() {
-		let brightest = 0,
-			// color will be "rgb(#, #, #)" or "rgba(#, #, #, #)"
-			color = window.getComputedStyle(document.body).backgroundColor;
+		// color will be "rgb(#, #, #)" or "rgba(#, #, #, #)"
+		let color = window.getComputedStyle(document.body).backgroundColor;
 		const rgb = (color || "")
 			.replace(/\s/g, "")
 			.match(/^rgba?\((\d+),(\d+),(\d+)/i);
 		if (rgb) {
-			color = rgb.slice(1); // remove "rgb.." part from match
-			color.forEach(c => {
-				// http://stackoverflow.com/a/15794784/145346
-				brightest = Math.max(brightest, parseInt(c, 10));
-			});
+			// remove "rgb.." part from match & parse
+			const colors = rgb.slice(1).map(Number);
+			// http://stackoverflow.com/a/15794784/145346
+			const brightest = Math.max.apply(null, colors);
 			// return true if we have a dark background
 			return brightest < 128;
 		}
@@ -133,17 +131,7 @@
 	}
 
 	function $$(str, el) {
-		return Array.from((el || document).querySelectorAll(str));
-	}
-
-	function closest(selector, el) {
-		while (el && el.nodeType === 1) {
-			if (el.matches(selector)) {
-				return el;
-			}
-			el = el.parentNode;
-		}
-		return null;
+		return [...(el || document).querySelectorAll(str)];
 	}
 
 	function removeSelection() {
@@ -259,17 +247,12 @@
 			)) {
 				// don't sort tables not inside of markdown,
 				// except for the repo "code" tab file list
-				if (
-					name === "TH" && (
-						closest(".markdown-body", target) ||
-						closest("table.files", target)
-					)
-				) {
+				if (name === "TH" && target.closest(".markdown-body, table.files")) {
 					return initSortTable(target);
 				}
 
 				// following
-				el = $("ol.follow-list", closest(".container", target));
+				el = $("ol.follow-list", target.closest(".container"));
 				if (el) {
 					return initSortUl(target, el, ".follow-list-name a");
 				}
@@ -281,26 +264,26 @@
 				}
 
 				// stars - https://github.com/stars
-				el = closest(".sort-bar", target);
+				el = target.closest(".sort-bar");
 				if (el && $(".repo-list", el.parentNode)) {
 					return initSortUl(el, $(".repo-list", el.parentNode), "h3 a");
 				}
 
 				// org repos - https://github.com/:organization
-				el = closest(".org-profile", target);
+				el = target.closest(".org-profile");
 				if (el && $(".repo-list", el)) {
 					return initSortUl(target, $(".repo-list", el), "h3 a");
 				}
 
 				// https://github.com/watching
-				el = closest(".subscriptions-content", target);
+				el = target.closest(".subscriptions-content");
 				if (el && $(".repo-list", el)) {
 					return initSortUl($(".Box-header", el), $(".repo-list", el), "li a");
 				}
 
 				// mini-repo listings with & without filter - https://github.com/
 				// and pinned repo lists
-				el = closest(".boxed-group", target);
+				el = target.closest(".boxed-group");
 				// prevent clicking on the H3 header of filtered repos
 				if (el && name === "H3" && (
 					el.parentNode.id === "your_teams" ||
