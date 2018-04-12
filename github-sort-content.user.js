@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Sort Content
-// @version     1.2.6
+// @version     1.2.7
 // @description A userscript that makes some lists & markdown tables sortable
 // @license     MIT
 // @author      Rob Garrison
@@ -297,7 +297,7 @@
 
 				// user sticky navigation
 				if (target.classList.contains("user-profile-nav")) {
-					el = $(".underline-nav-item.selected", target);
+					el = $(".UnderlineNav-item.selected", target);
 					if (el) {
 						if (el.textContent.indexOf("Overview") > -1) {
 							return initSortUl(target, $(".pinned-repos-list"), ".repo");
