@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Sort Reactions
-// @version     0.2.2
+// @version     0.2.3
 // @description A userscript that sorts comments by reaction
 // @license     MIT
 // @author      Rob Garrison
@@ -93,10 +93,10 @@ thumbs down = -1)" data-sort="ACTIVE">
 			0;
 	}
 
-	function extractSortValue(elm, type) {
+	function extractSortValue(elm, type, dir) {
 		if (type === "NONE" || type === "ACTIVE") {
 			return parseFloat(
-				elm.dataset[`sortComment${type === "NONE" ? "Date" : "Sum"}`]
+				elm.dataset[`sortComment${dir === 0 ? "Date" : "Sum"}`]
 			);
 		}
 		return getValue($(`.comment-reactions button[value*="${type}"]`, elm));
@@ -136,20 +136,20 @@ thumbs down = -1)" data-sort="ACTIVE">
 			container = $(".js-discussion"),
 			sortBlock = $(".ghsc-sort-block"),
 			loadMore = $("#progressive-timeline-item-container"),
-			dir = currentSort.dir !== 1,
+			dir = currentSort.dir,
+			sortAsc = dir !== 1,
 			type = currentSort.el ? currentSort.el.dataset.sort : "NONE";
-
 		currentSort.type = type;
 		updateAvatar();
 
 		$$(".js-timeline-item")
 			.sort((a, b) => {
-				const av = extractSortValue(a, type),
-					bv = extractSortValue(b, type);
+				const av = extractSortValue(a, type, dir),
+					bv = extractSortValue(b, type, dir);
 				if (av === bv) {
 					return stableSortValue(a) - stableSortValue(b);
 				}
-				return dir ? av - bv : bv - av;
+				return sortAsc ? av - bv : bv - av;
 			})
 			.forEach(el => {
 				fragment.appendChild(el);
