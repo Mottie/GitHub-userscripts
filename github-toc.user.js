@@ -22,7 +22,7 @@
 
 	GM_addStyle(`
 		/* z-index > 1000 to be above the */
-		.github-toc { position:fixed; z-index:1001; min-width:200px; top:55px; right:10px; }
+		.github-toc { position:fixed; z-index:1001; min-width:200px; top:56px; right:10px; }
 		.github-toc h3 { cursor:move; }
 		/* icon toggles TOC container & subgroups */
 		.github-toc h3 svg, .github-toc li.collapsible .github-toc-icon { cursor:pointer; vertical-align:baseline; }
