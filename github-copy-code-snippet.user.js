@@ -68,16 +68,18 @@
 	function init() {
 		const markdown = document.querySelector(markdownSelector);
 		if (markdown) {
-			[...markdown.querySelectorAll(codeSelector)].forEach(pre => {
-				let code = pre.querySelector("code");
-				let wrap = pre.parentNode;
-				if (code) {
-					// pre > code
-					addButton(pre, code);
-				} else if (wrap.classList.contains("highlight")) {
-					// div.highlight > pre
-					addButton(wrap, pre);
-				}
+			[...document.querySelectorAll(markdownSelector)].forEach(md => {
+				[...md.querySelectorAll(codeSelector)].forEach(pre => {
+					let code = pre.querySelector("code");
+					let wrap = pre.parentNode;
+					if (code) {
+						// pre > code
+						addButton(pre, code);
+					} else if (wrap.classList.contains("highlight")) {
+						// div.highlight > pre
+						addButton(wrap, pre);
+					}
+				});
 			});
 		}
 	}
