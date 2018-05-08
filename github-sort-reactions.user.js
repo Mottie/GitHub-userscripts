@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Sort Reactions
-// @version     0.2.3
+// @version     0.2.4
 // @description A userscript that sorts comments by reaction
 // @license     MIT
 // @author      Rob Garrison
@@ -94,7 +94,7 @@ thumbs down = -1)" data-sort="ACTIVE">
 	}
 
 	function extractSortValue(elm, type, dir) {
-		if (type === "NONE" || type === "ACTIVE") {
+		if (dir === 0 || type === "NONE" || type === "ACTIVE") {
 			return parseFloat(
 				elm.dataset[`sortComment${dir === 0 ? "Date" : "Sum"}`]
 			);
