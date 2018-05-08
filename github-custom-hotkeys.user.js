@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Custom Hotkeys
-// @version     1.0.15
+// @version     1.0.16
 // @description A userscript that allows you to add custom GitHub keyboard hotkeys
 // @license     MIT
 // @author      Rob Garrison
@@ -54,45 +54,50 @@
 		// https://github.com/{nonUser}
 		// see https://github.com/Mottie/github-reserved-names
 		nonUser = new RegExp("^(" + [
-			/* BUILD:RESERVED-NAMES-START (v1.0.13) */
+			/* BUILD:RESERVED-NAMES-START (v1.0.14) */
 			"400", "401", "402", "403", "404", "405", "406", "407", "408", "409",
 			"410", "411", "412", "413", "414", "415", "416", "417", "418", "419",
 			"420", "421", "422", "423", "424", "425", "426", "427", "428", "429",
 			"430", "431", "500", "501", "502", "503", "504", "505", "506", "507",
 			"508", "509", "510", "511", "about", "access", "account", "admin",
 			"anonymous", "any", "api", "apps", "attributes", "auth", "billing",
-			"blog", "branches", "business", "businesses", "c", "cache",
-			"categories", "central", "certification", "changelog", "cloud",
-			"codereview", "collection", "collections", "comments", "commit",
-			"community", "companies", "compare", "contact", "contributing",
-			"cookbook", "coupons", "customer", "customers", "dashboard", "design",
-			"develop", "developer", "diff", "discover", "discussions", "docs",
-			"downloads", "editor", "editors", "edu", "enterprise", "events",
-			"explore", "featured", "features", "files", "fixtures", "garage",
-			"gist", "gists", "graphs", "guide", "guides", "help", "home",
+			"blob", "blog", "bounty", "branches", "business", "businesses", "c",
+			"cache", "categories", "central", "certification", "changelog", "cla",
+			"cloud", "codereview", "collection", "collections", "comments",
+			"commit", "commits", "community", "companies", "compare", "contact",
+			"contributing", "cookbook", "coupons", "customer", "customers",
+			"dashboard", "dashboards", "design", "develop", "developer", "diff",
+			"discover", "discussions", "docs", "downloads", "downtime", "editor",
+			"editors", "edu", "enterprise", "events", "explore", "featured",
+			"features", "files", "fixtures", "forked", "garage", "gist", "gists",
+			"graphs", "guide", "guides", "help", "help-wanted", "home", "hooks",
 			"hosting", "identity", "images", "inbox", "individual", "info",
 			"integration", "integrations", "interfaces", "introduction",
 			"investors", "issues", "jobs", "join", "journal", "journals", "lab",
-			"labs", "languages", "launch", "learn", "legal", "library", "linux",
-			"listings", "lists", "login", "logos", "logout", "mac", "maintenance",
-			"man", "marketplace", "mention", "mentioned", "mine", "mirrors",
-			"mobile", "navigation", "network", "new", "news", "none", "nonprofit",
-			"notices", "notifications", "oauth", "offer", "open-source",
-			"organisations", "organizations", "orgs", "pages", "partners",
-			"payments", "personal", "plans", "plugins", "popular", "popularity",
-			"posts", "press", "pricing", "professional", "projects", "pulls",
-			"raw", "readme", "recommendations", "redeem", "releases", "render",
-			"reply", "repositories", "resources", "restore",
-			"save-net-neutrality", "saved", "search", "security", "services",
-			"sessions", "settings", "shareholders", "shop", "showcases", "signin",
-			"signup", "site", "spam", "ssh", "staff", "stars", "static", "status",
-			"storage", "store", "stories", "styleguide", "subscriptions",
-			"suggest", "suggestion", "suggestions", "support", "suspended",
-			"talks", "teach", "teacher", "teachers", "teaching", "teams", "ten",
-			"terms", "timeline", "topic", "topics", "tos", "tour", "train",
-			"training", "translations", "tree", "trending", "updates", "username",
-			"users", "w", "watching", "wiki", "windows", "works-with", "www0",
-			"www1", "www2", "www3", "www4", "www5", "www6", "www7", "www8", "www9"
+			"labs", "languages", "launch", "layouts", "learn", "legal", "library",
+			"linux", "listings", "lists", "login", "logos", "logout", "mac",
+			"maintenance", "malware", "man", "marketplace", "mention",
+			"mentioned", "mentioning", "mentions", "migrating", "milestones",
+			"mine", "mirrors", "mobile", "navigation", "network", "new", "news",
+			"none", "nonprofit", "nonprofits", "notices", "notifications",
+			"oauth", "offer", "open-source", "organisations", "organizations",
+			"orgs", "pages", "partners", "payments", "personal", "plans",
+			"plugins", "popular", "popularity", "posts", "press", "pricing",
+			"professional", "projects", "pulls", "raw", "readme",
+			"recommendations", "redeem", "releases", "render", "reply",
+			"repositories", "resources", "restore", "revert",
+			"save-net-neutrality", "saved", "scraping", "search", "security",
+			"services", "sessions", "settings", "shareholders", "shop",
+			"showcases", "signin", "signup", "site", "spam", "ssh", "staff",
+			"starred", "stars", "static", "status", "statuses", "storage",
+			"store", "stories", "styleguide", "subscriptions", "suggest",
+			"suggestion", "suggestions", "support", "suspended", "talks", "teach",
+			"teacher", "teachers", "teaching", "teams", "ten", "terms",
+			"timeline", "topic", "topics", "tos", "tour", "train", "training",
+			"translations", "tree", "trending", "updates", "username", "users",
+			"visualization", "w", "watching", "wiki", "windows", "works-with",
+			"www0", "www1", "www2", "www3", "www4", "www5", "www6", "www7",
+			"www8", "www9"
 			/* BUILD:RESERVED-NAMES-END */
 		].join("|") + ")$");
 
