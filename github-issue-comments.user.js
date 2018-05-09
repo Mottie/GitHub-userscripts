@@ -284,8 +284,10 @@
 		for (name of keys) {
 			if (!(name === "pipeline" && !hasZenHub)) {
 				item = closest(".dropdown-item", $("." + settings[name].name, menu));
-				settings[name].isHidden = $("input", item).checked;
-				toggleClass(item, "ghic-checked", settings[name].isHidden);
+				if (item) {
+					settings[name].isHidden = $("input", item).checked;
+					toggleClass(item, "ghic-checked", settings[name].isHidden);
+				}
 			}
 		}
 	}
@@ -295,7 +297,7 @@
 			isHidden = obj.isHidden;
 		let count, results,
 			item = closest(".dropdown-item", $(".ghic-menu ." + obj.name));
-		if (obj.selector) {
+		if (item && obj.selector) {
 			results = $$(obj.selector);
 			if (obj.contains) {
 				results = results.filter(el => {
@@ -313,7 +315,7 @@
 			toggleClass(item, "ghic-has-content", results.length);
 		} else if (name === "plus1") {
 			hidePlus1(init);
-		} else if (name === "reactions") {
+		} else if (item && name === "reactions") {
 			toggleClass($("body"), "ghic-hideReactions", isHidden);
 			toggleClass(item, "ghic-has-content", $$(".has-reactions").length - 1);
 			// make first comment reactions visible
@@ -598,7 +600,7 @@
 		update();
 	}
 
-	// update TOC when content changes
+	// update list when content changes
 	document.addEventListener("ghmo:container", addMenu);
 	document.addEventListener("ghmo:comments", update);
 	init();
