@@ -34,7 +34,7 @@
 		.ghic-button .dropdown-item.ghic-has-content span { opacity:1; }
 		.ghic-button .dropdown-item.ghic-checked span { font-weight:bold; }
 		.ghic-button .dropdown-item.ghic-checked svg,
-			.ghic-button .dropdown-item.ghic-checked .ghic-count { display:inline-block; }
+			.ghic-button .dropdown-item:not(.ghic-checked) .ghic-count { display:inline-block; }
 		.ghic-button .ghic-count { float:left; margin-right:5px; }
 		.ghic-button .select-menu-modal { margin:0; }
 		.ghic-button .ghic-participants { margin-bottom:20px; }
@@ -140,7 +140,7 @@
 			plus1: {
 				isHidden: false,
 				name: "ghic-plus1",
-				label: "Hide +1s"
+				label: "+1 Comments"
 			},
 			reactions: {
 				isHidden: false,
@@ -178,12 +178,12 @@
 					// make plus1 and reactions list items always bright
 					bright = name === "plus1" ? " ghic-has-content" : "";
 					isHidden = settings[name].isHidden;
-					isChecked = isHidden ? " ghic-checked": "";
+					isChecked = isHidden ? "" : " ghic-checked";
 					// not using multi-line backticks because it adds lots of white-space to the label
 					list += `<label class="dropdown-item${bright}${isChecked}">` +
 						`<span>${settings[name].label}</span>` +
 						`<span class="ghic-right ${settings[name].name}">` +
-							`<input type="checkbox"${isHidden ? " checked" : ""}>` +
+							`<input type="checkbox"${isHidden ? "" : " checked"}>` +
 							`${iconCheck}<span class="ghic-count"> </span>` +
 						`</span></label>`;
 				}
@@ -285,8 +285,8 @@
 			if (!(name === "pipeline" && !hasZenHub)) {
 				item = closest(".dropdown-item", $("." + settings[name].name, menu));
 				if (item) {
-					settings[name].isHidden = $("input", item).checked;
-					toggleClass(item, "ghic-checked", settings[name].isHidden);
+					settings[name].isHidden = !$("input", item).checked;
+					toggleClass(item, "ghic-checked", !settings[name].isHidden);
 				}
 			}
 		}
@@ -304,10 +304,10 @@
 					return !!$(obj.contains, el);
 				});
 			}
-			toggleClass(item, "ghic-checked", isHidden);
+			toggleClass(item, "ghic-checked", !isHidden);
 			if (isHidden) {
 				count = addClass(results, "ghic-hidden");
-				$(".ghic-count", item).textContent = count ? "(" + count + ")" : " ";
+				$(".ghic-count", item).textContent = count ? "(" + count + " hidden)" : " ";
 			} else if (!init) {
 				// no need to remove classes on initialization
 				removeClass(results, "ghic-hidden");
@@ -425,7 +425,7 @@
 						loop();
 					}, 200);
 				} else {
-					$(".ghic-menu .ghic-plus1 .ghic-count").textContent = total ? "(" + total + ")" : " ";
+					$(".ghic-menu .ghic-plus1 .ghic-count").textContent = total ? "(" + total + " hidden)" : " ";
 					toggleClass($(".ghic-menu ." + settings.plus1.name), "ghic-has-content", total);
 					addCountToReaction(count);
 				}
