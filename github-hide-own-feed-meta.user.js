@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Hide Own Feed Meta
-// @version     0.1.1
+// @version     0.1.2
 // @description A userscript that hides your own repo metadata in the GitHub feed
 // @license     MIT
 // @author      Rob Garrison
@@ -8,7 +8,7 @@
 // @include     https://github.com/
 // @run-at      document-idle
 // @grant       none
-// @require     https://greasyfork.org/scripts/28721-mutations/code/mutations.js?version=264157
+// @require     https://greasyfork.org/scripts/28721-mutations/code/mutations.js?version=596445
 // @icon        https://assets-cdn.github.com/pinned-octocat.svg
 // @updateURL   https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-hide-own-feed-meta.user.js
 // @downloadURL https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-hide-own-feed-meta.user.js

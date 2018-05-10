@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Remove Diff Signs
-// @version     1.2.2
+// @version     1.2.3
 // @description A userscript that removes the "+" and "-" from code diffs
 // @license     MIT
 // @author      Rob Garrison
@@ -8,7 +8,7 @@
 // @include     https://github.com/*
 // @run-at      document-idle
 // @grant       GM_addStyle
-// @require     https://greasyfork.org/scripts/28721-mutations/code/mutations.js?version=264157
+// @require     https://greasyfork.org/scripts/28721-mutations/code/mutations.js?version=596445
 // @icon        https://assets-cdn.github.com/pinned-octocat.svg
 // @updateURL   https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-remove-diff-signs.user.js
 // @downloadURL https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-remove-diff-signs.user.js
