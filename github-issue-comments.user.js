@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Toggle Issue Comments
-// @version     1.1.5
+// @version     1.2.0
 // @description A userscript that toggles issues/pull request comments & messages
 // @license     MIT
 // @author      Rob Garrison
@@ -339,32 +339,41 @@
 			// used https://github.com/isaacs/github/issues/215 for matches here...
 			// matches "+1!!!!", "++1", "+!", "+99!!!", "-1", "+ 100", "thumbs up"; ":+1:^21425235"
 			// ignoring -1's... add unicode for thumbs up; it gets replaced with an image in Windows
-			regexPlus = /([?!,.:^[\]()\'\"+-\d]|bump|thumbs|up|\ud83d\udc4d)/gi,
+			regexPlus = /([?!*,.:^[\]()\'\"+-\d]|bump|thumbs|up|\ud83d\udc4d)/gi,
 			// other comments to hide - they are still counted towards the +1 counter (for now?)
 			// seen "^^^" to bump posts; "bump plleeaaassee"; "eta?"; "pretty please"
 			// "need this"; "right now"; "still nothing?"; "super helpful"; "for gods sake"
 			regexHide = new RegExp("(" + [
 				"@\\w+",
+				"\\b(it|is|a|so|the|and|no|on|oh|do|this|any|very|much|here)\\b",
 				"pretty",
 				"pl+e+a+s+e+",
 				"y+e+s+",
 				"eta",
-				"much",
 				"need(ed)?",
 				"fix",
-				"this",
 				"right",
 				"now",
+				"hope(ful)?",
 				"still",
+				"wait(ing)?",
 				"nothing",
+				"really",
+				"add(ed)?",
+				"need(ed)?",
+				"update[sd]?",
+				"back",
+				"feature",
+				"useful",
 				"super",
 				"helpful",
+				"thanks",
 				"for\\sgods\\ssake",
-				"c'?mon",
-				"come\\son"
+				"c['emon]+" // c'mon, com'on, comeon
 			].join("|") + ")", "gi"),
 			// image title ":{anything}:", etc.
-			regexEmoji = /:(.*):/,
+			regexEmoji = /(:.*:)|[\u{1f300}-\u{1f64f}\u{1f680}-\u{1f6ff}\u{1f900}-\u{1f9ff}]/gu,
+			regexWhitespace = /\s+/g,
 
 			comments = $$(".js-discussion .timeline-comment-wrapper"),
 			len = comments.length,
@@ -404,8 +413,13 @@
 						}
 					}
 					// remove fluff
-					txt = txt.replace(regexEmoji, "").replace(regexPlus, "").replace(regexHide, "").trim();
-					if (txt === "" || (txt.length < 4 && !hasLink)) {
+					txt = txt
+						.replace(regexEmoji, "")
+						.replace(regexHide, "")
+						.replace(regexPlus, "")
+						.replace(regexWhitespace, " ")
+						.trim();
+					if (txt === "" || (txt.length <= 4 && !hasLink)) {
 						if (settings.plus1.isHidden) {
 							wrapper.classList.add("ghic-hidden");
 							total++;
@@ -422,7 +436,7 @@
 				}
 				if (indx < len) {
 					setTimeout(() => {
-						loop();
+						window.requestAnimationFrame(loop);
 					}, 200);
 				} else {
 					$(".ghic-menu .ghic-plus1 .ghic-count").textContent = total ? "(" + total + " hidden)" : " ";
