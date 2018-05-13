@@ -1,4 +1,4 @@
-/* GitHub mutations observer library script v0.2.4
+/* GitHub mutations observer library script v0.2.5
  * Detect changes to various elements and trigger an event
  * This script is meant to be used as a library for GitHub-based userscripts
  * Copyright © 2018 Rob Garrison
@@ -31,7 +31,7 @@
 				name: "comments"
 			},
 			// progressively loaded content (diff files)
-			".js-diff-progressive-container, .data.blob-wrapper, .js-diff-load-container": {
+			".js-diff-progressive-container, .data.blob-wrapper, .js-diff-load-container, .diff-table tbody": {
 				count: 0,
 				name: "diff"
 			}
