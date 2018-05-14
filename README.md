@@ -225,6 +225,8 @@ Each individual userscript's change log is contained on its individual wiki page
 
 Please report any userscript issues within this repository's [issue section](https://github.com/Mottie/GitHub-userscripts/issues). Greasyfork messages are also received, but not as easily tracked. Thanks!
 
+Also check out the [FAQ](https://github.com/Mottie/GitHub-userscripts/wiki/FAQ) and [known issues](https://github.com/Mottie/GitHub-userscripts/wiki/Known-issues) pages.
+
 ## Contributions
 
 If you would like to contribute to this repository, please...
