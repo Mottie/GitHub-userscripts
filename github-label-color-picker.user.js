@@ -18,7 +18,7 @@
 (() => {
 	"use strict";
 
-	GM_addStyle("div.cp-app { margin-top:110px; z-index:10; }");
+	GM_addStyle("div.cp-app { margin-top:110px; margin-left:-8px; z-index:10; }");
 
 	function addPicker() {
 		if (document.querySelector(".js-new-label-color")) {
