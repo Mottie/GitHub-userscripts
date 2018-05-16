@@ -20,22 +20,54 @@
 (() => {
 	"use strict";
 
-	GM_addStyle("div.cp-app { margin-top:110px; margin-left:-8px; z-index:10; }");
+	// GitHub-Dark changes "text-black" to #c0c0c0
+	GM_addStyle(`
+		div.cp-app { margin-top:110px; margin-left:-8px; z-index:10; }
+		.js-new-label-color-icon { pointer-events:none; }
+		.js-new-label-color-icon.text-black { color:#000 !important; }
+	`);
 
 	function addPicker() {
-		if (document.querySelector(".js-new-label-color")) {
+		if ($(".js-new-label-color")) {
 			jsColorPicker(".js-new-label-color-input", {
 				customBG: "#222",
 				noAlpha: true,
 				renderCallback: function(colors) {
 					let input = this && this.input;
 					if (input) {
-						input.value = "#" + colors.HEX;
-						input.parentNode.previousElementSibling.style.backgroundColor = input.value;
+						updateSwatch(input, colors);
 					}
 				}
 			});
 		}
+	}
+
+	function updateSwatch(input, colors) {
+		let background = "#" + colors.HEX;
+		input.value = background;
+		let textColor = calcContrast(colors.HEX);
+		// Update color swatch next to input
+		let swatch = $(".js-new-label-color", input.closest("dd"));
+		updateIcon(swatch, textColor);
+		updateColors(swatch, background, textColor);
+		// Update label preview
+		swatch = $(
+			".js-label-preview .IssueLabel--big",
+			input.closest(".table-list-item")
+		);
+		updateColors(swatch, background, textColor);
+	}
+
+	function updateIcon(swatch, textColor) {
+		let icon = $(".octicon", swatch);
+		// !important set on these GitHub primer color definitions
+		icon.classList.remove("text-white", "text-black");
+		icon.classList.add("text-" + textColor);
+	}
+
+	function updateColors(el, background, color) {
+		el.style.backgroundColor = background;
+		el.style.color = color;
 	}
 
 	/* replace colorPicker storage */
@@ -81,6 +113,20 @@
 			g: parseInt(result[2], 16),
 			b: parseInt(result[3], 16)
 		} : null;
+	}
+
+	// Calculate contrasting text color for the given background color
+	// https://24ways.org/2010/calculating-color-contrast/
+	function calcContrast(hex) {
+		const r = parseInt(hex.substr(0, 2), 16),
+			g = parseInt(hex.substr(2, 2), 16),
+			b = parseInt(hex.substr(4, 2), 16),
+			yiq = ((r * 299) + (g * 587) + (b * 114)) / 1000;
+		return yiq >= 128 ? "black" : "white";
+	}
+
+	function $(selector, el) {
+		return (el || document).querySelector(selector);
 	}
 
 	// Add GM options
