@@ -1,9 +1,10 @@
 // ==UserScript==
 // @name        GitHub Label Color Picker
-// @version     1.0.4
+// @version     1.0.5
 // @description A userscript that adds a color picker to the label color input
 // @license     MIT
 // @author      Rob Garrison
+// @contributor darkred
 // @namespace   https://github.com/Mottie
 // @include     https://github.com/*
 // @run-at      document-idle
@@ -19,18 +20,18 @@
 (() => {
 	"use strict";
 
-	GM_addStyle("div.cp-app { margin-top:65px; z-index:10; }");
+	GM_addStyle("div.cp-app { margin-top:110px; margin-left:-8px; z-index:10; }");
 
 	function addPicker() {
-		if (document.querySelector(".js-color-editor")) {
-			jsColorPicker(".js-color-editor-input", {
+		if (document.querySelector(".js-new-label-color")) {
+			jsColorPicker(".js-new-label-color-input", {
 				customBG: "#222",
 				noAlpha: true,
 				renderCallback: function(colors) {
 					let input = this && this.input;
 					if (input) {
 						input.value = "#" + colors.HEX;
-						input.previousElementSibling.style.backgroundColor = input.value;
+						input.parentNode.previousElementSibling.style.backgroundColor = input.value;
 					}
 				}
 			});
