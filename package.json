@@ -14,7 +14,8 @@
 		"github-reserved-names": "^1.0.14"
 	},
 	"scripts": {
-		"build": "node tools/build.js",
+		"build:reserved": "node tools/reserved-names.js",
+		"build:mutations": "node tools/update-mutations.js",
 		"lint": "eslint *.js || true",
 		"authors": "bash tools/authors.sh"
 	}

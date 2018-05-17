@@ -28,7 +28,7 @@ function updateReservedNames(data) {
 	);
 }
 
-
 readFile("github-custom-hotkeys.user.js")
 	.then(data => updateReservedNames(data))
-	.then(data => writeFile("github-custom-hotkeys.user.js", data));
+	.then(data => writeFile("github-custom-hotkeys.user.js", data))
+	.then(() => console.log("\x1b[32m%s\x1b[0m", "Reserved names updated"));
