@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Files Filter
-// @version     1.0.3
+// @version     1.0.4
 // @description A userscript that adds filters that toggle the view of repo files by extension
 // @license     MIT
 // @author      Rob Garrison
@@ -9,7 +9,7 @@
 // @run-at      document-idle
 // @grant       GM_getValue
 // @grant       GM_setValue
-// @require     https://greasyfork.org/scripts/28721-mutations/code/mutations.js?version=596445
+// @require     https://greasyfork.org/scripts/28721-mutations/code/mutations.js?version=597950
 // @icon        https://assets-cdn.github.com/pinned-octocat.svg
 // @updateURL   https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-files-filter.user.js
 // @downloadURL https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-files-filter.user.js
