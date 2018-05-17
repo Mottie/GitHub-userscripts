@@ -21,41 +21,41 @@ Userscripts to add functionality to GitHub.
 
 	| Userscript Wiki                        | ![][ico] | Direct<br>Install | Sites                 | Created    | Updated    |
 	|----------------------------------------|:---:|:------------------:|:-------------------------:|:----------:|:----------:|
-	| [GitHub code colors][ccr-wiki]         |     | [install][ccr-raw] | [GF][ccr-gf] [OU][ccr-ou] | 2016.03.20 | 2018.05.10 |
-	| [GitHub code folding][cfd-wiki]        |     | [install][cfd-raw] | [GF][cfd-gf] [OU][cfd-ou] | 2016.12.28 | 2018.05.10 |
+	| [GitHub code colors][ccr-wiki]         |     | [install][ccr-raw] | [GF][ccr-gf] [OU][ccr-ou] | 2016.03.20 | 2018.05.17 |
+	| [GitHub code folding][cfd-wiki]        |     | [install][cfd-raw] | [GF][cfd-gf] [OU][cfd-ou] | 2016.12.28 | 2018.05.17 |
 	| [GitHub code guides][cgl-wiki]         |     | [install][cgl-raw] | [GF][cgl-gf] [OU][cgl-ou] | 2016.08.27 | 2018.01.18 |
-	| [GitHub code show whitespace][csw-wiki]|     | [install][csw-raw] | [GF][csw-gf] [OU][csw-ou] | 2017.03.26 | 2018.05.10 |
-	| [GitHub collapse in comment][cic-wiki] |  *  | [install][cic-raw] | [GF][cic-gf] [OU][cic-ou] | 2016.06.27 | 2018.05.10 |
+	| [GitHub code show whitespace][csw-wiki]|     | [install][csw-raw] | [GF][csw-gf] [OU][csw-ou] | 2017.03.26 | 2018.05.17 |
+	| [GitHub collapse in comment][cic-wiki] |  *  | [install][cic-raw] | [GF][cic-gf] [OU][cic-ou] | 2016.06.27 | 2018.05.17 |
 	| [GitHub collapse markdown][cmd-wiki]   |  *  | [install][cmd-raw] | [GF][cmd-gf] [OU][cmd-ou] | 2016.06.27 | 2018.01.18 |
-	| [GitHub copy code snippet][ccs-wiki]   |     | [install][ccs-raw] | [GF][ccs-gf] [OU][ccs-ou] | 2018.01.12 | 2018.05.10 |
+	| [GitHub copy code snippet][ccs-wiki]   |     | [install][ccs-raw] | [GF][ccs-gf] [OU][ccs-ou] | 2018.01.12 | 2018.05.17 |
 	| [GitHub custom hotkeys][chk-wiki]      |     | [install][chk-raw] | [GF][chk-gf] [OU][chk-ou] | 2016.04.10 | 2018.05.08 |
 	| [GitHub custom navigation][cnv-wiki]   |     | [install][cnv-raw] | [GF][cnv-gf] [OU][cnv-ou] | 2016.06.22 | 2018.02.11 |
-	| [GitHub diff filename][dfn-wiki]       |     | [install][dfn-raw] | [GF][dfn-gf] [OU][dfn-ou] | 2017.08.27 | 2018.05.10 |
-	| [GitHub diff files filter][dff-wiki]   |     | [install][dff-raw] | [GF][dff-gf] [OU][dff-ou] | 2016.12.31 | 2018.05.10 |
-	| [GitHub diff links][dfl-wiki]          |     | [install][dfl-raw] | [GF][dfl-gf] [OU][dfl-ou] | 2016.07.21 | 2018.05.10 |
-	| [GitHub files filter][gff-wiki]        |     | [install][gff-raw] | [GF][gff-gf] [OU][gff-ou] | 2017.06.26 | 2018.05.10 |
-	| [GitHub font preview][fpv-wiki]        |     | [install][fpv-raw] | [GF][fpv-gf] [OU][fpv-ou] | 2016.06.11 | 2018.05.10 |
-	| [GitHub hide own feed meta][hof-wiki]  |     | [install][hof-raw] | [GF][hof-gf] [OU][hof-ou] | 2017.12.21 | 2018.05.10 |
-	| [GitHub image preview][ipv-wiki]       |     | [install][ipv-raw] | [GF][ipv-gf] [OU][ipv-ou] | 2016.05.17 | 2018.05.10 |
-	| [GitHub indent comments][ioc-wiki]     |     | [install][ioc-raw] | [GF][ioc-gf] [OU][ioc-ou] | 2017.03.15 | 2018.05.10 |
-	| [GitHub issue add details][iad-wiki]   |     | [install][iad-raw] | [GF][iad-gf] [OU][iad-ou] | 2018.01.05 | 2018.05.10 |
-	| [GitHub issue comments][ic1-wiki]      |     | [install][ic1-raw] | [GF][ic1-gf] [OU][ic1-ou] | 2016.04.04 | 2018.05.10 |
-	| [GitHub issue counts][ic2-wiki]        |     | [install][ic2-raw] | [GF][ic2-gf] [OU][ic2-ou] | 2012.01.16 | 2018.05.10 |
+	| [GitHub diff filename][dfn-wiki]       |     | [install][dfn-raw] | [GF][dfn-gf] [OU][dfn-ou] | 2017.08.27 | 2018.05.17 |
+	| [GitHub diff files filter][dff-wiki]   |     | [install][dff-raw] | [GF][dff-gf] [OU][dff-ou] | 2016.12.31 | 2018.05.17 |
+	| [GitHub diff links][dfl-wiki]          |     | [install][dfl-raw] | [GF][dfl-gf] [OU][dfl-ou] | 2016.07.21 | 2018.05.17 |
+	| [GitHub files filter][gff-wiki]        |     | [install][gff-raw] | [GF][gff-gf] [OU][gff-ou] | 2017.06.26 | 2018.05.17 |
+	| [GitHub font preview][fpv-wiki]        |     | [install][fpv-raw] | [GF][fpv-gf] [OU][fpv-ou] | 2016.06.11 | 2018.05.17 |
+	| [GitHub hide own feed meta][hof-wiki]  |     | [install][hof-raw] | [GF][hof-gf] [OU][hof-ou] | 2017.12.21 | 2018.05.17 |
+	| [GitHub image preview][ipv-wiki]       |     | [install][ipv-raw] | [GF][ipv-gf] [OU][ipv-ou] | 2016.05.17 | 2018.05.17 |
+	| [GitHub indent comments][ioc-wiki]     |     | [install][ioc-raw] | [GF][ioc-gf] [OU][ioc-ou] | 2017.03.15 | 2018.05.17 |
+	| [GitHub issue add details][iad-wiki]   |     | [install][iad-raw] | [GF][iad-gf] [OU][iad-ou] | 2018.01.05 | 2018.05.17 |
+	| [GitHub issue comments][ic1-wiki]      |     | [install][ic1-raw] | [GF][ic1-gf] [OU][ic1-ou] | 2016.04.04 | 2018.05.17 |
+	| [GitHub issue counts][ic2-wiki]        |     | [install][ic2-raw] | [GF][ic2-gf] [OU][ic2-ou] | 2012.01.16 | 2018.05.17 |
 	| [GitHub issue highlighter][gih-wiki]   |     | [install][gih-raw] | [GF][gih-gf] [OU][gih-ou] | 2016.05.21 | 2018.04.09 |
-	| [GitHub issue show status][iss-wiki]   |     | [install][iss-raw] | [GF][iss-gf] [OU][iss-ou] | 2017.06.02 | 2018.05.10 |
+	| [GitHub issue show status][iss-wiki]   |     | [install][iss-raw] | [GF][iss-gf] [OU][iss-ou] | 2017.06.02 | 2018.05.17 |
 	| [GitHub label color picker][glc-wiki]  |     | [install][glc-raw] | [GF][glc-gf] [OU][glc-ou] | 2016.09.16 | 2018.05.16 |
-	| [GitHub remove diff signs][rds-wiki]   |     | [install][rds-raw] | [GF][rds-gf] [OU][rds-ou] | 2016.04.05 | 2018.05.10 |
+	| [GitHub remove diff signs][rds-wiki]   |     | [install][rds-raw] | [GF][rds-gf] [OU][rds-ou] | 2016.04.05 | 2018.05.17 |
 	| [GitHub reveal header][rhd-wiki]       |     | [install][rhd-raw] | [GF][rhd-gf] [OU][rhd-ou] | 2017.06.03 | 2018.01.18 |
-	| [GitHub rtl comments][rtl-wiki]        |     | [install][rtl-raw] | [GF][rtl-gf] [OU][rtl-ou] | 2016.06.13 | 2018.05.10 |
+	| [GitHub rtl comments][rtl-wiki]        |     | [install][rtl-raw] | [GF][rtl-gf] [OU][rtl-ou] | 2016.06.13 | 2018.05.17 |
 	| [GitHub search autocomplete][sac-wiki] |     | [install][sac-raw] | [GF][sac-gf] [OU][sac-ou] | 2017.03.31 | 2018.01.18 |
-	| [GitHub sort content][srt-wiki]        |     | [install][srt-raw] | [GF][srt-gf] [OU][srt-ou] | 2016.07.13 | 2018.05.10 |
-	| [GitHub sort reactions][gsr-wiki]      |     | [install][gsr-raw] | [GF][gsr-gf] [OU][gsr-ou] | 2018.02.10 | 2018.05.10 |
-	| [GitHub static time][stt-wiki]         |     | [install][stt-raw] | [GF][stt-gf] [OU][stt-ou] | 2017.04.24 | 2018.05.10 |
-	| [GitHub table of contents][toc-wiki]   |     | [install][toc-raw] | [GF][toc-gf] [OU][toc-ou] | 2016.03.28 | 2018.05.10 |
+	| [GitHub sort content][srt-wiki]        |     | [install][srt-raw] | [GF][srt-gf] [OU][srt-ou] | 2016.07.13 | 2018.05.17 |
+	| [GitHub sort reactions][gsr-wiki]      |     | [install][gsr-raw] | [GF][gsr-gf] [OU][gsr-ou] | 2018.02.10 | 2018.05.17 |
+	| [GitHub static time][stt-wiki]         |     | [install][stt-raw] | [GF][stt-gf] [OU][stt-ou] | 2017.04.24 | 2018.05.17 |
+	| [GitHub table of contents][toc-wiki]   |     | [install][toc-raw] | [GF][toc-gf] [OU][toc-ou] | 2016.03.28 | 2018.05.17 |
 	| [GitHub title notification][tbn-wiki]  |     | [install][tbn-raw] | [GF][tbn-gf] [OU][tbn-ou] | 2016.03.24 | 2018.01.18 |
-	| [GitHub toggle diff comments][tdc-wiki]|     | [install][tdc-raw] | [GF][tdc-gf] [OU][tdc-ou] | 2017.12.10 | 2018.05.10 |
+	| [GitHub toggle diff comments][tdc-wiki]|     | [install][tdc-raw] | [GF][tdc-gf] [OU][tdc-ou] | 2017.12.10 | 2018.05.17 |
 	| [GitHub toggle expanders][tex-wiki]    |     | [install][tex-raw] | [GF][tex-gf] [OU][tex-ou] | 2016.09.17 | 2018.01.18 |
-	| [GitHub toggle wiki sidebar][tws-wiki] |     | [install][tws-raw] | [GF][tws-gf] [OU][tws-ou] | 2016.04.01 | 2018.05.10 |
+	| [GitHub toggle wiki sidebar][tws-wiki] |     | [install][tws-raw] | [GF][tws-gf] [OU][tws-ou] | 2016.04.01 | 2018.05.17 |
 	| [Gist raw links][grl-wiki]             |     | [install][grl-raw] | [GF][grl-gf] [OU][grl-ou] | 2017.05.19 | 2018.01.30 |
 	| [Gist to dabblet][g2d-wiki]            |     | [install][g2d-raw] | [GF][g2d-gf] [OU][g2d-ou] | 2012.01.26 | 2017.12.14 |
 
