@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Files Filter
-// @version     1.1.0
+// @version     1.1.1
 // @description A userscript that adds filters that toggle the view of repo files by extension
 // @license     MIT
 // @author      Rob Garrison
@@ -22,6 +22,9 @@
 	// animation delay; See #46
 	GM_addStyle(`
 		.gff-filter .btn.selected { font-variant: small-caps; }
+		.gff-filter .gff-all:not(.selected):focus,
+		.gff-filter .gff-all:not(.selected) ~ .btn:focus,
+		.gff-filter .gff-all:not(.selected) ~ .btn.selected:focus,
 		.gff-filter .gff-all:not(.selected):hover,
 		.gff-filter .gff-all:not(.selected) ~ .btn:hover,
 		.gff-filter .gff-all:not(.selected) ~ .btn.selected:hover {
