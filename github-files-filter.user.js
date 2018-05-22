@@ -9,6 +9,7 @@
 // @run-at      document-idle
 // @grant       GM_getValue
 // @grant       GM_setValue
+// @grant       GM_addStyle
 // @require     https://greasyfork.org/scripts/28721-mutations/code/mutations.js?version=597950
 // @icon        https://assets-cdn.github.com/pinned-octocat.svg
 // @updateURL   https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-files-filter.user.js
@@ -16,6 +17,21 @@
 // ==/UserScript==
 (() => {
 	"use strict";
+
+	// Emphasize selected buttons, disable hover when all selected and remove
+	// animation delay; See #46
+	GM_addStyle(`
+		.gff-filter .btn.selected { font-variant: small-caps; }
+		.gff-filter .gff-all:not(.selected):hover,
+		.gff-filter .gff-all:not(.selected) ~ .btn:hover,
+		.gff-filter .gff-all:not(.selected) ~ .btn.selected:hover {
+			border-color: #777 !important;
+		}
+		.gff-filter .btn:before, .gff-filter .btn:after {
+			animation-delay: unset !important;
+			filter: invert(10%);
+		}
+	`);
 
 	let settings,
 		list = {};
