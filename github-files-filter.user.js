@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Files Filter
-// @version     1.0.4
+// @version     1.1.0
 // @description A userscript that adds filters that toggle the view of repo files by extension
 // @license     MIT
 // @author      Rob Garrison
@@ -175,7 +175,7 @@
 		// get all files
 		$$("table.files tr.js-navigation-item").forEach(file => {
 			if ($("td.icon .octicon-file", file)) {
-				let ext,
+				let ext, tmp,
 					link = $("td.content .js-navigation-open", file),
 					txt = (link.title || link.textContent || "").trim(),
 					name = txt.split("/").slice(-1)[0];
@@ -183,6 +183,10 @@
 				ext = Object.keys(types).find(item => {
 					return types[item].is(name);
 				}) || /[^./\\]*$/.exec(name)[0];
+				tmp = name.split(".");
+				if (!ext.startsWith(":") && tmp.length > 2 && tmp[0] !== "") {
+					ext = tmp.slice(-2).join(".");
+				}
 				if (ext) {
 					if (!list[ext]) {
 						list[ext] = [];
