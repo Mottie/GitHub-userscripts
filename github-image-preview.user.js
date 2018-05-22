@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Image Preview
-// @version     1.1.15
+// @version     1.1.16
 // @description A userscript that adds clickable image thumbnails
 // @license     MIT
 // @author      Rob Garrison
@@ -95,8 +95,8 @@
 			btn = `btn btn-sm BtnGroup-item tooltipped tooltipped-n" aria-label="Show`;
 		div.className = "BtnGroup float-right gh-img-preview";
 		div.innerHTML = `
-			<div class="ghip-tiled ${btn} tiled files with image preview">${tiled}</div>
-			<div class="ghip-fullw ${btn} full width files with image preview">${fullWidth}</div>
+			<button type="button" class="ghip-tiled ${btn} tiled files with image preview">${tiled}</button>
+			<button type="button" class="ghip-fullw ${btn} full width files with image preview">${fullWidth}</button>
 		`;
 		$(".file-navigation").appendChild(div);
 
