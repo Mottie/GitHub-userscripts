@@ -102,7 +102,7 @@
 	}
 
 	function toggleRow(el, mode) {
-		const row = closest("tr.js-navigation-item", el);
+		const row = el.closest("tr.js-navigation-item");
 		// don't toggle folders
 		if (row && !$(folderIconClasses, row)) {
 			row.style.display = mode === "show" ? "" : "none";
@@ -288,16 +288,6 @@
 
 	function $$(str, el) {
 		return Array.from((el || document).querySelectorAll(str));
-	}
-
-	function closest(selector, el) {
-		while (el && el.nodeType === 1) {
-			if (el.matches(selector)) {
-				return el;
-			}
-			el = el.parentNode;
-		}
-		return null;
 	}
 
 	document.addEventListener("ghmo:container", () => {
