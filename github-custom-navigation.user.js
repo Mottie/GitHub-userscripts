@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Custom Navigation
-// @version     1.1.0
+// @version     1.1.1
 // @description A userscript that allows you to customize GitHub's main navigation bar
 // @license     MIT
 // @author      Rob Garrison
@@ -91,7 +91,7 @@
 					url: "https://github.com/marketplace",
 					tooltip: "Marketplace",
 					hotkey: "",
-					content: "<svg class='octicon' xmlns='http://www.w3.org/2000/svg' aria-hidden='true' height='16' viewBox='0 0 16 16' width='16'><path d='M0 0v16h7.5v-1H1V1h10.5v.5h1V0zm3 3v1h8.8l2.5 2.5-.7.6.8.8 1.3-1.4L12.2 3zm1.4 2.1l-.8.8 2 2 .8-.8zm4.5 0L8 6l2 2L11 7zM12 9c-1.1 0-2 .4-2.6 1.1-.6.7-.9 1.5-.9 2.4A3.4 3.4 0 0 0 12 16c1.1 0 2-.4 2.6-1.1.6-.7.9-1.5.9-2.4A3.4 3.4 0 0 0 12 9zm0 1c.9 0 1.5.3 1.9.8.4.4.6 1 .6 1.7 0 .6-.2 1.3-.6 1.7-.4.5-1 .8-1.9.8-.9 0-1.5-.3-1.9-.8-.4-.4-.6-1-.6-1.7 0-.6.2-1.3.6-1.7.4-.5 1-.8 1.9-.8zm-.9 1.2v2h2v-1h-1v-1z'/></svg>"
+					content: "<svg class='octicon' xmlns='http://www.w3.org/2000/svg' aria-hidden='true' height='16' viewBox='0 0 14 16' width='16'><path d='M0 0v16h14v-2h-1v1H1V1h12v.5h1V0H0zm3 3v1h8.8l2.5 2.5-.7.6.8.8 1.3-1.4L12.2 3H3zm1.4 2.1l-.8.8 2 2 .8-.8-2-2zm4.5 0L8 6l2 2 1-1-2.1-1.9z'/><path d='M6.5 15h-1v-4H4v4H3v-5h3.5zM12 13H8v-3h4v3zm-3-1h2v-1H9v1z'/></svg>"
 				},
 				"menu": {
 					url: panelHash,
