@@ -39,6 +39,7 @@
 	const pairs = new Map(),
 		ellipsis = document.createElement("span"),
 		triangle = document.createElement("span");
+	let isMobile = false;
 
 	triangle.className = "collapser";
 	ellipsis.className = "pl-smi ellipsis";
@@ -46,7 +47,8 @@
 
 	function countInitialWhiteSpace(arr) {
 		const getWhiteSpaceIndex = i => {
-			if (arr[i] !== " " && arr[i] !== "\t") {
+			if (arr[i] !== " " && arr[i] !== "\t" &&
+				(!isMobile || arr[i] !== "\xa0")) {
 				return i;
 			}
 			i++;
@@ -65,7 +67,7 @@
 	}
 
 	function getLineNumber(el) {
-		let elm = el.closest("td"),
+		let elm = el.closest(isMobile ? "div" : "td"),
 			index = elm ? elm.id : "";
 		if (index) {
 			return parseInt(index.slice(2), 10);
@@ -73,9 +75,14 @@
 		return "";
 	}
 
+	function getCodeLines() {
+		return $$(isMobile ? ".blob-file-content .line" :
+			".file table.highlight .blob-code-inner");
+	}
+
 	function toggleCode(action, index, depth) {
 		let els, lineNums;
-		const codeLines = $$(".file table.highlight .blob-code-inner");
+		const codeLines = getCodeLines();
 		// depth is a string containing a specific depth number to toggle
 		if (depth) {
 			els = $$(`.collapser[data-depth="${depth}"]`);
@@ -92,7 +99,7 @@
 				let elm,
 					end = pairs.get(start - 1);
 				codeLines.slice(start, end).forEach(el => {
-					elm = el.closest("tr");
+					elm = isMobile ? el : el.closest("tr");
 					if (elm) {
 						elm.classList.add("hidden-line");
 					}
@@ -109,7 +116,7 @@
 			lineNums.forEach(start => {
 				let end = pairs.get(start - 1);
 				codeLines.slice(start, end).forEach(el => {
-					let elm = el.closest("tr");
+					let elm = isMobile ? el : el.closest("tr");
 					if (elm) {
 						elm.classList.remove("hidden-line");
 						remove(".ellipsis", elm);
@@ -172,13 +179,15 @@
 	}
 
 	function addCodeFolding() {
-		if ($(".file table.highlight")) {
+		if ($(".file table.highlight") || $("div.blob-file-content")) {
+			isMobile = !$(".file table.highlight");
+
 			// In case this script has already been run and modified the DOM on a
 			// previous page in github, make sure to reset it.
 			remove("span.collapser");
 			pairs.clear();
 
-			const codeLines = $$(".file table.highlight .blob-code-inner"),
+			const codeLines = getCodeLines(),
 				spaceMap = new Map(),
 				stack = [];
 
