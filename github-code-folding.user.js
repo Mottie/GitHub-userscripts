@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Code Folding
-// @version     1.0.14
+// @version     1.0.15
 // @description A userscript that adds code folding to GitHub files
 // @license     MIT
 // @author      Rob Garrison
@@ -47,8 +47,10 @@
 
 	function countInitialWhiteSpace(arr) {
 		const getWhiteSpaceIndex = i => {
-			if (arr[i] !== " " && arr[i] !== "\t" &&
-				(!isMobile || arr[i] !== "\xa0")) {
+			if (
+				arr[i] !== " " && arr[i] !== "\t" &&
+				(!isMobile || arr[i] !== "\xa0")
+			) {
 				return i;
 			}
 			i++;
@@ -76,8 +78,11 @@
 	}
 
 	function getCodeLines() {
-		return $$(isMobile ? ".blob-file-content .line" :
-			".file table.highlight .blob-code-inner");
+		return $$(
+			isMobile ?
+				".blob-file-content .line" :
+				".file table.highlight .blob-code-inner"
+		);
 	}
 
 	function toggleCode(action, index, depth) {
