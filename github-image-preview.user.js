@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Image Preview
-// @version     1.1.16
+// @version     1.1.17
 // @description A userscript that adds clickable image thumbnails
 // @license     MIT
 // @author      Rob Garrison
@@ -59,11 +59,10 @@
 	const imgExt = /(png|jpg|jpeg|gif|tif|tiff|bmp|webp)$/i,
 		svgExt = /svg$/i,
 
-		folderIconClasses = [
-			".octicon-file-directory",
-			".octicon-file-symlink-directory",
-			".octicon-file-submodule"
-		].join(","),
+		folderIconClasses = `
+			.octicon-file-directory,
+			.octicon-file-symlink-directory,
+			.octicon-file-submodule`,
 
 		tiled = `
 			<svg class="octicon" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 16 16">
@@ -100,54 +99,53 @@
 		`;
 		$(".file-navigation").appendChild(div);
 
-		$(".ghip-tiled", div).addEventListener("click", () => {
-			openView("tiled");
+		$(".ghip-tiled", div).addEventListener("click", event => {
+			openView("tiled", event);
 		});
-		$(".ghip-fullw", div).addEventListener("click", () => {
-			openView("fullw");
+		$(".ghip-fullw", div).addEventListener("click", event => {
+			openView("fullw", event);
 		});
 	}
 
 	function setInitState() {
-		const view = GM_getValue("gh-image-preview");
-		if (view) {
-			openView(view);
+		const state = GM_getValue("gh-image-preview");
+		if (state) {
+			openView(state);
 		}
 	}
 
-	function openView(name) {
+	function openView(name, event) {
 		const el = $(".ghip-" + name);
 		if (el) {
-			el.classList.toggle("selected");
-			if (el.classList.contains("selected")) {
-				GM_setValue("gh-image-preview", name);
-				showPreview(name);
-			} else {
-				GM_setValue("gh-image-preview", "");
-				showList();
+			if (event) {
+				el.classList.toggle("selected");
+				if (!el.classList.contains("selected")) {
+					return showList();
+				}
 			}
+			showPreview(name);
 		}
 	}
 
-	function showPreview(size) {
+	function showPreview(name) {
 		buildPreviews();
 		const table = $("table.files"),
-			btn1 = "ghip-" + size,
-			btn2 = "ghip-" + (size === "fullw" ? "tiled" : "fullw");
-		table.classList.add(...["ghip-show-previews", btn1]);
+			btn1 = "ghip-" + name,
+			btn2 = "ghip-" + (name === "fullw" ? "tiled" : "fullw");
+		table.classList.add("ghip-show-previews", btn1);
 		$(".btn." + btn1).classList.add("selected");
 		table.classList.remove(btn2);
 		$(".btn." + btn2).classList.remove("selected");
+		GM_setValue("gh-image-preview", name);
 	}
 
 	function showList() {
-		$("table.files").classList.remove(...[
-			"ghip-show-previews",
-			"ghip-tiled",
-			"ghip-fullw"
-		]);
+		$("table.files").classList.remove(
+			"ghip-show-previews", "ghip-tiled", "ghip-fullw"
+		);
 		$(".btn.ghip-tiled").classList.remove("selected");
 		$(".btn.ghip-fullw").classList.remove("selected");
+		GM_setValue("gh-image-preview", "");
 	}
 
 	function buildPreviews() {
@@ -249,12 +247,11 @@
 			method: "GET",
 			url,
 			onload: response => {
-				let encoded;
 				const url = response.finalUrl,
 					file = url.substring(url.lastIndexOf("/") + 1, url.length),
 					target = $("[data-svg-holder='" + file + "']");
 				if (target) {
-					encoded = window.btoa(response.responseText);
+					const encoded = window.btoa(response.responseText);
 					target.src = "data:image/svg+xml;base64," + encoded;
 				}
 			}
@@ -265,13 +262,13 @@
 		return (el || document).querySelector(selector);
 	}
 	function $$(selector, el) {
-		return Array.from((el || document).querySelectorAll(selector));
+		return [...(el || document).querySelectorAll(selector)];
 	}
 
 	function init() {
 		if ($("table.files")) {
 			addToggles();
-			setInitState();
+			setTimeout(setInitState, 0);
 		}
 	}
 
