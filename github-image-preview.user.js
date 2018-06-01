@@ -130,12 +130,12 @@
 	function showPreview(name) {
 		buildPreviews();
 		const table = $("table.files"),
-			btn1 = "ghip-" + name,
-			btn2 = "ghip-" + (name === "fullw" ? "tiled" : "fullw");
-		table.classList.add("ghip-show-previews", btn1);
-		$(".btn." + btn1).classList.add("selected");
-		table.classList.remove(btn2);
-		$(".btn." + btn2).classList.remove("selected");
+			selected = "ghip-" + name,
+			notSelected = "ghip-" + (name === "fullw" ? "tiled" : "fullw");
+		table.classList.add("ghip-show-previews", selected);
+		$(".btn." + selected).classList.add("selected");
+		table.classList.remove(notSelected);
+		$(".btn." + notSelected).classList.remove("selected");
 		GM_setValue("gh-image-preview", name);
 	}
 
@@ -149,7 +149,7 @@
 	}
 
 	function buildPreviews() {
-		let template, url, temp, noExt,
+		let template, url, temp, noExt, fileName,
 			imgs = "<td colspan='4' class='ghip-content'>",
 			indx = 0;
 		const row = document.createElement("tr"),
@@ -168,12 +168,14 @@
 				temp = $("td.content a", files[indx]) ||
 					$("td.content span span", files[indx]);
 				// use innerHTML because some links include path - see "third_party/lss"
-				template = temp ? temp.innerHTML.trim() + "</h4>" : "";
+				fileName = temp ? temp.innerHTML.trim() : "";
 				// temp = temp && $("a", temp);
 				url = temp && temp.nodeName === "A" ? temp.href : "";
 				// add link color
-				template = "<h4 class='ghip-file-name" + (url ? " text-blue" : "") +
-					"'>" + template;
+				template = `<h4 class="ghip-file-name ${
+					(url ? " text-blue" : "")}" title="${fileName}">
+						${fileName}
+					</h4>`;
 				if (imgExt.test(url)) {
 					// *** image preview ***
 					template += "<img src='" + url + "?raw=true'/>";
