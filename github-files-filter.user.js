@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Files Filter
-// @version     1.1.1
+// @version     1.1.2
 // @description A userscript that adds filters that toggle the view of repo files by extension
 // @license     MIT
 // @author      Rob Garrison
@@ -106,7 +106,7 @@
 				selector += `[href$="${ext}"]`;
 			}
 			$$(`.ghip-image-previews ${selector}`).forEach(el => {
-				if (!$(".ghip-folder", el)) {
+				if (!$(".ghip-folder, .ghip-up-tree", el)) {
 					if (hasType && ext !== ":all") {
 						// image preview includes the filename
 						let elm = $(".ghip-file-name", el);
