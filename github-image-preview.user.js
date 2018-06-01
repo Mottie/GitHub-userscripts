@@ -228,7 +228,7 @@
 						imgs += url ?
 							updateTemplate(
 								url,
-								"<h4 class='text-blue'>&middot;&middot;</h4>"
+								"<h4 class='text-blue ghip-up-tree'>&middot;&middot;</h4>"
 							) : "";
 					}
 				}
