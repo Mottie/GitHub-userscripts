@@ -11,7 +11,7 @@
 	},
 	"devDependencies": {
 		"eslint": "^4.19.1",
-		"github-reserved-names": "^1.0.14"
+		"github-reserved-names": "^1.1.0"
 	},
 	"scripts": {
 		"build:reserved": "node tools/reserved-names.js",
