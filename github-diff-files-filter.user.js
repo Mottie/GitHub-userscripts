@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Diff Files Filter
-// @version     1.0.3
+// @version     1.1.0
 // @description A userscript that adds filters that toggle diff & PR files by extension
 // @license     MIT
 // @author      Rob Garrison
@@ -18,7 +18,8 @@
 
 	const allExtLabel = "\u00ABall\u00BB",
 		noExtLabel = "\u00ABno-ext\u00BB",
-		dotExtLabel = "\u00ABdot-files\u00BB";
+		dotExtLabel = "\u00ABdot-files\u00BB",
+		renameFileLabel = "\u00ABrenamed\u00BB";
 
 	let list = {};
 
@@ -66,15 +67,18 @@
 		// make noExtLabel the first element in the object
 		list[noExtLabel] = [];
 		list[dotExtLabel] = [];
+		list[renameFileLabel] = [];
 		// TOC in file diffs and pr-toolbar in Pull requests
 		$$(".file-header .file-info > a").forEach(file => {
-			let ext,
-				txt = (file.textContent || "").trim(),
-				filename = txt.split("/").slice(-1)[0];
-			// test for no extension, then get extension name
-			// regexp from https://github.com/silverwind/file-extension
-			ext = /\./.test(filename) ? /[^./\\]*$/.exec(filename)[0] : noExtLabel;
-			if (ext === filename.slice(1)) {
+			let txt = (file.title || file.textContent || "").trim(),
+				filename = txt.split("/").splice(-1)[0],
+				// test for no extension, then get extension name
+				// regexp from https://github.com/silverwind/file-extension
+				ext = /\./.test(filename) ? /[^./\\]*$/.exec(filename)[0] : noExtLabel;
+			// Add filter for renamed files: {old path} → {new path}
+			if (txt.indexOf(" → ") > -1) {
+				ext = renameFileLabel;
+			} else if (ext === filename.slice(1)) {
 				ext = dotExtLabel;
 			}
 			if (ext) {
@@ -93,7 +97,6 @@
 	}
 
 	function makeFilter() {
-		buildList();
 		const files = $("#files");
 		let filters = 0,
 			keys = Object.keys(list),
@@ -141,6 +144,7 @@
 
 	function init() {
 		if ($("#files.diff-view") || $(".pr-toolbar")) {
+			buildList();
 			makeFilter();
 		}
 	}
