@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Toggle Issue Comments
-// @version     1.2.1
+// @version     1.2.2
 // @description A userscript that toggles issues/pull request comments & messages
 // @license     MIT
 // @author      Rob Garrison
@@ -345,30 +345,29 @@
 			// "need this"; "right now"; "still nothing?"; "super helpful"; "for gods sake"
 			regexHide = new RegExp("(" + [
 				"@\\w+",
-				"\\b(it|is|a|so|the|and|no|on|oh|do|this|any|very|much|here)\\b",
+				"\\b(it|is|a|so|the|and|no|on|oh|do|this|any|very|much|here|just|my)\\b",
 				"pretty",
 				"pl+e+a+s+e+",
 				"y+e+s+",
 				"eta",
-				"need(ed)?",
 				"fix",
 				"right",
 				"now",
 				"hope(ful)?",
 				"still",
-				"wait(ing)?",
+				"wait(ed|ing)?",
 				"nothing",
 				"really",
-				"add(ed)?",
-				"need(ed)?",
-				"update[sd]?",
+				"add(ed|ing)?",
+				"need(ed|ing)?",
+				"updat(es|ed|ing)?",
 				"back",
-				"feature",
+				"features?",
 				"useful",
 				"super",
 				"helpful",
 				"thanks",
-				"for\\sgods\\ssake",
+				"for\\sgod'?s\\ssake",
 				"c['emon]+" // c'mon, com'on, comeon
 			].join("|") + ")", "gi"),
 			// image title ":{anything}:", etc.
