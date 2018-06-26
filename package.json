@@ -10,8 +10,8 @@
 		"url": "https://github.com/Mottie"
 	},
 	"devDependencies": {
-		"eslint": "^4.19.1",
-		"github-reserved-names": "^1.1.0"
+		"eslint": "^5.0.1",
+		"github-reserved-names": "^1.1.1"
 	},
 	"scripts": {
 		"build:reserved": "node tools/reserved-names.js",
