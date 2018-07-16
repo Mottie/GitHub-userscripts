@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Issue Highlighter
-// @version     1.0.8
+// @version     1.1.0
 // @description A userscript that highlights the linked-to comment
 // @license     MIT
 // @author      Rob Garrison
@@ -24,7 +24,7 @@
 		.timeline-comment.current-user.selected {
 			border-color: #4183C4 !important;
 		}
-		.timeline-comment.selected:before,
+		.timeline-comment.selected .comment:before,
 		.timeline-comment.current-user.selected:before {
 			border-right-color: #4183C4 !important;
 		}
@@ -48,7 +48,7 @@
 			if (regex.test(hash)) {
 				target = document.querySelector(hash.match(regex)[0]);
 				if (target) {
-					target.classList.add("selected");
+					target.querySelector(".timeline-comment").classList.add("selected");
 				}
 			}
 		}
