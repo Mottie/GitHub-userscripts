@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Files Filter
-// @version     1.1.2
+// @version     1.1.3
 // @description A userscript that adds filters that toggle the view of repo files by extension
 // @license     MIT
 // @author      Rob Garrison
@@ -168,6 +168,15 @@
 		updateAllButton();
 	}
 
+	function addExt(ext, txt) {
+		if (ext) {
+			if (!list[ext]) {
+				list[ext] = [];
+			}
+			list[ext].push(txt);
+		}
+	}
+
 	function buildList() {
 		list = {};
 		Object.keys(types).forEach(item => {
@@ -178,24 +187,25 @@
 		// get all files
 		$$("table.files tr.js-navigation-item").forEach(file => {
 			if ($("td.icon .octicon-file", file)) {
-				let ext, tmp,
+				let ext, parts, sub,
 					link = $("td.content .js-navigation-open", file),
-					txt = (link.title || link.textContent || "").trim(),
+					txt = (link.title || link.textContent || "").trim().toLowerCase(),
 					name = txt.split("/").slice(-1)[0];
 				// test extension types; fallback to regex extraction
 				ext = Object.keys(types).find(item => {
 					return types[item].is(name);
 				}) || /[^./\\]*$/.exec(name)[0];
-				tmp = name.split(".");
-				if (!ext.startsWith(":") && tmp.length > 2 && tmp[0] !== "") {
-					ext = tmp.slice(-2).join(".");
-				}
-				if (ext) {
-					if (!list[ext]) {
-						list[ext] = [];
+				parts = name.split(".");
+				if (!ext.startsWith(":") && parts.length > 2 && parts[0] !== "") {
+					sub = parts.slice(0, -1).join(".");
+					// Prevent version numbers & "vs. " from adding a filter button
+					// See https://github.com/tpn/pdfs
+					if (!/[()]/.test(sub) && !/[\b\w]\.[\b\d]/.test(sub)) {
+						addExt(ext, txt);
+						ext = parts.slice(-2).join(".");
 					}
-					list[ext].push(txt);
 				}
+				addExt(ext, txt);
 			}
 		});
 	}
