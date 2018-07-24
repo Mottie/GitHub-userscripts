@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Custom Navigation
-// @version     1.1.1
+// @version     1.1.2
 // @description A userscript that allows you to customize GitHub's main navigation bar
 // @license     MIT
 // @author      Rob Garrison
@@ -235,7 +235,7 @@
 				<div id="ghcn-settings-inner" class="boxed-group">
 					<h3>GitHub Custom Navigation Settings
 						<button type="button" class="ghcn-close btn btn-sm">${icons.close}</button>
-						<button type="button" class="ghcn-code btn btn-sm tooltipped tooltipped-n" aria-label="Toggle JSON data view">{ }</button>
+						<button type="button" class="ghcn-code btn btn-sm tooltipped tooltipped-w" aria-label="Toggle JSON data view">{ }</button>
 					</h3>
 					<div class="ghcn-settings-wrapper boxed-group-inner">
 						<ul id="ghcn-nav-items" class="BtnGroup HeaderNav"></ul>
