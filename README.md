@@ -29,7 +29,7 @@ Userscripts to add functionality to GitHub.
 	| [GitHub collapse markdown][cmd-wiki]   |  *  | [install][cmd-raw] | [GF][cmd-gf] [OU][cmd-ou] | 2016.06.27 | 2018.01.18 |
 	| [GitHub copy code snippet][ccs-wiki]   |     | [install][ccs-raw] | [GF][ccs-gf] [OU][ccs-ou] | 2018.01.12 | 2018.05.17 |
 	| [GitHub custom hotkeys][chk-wiki]      |     | [install][chk-raw] | [GF][chk-gf] [OU][chk-ou] | 2016.04.10 | 2018.06.26 |
-	| [GitHub custom navigation][cnv-wiki]   |     | [install][cnv-raw] | [GF][cnv-gf] [OU][cnv-ou] | 2016.06.22 | 2018.05.27 |
+	| [GitHub custom navigation][cnv-wiki]   |     | [install][cnv-raw] | [GF][cnv-gf] [OU][cnv-ou] | 2016.06.22 | 2018.07.24 |
 	| [GitHub diff expander][dex-wiki]       |     | [install][dex-raw] | [GF][dex-gf] [OU][dex-ou] | 2018.06.09 | 2018.06.09 |
 	| [GitHub diff filename][dfn-wiki]       |     | [install][dfn-raw] | [GF][dfn-gf] [OU][dfn-ou] | 2017.08.27 | 2018.05.17 |
 	| [GitHub diff files filter][dff-wiki]   |     | [install][dff-raw] | [GF][dff-gf] [OU][dff-ou] | 2016.12.31 | 2018.06.23 |
@@ -245,12 +245,12 @@ Thanks to all that have [contributed](./AUTHORS) so far!
 ## Other userscripts not hosted here:
 
 * [GitHub Dark Script](https://github.com/StylishThemes/GitHub-Dark-Script)
-	* [Github Monospace Font Toggle](https://greasyfork.org/en/scripts/18787-github-monospace-font-toggle) (also part of GitHub Dark Script)
-	* [GitHub Diff File Toggle](https://greasyfork.org/en/scripts/18788-github-diff-file-toggle) (also part of GitHub Dark Script)
-	* [GitHub Toggle Code Wrap](https://greasyfork.org/en/scripts/18789-github-toggle-code-wrap) (also part of GitHub Dark Script)
+	* [Github Monospace Font Toggle](https://greasyfork.org/en/scripts/18787-github-monospace-font-toggle) (also part of GitHub Dark Script).
+	* [GitHub Diff File Toggle](https://greasyfork.org/en/scripts/18788-github-diff-file-toggle) (also part of GitHub Dark Script).
+	* [GitHub Toggle Code Wrap](https://greasyfork.org/en/scripts/18789-github-toggle-code-wrap) (also part of GitHub Dark Script).
+	* [GitHub Make Tooltips](https://greasyfork.org/en/scripts/22194) (Included in GitHub Dark Script repo).
 * [GitHub Custom Emojis](https://github.com/StylishThemes/GitHub-Custom-Emojis)
-* [GitHub Make Tooltips](https://greasyfork.org/en/scripts/22194)
 * [Bitbucket userscripts](https://bitbucket.org/mottie/bitbucket-userscripts)
-* [GitLab userscript](https://gitlab.com/Mottie/GitLab-userscripts)
+* [GitLab userscripts](https://gitlab.com/Mottie/GitLab-userscripts)
 * [Miscellaneous userscripts](https://github.com/Mottie/Misc-userscripts)
 * [GitHub userscripts by Jerone](https://github.com/jerone/UserScripts#github)
