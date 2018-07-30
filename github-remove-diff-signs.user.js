@@ -18,7 +18,7 @@
 
 	GM_addStyle(`.diff-table .blob-code-inner:before {
 		user-select: none;
-		content: "\\a0";
+		content: "";
 	}`);
 
 	function processDiff() {
