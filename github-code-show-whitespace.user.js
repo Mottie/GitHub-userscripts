@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Code Show Whitespace
-// @version     1.2.0
+// @version     1.2.1
 // @description A userscript that shows whitespace (space, tabs and carriage returns) in code blocks
 // @license     MIT
 // @author      Rob Garrison
@@ -22,10 +22,10 @@
 // @updateURL   https://raw.githubusercontent.com/Mottie/Github-userscripts/master/github-code-show-whitespace.user.js
 // @downloadURL https://raw.githubusercontent.com/Mottie/Github-userscripts/master/github-code-show-whitespace.user.js
 // ==/UserScript==
-(() => {
+(async () => {
 	"use strict";
 
-	const showWhiteSpace = GM_getValue("show-whitespace", "false");
+	let showWhiteSpace = await GM.getValue("show-whitespace", "false");
 
 	// include em-space & en-space?
 	const whitespace = {
@@ -94,7 +94,7 @@
 			if (!$(".ghcw-toggle", el)) {
 				el.insertBefore(toggleButton.cloneNode(true), el.childNodes[0]);
 			}
-			if (showWhiteSpace) {
+			if (showWhiteSpace === "true") {
 				// Let the page render a bit before going nuts
 				setTimeout(show(el, true), 200);
 			}
@@ -246,10 +246,12 @@
 		}
 	});
 
-	GM_registerMenuCommand("GitHub Code White Space", () => {
-		const val = prompt("Always show on page load?", showWhiteSpace);
+	GM.registerMenuCommand("Set GitHub Code White Space", async () => {
+		let val = prompt("Always show on page load (true/false)?", showWhiteSpace);
 		if (val !== null) {
-			GM_getValue("show-whitespace", showWhiteSpace);
+			val = (val || "").toLowerCase();
+			await GM.setValue("show-whitespace", val);
+			showWhiteSpace = val;
 			showAll();
 		}
 	});
