@@ -79,11 +79,6 @@
 		.ghcw-adjust .ghcw-active .ghcw-whitespace:before {
 			left: .6em;
 		}
-		/* hide extra leading space added to diffs - see #27 */
-		.diff-table td.blob-code-inner .pl-space:first-child,
-		.diff-table .blob-code-context .pl-space:first-child {
-			opacity: 0;
-		}
 	`);
 
 	function addToggle() {
