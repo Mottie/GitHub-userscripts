@@ -8,8 +8,14 @@
 // @include     https://github.com/*
 // @include     https://gist.github.com/*
 // @run-at      document-idle
+// @grant       GM_registerMenuCommand
+// @grant       GM.registerMenuCommand
 // @grant       GM.addStyle
 // @grant       GM_addStyle
+// @grant       GM.getValue
+// @grant       GM_getValue
+// @grant       GM.setValue
+// @grant       GM_setValue
 // @require     https://greasemonkey.github.io/gm4-polyfill/gm4-polyfill.js?updated=20180103
 // @require     https://greasyfork.org/scripts/28721-mutations/code/mutations.js?version=597950
 // @icon        https://assets-cdn.github.com/pinned-octocat.svg
@@ -18,6 +24,8 @@
 // ==/UserScript==
 (() => {
 	"use strict";
+
+	const showWhiteSpace = GM_getValue("show-whitespace", "false");
 
 	// include em-space & en-space?
 	const whitespace = {
@@ -85,6 +93,10 @@
 		$$(".file-actions").forEach(el => {
 			if (!$(".ghcw-toggle", el)) {
 				el.insertBefore(toggleButton.cloneNode(true), el.childNodes[0]);
+			}
+			if (showWhiteSpace) {
+				// Let the page render a bit before going nuts
+				setTimeout(show(el, true), 200);
 			}
 		});
 	}
@@ -199,6 +211,23 @@
 		}
 	}
 
+	function showAll() {
+		$$(".file .highlight").forEach(target => {
+			show(target, true);
+		});
+	}
+
+	function show(target, state) {
+		const wrap = target.closest(".file");
+		const block = $(".highlight", wrap);
+		if (block) {
+			wrap.querySelector(".ghcw-toggle").classList.toggle("selected", state);
+			block.classList.toggle("ghcw-active", state);
+			detectDiff(wrap);
+			addWhitespace(block);
+		}
+	}
+
 	function $(selector, el) {
 		return (el || document).querySelector(selector);
 	}
@@ -214,14 +243,15 @@
 			target.nodeName === "DIV" &&
 			target.classList.contains("ghcw-toggle")
 		) {
-			const wrap = target.closest(".file");
-			const block = $(".highlight", wrap);
-			if (block) {
-				target.classList.toggle("selected");
-				block.classList.toggle("ghcw-active");
-				detectDiff(wrap);
-				addWhitespace(block);
-			}
+			show(target);
+		}
+	});
+
+	GM_registerMenuCommand("GitHub Code White Space", () => {
+		const val = prompt("Always show on page load?", showWhiteSpace);
+		if (val !== null) {
+			GM_getValue("show-whitespace", showWhiteSpace);
+			showAll();
 		}
 	});
 
