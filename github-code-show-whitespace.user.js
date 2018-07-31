@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Code Show Whitespace
-// @version     1.1.10
+// @version     1.2.0
 // @description A userscript that shows whitespace (space, tabs and carriage returns) in code blocks
 // @license     MIT
 // @author      Rob Garrison
@@ -156,38 +156,37 @@
 		}
 	}
 
+	function* modifyLine(lines) {
+		while (lines.length) {
+			const line = lines.shift();
+			// first node is a syntax string and may have leading whitespace
+			replaceTextNode(getNodes(line));
+			// remove end CRLF if it exists; then add a line ending
+			const html = line.innerHTML;
+			const update = html.replace(regexCR, "") + whitespace.CRLF;
+			if (update !== html) {
+				line.innerHTML = update;
+			}
+		}
+		yield lines;
+	}
+
 	function addWhitespace(block) {
-		let lines, indx, len;
 		if (block && !block.classList.contains("ghcw-processed")) {
 			block.classList.add("ghcw-processed");
-			indx = 0;
+			let status;
 
 			// class name of each code row
-			lines = $$(".blob-code-inner:not(.blob-code-hunk)", block);
-			len = lines.length;
+			const lines = $$(".blob-code-inner:not(.blob-code-hunk)", block);
+			const iter = modifyLine(lines);
 
 			// loop with delay to allow user interaction
 			const loop = () => {
-				let line, nodes,
-					// max number of DOM insertions per loop
-					max = 0;
-				while (max < 50 && indx < len) {
-					if (indx >= len) {
-						return;
-					}
-					line = lines[indx];
-					// first node is a syntax string and may have leading whitespace
-					nodes = getNodes(line);
-					replaceTextNode(nodes);
-					// remove end CRLF if it exists; then add a line ending
-					line.innerHTML = line.innerHTML.replace(regexCR, "") + whitespace.CRLF;
-					max++;
-					indx++;
+				for (let i = 0; i < 40; i++) {
+					status = iter.next();
 				}
-				if (indx < len) {
-					setTimeout(() => {
-						loop();
-					}, 100);
+				if (!status.done) {
+					requestAnimationFrame(loop);
 				}
 			};
 			loop();
