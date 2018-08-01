@@ -30,9 +30,9 @@
 		/* move collapsed TOC to top right corner */
 		.ghus-toc.collapsed {
 			width:30px; height:30px; min-width:auto; overflow:hidden; top:16px !important; left:auto !important;
-			right:10px !important; border:1px solid #d8d8d8; border-radius:3px;
+			right:10px !important; border:1px solid rgba(128, 128, 128, 0.5); border-radius:3px;
 		}
-		.ghus-toc.collapsed > h3 { cursor:pointer; padding-top:5px; border:none; }
+		.ghus-toc.collapsed > h3 { cursor:pointer; padding-top:5px; border:none; background:#222; color:#ddd; }
 		.ghus-toc.collapsed .ghus-toc-docs { display:none; }
 		.ghus-toc.collapsed ~ .Header { padding-right: 30px !important; }
 		/* move header text out-of-view when collapsed */
