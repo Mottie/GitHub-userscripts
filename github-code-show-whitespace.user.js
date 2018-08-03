@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Code Show Whitespace
-// @version     1.2.2
+// @version     1.2.3
 // @description A userscript that shows whitespace (space, tabs and carriage returns) in code blocks
 // @license     MIT
 // @author      Rob Garrison
@@ -88,7 +88,7 @@
 			left: .6em;
 		}
 		/* hide extra leading space added to diffs - see #27 */
-		.diff-table tr.blob-expanded .pl-space:first-child {
+		.diff-table tr.blob-expanded td > span:first-child .pl-space:first-child {
 			visibility: hidden;
 		}
 	`);
