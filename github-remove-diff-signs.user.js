@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Remove Diff Signs
-// @version     1.3.0
+// @version     1.3.1
 // @description A userscript that hides the "+" and "-" from code diffs
 // @license     MIT
 // @author      Rob Garrison
@@ -16,10 +16,11 @@
 	"use strict";
 
 	GM_addStyle(`
+		.blob-code-inner:before,
 		.blob-code-marker-context:before,
 		.blob-code-marker-addition:before,
 		.blob-code-marker-deletion:before {
-			display: none !important;
+			visibility: hidden !important;
 		}`
 	);
 
