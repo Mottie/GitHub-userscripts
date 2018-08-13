@@ -47,7 +47,7 @@
 		) {
 			// give GitHub time to add the class
 			setTimeout(() => {
-				toggle(target, event.ctrlKey);
+				toggle(target, event.ctrlKey || event.metaKey);
 			}, 100);
 		}
 	});
