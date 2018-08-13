@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Code Colors
-// @version     1.2.1
+// @version     1.2.2
 // @description A userscript that adds a color swatch next to the code color definition
 // @license     MIT
 // @author      Rob Garrison
@@ -131,11 +131,17 @@
 
 	// Loop with delay to allow user interaction
 	function* addBlock(els) {
+		let last = "";
 		while (els.length) {
 			let el = els.shift();
 			let txt = el.textContent;
-			if (el.parentNode && el.parentNode.classList.contains("pl-c1")) {
-				// Ignore nested pl-c1 (see https://git.io/vFx8y)
+			if (
+				// No swatch for JavaScript Math.tan
+				last === "Math" ||
+				// Ignore nested pl-c1 (see https://git.io/fNF3N)
+				el.parentNode && el.parentNode.classList.contains("pl-c1")
+			) {
+				// noop
 			} else if (!el.querySelector(".ghcc-block")) {
 				if (el.classList.contains("pl-s")) {
 					txt = txt.replace(regexQuotes, "");
@@ -148,6 +154,7 @@
 					els = hsl(els, el, txt);
 				}
 			}
+			last = txt;
 			yield els;
 		}
 	}
