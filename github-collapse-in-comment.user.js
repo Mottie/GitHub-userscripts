@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Collapse In Comment
-// @version     1.0.16
+// @version     1.0.17
 // @description A userscript that adds a header that can toggle long code and quote blocks in comments
 // @license     MIT
 // @author      Rob Garrison
@@ -165,7 +165,7 @@
 				if (event.shiftKey) {
 					els = $$(
 						".gcic-block",
-						event.ctrlKey ? "" : closest(".markdown-body", el)
+						event.ctrlKey || event.metaKey ? "" : closest(".markdown-body", el)
 					);
 					indx = els.length;
 					flag = el.classList.contains("gcic-block-closed");
