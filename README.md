@@ -21,7 +21,7 @@ Userscripts to add functionality to GitHub.
 
 	| Userscript Wiki                        | ![][ico] | Direct<br>Install | Sites                 | Created    | Updated    | Deprecated |
 	|----------------------------------------|:---:|:------------------:|:-------------------------:|:----------:|:----------:|:----------:|
-	| [GitHub code colors][ccr-wiki]         |     | [install][ccr-raw] | [GF][ccr-gf] [OU][ccr-ou] | 2016.03.20 | 2018.07.31 |            |
+	| [GitHub code colors][ccr-wiki]         |     | [install][ccr-raw] | [GF][ccr-gf] [OU][ccr-ou] | 2016.03.20 | 2018.08.13 |            |
 	| [GitHub code folding][cfd-wiki]        |     | [install][cfd-raw] | [GF][cfd-gf] [OU][cfd-ou] | 2016.12.28 | 2018.05.28 |            |
 	| [GitHub code guides][cgl-wiki]         |     | [install][cgl-raw] | [GF][cgl-gf] [OU][cgl-ou] | 2016.08.27 | 2018.01.18 |            |
 	| [GitHub code show whitespace][csw-wiki]|     | [install][csw-raw] | [GF][csw-gf] [OU][csw-ou] | 2017.03.26 | 2018.08.02 |            |
