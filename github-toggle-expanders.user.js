@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Toggle Expanders
-// @version     1.1.2
+// @version     1.1.3
 // @description A userscript that toggles all expanders when one expander is shift-clicked
 // @license     MIT
 // @author      Rob Garrison
@@ -14,40 +14,39 @@
 (() => {
 	"use strict";
 
-	function toggle(el, ctrlKeyPressed) {
-		const stateNode = closest(".js-details-container", el),
-			state = stateNode.classList.contains("open"),
-			parentNode = closest(ctrlKeyPressed ?
-				".container, .js-discussion" :
-				".commits-listing, .discussion-item-body, .release-timeline-tags",
-			stateNode
-			),
-			containerNodes = parentNode.querySelectorAll(".js-details-container");
+	function toggle(el, modKey) {
+		const stateNode = el.closest(".js-details-container, details");
+		const state = stateNode.nodeName === "DETAILS" ?
+			stateNode.open :
+			stateNode.classList.contains("open");
+		const parentNode = stateNode.closest(modKey ?
+			".container, .js-discussion" :
+			".commit-group, .js-timeline-item"
+		);
+		const containers = parentNode.querySelectorAll(
+			".js-details-container, .outdated-comment"
+		);
 
-		Array.from(containerNodes).forEach(node => {
-			node.classList.toggle("open", state);
-		});
-	}
-
-	function closest(selector, el) {
-		while (el && el.nodeType === 1) {
-			if (el.matches(selector)) {
-				return el;
+		[...containers].forEach(node => {
+			if (node.nodeName === "DETAILS") {
+				node.open = state;
+			} else {
+				node.classList.toggle("open", state);
 			}
-			el = el.parentNode;
-		}
-		return null;
+		});
 	}
 
 	document.body.addEventListener("click", event => {
 		const target = event.target;
-		if (
-			target && event.getModifierState("Shift") &&
-			target.matches(".js-details-target")
-		) {
-			// give GitHub time to add the class
+		const mod = event.ctrlKey || event.metaKey;
+		if (target && event.getModifierState("Shift")) {
+			// give GitHub time to update the elements
 			setTimeout(() => {
-				toggle(target, event.ctrlKey || event.metaKey);
+				if (target.matches(".js-details-target")) {
+					toggle(target, mod);
+				} else if (target.matches(".btn-link, .js-toggle-outdated-comments")) {
+					toggle(target.closest("details"), mod);
+				}
 			}, 100);
 		}
 	});
