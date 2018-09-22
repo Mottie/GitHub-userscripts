@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Toggle Issue Comments
-// @version     1.2.2
+// @version     1.2.3
 // @description A userscript that toggles issues/pull request comments & messages
 // @license     MIT
 // @author      Rob Garrison
@@ -403,7 +403,7 @@
 						// ignore quoted messages
 						txt = getAllText(tmp);
 					} else {
-						txt = el.textContent.trim();
+						txt = (el ? el.textContent || "" : "").trim();
 					}
 					if (!txt) {
 						img = $("img", el);
@@ -412,7 +412,7 @@
 						}
 					}
 					// remove fluff
-					txt = txt
+					txt = (txt || "")
 						.replace(regexEmoji, "")
 						.replace(regexHide, "")
 						.replace(regexPlus, "")
