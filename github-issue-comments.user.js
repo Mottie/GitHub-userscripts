@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Toggle Issue Comments
-// @version     1.2.3
+// @version     1.2.4
 // @description A userscript that toggles issues/pull request comments & messages
 // @license     MIT
 // @author      Rob Garrison
@@ -46,6 +46,10 @@
 	const regex = /(svg|path)/i,
 		// ZenHub addon active (include ZenHub Enterprise)
 		hasZenHub = $(".zhio, .zhe") ? true : false,
+
+		exceptions = [
+			"ghsc-sort-block" // sort reactions block (github-sort-reactions.user.js)
+		],
 
 		settings = {
 			// example: https://github.com/Mottie/Keyboard/issues/448
@@ -374,7 +378,11 @@
 			regexEmoji = /(:.*:)|[\u{1f300}-\u{1f64f}\u{1f680}-\u{1f6ff}\u{1f900}-\u{1f9ff}]/gu,
 			regexWhitespace = /\s+/g,
 
-			comments = $$(".js-discussion .timeline-comment-wrapper"),
+			comments = $$(".js-discussion .timeline-comment-wrapper")
+				.filter(comment => {
+				  const classes = comment.className.split(" ");
+				  return exceptions.some(ex => classes.includes(ex));
+				}),
 			len = comments.length,
 
 			loop = () => {
