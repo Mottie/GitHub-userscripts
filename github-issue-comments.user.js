@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Toggle Issue Comments
-// @version     1.2.4
+// @version     1.3.0
 // @description A userscript that toggles issues/pull request comments & messages
 // @license     MIT
 // @author      Rob Garrison
@@ -22,7 +22,7 @@
 		.ghic-button { float:right; }
 		.ghic-button .btn:hover div.select-menu-modal-holder { display:block; top:auto; bottom:25px; right:0; }
 		.ghic-right { position:absolute; right:10px; top:9px; }
-		.ghic-button .select-menu-header, .ghic-participants { cursor:default; }
+		.ghic-button .select-menu-header, .ghic-participants { cursor:default; display:block; }
 		.ghic-participants { border-top:1px solid #484848; padding:15px; }
 		.ghic-avatar { display:inline-block; float:left; margin: 0 2px 2px 0; cursor:pointer; position:relative; }
 		.ghic-avatar:last-child { margin-bottom:5px; }
@@ -38,17 +38,18 @@
 		.ghic-button .select-menu-modal { margin:0; }
 		.ghic-button .ghic-participants { margin-bottom:20px; }
 		/* for testing: ".ghic-hidden { opacity: 0.3; } */
-		.ghic-hidden, .ghic-hidden-participant, .ghic-avatar svg, .ghic-count,
-			.ghic-hideReactions .comment-reactions { display:none; }
-		.ghic-menu input[type=checkbox] { height:0; width:0; visibility:hidden; position:absolute; }
-		.ghic-menu .ghic-toggle { cursor:pointer; text-indent:-9999px; width:20px; height:10px;
+		.ghic-hidden, .ghic-hidden-participant, .ghic-avatar svg, .ghic-button .ghic-count,
+			.ghic-hideReactions .comment-reactions,
+			.select-menu-header.ghic-active + .select-menu-list .dropdown-item:not(.ghic-has-content) { display:none; }
+		.ghic-menu-wrapper input[type=checkbox] { height:0; width:0; visibility:hidden; position:absolute; }
+		.ghic-menu-wrapper .ghic-toggle { cursor:pointer; text-indent:-9999px; width:20px; height:10px;
 			background:grey; display:block; border-radius:10px; position:relative; }
-		.ghic-menu .ghic-toggle:after { content:''; position:absolute; top:0; left:1px; width:9px;
+		.ghic-menu-wrapper .ghic-toggle:after { content:''; position:absolute; top:0; left:1px; width:9px;
 			height:9px; background:#fff; border-radius:9px; transition:.3s; }
-		.ghic-menu input:checked + .ghic-toggle { background:#070; }
-		.ghic-menu input:checked + .ghic-toggle:after { top:0; left:calc(100% - 1px);
+		.ghic-menu-wrapper input:checked + .ghic-toggle { background:#070; }
+		.ghic-menu-wrapper input:checked + .ghic-toggle:after { top:0; left:calc(100% - 1px);
 			transform:translateX(-100%); }
-		.ghic-menu .ghic-toggle:active:after { width:13px; }
+		.ghic-menu-wrapper .ghic-toggle:active:after { width:13px; }
 `);
 
 	const regex = /(svg|path)/i,
@@ -181,6 +182,7 @@
 			let name, hasContent, isHidden, isChecked,
 				list = "",
 				keys = Object.keys(settings),
+				onlyActive = GM_getValue("onlyActive", false),
 				header = $(".discussion-sidebar-item:last-child"),
 				menu = document.createElement("div");
 
@@ -208,10 +210,14 @@
 							<path d="M15 2H6c-0.55 0-1 0.45-1 1v2H1c-0.55 0-1 0.45-1 1v6c0 0.55 0.45 1 1 1h1v3l3-3h4c0.55 0 1-0.45 1-1V10h1l3 3V10h1c0.55 0 1-0.45 1-1V3c0-0.55-0.45-1-1-1zM9 12H4.5l-1.5 1.5v-1.5H1V6h4v3c0 0.55 0.45 1 1 1h3v2z m6-3H13v1.5l-1.5-1.5H6V3h9v6z"></path>
 						</svg>
 					</span>
-					<div class="select-menu-modal-holder">
+					<div class="select-menu-modal-holder ghic-menu-wrapper">
 						<div class="select-menu-modal" aria-hidden="true">
-							<div class="select-menu-header" tabindex="-1">
+							<div class="select-menu-header ${onlyActive ? "ghic-active" : ""}" tabindex="-1">
 								<span class="select-menu-title">Toggle items</span>
+								<label class="ghic-right tooltipped tooltipped-w" aria-label="Only show active items">
+									<input id="ghic-only-active" type="checkbox" ${onlyActive ? "checked" : ""}>
+									<span class="ghic-toggle"></span>
+								</label>
 							</div>
 							<div class="select-menu-list ghic-menu" role="menu">
 								${list}
@@ -554,6 +560,9 @@
 					// clicking on the SVG may target the svg or path inside
 					hideParticipant(closest(".ghic-avatar", target));
 				}
+			} else if (target.id === "ghic-only-active") {
+				closest(".select-menu-header", target).classList.toggle("ghic-active", target.checked);
+				GM_setValue('onlyActive', target.checked);
 			}
 			// Make button show if it is active
 			target = $(".ghic-button .btn");
