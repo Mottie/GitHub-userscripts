@@ -21,34 +21,42 @@
 	GM_addStyle(`
 		.ghic-button { float:right; }
 		.ghic-button .btn:hover div.select-menu-modal-holder { display:block; top:auto; bottom:25px; right:0; }
-		.ghic-right { float:right; }
-		/* pre-wrap set for Firefox; see https://greasyfork.org/en/forum/discussion/9166/x */
-		.ghic-menu label { display:block; padding:5px 15px; white-space:pre-wrap; }
+		.ghic-right { position:absolute; right:10px; top:9px; }
 		.ghic-button .select-menu-header, .ghic-participants { cursor:default; }
 		.ghic-participants { border-top:1px solid #484848; padding:15px; }
 		.ghic-avatar { display:inline-block; float:left; margin: 0 2px 2px 0; cursor:pointer; position:relative; }
 		.ghic-avatar:last-child { margin-bottom:5px; }
 		.ghic-avatar.comments-hidden svg { display:block; position:absolute; top:-2px; left:-2px; z-index:1; }
 		.ghic-avatar.comments-hidden img { opacity:0.5; }
+		.ghic-button .dropdown-item { font-weight:normal; position:relative; }
 		.ghic-button .dropdown-item span { font-weight:normal; opacity:.5; }
 		.ghic-button .dropdown-item.ghic-has-content span { opacity:1; }
 		.ghic-button .dropdown-item.ghic-checked span { font-weight:bold; }
 		.ghic-button .dropdown-item.ghic-checked svg,
 			.ghic-button .dropdown-item:not(.ghic-checked) .ghic-count { display:inline-block; }
-		.ghic-button .ghic-count { float:left; margin-right:5px; }
+		.ghic-button .ghic-count { margin-left:5px; }
 		.ghic-button .select-menu-modal { margin:0; }
 		.ghic-button .ghic-participants { margin-bottom:20px; }
 		/* for testing: ".ghic-hidden { opacity: 0.3; } */
-		.ghic-hidden, .ghic-hidden-participant, .ghic-avatar svg, .ghic-button .ghic-right > *,
+		.ghic-hidden, .ghic-hidden-participant, .ghic-avatar svg, .ghic-count,
 			.ghic-hideReactions .comment-reactions { display:none; }
-	`);
+		.ghic-menu input[type=checkbox] { height:0; width:0; visibility:hidden; position:absolute; }
+		.ghic-menu .ghic-toggle { cursor:pointer; text-indent:-9999px; width:20px; height:10px;
+			background:grey; display:block; border-radius:10px; position:relative; }
+		.ghic-menu .ghic-toggle:after { content:''; position:absolute; top:0; left:1px; width:9px;
+			height:9px; background:#fff; border-radius:9px; transition:.3s; }
+		.ghic-menu input:checked + .ghic-toggle { background:#070; }
+		.ghic-menu input:checked + .ghic-toggle:after { top:0; left:calc(100% - 1px);
+			transform:translateX(-100%); }
+		.ghic-menu .ghic-toggle:active:after { width:13px; }
+`);
 
 	const regex = /(svg|path)/i,
 		// ZenHub addon active (include ZenHub Enterprise)
 		hasZenHub = $(".zhio, .zhe") ? true : false,
 
 		exceptions = [
-			"ghsc-sort-block" // sort reactions block (github-sort-reactions.user.js)
+			"ghsr-sort-block" // sort reactions block (github-sort-reactions.user.js)
 		],
 
 		settings = {
@@ -164,14 +172,13 @@
 		};
 
 	const iconHidden = `<svg class="octicon" xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 9 9"><path fill="#777" d="M7.07 4.5c0-.47-.12-.9-.35-1.3L3.2 6.7c.4.25.84.37 1.3.37.35 0 .68-.07 1-.2.32-.14.6-.32.82-.55.23-.23.4-.5.55-.82.13-.32.2-.65.2-1zM2.3 5.8l3.5-3.52c-.4-.23-.83-.35-1.3-.35-.35 0-.68.07-1 .2-.3.14-.6.32-.82.55-.23.23-.4.5-.55.82-.13.32-.2.65-.2 1 0 .47.12.9.36 1.3zm6.06-1.3c0 .7-.17 1.34-.52 1.94-.34.6-.8 1.05-1.4 1.4-.6.34-1.24.52-1.94.52s-1.34-.18-1.94-.52c-.6-.35-1.05-.8-1.4-1.4C.82 5.84.64 5.2.64 4.5s.18-1.35.52-1.94.8-1.06 1.4-1.4S3.8.64 4.5.64s1.35.17 1.94.52 1.06.8 1.4 1.4c.35.6.52 1.24.52 1.94z"/></svg>`,
-		iconCheck = `<svg class="octicon octicon-check" height="16" viewBox="0 0 12 16" width="12"><path d="M12 5L4 13 0 9l1.5-1.5 2.5 2.5 6.5-6.5 1.5 1.5z"></path></svg>`,
 		plus1Icon = `<img src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f44d.png" class="emoji" title=":+1:" alt=":+1:" height="20" width="20" align="absmiddle">`;
 
 	function addMenu() {
 		if ($("#discussion_bucket") && !$(".ghic-button")) {
 			// update "isHidden" values
 			getSettings();
-			let name, bright, isHidden, isChecked,
+			let name, hasContent, isHidden, isChecked,
 				list = "",
 				keys = Object.keys(settings),
 				header = $(".discussion-sidebar-item:last-child"),
@@ -179,17 +186,17 @@
 
 			for (name of keys) {
 				if (!(name === "pipeline" && !hasZenHub)) {
-					// make plus1 and reactions list items always bright
-					bright = name === "plus1" ? " ghic-has-content" : "";
+					// make plus1 and reactions list items always bright (has-content class)
+					hasContent = name === "plus1" ? "ghic-has-content" : "";
 					isHidden = settings[name].isHidden;
-					isChecked = isHidden ? "" : " ghic-checked";
+					isChecked = isHidden ? "" : "ghic-checked";
 					// not using multi-line backticks because it adds lots of white-space to the label
-					list += `<label class="dropdown-item${bright}${isChecked}">` +
-						`<span>${settings[name].label}</span>` +
-						`<span class="ghic-right ${settings[name].name}">` +
-							`<input type="checkbox"${isHidden ? "" : " checked"}>` +
-							`${iconCheck}<span class="ghic-count"> </span>` +
-						`</span></label>`;
+					list += `<label class="dropdown-item ${hasContent} ${isChecked} ${settings[name].name}" data-ghic="${name}">
+						<span>${settings[name].label} <span class="ghic-count"> </span></span>
+						<span class="ghic-right">
+							<input type="checkbox"${isHidden ? "" : " checked"}>
+							<span class="ghic-toggle"></span>
+						</span></label>`;
 				}
 			}
 
@@ -300,8 +307,18 @@
 		const obj = settings[name],
 			isHidden = obj.isHidden;
 		let count, results,
-			item = closest(".dropdown-item", $(".ghic-menu ." + obj.name));
-		if (item && obj.selector) {
+			item = $(".ghic-menu .dropdown-item." + obj.name);
+		if (name === "plus1") {
+			hidePlus1(init);
+		} else if (item && name === "reactions") {
+			toggleClass($("body"), "ghic-hideReactions", isHidden);
+			toggleClass(item, "ghic-has-content", $$(".has-reactions").length - 1);
+			// make first comment reactions visible
+			item = $(".has-reactions", $(".timeline-comment-wrapper"));
+			if (item) {
+				item.style.display = "block";
+			}
+		} else if (item && obj.selector) {
 			results = $$(obj.selector);
 			if (obj.contains) {
 				results = results.filter(el => {
@@ -317,16 +334,6 @@
 				removeClass(results, "ghic-hidden");
 			}
 			toggleClass(item, "ghic-has-content", results.length);
-		} else if (name === "plus1") {
-			hidePlus1(init);
-		} else if (item && name === "reactions") {
-			toggleClass($("body"), "ghic-hideReactions", isHidden);
-			toggleClass(item, "ghic-has-content", $$(".has-reactions").length - 1);
-			// make first comment reactions visible
-			item = $(".has-reactions", $(".timeline-comment-wrapper"));
-			if (item) {
-				item.style.display = "block";
-			}
 		}
 	}
 
@@ -380,8 +387,8 @@
 
 			comments = $$(".js-discussion .timeline-comment-wrapper")
 				.filter(comment => {
-				  const classes = comment.className.split(" ");
-				  return exceptions.some(ex => classes.includes(ex));
+					const classes = comment.className.split(" ");
+					return !exceptions.some(ex => classes.includes(ex));
 				}),
 			len = comments.length,
 
@@ -447,7 +454,6 @@
 					}, 200);
 				} else {
 					$(".ghic-menu .ghic-plus1 .ghic-count").textContent = total ? "(" + total + " hidden)" : " ";
-					toggleClass($(".ghic-menu ." + settings.plus1.name), "ghic-has-content", total);
 					addCountToReaction(count);
 				}
 			};
@@ -532,15 +538,14 @@
 		if (document.getElementById("discussion_bucket")) {
 			let name,
 				target = event.target,
-				wrap = target && target.parentNode;
+				wrap = target && target.closest(".dropdown-item");
 			if (target && wrap) {
-				if (target.nodeName === "INPUT" && wrap.classList.contains("ghic-right")) {
+				if (target.nodeName === "INPUT") {
 					getInputValues();
 					saveSettings();
-					// extract ghic-{name}, because it matches the name in settings
-					name = wrap.className.replace("ghic-right", "").replace("ghic-has-content", "").trim();
-					if (wrap.classList.contains(name)) {
-						hideStuff(name.replace("ghic-", ""));
+					name = wrap.dataset.ghic;
+					if (name) {
+						hideStuff(name);
 					}
 				} else if (target.classList.contains("ghic-avatar")) {
 					// make sure we're targeting the span wrapping the image
@@ -616,7 +621,6 @@
 	function init() {
 		getSettings();
 		addMenu();
-		$("body").addEventListener("input", checkItem);
 		$("body").addEventListener("click", checkItem);
 		update();
 	}
