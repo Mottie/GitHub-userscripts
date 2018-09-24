@@ -358,7 +358,7 @@
 			// "need this"; "right now"; "still nothing?"; "super helpful"; "for gods sake"
 			regexHide = new RegExp("(" + [
 				"@\\w+",
-				"\\b(it|is|a|so|the|and|no|on|oh|do|this|any|very|much|here|just|my)\\b",
+				"\\b(it|is|a|so|the|and|no|on|oh|do|this|any|very|much|here|just|my|me|too|want|yet|image)\\b",
 				"pretty",
 				"pl+e+a+s+e+",
 				"y+e+s+",
@@ -376,6 +376,7 @@
 				"updat(es|ed|ing)?",
 				"back",
 				"features?",
+				"infinity", // +Infinity
 				"useful",
 				"super",
 				"helpful",
