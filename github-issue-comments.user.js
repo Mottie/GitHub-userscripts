@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Toggle Issue Comments
-// @version     1.3.0
+// @version     1.3.1
 // @description A userscript that toggles issues/pull request comments & messages
 // @license     MIT
 // @author      Rob Garrison
@@ -179,7 +179,7 @@
 		if ($("#discussion_bucket") && !$(".ghic-button")) {
 			// update "isHidden" values
 			getSettings();
-			let name, hasContent, isHidden, isChecked,
+			let name, isHidden, isChecked,
 				list = "",
 				keys = Object.keys(settings),
 				onlyActive = GM_getValue("onlyActive", false),
@@ -188,17 +188,15 @@
 
 			for (name of keys) {
 				if (!(name === "pipeline" && !hasZenHub)) {
-					// make plus1 and reactions list items always bright (has-content class)
-					hasContent = name === "plus1" ? "ghic-has-content" : "";
 					isHidden = settings[name].isHidden;
 					isChecked = isHidden ? "" : "ghic-checked";
-					// not using multi-line backticks because it adds lots of white-space to the label
-					list += `<label class="dropdown-item ${hasContent} ${isChecked} ${settings[name].name}" data-ghic="${name}">
-						<span>${settings[name].label} <span class="ghic-count"> </span></span>
-						<span class="ghic-right">
-							<input type="checkbox"${isHidden ? "" : " checked"}>
-							<span class="ghic-toggle"></span>
-						</span></label>`;
+					list += `<label class="dropdown-item ${isChecked} ${settings[name].name}" data-ghic="${name}">
+							<span>${settings[name].label} <span class="ghic-count"> </span></span>
+							<span class="ghic-right">
+								<input type="checkbox"${isHidden ? "" : " checked"}>
+								<span class="ghic-toggle"></span>
+							</span>
+						</label>`;
 				}
 			}
 
@@ -315,7 +313,7 @@
 		let count, results,
 			item = $(".ghic-menu .dropdown-item." + obj.name);
 		if (name === "plus1") {
-			hidePlus1(init);
+			hidePlus1(init, item);
 		} else if (item && name === "reactions") {
 			toggleClass($("body"), "ghic-hideReactions", isHidden);
 			toggleClass(item, "ghic-has-content", $$(".has-reactions").length - 1);
@@ -343,10 +341,7 @@
 		}
 	}
 
-	function hidePlus1(init) {
-		if (init && !settings.plus1.isHidden) {
-			return;
-		}
+	function hidePlus1(init, item) {
 		let max,
 			indx = 0,
 			count = 0,
@@ -403,6 +398,9 @@
 				max = 0;
 				while (max < 20 && indx < len) {
 					if (indx >= len) {
+						if (init) {
+							item.classList.toggle("ghic-has-content", count > 0);
+						}
 						return;
 					}
 					wrapper = comments[indx];
@@ -440,6 +438,11 @@
 						.replace(regexWhitespace, " ")
 						.trim();
 					if (txt === "" || (txt.length <= 4 && !hasLink)) {
+						if (init && !settings.plus1.isHidden) {
+							// +1 Comments has-content
+							item.classList.toggle("ghic-has-content", true);
+							return;
+						}
 						if (settings.plus1.isHidden) {
 							wrapper.classList.add("ghic-hidden");
 							total++;
@@ -459,6 +462,9 @@
 						window.requestAnimationFrame(loop);
 					}, 200);
 				} else {
+					if (init) {
+						item.classList.toggle("ghic-has-content", count > 0);
+					}
 					$(".ghic-menu .ghic-plus1 .ghic-count").textContent = total ? "(" + total + " hidden)" : " ";
 					addCountToReaction(count);
 				}
@@ -562,7 +568,7 @@
 				}
 			} else if (target.id === "ghic-only-active") {
 				closest(".select-menu-header", target).classList.toggle("ghic-active", target.checked);
-				GM_setValue('onlyActive', target.checked);
+				GM_setValue("onlyActive", target.checked);
 			}
 			// Make button show if it is active
 			target = $(".ghic-button .btn");
