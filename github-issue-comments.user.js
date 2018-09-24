@@ -50,6 +50,7 @@
 		.ghic-menu-wrapper input:checked + .ghic-toggle:after { top:0; left:calc(100% - 1px);
 			transform:translateX(-100%); }
 		.ghic-menu-wrapper .ghic-toggle:active:after { width:13px; }
+		.timeline-comment-wrapper.ghic-highlight .comment { border-color:#800 !important; }
 `);
 
 	const regex = /(svg|path)/i,
@@ -444,7 +445,7 @@
 							return;
 						}
 						if (settings.plus1.isHidden) {
-							wrapper.classList.add("ghic-hidden");
+							wrapper.classList.add("ghic-hidden", "ghic-highlight");
 							total++;
 							// one +1 per author
 							if (!dupe) {
