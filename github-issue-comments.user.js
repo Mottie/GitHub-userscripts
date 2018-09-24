@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Toggle Issue Comments
-// @version     1.3.1
+// @version     1.3.2
 // @description A userscript that toggles issues/pull request comments & messages
 // @license     MIT
 // @author      Rob Garrison
@@ -317,7 +317,7 @@
 			hidePlus1(init, item);
 		} else if (item && name === "reactions") {
 			toggleClass($("body"), "ghic-hideReactions", isHidden);
-			toggleClass(item, "ghic-has-content", $$(".has-reactions").length - 1);
+			toggleClass(item, "ghic-has-content", $$(".has-reactions").length - 1 > 0);
 			// make first comment reactions visible
 			item = $(".has-reactions", $(".timeline-comment-wrapper"));
 			if (item) {
