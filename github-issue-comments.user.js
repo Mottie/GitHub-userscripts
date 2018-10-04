@@ -31,10 +31,10 @@
 		.ghic-button .dropdown-item { font-weight:normal; position:relative; }
 		.ghic-button .dropdown-item span { font-weight:normal; opacity:.5; }
 		.ghic-button .dropdown-item.ghic-has-content span { opacity:1; }
-		.dropdown-item.ghic-has-content:not(.ghic-checked){ text-decoration:line-through; }
 		.ghic-button .dropdown-item.ghic-checked span { font-weight:bold; }
 		.ghic-button .dropdown-item.ghic-checked svg,
 			.ghic-button .dropdown-item:not(.ghic-checked) .ghic-count { display:inline-block; }
+		.ghic-button .dropdown-item:not(.ghic-checked) { text-decoration:line-through; }
 		.ghic-button .ghic-count { margin-left:5px; }
 		.ghic-button .select-menu-modal { margin:0; }
 		.ghic-button .ghic-participants { margin-bottom:20px; }
