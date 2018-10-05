@@ -221,7 +221,10 @@
 							</div>
 							<div class="select-menu-list ghic-menu" role="menu">
 								${list}
-								<div class="ghic-participants"></div>
+								<div class="ghic-participants">
+									<p><strong>Hide Comments from</strong></p>
+									<div class="ghic-list"></div>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -239,11 +242,11 @@
 
 	function addAvatars() {
 		let indx = 0,
-
-			str = "<p><strong>Hide Comments from</strong></p>",
+			str = "",
 			unique = [],
 			// get all avatars
 			avatars = $$(".timeline-comment-avatar img"),
+			list = $(".ghic-list"),
 			len = avatars.length - 1, // last avatar is the new comment with the current user
 
 			loop = (callback) => {
@@ -255,7 +258,7 @@
 					}
 					el = avatars[indx];
 					name = (el.getAttribute("alt") || "").replace("@", "");
-					if (!unique.includes(name)) {
+					if (!unique.includes(name) && !$(`.ghic-avatar[aria-label="${name}"]`, list)) {
 						str += `<span class="ghic-avatar tooltipped tooltipped-n" aria-label="${name}">
 								${iconHidden}
 								<img class="ghic-avatar avatar" width="24" height="24" src="${el.src}"/>
@@ -274,7 +277,11 @@
 				}
 			};
 		loop(() => {
-			$(".ghic-participants").innerHTML = str;
+			if ($(".ghic-avatar", list)) {
+				list.innerHTML += str;
+			} else {
+				list.innerHTML = str;
+			}
 		});
 	}
 
@@ -546,6 +553,7 @@
 				// true flag for init - no need to remove classes
 				hideStuff(keys[indx], true);
 			}
+			addAvatars();
 		}
 	}
 
@@ -553,7 +561,7 @@
 		if (document.getElementById("discussion_bucket")) {
 			let name,
 				target = event.target,
-				wrap = target && target.closest(".dropdown-item");
+				wrap = target && target.closest(".dropdown-item, .ghic-participants");
 			if (target && wrap) {
 				if (target.nodeName === "INPUT") {
 					getInputValues();
