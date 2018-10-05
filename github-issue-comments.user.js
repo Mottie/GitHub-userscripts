@@ -10,7 +10,7 @@
 // @grant       GM_addStyle
 // @grant       GM_getValue
 // @grant       GM_setValue
-// @require     https://greasyfork.org/scripts/28721-mutations/code/mutations.js?version=597950
+// @require     https://greasyfork.org/scripts/28721-mutations/code/mutations.js?version=634242
 // @icon        https://assets-cdn.github.com/pinned-octocat.svg
 // @updateURL   https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-issue-comments.user.js
 // @downloadURL https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-issue-comments.user.js

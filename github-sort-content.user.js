@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Sort Content
-// @version     2.0.0
+// @version     2.0.1
 // @description A userscript that makes some lists & markdown tables sortable
 // @license     MIT
 // @author      Rob Garrison
@@ -11,7 +11,7 @@
 // @grant       GM_addStyle
 // @require     https://greasemonkey.github.io/gm4-polyfill/gm4-polyfill.js?updated=20180103
 // @require     https://cdnjs.cloudflare.com/ajax/libs/tinysort/2.3.6/tinysort.min.js
-// @require     https://greasyfork.org/scripts/28721-mutations/code/mutations.js?version=597950
+// @require     https://greasyfork.org/scripts/28721-mutations/code/mutations.js?version=634242
 // @icon        https://assets-cdn.github.com/pinned-octocat.svg
 // @updateURL   https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-sort-content.user.js
 // @downloadURL https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-sort-content.user.js

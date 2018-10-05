@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Diff Filename
-// @version     1.0.3
+// @version     1.0.4
 // @description A userscript that highlights filename & permission alterations
 // @license     MIT
 // @author      Rob Garrison
@@ -9,7 +9,7 @@
 // @run-at      document-end
 // @grant       GM_getValue
 // @grant       GM_setValue
-// @require     https://greasyfork.org/scripts/28721-mutations/code/mutations.js?version=597950
+// @require     https://greasyfork.org/scripts/28721-mutations/code/mutations.js?version=634242
 // @icon        https://assets-cdn.github.com/pinned-octocat.svg
 // @updateURL   https://raw.githubusercontent.com/Mottie/Github-userscripts/master/github-diff-filename.user.js
 // @downloadURL https://raw.githubusercontent.com/Mottie/Github-userscripts/master/github-diff-filename.user.js

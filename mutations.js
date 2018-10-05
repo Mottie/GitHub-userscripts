@@ -1,4 +1,4 @@
-/* GitHub mutations observer library script v0.2.5
+/* GitHub mutations observer library script v0.2.6
  * Detect changes to various elements and trigger an event
  * This script is meant to be used as a library for GitHub-based userscripts
  * Copyright © 2018 Rob Garrison
@@ -25,9 +25,10 @@
 			// .js-discussion = wrapper for progressively loaded comments;
 			// "# items not shown" example: https://github.com/isaacs/github/issues/18
 			// .discussion-item = issue status changed (github-issue-show-status)
-			// #progressive-timeline-item-container = load hidden items
-			".js-discussion, .discussion-item, .toolbar-item, #progressive-timeline-item-container": {
-				count: 0,
+			// #progressive-timeline-item-container = load hidden items (old?)
+		    // #js-progressive-timeline-item-container = load hidden items
+				".js-discussion, .discussion-item, .toolbar-item, #progressive-timeline-item-container, #js-progressive-timeline-item-container": {
+					count: 0,
 				name: "comments"
 			},
 			// progressively loaded content (diff files)
