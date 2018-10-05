@@ -6,6 +6,7 @@
 // @author      Rob Garrison
 // @namespace   https://github.com/Mottie
 // @include     https://github.com/*
+// @include     https://gist.github.com/*
 // @run-at      document-idle
 // @grant       GM.addStyle
 // @grant       GM_addStyle
