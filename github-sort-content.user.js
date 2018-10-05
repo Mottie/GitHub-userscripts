@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Sort Content
-// @version     2.0.1
+// @version     2.0.2
 // @description A userscript that makes some lists & markdown tables sortable
 // @license     MIT
 // @author      Rob Garrison
@@ -335,7 +335,8 @@
 				padding: 2px 2px 2px 10px;
 			}
 			/* unsorted icon */
-			.markdown-body table thead th, table.files thead th {
+			.markdown-body table thead th, table.files thead th,
+			.markdown-body table.csv-data thead th {
 				cursor: pointer;
 				padding-right: 22px !important;
 				background-image: url(${getIcon("unsorted", color)}) !important;
@@ -410,6 +411,7 @@
 			}
 			/* asc/dec icons */
 			table thead th.asc,
+			.markdown-body table.csv-data thead th.asc,
 			.js-repos-container.asc .Box-title,
 			#org_your_repos.asc .Box-title,
 			.org-profile .TableObject.asc,
@@ -424,6 +426,7 @@
 				background-repeat: no-repeat !important;
 			}
 			table thead th.desc,
+			.markdown-body table.csv-data thead th.desc,
 			.js-repos-container.desc .Box-title,
 			#org_your_repos.desc .Box-title,
 			.org-profile .TableObject.desc,
