@@ -26,9 +26,9 @@
 			// "# items not shown" example: https://github.com/isaacs/github/issues/18
 			// .discussion-item = issue status changed (github-issue-show-status)
 			// #progressive-timeline-item-container = load hidden items (old?)
-		    // #js-progressive-timeline-item-container = load hidden items
-				".js-discussion, .discussion-item, .toolbar-item, #progressive-timeline-item-container, #js-progressive-timeline-item-container": {
-					count: 0,
+			// #js-progressive-timeline-item-container = load hidden items
+			".js-discussion, .discussion-item, .toolbar-item, #progressive-timeline-item-container, #js-progressive-timeline-item-container": {
+				count: 0,
 				name: "comments"
 			},
 			// progressively loaded content (diff files)
