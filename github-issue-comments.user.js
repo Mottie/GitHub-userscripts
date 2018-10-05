@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Toggle Issue Comments
-// @version     1.3.2
+// @version     1.3.3
 // @description A userscript that toggles issues/pull request comments & messages
 // @license     MIT
 // @author      Rob Garrison
@@ -34,6 +34,7 @@
 		.ghic-button .dropdown-item.ghic-checked span { font-weight:bold; }
 		.ghic-button .dropdown-item.ghic-checked svg,
 			.ghic-button .dropdown-item:not(.ghic-checked) .ghic-count { display:inline-block; }
+		.ghic-button .dropdown-item:not(.ghic-checked) { text-decoration:line-through; }
 		.ghic-button .ghic-count { margin-left:5px; }
 		.ghic-button .select-menu-modal { margin:0; }
 		.ghic-button .ghic-participants { margin-bottom:20px; }
