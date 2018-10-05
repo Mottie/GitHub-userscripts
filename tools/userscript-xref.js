@@ -14,6 +14,7 @@ module.exports = {
 	"GitHub Copy Code Snippet": "ccs",
 	"GitHub Custom Hotkeys": "chk",
 	"GitHub Custom Navigation": "cnv",
+	"GitHub Diff Expander": "dex",
 	"GitHub Diff Filename": "dfn",
 	"GitHub Diff Files Filter": "dff",
 	"GitHub Diff Links": "dfl",
