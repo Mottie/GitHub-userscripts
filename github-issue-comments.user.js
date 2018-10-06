@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Toggle Issue Comments
-// @version     1.3.3
+// @version     1.3.4
 // @description A userscript that toggles issues/pull request comments & messages
 // @license     MIT
 // @author      Rob Garrison
@@ -149,6 +149,15 @@
 				name: "ghic-integrate",
 				selector: ".discussion-item-integrations-callout",
 				label: "Integrations"
+			},
+
+			// similar comments
+			similar: {
+				isHidden: false,
+				name: "ghic-similar",
+				selector: `.js-discussion > .Details-element.details-reset,
+					#js-progressive-timeline-item-container > .Details-element.details-reset`,
+				label: "Similar comments"
 			},
 
 			// extras (special treatment - no selector)
