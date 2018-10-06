@@ -243,22 +243,26 @@
 	function addAvatars() {
 		let indx = 0,
 			str = "",
-			unique = [],
+			list = $(".ghic-list"),
+			unique = $$("span.ghic-avatar", list).map(el => el.getAttribute("aria-label")),
 			// get all avatars
 			avatars = $$(".timeline-comment-avatar img"),
-			list = $(".ghic-list"),
 			len = avatars.length - 1, // last avatar is the new comment with the current user
+			updateAvatars = () => {
+				list.innerHTML += str;
+				str = "";
+			},
 
-			loop = (callback) => {
+			loop = () => {
 				let el, name,
 					max = 0;
 				while (max < 50 && indx < len) {
 					if (indx >= len) {
-						return callback();
+						return updateAvatars();
 					}
 					el = avatars[indx];
 					name = (el.getAttribute("alt") || "").replace("@", "");
-					if (!unique.includes(name) && !$(`.ghic-avatar[aria-label="${name}"]`, list)) {
+					if (!unique.includes(name)) {
 						str += `<span class="ghic-avatar tooltipped tooltipped-n" aria-label="${name}">
 								${iconHidden}
 								<img class="ghic-avatar avatar" width="24" height="24" src="${el.src}"/>
@@ -268,21 +272,14 @@
 					}
 					indx++;
 				}
+				updateAvatars();
 				if (indx < len) {
 					setTimeout(() => {
-						loop(callback);
+						loop();
 					}, 200);
-				} else {
-					callback();
 				}
 			};
-		loop(() => {
-			if ($(".ghic-avatar", list)) {
-				list.innerHTML += str;
-			} else {
-				list.innerHTML = str;
-			}
-		});
+		loop();
 	}
 
 	function getSettings() {
@@ -369,6 +366,8 @@
 				"\\b(it|is|a|so|the|and|no|on|oh|do|this|any|very|much|here|just|my|me|too|want|yet|image)\\b",
 				"pretty",
 				"pl+e+a+s+e+",
+				"plz",
+				"totally",
 				"y+e+s+",
 				"eta",
 				"fix",
@@ -382,6 +381,7 @@
 				"add(ed|ing)?",
 				"need(ed|ing)?",
 				"updat(es|ed|ing)?",
+				"(months|years)\\slater",
 				"back",
 				"features?",
 				"infinity", // +Infinity
