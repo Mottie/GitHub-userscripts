@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Image Preview
-// @version     1.1.18
+// @version     1.2.0
 // @description A userscript that adds clickable image thumbnails
 // @license     MIT
 // @author      Rob Garrison
@@ -41,6 +41,8 @@
 		table.files.ghip-tiled .image:hover img:not(.ghip-non-image) { zoom:3; }
 		.ghip-image-previews .border-wrap img,
 			.ghip-image-previews .border-wrap svg { max-width:95%; }
+		.ghip-image-previews .border-wrap img.error { border:5px solid red;
+			border-radius:32px; }
 		.ghip-image-previews .border-wrap h4 { white-space:nowrap;
 			text-overflow:ellipsis; margin-bottom:5px; }
 		.ghip-image-previews .border-wrap h4.ghip-file-name { overflow:hidden; }
@@ -58,6 +60,7 @@
 	// supported img types
 	const imgExt = /(png|jpg|jpeg|gif|tif|tiff|bmp|webp)$/i,
 		svgExt = /svg$/i,
+		spinner = "https://assets-cdn.github.com/images/spinners/octocat-spinner-32.gif",
 
 		folderIconClasses = `
 			.octicon-file-directory,
@@ -187,9 +190,8 @@
 					// loaded & encoded because GitHub sets content-type headers as
 					// a string
 					temp = url.substring(url.lastIndexOf("/") + 1, url.length);
-					template += `<img data-svg-holder="${temp}" alt="${temp}" />`;
+					template += `<img data-svg-holder="${temp}" data-svg-url="${url}" alt="${temp}" src="${spinner}" />`;
 					imgs += updateTemplate(url, template);
-					getSVG(url + "?raw=true");
 				} else {
 					// *** non-images (file/folder icons) ***
 					temp = $("td.icon svg", files[indx]);
@@ -235,6 +237,7 @@
 			}
 			row.innerHTML = imgs + "</td>";
 			table.appendChild(row);
+			lazyLoadSVGs();
 		}
 	}
 
@@ -244,17 +247,53 @@
 			.replace("${image}", img);
 	}
 
-	function getSVG(url) {
+	function lazyLoadSVGs() {
+		const imgs = $$("[data-svg-holder]");
+		if (imgs.length && "IntersectionObserver" in window) {
+			let imgObserver = new IntersectionObserver(entries => {
+				entries.forEach(entry => {
+					if (entry.isIntersecting) {
+						const img = entry.target;
+						setTimeout(() => {
+							const bounds = img.getBoundingClientRect();
+							// Don't load all svgs when the user scrolls down the page really
+							// fast
+							if (bounds.top <= window.innerHeight && bounds.bottom >= 0) {
+								getSVG(imgObserver, img);
+							}
+						}, 300);
+					}
+				});
+			});
+			imgs.forEach(function(img) {
+				imgObserver.observe(img);
+			});
+		} else {
+			console.error("IntersectionObserver is not supported");
+		}
+	}
+
+	function getSVG(observer, img) {
 		GM_xmlhttpRequest({
 			method: "GET",
-			url,
+			url: img.dataset.svgUrl + "?raw=true",
 			onload: response => {
 				const url = response.finalUrl,
 					file = url.substring(url.lastIndexOf("/") + 1, url.length),
-					target = $("[data-svg-holder='" + file + "']");
-				if (target) {
+					target = $("[data-svg-holder='" + file + "']"),
+					resp = response.responseText,
+					// Loading too many images at once makes GitHub returns a "You have triggered
+					// an abuse detection mechanism" message
+					abuse = resp.includes("abuse detection");
+				if (target && !abuse) {
 					const encoded = window.btoa(response.responseText);
 					target.src = "data:image/svg+xml;base64," + encoded;
+					target.title = "";
+					target.classList.remove("error");
+					observer.unobserve(img);
+				} else if (abuse) {
+					img.title = "GitHub is reporting that too many images have been loaded at once, please wait";
+					img.classList.add("error");
 				}
 			}
 		});
