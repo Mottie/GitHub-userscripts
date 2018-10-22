@@ -34,6 +34,7 @@ Userscripts to add functionality to GitHub.
 	| [GitHub diff filename][dfn-wiki]       |     | [install][dfn-raw] | [GF][dfn-gf] [OU][dfn-ou] | 2017.08.27 | 2018.10.05 |            |
 	| [GitHub diff files filter][dff-wiki]   |     | [install][dff-raw] | [GF][dff-gf] [OU][dff-ou] | 2016.12.31 | 2018.10.05 |            |
 	| [GitHub diff links][dfl-wiki]          |     | [install][dfl-raw] | [GF][dfl-gf] [OU][dfl-ou] | 2016.07.21 | 2018.10.05 |            |
+	| [GitHub download zip][dlz-wiki]        |     | [install][dlz-raw] | [GF][dlz-gf] [OU][dlz-ou] | 2018.10.22 | 2018.10.22 |            |
 	| [GitHub files filter][gff-wiki]        |     | [install][gff-raw] | [GF][gff-gf] [OU][gff-ou] | 2017.06.26 | 2018.10.05 |            |
 	| [GitHub font preview][fpv-wiki]        |     | [install][fpv-raw] | [GF][fpv-gf] [OU][fpv-ou] | 2016.06.11 | 2018.10.05 |            |
 	| [GitHub hide own feed meta][hof-wiki]  |     | [install][hof-raw] | [GF][hof-gf] [OU][hof-ou] | 2017.12.21 | 2018.10.05 |            |
@@ -75,6 +76,7 @@ Userscripts to add functionality to GitHub.
 [dff-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-diff-files-filter
 [dfl-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-diff-links
 [dfn-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-diff-filename
+[dlz-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-download-zip
 [fpv-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-font-preview
 [hof-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-hide-own-feed-meta
 [g2d-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/Gist-to-dabblet
@@ -114,6 +116,7 @@ Userscripts to add functionality to GitHub.
 [dff-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-diff-files-filter.user.js
 [dfl-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-diff-links.user.js
 [dfn-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-diff-filename.user.js
+[dlz-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-download-zip.user.js
 [fpv-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-font-preview.user.js
 [hof-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-hide-own-feed-meta.user.js
 [g2d-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/gist-to-dabblet.user.js
@@ -153,6 +156,7 @@ Userscripts to add functionality to GitHub.
 [dff-gf]: https://greasyfork.org/en/scripts/26191-github-diff-files-filter
 [dfl-gf]: https://greasyfork.org/en/scripts/21559-github-diff-links
 [dfn-gf]: https://greasyfork.org/en/scripts/32634-github-diff-filename
+[dfn-gf]: 
 [fpv-gf]: https://greasyfork.org/en/scripts/20479-github-font-preview
 [hof-gf]: https://greasyfork.org/en/scripts/36598-github-hide-own-feed-meta
 [g2d-gf]: https://greasyfork.org/en/scripts/18254-gist-to-dabblet
@@ -192,6 +196,7 @@ Userscripts to add functionality to GitHub.
 [dff-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Diff_Files_Filter
 [dfl-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Diff_Links
 [dfn-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Diff_Filename
+[dlz-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Download_Zip
 [fpv-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Font_Preview
 [hof-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Hide_Own_Feed_Meta
 [g2d-ou]: https://openuserjs.org/scripts/Mottie/Gist_to_dabblet
