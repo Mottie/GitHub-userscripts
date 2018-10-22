@@ -156,7 +156,7 @@ Userscripts to add functionality to GitHub.
 [dff-gf]: https://greasyfork.org/en/scripts/26191-github-diff-files-filter
 [dfl-gf]: https://greasyfork.org/en/scripts/21559-github-diff-links
 [dfn-gf]: https://greasyfork.org/en/scripts/32634-github-diff-filename
-[dfn-gf]: 
+[dlz-gf]: https://greasyfork.org/en/scripts/373514-github-download-zip
 [fpv-gf]: https://greasyfork.org/en/scripts/20479-github-font-preview
 [hof-gf]: https://greasyfork.org/en/scripts/36598-github-hide-own-feed-meta
 [g2d-gf]: https://greasyfork.org/en/scripts/18254-gist-to-dabblet
@@ -196,7 +196,7 @@ Userscripts to add functionality to GitHub.
 [dff-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Diff_Files_Filter
 [dfl-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Diff_Links
 [dfn-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Diff_Filename
-[dlz-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Download_Zip
+[dlz-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Download_ZIP
 [fpv-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Font_Preview
 [hof-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Hide_Own_Feed_Meta
 [g2d-ou]: https://openuserjs.org/scripts/Mottie/Gist_to_dabblet
