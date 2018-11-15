@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Toggle Issue Comments
-// @version     1.3.4
+// @version     1.3.5
 // @description A userscript that toggles issues/pull request comments & messages
 // @license     MIT
 // @author      Rob Garrison
@@ -170,6 +170,14 @@
 				isHidden: false,
 				name: "ghic-reactions",
 				label: "Reactions"
+			},
+			projects: {
+				isHidden: false,
+				name: "ghic-projects",
+				selector: `.discussion-item-added_to_project,
+					.discussion-item-moved_columns_in_project,
+					.discussion-item-removed_from_project`,
+				label: "Project Changes"
 			},
 			// page with lots of users to hide:
 			// https://github.com/isaacs/github/issues/215
