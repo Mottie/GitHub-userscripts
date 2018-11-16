@@ -2,8 +2,8 @@
 "use strict";
 
 const { getUserscriptsInFolder, readFile, writeFile } = require("./files");
-const currentVersion = require("./current-mutations-version");
-const usXref = require("./userscript-xref");
+const getVersion = require("./get-mutation-version");
+const getXrefs = require("./get-xrefs");
 
 const regexpMutations = /mutations.js\?version=\d+/;
 const regexpPatch = /(@version\s+)([\d.]+)/;
@@ -11,6 +11,8 @@ const regexpName = /(@name\s+)([\w ]+)/;
 const today = (new Date()).toISOString().substring(0, 10).replace(/-/g, ".");
 
 const updatedList = [];
+
+let currentVersion, usXref;
 
 function updateFile(name) {
 	return new Promise((resolve, reject) => {
@@ -97,6 +99,10 @@ function exit(err) {
 	process.exit(err ? 1 : 0);
 }
 
-getUserscriptsInFolder()
-	.then(list => processUserscripts(list))
+Promise.all([ getUserscriptsInFolder(), getVersion(), getXrefs() ])
+	.then(([list, version, xrefs]) => {
+		currentVersion = version;
+		usXref = xrefs;
+		return processUserscripts(list)
+	})
 	.catch(exit);
