@@ -41,7 +41,7 @@ Userscripts to add functionality to GitHub.
 	| [GitHub image preview][ipv-wiki]       |     | [install][ipv-raw] | [GF][ipv-gf] [OU][ipv-ou] | 2016.05.17 | 2018.10.20 |            |
 	| [GitHub indent comments][ioc-wiki]     |     | [install][ioc-raw] | [GF][ioc-gf] [OU][ioc-ou] | 2017.03.15 | 2018.10.05 |            |
 	| [GitHub issue add details][iad-wiki]   |     | [install][iad-raw] | [GF][iad-gf] [OU][iad-ou] | 2018.01.05 | 2018.10.05 |            |
-	| [GitHub issue comments][ic1-wiki]      |     | [install][ic1-raw] | [GF][ic1-gf] [OU][ic1-ou] | 2016.04.04 | 2018.10.05 |            |
+	| [GitHub issue comments][ic1-wiki]      |     | [install][ic1-raw] | [GF][ic1-gf] [OU][ic1-ou] | 2016.04.04 | 2018.11.15 |            |
 	| [GitHub issue counts][ic2-wiki]        |     | [install][ic2-raw] | [GF][ic2-gf] [OU][ic2-ou] | 2012.01.16 | 2018.10.05 |            |
 	| [GitHub issue highlighter][gih-wiki]   |     | [install][gih-raw] | [GF][gih-gf] [OU][gih-ou] | 2016.05.21 | 2018.07.16 | 2018.07.26 |
 	| [GitHub issue show status][iss-wiki]   |     | [install][iss-raw] | [GF][iss-gf] [OU][iss-ou] | 2017.06.02 | 2018.10.05 |            |
