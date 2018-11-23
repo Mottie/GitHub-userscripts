@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Custom Navigation
-// @version     1.1.2
+// @version     1.1.3
 // @description A userscript that allows you to customize GitHub's main navigation bar
 // @license     MIT
 // @author      Rob Garrison
@@ -657,7 +657,7 @@
 
 	// Main process - adds links to header navigation
 	function customize() {
-		let nav = $(".Header ul[role='navigation']");
+		let nav = $(".HeaderMenu nav ul.flex-items-center");
 		if (nav) {
 			nav.classList.add("HeaderNav");
 			let indx, els,
