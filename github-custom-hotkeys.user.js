@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Custom Hotkeys
-// @version     1.0.19
+// @version     1.0.20
 // @description A userscript that allows you to add custom GitHub keyboard hotkeys
 // @license     MIT
 // @author      Rob Garrison
@@ -21,7 +21,7 @@
 	{
 		"all": [
 			{ "f1" : "#hotkey-settings" },
-			{ "g g": "{repo}/graphs" },
+			{ "g g": "{repo}/graphs/code-frequency" },
 			{ "g p": "{repo}/pulse" },
 			{ "g u": "{user}" },
 			{ "g s": "{upstream}" }
