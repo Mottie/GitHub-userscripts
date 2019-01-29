@@ -1,4 +1,4 @@
-/* GitHub mutations observer library script v0.2.6
+/* GitHub mutations observer library script v0.3.0
  * Detect changes to various elements and trigger an event
  * This script is meant to be used as a library for GitHub-based userscripts
  * Copyright © 2018 Rob Garrison
@@ -13,7 +13,8 @@
 		debounceInterval = 200,
 		targets = {
 			// pjax container (covers general, repo & gists)
-			"[data-pjax-container]": {
+			// .news = newsfeed layout
+			"[data-pjax-container], .news": {
 				count: 0,
 				name: "container"
 			},
