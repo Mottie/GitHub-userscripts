@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Static Time
-// @version     1.0.4
+// @version     1.0.5
 // @description A userscript that replaces relative times with a static time formatted as you like it
 // @license     MIT
 // @author      Rob Garrison
@@ -11,13 +11,14 @@
 // @grant       GM_getValue
 // @grant       GM_setValue
 // @grant       GM_registerMenuCommand
-// @require     https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment-with-locales.min.js
+// @require     https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment-with-locales.min.js
 // @require     https://greasyfork.org/scripts/28721-mutations/code/mutations.js?version=634242
 // @icon        https://assets-cdn.github.com/pinned-octocat.svg
 // @updateURL   https://raw.githubusercontent.com/Mottie/Github-userscripts/master/github-static-time.user.js
 // @downloadURL https://raw.githubusercontent.com/Mottie/Github-userscripts/master/github-static-time.user.js
 // ==/UserScript==
 (() => {
+    /* global moment */
 	"use strict";
 
 	let busy = false,
@@ -164,7 +165,7 @@
 
 			// loop with delay to allow user interaction
 			const loop = () => {
-				let el, time, node,
+				let el, time, node, formatted,
 					// max number of DOM insertions per loop
 					max = 0;
 				while (max < 20 && indx < len) {
@@ -175,11 +176,15 @@
 					time = el.getAttribute("datetime") || "";
 					if (el && time) {
 						if (tempFormat) {
-							el.textContent = moment(time).format(tempFormat);
+						    formatted = moment(time).format(tempFormat);
+							el.textContent = formatted;
+						    el.title = formatted;
 						} else {
+						    formatted = moment(time).format(timeFormat);
 							node = block.cloneNode(true);
 							node.setAttribute("datetime", time);
-							node.textContent = moment(time).format(timeFormat);
+							node.textContent = formatted;
+						    node.title = formatted;
 							// el.parentElement may be null sometimes when using browser
 							// back arrow
 							if (el.parentElement) {
