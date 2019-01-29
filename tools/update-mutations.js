@@ -77,7 +77,7 @@ function updateReadme() {
 				reject();
 			}
 			updatedList.forEach(name => {
-				readme = updateEntry({readme, name});
+				readme = updateEntry({readme, name: name.toLowerCase()});
 			});
 			resolve(readme);
 		}))
@@ -103,6 +103,6 @@ Promise.all([ getUserscriptsInFolder(), getVersion(), getXrefs() ])
 	.then(([list, version, xrefs]) => {
 		currentVersion = version;
 		usXref = xrefs;
-		return processUserscripts(list)
+		return processUserscripts(list);
 	})
 	.catch(exit);

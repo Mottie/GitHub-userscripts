@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name        GitHub Toggle Issue Comments
+// @name        GitHub Issue Comments
 // @version     1.3.5
 // @description A userscript that toggles issues/pull request comments & messages
 // @license     MIT

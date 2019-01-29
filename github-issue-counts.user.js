@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name        GitHub Show Repo Issues
+// @name        GitHub Issue Counts
 // @version     3.0.15
 // @description A userscript that adds a repo issues count to the repository tab & organization page (https://github.com/:user)
 // @license     MIT

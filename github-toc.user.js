@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name        GitHub TOC
+// @name        GitHub Table of Contents
 // @version     1.2.20
 // @description A userscript that adds a table of contents to readme & wiki pages
 // @license     MIT
