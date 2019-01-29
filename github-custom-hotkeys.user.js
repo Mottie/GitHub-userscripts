@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Custom Hotkeys
-// @version     1.0.20
+// @version     1.0.21
 // @description A userscript that allows you to add custom GitHub keyboard hotkeys
 // @license     MIT
 // @author      Rob Garrison
@@ -54,7 +54,7 @@
 		// https://github.com/{nonUser}
 		// see https://github.com/Mottie/github-reserved-names
 		nonUser = new RegExp("^(" + [
-			/* BUILD:RESERVED-NAMES-START (v1.1.3) */
+			/* BUILD:RESERVED-NAMES-START (v1.1.4) */
 			"400", "401", "402", "403", "404", "405", "406", "407", "408", "409",
 			"410", "411", "412", "413", "414", "415", "416", "417", "418", "419",
 			"420", "421", "422", "423", "424", "425", "426", "427", "428", "429",
@@ -69,12 +69,12 @@
 			"dashboard", "dashboards", "design", "develop", "developer", "diff",
 			"discover", "discussions", "docs", "downloads", "downtime", "editor",
 			"editors", "edu", "enterprise", "events", "explore", "featured",
-			"features", "files", "fixtures", "forked", "garage", "gist", "gists",
-			"graphs", "guide", "guides", "help", "help-wanted", "home", "hooks",
-			"hosting", "hovercards", "identity", "images", "inbox", "individual",
-			"info", "integration", "interfaces", "introduction", "investors",
-			"issues", "jobs", "join", "journal", "journals", "lab", "labs",
-			"languages", "launch", "layouts", "learn", "legal", "library",
+			"features", "files", "fixtures", "forked", "garage", "ghost", "gist",
+			"gists", "graphs", "guide", "guides", "help", "help-wanted", "home",
+			"hooks", "hosting", "hovercards", "identity", "images", "inbox",
+			"individual", "info", "integration", "interfaces", "introduction",
+			"investors", "issues", "jobs", "join", "journal", "journals", "lab",
+			"labs", "languages", "launch", "layouts", "learn", "legal", "library",
 			"linux", "listings", "lists", "login", "logos", "logout", "mac",
 			"maintenance", "malware", "man", "marketplace", "mention",
 			"mentioned", "mentioning", "mentions", "migrating", "milestones",
