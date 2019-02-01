@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Custom Hotkeys
-// @version     1.0.21
+// @version     1.0.22
 // @description A userscript that allows you to add custom GitHub keyboard hotkeys
 // @license     MIT
 // @author      Rob Garrison
@@ -54,7 +54,7 @@
 		// https://github.com/{nonUser}
 		// see https://github.com/Mottie/github-reserved-names
 		nonUser = new RegExp("^(" + [
-			/* BUILD:RESERVED-NAMES-START (v1.1.4) */
+			/* BUILD:RESERVED-NAMES-START (v1.1.5) */
 			"400", "401", "402", "403", "404", "405", "406", "407", "408", "409",
 			"410", "411", "412", "413", "414", "415", "416", "417", "418", "419",
 			"420", "421", "422", "423", "424", "425", "426", "427", "428", "429",
@@ -62,30 +62,30 @@
 			"508", "509", "510", "511", "about", "access", "account", "admin",
 			"anonymous", "any", "api", "apps", "attributes", "auth", "billing",
 			"blob", "blog", "bounty", "branches", "business", "businesses", "c",
-			"cache", "categories", "central", "certification", "changelog", "cla",
-			"cloud", "codereview", "collection", "collections", "comments",
-			"commit", "commits", "community", "companies", "compare", "contact",
-			"contributing", "cookbook", "coupons", "customer", "customers",
-			"dashboard", "dashboards", "design", "develop", "developer", "diff",
-			"discover", "discussions", "docs", "downloads", "downtime", "editor",
-			"editors", "edu", "enterprise", "events", "explore", "featured",
-			"features", "files", "fixtures", "forked", "garage", "ghost", "gist",
-			"gists", "graphs", "guide", "guides", "help", "help-wanted", "home",
-			"hooks", "hosting", "hovercards", "identity", "images", "inbox",
-			"individual", "info", "integration", "interfaces", "introduction",
-			"investors", "issues", "jobs", "join", "journal", "journals", "lab",
-			"labs", "languages", "launch", "layouts", "learn", "legal", "library",
-			"linux", "listings", "lists", "login", "logos", "logout", "mac",
-			"maintenance", "malware", "man", "marketplace", "mention",
-			"mentioned", "mentioning", "mentions", "migrating", "milestones",
-			"mine", "mirrors", "mobile", "navigation", "network", "new", "news",
-			"none", "nonprofit", "nonprofits", "notices", "notifications",
-			"oauth", "offer", "open-source", "organisations", "organizations",
-			"orgs", "pages", "partners", "payments", "personal", "plans",
-			"plugins", "popular", "popularity", "posts", "press", "pricing",
-			"professional", "projects", "pulls", "raw", "readme",
-			"recommendations", "redeem", "releases", "render", "reply",
-			"repositories", "resources", "restore", "revert",
+			"cache", "case-studies", "categories", "central", "certification",
+			"changelog", "cla", "cloud", "codereview", "collection",
+			"collections", "comments", "commit", "commits", "community",
+			"companies", "compare", "contact", "contributing", "cookbook",
+			"coupons", "customer", "customers", "dashboard", "dashboards",
+			"design", "develop", "developer", "diff", "discover", "discussions",
+			"docs", "downloads", "downtime", "editor", "editors", "edu",
+			"enterprise", "events", "explore", "featured", "features", "files",
+			"fixtures", "forked", "garage", "ghost", "gist", "gists", "graphs",
+			"guide", "guides", "help", "help-wanted", "home", "hooks", "hosting",
+			"hovercards", "identity", "images", "inbox", "individual", "info",
+			"integration", "interfaces", "introduction", "investors", "issues",
+			"jobs", "join", "journal", "journals", "lab", "labs", "languages",
+			"launch", "layouts", "learn", "legal", "library", "linux", "listings",
+			"lists", "login", "logos", "logout", "mac", "maintenance", "malware",
+			"man", "marketplace", "mention", "mentioned", "mentioning",
+			"mentions", "migrating", "milestones", "mine", "mirrors", "mobile",
+			"navigation", "network", "new", "news", "none", "nonprofit",
+			"nonprofits", "notices", "notifications", "oauth", "offer",
+			"open-source", "organisations", "organizations", "orgs", "pages",
+			"partners", "payments", "personal", "plans", "plugins", "popular",
+			"popularity", "posts", "press", "pricing", "professional", "projects",
+			"pulls", "raw", "readme", "recommendations", "redeem", "releases",
+			"render", "reply", "repositories", "resources", "restore", "revert",
 			"save-net-neutrality", "saved", "scraping", "search", "security",
 			"services", "sessions", "settings", "shareholders", "shop",
 			"showcases", "signin", "signup", "site", "spam", "ssh", "staff",
