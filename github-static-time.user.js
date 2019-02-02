@@ -18,7 +18,7 @@
 // @downloadURL https://raw.githubusercontent.com/Mottie/Github-userscripts/master/github-static-time.user.js
 // ==/UserScript==
 (() => {
-    /* global moment */
+	/* global moment */
 	"use strict";
 
 	let busy = false,
