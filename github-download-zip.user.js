@@ -35,7 +35,7 @@
 
 	function updateLinks() {
 		// Branch dropdown on main repo page
-		const branch = $("button[data-hotkey='w'] span");
+		const branch = $("summary[data-hotkey='w'] span");
 		// Download link in "Clone or Download" dropdown
 		const downloadLink = $("a[data-ga-click*='download zip']");
 		// Repo commits page
