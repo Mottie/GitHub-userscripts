@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Download ZIP
-// @version     0.1.1
+// @version     0.1.2
 // @description A userscript adds download links so that downloaded filenames include the SHA
 // @license     MIT
 // @author      Rob Garrison
@@ -24,7 +24,7 @@
 	span.innerHTML = zipIcon;
 
 	const link = document.createElement("a");
-	link.className = "btn btn-outline BtnGroup-item tooltipped tooltipped-s";
+	link.className = "btn btn-outline BtnGroup-item tooltipped tooltipped-s ghdz-btn";
 	link.setAttribute("aria-label", "Download ZIP");
 	link.innerHTML = zipIcon;
 
@@ -45,14 +45,15 @@
 			downloadLink.href = buildURL(branch.textContent.trim());
 			downloadLink.appendChild(span.cloneNode(true));
 		}
-
 		// Branch doesn't matter when you're using the SHA (first 7 values)
 		if (commits) {
 			[...document.querySelectorAll(".commit-group .commit .commit-links-group")].forEach(group => {
-				const sha = $(".sha", group).textContent.trim();
-				const a = link.cloneNode(true);
-				a.href = buildURL(sha);
-				group.appendChild(a);
+				if (!$(".ghdz-btn", group)) {
+					const sha = $(".sha", group).textContent.trim();
+					const a = link.cloneNode(true);
+					a.href = buildURL(sha);
+					group.appendChild(a);
+				}
 			});
 		}
 	}
