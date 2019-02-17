@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Toggle Wiki Sidebar
-// @version     1.0.16
+// @version     1.0.17
 // @description A userscript that adds a button to toggle the GitHub Wiki sidebar
 // @license     MIT
 // @author      Rob Garrison
@@ -11,7 +11,7 @@
 // @grant       GM_getValue
 // @grant       GM_setValue
 // @require     https://greasyfork.org/scripts/28721-mutations/code/mutations.js?version=666427
-// @icon        https://assets-cdn.github.com/pinned-octocat.svg
+// @icon        https://github.githubassets.com/pinned-octocat.svg
 // @updateURL   https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-toggle-wiki-sidebar.user.js
 // @downloadURL https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-toggle-wiki-sidebar.user.js
 // ==/UserScript==

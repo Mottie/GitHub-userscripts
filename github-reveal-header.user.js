@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Reveal Header
-// @version     0.1.2
+// @version     0.1.3
 // @description A userscript that reveals the header when hovering near the top of the screen
 // @license     MIT
 // @author      Rob Garrison
@@ -9,7 +9,7 @@
 // @include     https://gist.github.com/*
 // @run-at      document-idle
 // @grant       GM_addStyle
-// @icon        https://assets-cdn.github.com/pinned-octocat.svg
+// @icon        https://github.githubassets.com/pinned-octocat.svg
 // @updateURL   https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-reveal-header.user.js
 // @downloadURL https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-reveal-header.user.js
 // ==/UserScript==

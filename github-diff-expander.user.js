@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Diff Expander
-// @version     0.1.2
+// @version     0.1.3
 // @description A userscript that adds more diff code expanding buttons
 // @license     MIT
 // @author      Rob Garrison
@@ -9,7 +9,7 @@
 // @run-at      document-idle
 // @grant       none
 // @require     https://greasyfork.org/scripts/28721-mutations/code/mutations.js?version=666427
-// @icon        https://assets-cdn.github.com/pinned-octocat.svg
+// @icon        https://github.githubassets.com/pinned-octocat.svg
 // @updateURL   https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-diff-expander.user.js
 // @downloadURL https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-diff-expander.user.js
 // ==/UserScript==
