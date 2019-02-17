@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Files Filter
-// @version     1.1.7
+// @version     1.1.8
 // @description A userscript that adds filters that toggle the view of repo files by extension
 // @license     MIT
 // @author      Rob Garrison
@@ -244,7 +244,6 @@
 				filters.className = "gff-filter-wrapper commitinfo";
 				filters.style = "padding:3px 5px 2px;border-bottom:1px solid #eaecef";
 				files.insertBefore(filters, files.firstChild);
-				filters.addEventListener("click", updateFilter);
 			}
 			fixWidth();
 			buildHTML();
@@ -255,7 +254,7 @@
 	function buildButton(name, label, ext, text) {
 		return `<button type="button" ` +
 			`class="btn btn-sm selected BtnGroup-item tooltipped tooltipped-n` +
-			(name ? name : "") + `" ` +
+			(name ? name : "") + ` gff-btn" ` +
 			`data-ext="${ext}" aria-label="${label}">${text}</button>`;
 	}
 
@@ -325,6 +324,12 @@
 	function $$(str, el) {
 		return Array.from((el || document).querySelectorAll(str));
 	}
+
+	document.addEventListener("click", e => {
+		if (e.target.classList.contains("gff-btn")) {
+			updateFilter(e);
+		}
+	});
 
 	document.addEventListener("ghmo:container", () => {
 		// init after a short delay to allow rendering of file list
