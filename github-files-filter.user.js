@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Files Filter
-// @version     1.1.6
+// @version     1.1.7
 // @description A userscript that adds filters that toggle the view of repo files by extension
 // @license     MIT
 // @author      Rob Garrison
@@ -23,7 +23,7 @@
 	GM_addStyle(`
 		.gff-filter .btn.selected { font-variant: small-caps; }
 		.gff-filter .btn:not(.selected):not(:first-child) {
-      			text-decoration: line-through;
+			text-decoration: line-through;
 		}
 		.gff-filter .gff-all:not(.selected):focus,
 		.gff-filter .gff-all:not(.selected) ~ .btn:focus,
@@ -192,7 +192,7 @@
 			if ($("td.icon .octicon-file", file)) {
 				let ext, parts, sub,
 					link = $("td.content .js-navigation-open", file),
-					txt = (link.title || link.textContent || "").trim().toLowerCase(),
+					txt = (link.title || link.textContent || "").trim(),
 					name = txt.split("/").slice(-1)[0];
 				// test extension types; fallback to regex extraction
 				ext = Object.keys(types).find(item => {
