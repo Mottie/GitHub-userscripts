@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Table of Contents
-// @version     1.2.21
+// @version     1.3.0
 // @description A userscript that adds a table of contents to readme & wiki pages
 // @license     MIT
 // @author      Rob Garrison
@@ -10,17 +10,21 @@
 // @run-at      document-idle
 // @grant       GM_registerMenuCommand
 // @grant       GM_getValue
+// @grant       GM.getValue
 // @grant       GM_setValue
+// @grant       GM.setValue
 // @grant       GM_addStyle
+// @grant       GM.addStyle
 // @require     https://greasyfork.org/scripts/28721-mutations/code/mutations.js?version=666427
+// @require     https://greasemonkey.github.io/gm4-polyfill/gm4-polyfill.js?updated=20180103
 // @icon        https://assets-cdn.github.com/pinned-octocat.svg
 // @updateURL   https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-toc.user.js
 // @downloadURL https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-toc.user.js
 // ==/UserScript==
-(() => {
+(async () => {
 	"use strict";
 
-	GM_addStyle(`
+	GM.addStyle(`
 		/* z-index > 1000 to be above the */
 		.ghus-toc { position:fixed; z-index:1001; min-width:200px; top:60px; right:10px; }
 		.ghus-toc h3 { cursor:move; }
@@ -38,7 +42,7 @@
 		/* move header text out-of-view when collapsed */
 		.ghus-toc.collapsed > h3 svg { margin-bottom: 10px; }
 		.ghus-toc-hidden, .ghus-toc.collapsed .boxed-group-inner,
-		 .ghus-toc li:not(.collapsible) .ghus-toc-icon { display:none; }
+			.ghus-toc li:not(.collapsible) .ghus-toc-icon { display:none; }
 		.ghus-toc .boxed-group-inner { max-width:250px; max-height:400px; overflow-y:auto; overflow-x:hidden; }
 		.ghus-toc ul { list-style:none; }
 		.ghus-toc li { max-width:230px; white-space:nowrap; overflow-x:hidden; text-overflow:ellipsis; }
@@ -58,10 +62,10 @@
 		.ghus-toc-no-selection { -webkit-user-select:none !important; -moz-user-select:none !important; user-select:none !important; }
 	`);
 
-	let tocInit = false,
+	let tocInit = false;
 
-		// modifiable title
-		title = GM_getValue("github-toc-title", "Table of Contents");
+	// modifiable title
+	let title = await GM.getValue("github-toc-title", "Table of Contents");
 
 	const container = document.createElement("div"),
 
@@ -114,9 +118,9 @@
 		drag.el = null;
 	}
 
-	function dragSave(clear) {
+	async function dragSave(clear) {
 		let val = clear ? null : [container.style.left, container.style.top];
-		GM_setValue("github-toc-location", val);
+		await GM.setValue("github-toc-location", val);
 	}
 
 	// stop text selection while dragging
@@ -150,14 +154,14 @@
 		}
 	}
 
-	function tocShow() {
+	async function tocShow() {
 		container.classList.remove("collapsed");
-		GM_setValue("github-toc-hidden", false);
+		await GM.setValue("github-toc-hidden", false);
 	}
 
-	function tocHide() {
+	async function tocHide() {
 		container.classList.add("collapsed");
-		GM_setValue("github-toc-hidden", true);
+		await GM.setValue("github-toc-hidden", true);
 	}
 
 	function tocToggle() {
@@ -179,17 +183,15 @@
 	}
 
 	function tocAdd() {
-		// make sure the script is initialized
-		init();
 		if (!tocInit) {
 			return;
 		}
 		if ($("#wiki-content, #readme")) {
-			let indx, header, anchor, txt,
-				content = "<ul>",
-				anchors = $$(".markdown-body .anchor"),
-				len = anchors.length;
-			if (len > 2) {
+			let indx, header, anchor, txt;
+			let content = "<ul>";
+			const anchors = $$(".markdown-body .anchor");
+			const len = anchors.length;
+			if (len > 1) {
 				for (indx = 0; indx < len; indx++) {
 					anchor = anchors[indx];
 					if (anchor.parentNode) {
@@ -216,9 +218,9 @@
 	}
 
 	function listCollapsible() {
-		let indx, el, next, count, num, group,
-			els = $$("li", container),
-			len = els.length;
+		let indx, el, next, count, num, group;
+		const els = $$("li", container);
+		const len = els.length;
 		for (indx = 0; indx < len; indx++) {
 			count = 0;
 			group = [];
@@ -242,9 +244,9 @@
 		group = [];
 		on(container, "click", event => {
 			// click on icon, then target LI parent
-			let els, name, indx,
-				el = event.target.parentNode,
-				collapse = el.classList.contains("collapsed");
+			let els, name, indx;
+			const el = event.target.parentNode;
+			const collapse = el.classList.contains("collapsed");
 			if (event.target.classList.contains("ghus-toc-icon")) {
 				if (event.shiftKey) {
 					name = el.className.match(/ghus-toc-h\d/);
@@ -260,9 +262,10 @@
 			}
 		});
 	}
+
 	function collapseChildren(el, collapse) {
-		let name = el && el.className.match(/collapsible-(\d+)/),
-			children = name ? $$(".ghus-toc-childof-" + name[1], container) : null;
+		const name = el && el.className.match(/collapsible-(\d+)/);
+		const children = name ? $$(".ghus-toc-childof-" + name[1], container) : null;
 		if (children) {
 			if (collapse) {
 				el.classList.remove("collapsed");
@@ -280,10 +283,10 @@
 		clearTimeout(keyboard.timer);
 		// use "g+t" to toggle the panel; "g+r" to reset the position
 		// keypress may be needed for non-alphanumeric keys
-		let tocToggle = keyboard.toggle.split("+"),
-			tocReset = keyboard.restore.split("+"),
-			key = String.fromCharCode(event.which).toLowerCase(),
-			panelHidden = container.classList.contains("collapsed");
+		const tocToggle = keyboard.toggle.split("+");
+		const tocReset = keyboard.restore.split("+");
+		const key = String.fromCharCode(event.which).toLowerCase();
+		const panelHidden = container.classList.contains("collapsed");
 
 		// press escape to close the panel
 		if (event.which === 27 && !panelHidden) {
@@ -313,23 +316,23 @@
 		}, keyboard.delay);
 	}
 
-	function init() {
+	async function init() {
 		// there is no ".header" on github.com/contact; and some other pages
 		if (!$(".header, .Header") || tocInit) {
 			return;
 		}
 		// insert TOC after header
-		let tmp = GM_getValue("github-toc-location", null);
+		const location = await GM.getValue("github-toc-location", null);
 		// restore last position
-		if (tmp) {
-			container.style.left = tmp[0];
-			container.style.top = tmp[1];
+		if (location) {
+			container.style.left = location[0];
+			container.style.top = location[1];
 			container.style.right = "auto";
 		}
 
 		// TOC saved state
-		tmp = GM_getValue("github-toc-hidden", false);
-		container.className = "ghus-toc boxed-group wiki-pages-box readability-sidebar" + (tmp ? " collapsed" : "");
+		const hidden = await GM.getValue("github-toc-hidden", false);
+		container.className = "ghus-toc boxed-group wiki-pages-box readability-sidebar" + (hidden ? " collapsed" : "");
 		container.setAttribute("role", "navigation");
 		container.setAttribute("unselectable", "on");
 		container.innerHTML = `
@@ -348,8 +351,8 @@
 		`;
 
 		// add container
-		tmp = $(".header, .Header");
-		tmp.parentNode.insertBefore(container, tmp);
+		const el = $(".header, .Header");
+		el.parentNode.insertBefore(container, el);
 
 		// make draggable
 		on($("h3", container), "mousedown", dragInit);
@@ -361,7 +364,9 @@
 		on(container, "onselectstart", () => false );
 		// keyboard shortcuts
 		on(document, "keydown", keyboardCheck);
+
 		tocInit = true;
+	  tocAdd();
 	}
 
 	function $(str, el) {
@@ -377,30 +382,30 @@
 	}
 
 	function addClass(els, name) {
-		let indx,
-			len = els.length;
+		let indx;
+		const len = els.length;
 		for (indx = 0; indx < len; indx++) {
 			els[indx].classList.add(name);
 		}
 	}
 
 	function removeClass(els, name) {
-		let indx,
-			len = els.length;
+		let indx;
+		const len = els.length;
 		for (indx = 0; indx < len; indx++) {
 			els[indx].classList.remove(name);
 		}
 	}
 
 	// Add GM options
-	GM_registerMenuCommand("Set Table of Contents Title", () => {
+	GM.registerMenuCommand("Set Table of Contents Title", async () => {
 		title = prompt("Table of Content Title:", title);
-		GM_setValue("github-toc-title", title);
+		await GM.setValue("github-toc-title", title);
 		$("h3 span", container).textContent = title;
 	});
 
 	on(document, "ghmo:container", tocAdd);
 	on(document, "ghmo:preview", tocAdd);
-	tocAdd();
+	init();
 
 })();
