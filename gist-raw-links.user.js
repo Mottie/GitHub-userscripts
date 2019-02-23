@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        Gist Raw Links
-// @version     0.1.8
+// @version     0.2.0
 // @description Add a button that contains a list of gist raw file links
 // @license     MIT
 // @author      Rob Garrison
@@ -21,34 +21,30 @@
 	"use strict";
 
 	GM.addStyle(`
-		.ghrl-get-list * { pointer-events:none; }
 		.ghrl-get-list, .ghrl-files a { cursor:pointer; }
 		.ghrl-files div { text-align:center; }
 		.gist-count-links { z-index: 21; }
 	`);
 
 	const item = document.createElement("li");
-	item.className = "select-menu js-menu-container js-select-menu";
+	item.className = "d-inline-block mr-3";
 
 	function addButton(node) {
 		const button = item.cloneNode();
 		button.innerHTML = `
-			<a class="select-menu-button js-menu-target ghrl-get-list" aria-expanded="false" aria-haspopup="true">
-				🍣 Raw urls
-			</a>
-			<div class="select-menu-modal-holder">
-				<div class="select-menu-modal js-menu-content">
+			<details class="details-reset details-overlay select-menu">
+				<summary class="select-menu-button">
+					<span class="ghrl-get-list" data-menu-button>🍣 Raw urls</span>
+				</summary>
+				<details-menu class="select-menu-modal position-absolute ghrl-files" style="z-index: 99;" aria-label="Raw gist links">
 					<div class="select-menu-header">
-						<svg aria-label="Close" class="octicon octicon-x js-menu-close" height="16" role="img" version="1.1" viewBox="0 0 12 16" width="12"><path fill-rule="evenodd" d="M7.48 8l3.75 3.75-1.48 1.48L6 9.48l-3.75 3.75-1.48-1.48L4.52 8 .77 4.25l1.48-1.48L6 6.52l3.75-3.75 1.48 1.48z"/></svg>
-						<span class="select-menu-title">Files</span>
+						<span class="select-menu-title">Filter options</span>
 					</div>
-					<div class="js-select-menu-deferred-content ghrl-files">
-						<div>
-							<img src="https://assets-cdn.github.com/images/spinners/octocat-spinner-32.gif" width="32" alt="">
-						</div>
+					<div class="select-menu-list">
+						<img src="https://assets-cdn.github.com/images/spinners/octocat-spinner-32.gif" width="32" alt="">
 					</div>
-				</div>
-			</div>`;
+				</details-menu>
+			</details>`;
 		node.insertBefore(button, node.childNodes[0]);
 	}
 
@@ -59,36 +55,38 @@
 			while (indx--) {
 				// only save dabblet files from list
 				if (!$(".ghrl-get-list", gists[indx])) {
-					addButton($(".gist-count-links", gists[indx]));
+					addButton($(".gist-snippet-meta ul", gists[indx]));
 				}
 			}
 		}
 	}
 
 	function addList(link, files) {
-		let url,
-			html = "";
+		let html = "";
 		Object.keys(files).forEach(file => {
 			// remove version sha from raw_url to always point at
 			// the latest version of the file - see #18
-			url = files[file].raw_url.replace(/raw\/\w+\//, "raw/");
+			const url = files[file].raw_url.replace(/raw\/\w+\//, "raw/");
 			html += `
-				<a class="dropdown-item ghrl-file" role="menuitem" href="${url}">
-					${file}
+				<a href="${url}" class="js-selected-navigation-item select-menu-item ghrl-file" role="menuitem" aria-current="page>
+					<span class="select-menu-item-text" data-menu-button-text>
+						${file}
+					</span>
 				</a>`;
 		});
-		$(".ghrl-files", link.parentNode).innerHTML = html;
+		$(".ghrl-files", link.closest("li")).innerHTML = html;
 	}
 
 	function loadFileList(link) {
 		let url,
-			el = link.closest(".select-menu");
+			el = link.closest("li");
 		el = $("a", el.nextElementSibling);
 		if (el) {
 			url = el.href.split("/");
+			const gistid = url.pop();
 			GM.xmlHttpRequest({
 				method : "GET",
-				url : `https://api.github.com/gists/${url.pop()}`,
+				url : `https://api.github.com/gists/${gistid}`,
 				onload : response => {
 					if (response.status !== 200) {
 						$(".ghrl-files", link.parentNode).innerHTML = response.message;
@@ -112,8 +110,6 @@
 		document.addEventListener("click", function(event) {
 			const target = event.target;
 			if (target.classList.contains("ghrl-get-list")) {
-				event.preventDefault();
-			 event.stopPropagation();
 				if (!$(".dropdown-item", target.parentNode)) {
 					loadFileList(target);
 				}
