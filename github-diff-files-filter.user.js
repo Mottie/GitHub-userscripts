@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Diff Files Filter
-// @version     2.0.2
+// @version     2.1.0
 // @description A userscript that adds filters that toggle diff & PR folders, and files by extension
 // @license     MIT
 // @author      Rob Garrison
@@ -21,7 +21,8 @@
 		rootLabel = "\u00ABroot\u00BB",
 		noExtLabel = "\u00ABno-ext\u00BB",
 		dotExtLabel = "\u00ABdot-files\u00BB",
-		renameFileLabel = "\u00ABrenamed\u00BB";
+		renameFileLabel = "\u00ABrenamed\u00BB",
+		minFileLabel = "\u00ABmin\u00BB";
 
 	let exts = {};
 	let folders = {};
@@ -90,6 +91,7 @@
 		exts[noExtLabel] = [];
 		exts[dotExtLabel] = [];
 		exts[renameFileLabel] = [];
+		exts[minFileLabel] = [];
 		folders[rootLabel] = [];
 		// TOC in file diffs and pr-toolbar in Pull requests
 		$$(".file-header .file-info > a").forEach(file => {
@@ -98,7 +100,8 @@
 				filename = txt.split("/").splice(-1)[0],
 				// test for no extension, then get extension name
 				// regexp from https://github.com/silverwind/file-extension
-				ext = /\./.test(filename) ? /[^./\\]*$/.exec(filename)[0] : noExtLabel;
+				ext = /\./.test(filename) ? /[^./\\]*$/.exec(filename)[0] : noExtLabel,
+				min = /\.min\./.test(filename);
 			// Add filter for renamed files: {old path} → {new path}
 			if (txt.indexOf(" → ") > -1) {
 				ext = renameFileLabel;
@@ -111,6 +114,9 @@
 					exts[ext] = [];
 				}
 				exts[ext].push(sha);
+				if (min) {
+					exts[minFileLabel].push(sha);
+				}
 			}
 			if (path.length > 1) {
 				path.splice(-1); // remove filename
