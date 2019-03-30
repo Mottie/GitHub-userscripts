@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Custom Navigation
-// @version     1.1.5
+// @version     1.1.6
 // @description A userscript that allows you to customize GitHub's main navigation bar
 // @license     MIT
 // @author      Rob Garrison
@@ -207,6 +207,7 @@
 			body.ghcn-settings-open .HeaderNavlink,
 				.ghcn-settings-wrapper .HeaderNavlink { min-height:auto;
 				min-width:16px; padding-top:1px; }
+			body.ghcn-settings-open .js-header-wrapper .HeaderNavlink.form-control,
 			body.ghcn-settings-open .Header .HeaderNavlink.form-control {
 				background-color: transparent; border: 1px solid #444; }
 			/* JSON code block */
@@ -551,7 +552,9 @@
 
 		el = $$(`
 			.Header .dropdown-item[href='/settings/profile'],
-			.Header .dropdown-item[data-ga-click*='go to profile']`
+			.Header .dropdown-item[data-ga-click*='go to profile'],
+			.js-header-wrapper .dropdown-item[href='/settings/profile'],
+			.js-header-wrapper .dropdown-item[data-ga-click*='go to profile']`
 		);
 		// get last found item - gists only have the "go to profile" item; GitHub
 		// has both
