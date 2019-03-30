@@ -164,7 +164,7 @@ Userscripts to add functionality to GitHub.
 [hof-gf]: https://greasyfork.org/en/scripts/36598-github-hide-own-feed-meta
 [g2d-gf]: https://greasyfork.org/en/scripts/18254-gist-to-dabblet
 [gff-gf]: https://greasyfork.org/en/scripts/30940-github-files-filter
-[ghp-gf]:
+[ghp-gf]: https://greasyfork.org/en/scripts/381133-github-html-preview
 [gih-gf]: https://greasyfork.org/en/scripts/19867-github-issue-highlighter
 [grl-gf]: https://greasyfork.org/en/scripts/29888-gist-raw-links
 [gsr-gf]: https://greasyfork.org/en/scripts/38354-github-sort-reactions
@@ -205,6 +205,7 @@ Userscripts to add functionality to GitHub.
 [hof-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Hide_Own_Feed_Meta
 [g2d-ou]: https://openuserjs.org/scripts/Mottie/Gist_to_dabblet
 [gff-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Files_Filter
+[ghp-ou]: https://openuserjs.org/scripts/Mottie/GitHub_HTML_Preview
 [gih-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Issue_Highlighter
 [glc-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Label_Color_Picker
 [grl-ou]: https://openuserjs.org/scripts/Mottie/Gist_Raw_Links
