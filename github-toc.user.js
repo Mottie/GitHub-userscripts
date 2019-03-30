@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Table of Contents
-// @version     1.3.0
+// @version     1.3.1
 // @description A userscript that adds a table of contents to readme & wiki pages
 // @license     MIT
 // @author      Rob Garrison
@@ -38,7 +38,8 @@
 		}
 		.ghus-toc.collapsed > h3 { cursor:pointer; padding-top:5px; border:none; background:#222; color:#ddd; }
 		.ghus-toc.collapsed .ghus-toc-docs { display:none; }
-		.ghus-toc.collapsed ~ .Header { padding-right: 30px !important; }
+		.ghus-toc.collapsed ~ .Header,
+		.ghus-toc.collapsed ~ .js-header-wrapper { padding-right: 30px !important; }
 		/* move header text out-of-view when collapsed */
 		.ghus-toc.collapsed > h3 svg { margin-bottom: 10px; }
 		.ghus-toc-hidden, .ghus-toc.collapsed .boxed-group-inner,
@@ -318,7 +319,7 @@
 
 	async function init() {
 		// there is no ".header" on github.com/contact; and some other pages
-		if (!$(".header, .Header") || tocInit) {
+		if (!$(".header, .Header, .js-header-wrapper") || tocInit) {
 			return;
 		}
 		// insert TOC after header
@@ -351,7 +352,7 @@
 		`;
 
 		// add container
-		const el = $(".header, .Header");
+		const el = $(".header, .js-header-wrapper");
 		el.parentNode.insertBefore(container, el);
 
 		// make draggable
