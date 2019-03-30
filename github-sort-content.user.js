@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Sort Content
-// @version     2.0.4
+// @version     2.0.5
 // @description A userscript that makes some lists & markdown tables sortable
 // @license     MIT
 // @author      Rob Garrison
@@ -259,7 +259,7 @@
 
 	function getFixedHeader() {
 		// Is https://github.com/StylishThemes/GitHub-FixedHeader active?
-		const header = window.getComputedStyle($(".Header"));
+		const header = window.getComputedStyle($(".Header, .js-header-wrapper"));
 		const height = header.position === "fixed" && parseInt(header.height, 10);
 		// Adjust sort arrow position
 		return height ?
