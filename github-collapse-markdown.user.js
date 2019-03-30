@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Collapse Markdown
-// @version     1.1.13
+// @version     1.2.0
 // @description A userscript that collapses markdown headers
 // @license     MIT
 // @author      Rob Garrison
@@ -13,6 +13,7 @@
 // @grant       GM_getValue
 // @grant       GM_setValue
 // @grant       GM_registerMenuCommand
+// @require     https://greasyfork.org/scripts/28721-mutations/code/mutations.js?version=666427
 // @icon        https://github.githubassets.com/pinned-octocat.svg
 // @updateURL   https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-collapse-markdown.user.js
 // @downloadURL https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-collapse-markdown.user.js
@@ -65,7 +66,7 @@
 		.octicon-link, .octicon-link > * {
 			pointer-events:none;
 		}
-		.ghcm-hidden {
+		.ghcm-hidden, .ghcm-no-content:after {
 			display:none !important;
 		}
 	`);
@@ -81,7 +82,7 @@
 	}
 
 	function toggle(el, shifted) {
-		if (el) {
+		if (el && !el.classList.contains("ghcm-no-content")) {
 			el.classList.toggle(collapsed);
 			let els;
 			const name = el.nodeName || "",
@@ -167,7 +168,7 @@
 			let target = event.target;
 			const name = (target && (target.nodeName || "")).toLowerCase();
 			if (name === "path") {
-				target = closest("svg", target);
+				target = target.closest("svg");
 			}
 			if (!target || target.classList.contains("anchor") ||
 				name === "a" || name === "img" ||
@@ -177,13 +178,19 @@
 				return;
 			}
 			// check if element is inside a header
-			target = closest(headers.join(","), event.target);
+			target = event.target.closest(headers.join(","));
 			if (target && headers.indexOf(target.nodeName || "") > -1) {
 				// make sure the header is inside of markdown
-				if (closest(blocks.slice(0, -1).join(","), target)) {
+				if (target.closest(blocks.slice(0, -1).join(","))) {
 					toggle(target, event.shiftKey);
 				}
 			}
+		});
+		document.addEventListener("ghmo:container", () => {
+			// init after a short delay to allow rendering of file list
+			setTimeout(() => {
+				ignoreEmptyHeaders();
+			}, 200);
 		});
 	}
 
@@ -228,11 +235,21 @@
 		}
 	}
 
+	function ignoreEmptyHeaders() {
+		$$("a.anchor").forEach(el => {
+			const parent = el.parentNode;
+			if (parent && parent.matches(headers.join(",")) && !parent.nextElementSibling) {
+				parent.classList.add("ghcm-no-content");
+			}
+		});
+	}
+
 	function init() {
 		document.querySelector("head").appendChild(arrowColors);
 		checkColors();
 		addColors();
 		addBinding();
+		ignoreEmptyHeaders();
 		if (startCollapsed) {
 			checkHash();
 		}
@@ -244,16 +261,6 @@
 
 	function $$(selectors, el) {
 		return [...(el || document).querySelectorAll(selectors)];
-	}
-
-	function closest(selector, el) {
-		while (el && el.nodeType === 1) {
-			if (el.matches(selector)) {
-				return el;
-			}
-			el = el.parentNode;
-		}
-		return null;
 	}
 
 	// Add GM options
