@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Custom Navigation
-// @version     1.1.6
+// @version     1.1.7
 // @description A userscript that allows you to customize GitHub's main navigation bar
 // @license     MIT
 // @author      Rob Garrison
@@ -176,8 +176,8 @@
 			.ghcn-footer { margin-top:4px; border-top:#555 solid 1px; }
 			li[data-ghcn] a { min-width:25px; text-align: center; }
 			.HeaderNavlink { height:28px; padding:2px 5px; }
-			ul.HeaderNav .HeaderNavlink svg,
-				ul.HeaderNav .HeaderNavlink img,
+			.HeaderNav .HeaderNavlink svg,
+				.HeaderNav .HeaderNavlink img,
 				#ghcn-nav-items .HeaderNavlink svg,
 				#ghcn-nav-items .HeaderNavlink img, .gu-mirror svg, .gu-mirror img {
 				max-height:16px; fill:currentColor; vertical-align:middle;
@@ -195,12 +195,12 @@
 				body.ghcn-settings-open .header-logo-wordmark,
 				.gist-header .octicon-logo-github, /* hide GitHub logo on Gist page */
 				.zh-todo-link { display:none !important; }
-			body.ghcn-settings-open ul.HeaderNav { width:100%; }
+			body.ghcn-settings-open .HeaderNav { width:100%; }
 			body.ghcn-settings-open .HeaderNavlink > * { pointer-events:none; }
 			body.ghcn-settings-open #ghcn-overlay,
 			body.ghcn-settings-open #ghcn-settings-inner,
 			#ghcn-nav-items { display:block; }
-			body.ghcn-settings-open ul.HeaderNav .HeaderNavitem,
+			body.ghcn-settings-open .HeaderNav .HeaderNavitem,
 			.ghcn-settings-wrapper .HeaderNavitem { cursor:move;
 				border:#555 1px solid; border-radius:4px; margin-left: 2px;
 				display:inline-block; }
@@ -416,7 +416,7 @@
 				</a>`;
 		}
 		make({
-			el: "li",
+			el: "span",
 			appendTo: target,
 			attr: {
 				"data-ghcn": name
@@ -660,7 +660,7 @@
 
 	// Main process - adds links to header navigation
 	function customize() {
-		let nav = $(".HeaderMenu nav ul.flex-items-center");
+		let nav = $(".Header nav");
 		if (nav) {
 			nav.classList.add("HeaderNav");
 			let indx, els,
