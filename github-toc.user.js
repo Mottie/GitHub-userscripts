@@ -26,7 +26,7 @@
 
 	GM.addStyle(`
 		/* z-index > 1000 to be above the */
-		.ghus-toc { position:fixed; z-index:1001; min-width:200px; top:60px; right:10px; }
+		.ghus-toc { position:fixed; z-index:1001; min-width:200px; top:64px; right:10px; }
 		.ghus-toc h3 { cursor:move; }
 		/* icon toggles TOC container & subgroups */
 		.ghus-toc h3 svg, .ghus-toc li.collapsible .ghus-toc-icon { cursor:pointer; vertical-align:baseline; }
