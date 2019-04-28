@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Table of Contents
-// @version     1.3.1
+// @version     1.3.2
 // @description A userscript that adds a table of contents to readme & wiki pages
 // @license     MIT
 // @author      Rob Garrison
@@ -38,8 +38,7 @@
 		}
 		.ghus-toc.collapsed > h3 { cursor:pointer; padding-top:5px; border:none; background:#222; color:#ddd; }
 		.ghus-toc.collapsed .ghus-toc-docs { display:none; }
-		.ghus-toc.collapsed ~ .Header,
-		.ghus-toc.collapsed ~ .js-header-wrapper { padding-right: 30px !important; }
+		.ghus-toc:not(.ghus-toc-hidden).collapsed ~ .js-header-wrapper .Header { padding-right: 48px !important; }
 		/* move header text out-of-view when collapsed */
 		.ghus-toc.collapsed > h3 svg { margin-bottom: 10px; }
 		.ghus-toc-hidden, .ghus-toc.collapsed .boxed-group-inner,
@@ -176,10 +175,10 @@
 		}
 	}
 	// hide TOC entirely, if no rendered markdown detected
-	function tocView(mode) {
+	function tocView(isVisible) {
 		const toc = $(".ghus-toc");
 		if (toc) {
-			toc.style.display = mode || "none";
+			toc.classList.toggle("ghus-toc-hidden", !isVisible);
 		}
 	}
 
@@ -208,7 +207,7 @@
 					}
 				}
 				$(".boxed-group-inner", container).innerHTML = content + "</ul>";
-				tocView("block");
+				tocView(true);
 				listCollapsible();
 			} else {
 				tocView();
