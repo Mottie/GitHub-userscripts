@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Table of Contents
-// @version     1.3.2
+// @version     1.3.3
 // @description A userscript that adds a table of contents to readme & wiki pages
 // @license     MIT
 // @author      Rob Garrison
@@ -54,11 +54,12 @@
 		.ghus-toc .ghus-toc-h6 { padding-left:90px; }
 		/* anchor collapsible icon */
 		.ghus-toc li.collapsible .ghus-toc-icon {
-			width:16px; height:16px; display:inline-block; margin-left:-16px;
+			width:16px; height:10px; display:inline-block; margin-left:-16px;
 			background: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGNsYXNzPSdvY3RpY29uJyBoZWlnaHQ9JzE0JyB2aWV3Qm94PScwIDAgMTIgMTYnPjxwYXRoIGQ9J00wIDVsNiA2IDYtNkgweic+PC9wYXRoPjwvc3ZnPg==) left center no-repeat;
 		}
 		/* on rotate, height becomes width, so this is keeping things lined up */
 		.ghus-toc li.collapsible.collapsed .ghus-toc-icon { -webkit-transform:rotate(-90deg); transform:rotate(-90deg); height:10px; width:12px; margin-right:2px; }
+		.ghus-toc-icon svg, .ghus-toc-docs svg { pointer-events:none; }
 		.ghus-toc-no-selection { -webkit-user-select:none !important; -moz-user-select:none !important; user-select:none !important; }
 	`);
 
@@ -67,32 +68,40 @@
 	// modifiable title
 	let title = await GM.getValue("github-toc-title", "Table of Contents");
 
-	const container = document.createElement("div"),
+	const container = document.createElement("div");
+	const useClient = !!document.all;
 
-		// keyboard shortcuts
-		keyboard = {
-			toggle  : "g+t",
-			restore : "g+r",
-			timer   : null,
-			lastKey : null,
-			delay   : 1000 // ms between keyboard shortcuts
-		},
+	// keyboard shortcuts
+	const keyboard = {
+		toggle  : "g+t",
+		restore : "g+r",
+		timer   : null,
+		lastKey : null,
+		delay   : 1000 // ms between keyboard shortcuts
+	};
 
-		// drag variables
-		drag = {
-			el   : null,
-			pos  : [0, 0],
-			elm  : [0, 0],
-			time : 0,
-			unsel: null
-		};
+	// drag variables
+	const drag = {
+		el    :  null,
+		elmX  : 0,
+		elmY  : 0,
+		time  : 0,
+		unsel : null
+	};
+
+	const stopPropag = event => {
+		event.preventDefault();
+		event.stopPropagation();
+	};
 
 	// drag code adapted from http://jsfiddle.net/tovic/Xcb8d/light/
-	function dragInit() {
+	function dragInit(event) {
 		if (!container.classList.contains("collapsed")) {
+			const x = useClient ? window.event.clientX : event.pageX;
+			const y = useClient ? window.event.clientY : event.pageY;
 			drag.el = container;
-			drag.elm[0] = drag.pos[0] - drag.el.offsetLeft;
-			drag.elm[1] = drag.pos[1] - drag.el.offsetTop;
+			drag.elmX = x - drag.el.offsetLeft;
+			drag.elmY = y - drag.el.offsetTop;
 			selectionToggle(true);
 		} else {
 			drag.el = null;
@@ -101,11 +110,11 @@
 	}
 
 	function dragMove(event) {
-		drag.pos[0] = document.all ? window.event.clientX : event.pageX;
-		drag.pos[1] = document.all ? window.event.clientY : event.pageY;
 		if (drag.el !== null) {
-			drag.el.style.left = (drag.pos[0] - drag.elm[0]) + "px";
-			drag.el.style.top = (drag.pos[1] - drag.elm[1]) + "px";
+			const x = useClient ? window.event.clientX : event.pageX;
+			const y = useClient ? window.event.clientY : event.pageY;
+			drag.el.style.left = (x - drag.elmX) + "px";
+			drag.el.style.top = (y - drag.elmY) + "px";
 			drag.el.style.right = "auto";
 		}
 	}
@@ -131,13 +140,13 @@
 			drag.unsel = body.getAttribute("unselectable");
 			body.setAttribute("unselectable", "on");
 			body.classList.add("ghus-toc-no-selection");
-			on(body, "onselectstart", () => false);
+			on(body, "onselectstart", stopPropag);
 		} else {
 			if (drag.unsel) {
 				body.setAttribute("unselectable", drag.unsel);
 			}
 			body.classList.remove("ghus-toc-no-selection");
-			body.removeEventListener("onselectstart", () => false);
+			body.removeEventListener("onselectstart", stopPropag);
 		}
 		removeSelection();
 	}
@@ -243,6 +252,10 @@
 		}
 		group = [];
 		on(container, "click", event => {
+			// Allow doc link to work
+			if (event.target.nodeName.toLowerCase() !== "a") {
+				stopPropag(event);
+			}
 			// click on icon, then target LI parent
 			let els, name, indx;
 			const el = event.target.parentNode;
@@ -283,7 +296,7 @@
 		clearTimeout(keyboard.timer);
 		// use "g+t" to toggle the panel; "g+r" to reset the position
 		// keypress may be needed for non-alphanumeric keys
-		const tocToggle = keyboard.toggle.split("+");
+		const tocToggleKeys = keyboard.toggle.split("+");
 		const tocReset = keyboard.restore.split("+");
 		const key = String.fromCharCode(event.which).toLowerCase();
 		const panelHidden = container.classList.contains("collapsed");
@@ -298,7 +311,7 @@
 			return;
 		}
 		// toggle TOC (g+t)
-		if (keyboard.lastKey === tocToggle[0] && key === tocToggle[1]) {
+		if (keyboard.lastKey === tocToggleKeys[0] && key === tocToggleKeys[1]) {
 			if (panelHidden) {
 				tocShow();
 			} else {
@@ -361,12 +374,12 @@
 		// toggle TOC
 		on($(".ghus-toc-icon", container), "mouseup", tocToggle);
 		// prevent container content selection
-		on(container, "onselectstart", () => false );
+		on(container, "onselectstart", stopPropag);
 		// keyboard shortcuts
 		on(document, "keydown", keyboardCheck);
 
 		tocInit = true;
-	  tocAdd();
+		tocAdd();
 	}
 
 	function $(str, el) {
