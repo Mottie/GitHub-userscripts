@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Table of Contents
-// @version     1.3.3
+// @version     1.3.4
 // @description A userscript that adds a table of contents to readme & wiki pages
 // @license     MIT
 // @author      Rob Garrison
