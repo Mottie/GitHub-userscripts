@@ -28,8 +28,12 @@
 		/* z-index > 1000 to be above the */
 		.ghus-toc { position:fixed; z-index:1001; min-width:200px; top:60px; right:10px; }
 		.ghus-toc h3 { cursor:move; }
+		.ghus-toc-title { padding-left:20px; }
 		/* icon toggles TOC container & subgroups */
-		.ghus-toc h3 svg, .ghus-toc li.collapsible .ghus-toc-icon { cursor:pointer; vertical-align:baseline; }
+		.ghus-toc .ghus-toc-icon { vertical-align:baseline; }
+		.ghus-toc h3 .ghus-toc-icon, .ghus-toc li.collapsible .ghus-toc-icon { cursor:pointer; }
+		.ghus-toc .ghus-toc-toggle { position:absolute; width:28px; height:38px; top:0px; left:0px; }
+		.ghus-toc .ghus-toc-toggle svg { margin-top:10px; margin-left:9px; }
 		.ghus-toc .ghus-toc-docs { float:right; }
 		/* move collapsed TOC to top right corner */
 		.ghus-toc.collapsed {
@@ -40,7 +44,7 @@
 		.ghus-toc.collapsed .ghus-toc-docs { display:none; }
 		.ghus-toc:not(.ghus-toc-hidden).collapsed ~ .js-header-wrapper .Header { padding-right: 48px !important; }
 		/* move header text out-of-view when collapsed */
-		.ghus-toc.collapsed > h3 svg { margin-bottom: 10px; }
+		.ghus-toc.collapsed > h3 svg { margin-top:6px; }
 		.ghus-toc-hidden, .ghus-toc.collapsed .boxed-group-inner,
 			.ghus-toc li:not(.collapsible) .ghus-toc-icon { display:none; }
 		.ghus-toc .boxed-group-inner { max-width:250px; max-height:400px; overflow-y:auto; overflow-x:hidden; }
@@ -253,9 +257,10 @@
 		group = [];
 		on(container, "click", event => {
 			// Allow doc link to work
-			if (event.target.nodeName.toLowerCase() !== "a") {
-				stopPropag(event);
+			if (event.target.nodeName.toLowerCase() === "a") {
+				return;
 			}
+			stopPropag(event);
 			// click on icon, then target LI parent
 			let els, name, indx;
 			const el = event.target.parentNode;
@@ -350,10 +355,12 @@
 		container.setAttribute("unselectable", "on");
 		container.innerHTML = `
 			<h3 class="js-wiki-toggle-collapse wiki-auxiliary-content" data-hotkey="g t">
-				<svg class="octicon ghus-toc-icon" height="14" width="14" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 16 12">
-					<path d="M2 13c0 .6 0 1-.6 1H.6c-.6 0-.6-.4-.6-1s0-1 .6-1h.8c.6 0 .6.4.6 1zm2.6-9h6.8c.6 0 .6-.4.6-1s0-1-.6-1H4.6C4 2 4 2.4 4 3s0 1 .6 1zM1.4 7H.6C0 7 0 7.4 0 8s0 1 .6 1h.8C2 9 2 8.6 2 8s0-1-.6-1zm0-5H.6C0 2 0 2.4 0 3s0 1 .6 1h.8C2 4 2 3.6 2 3s0-1-.6-1zm10 5H4.6C4 7 4 7.4 4 8s0 1 .6 1h6.8c.6 0 .6-.4.6-1s0-1-.6-1zm0 5H4.6c-.6 0-.6.4-.6 1s0 1 .6 1h6.8c.6 0 .6-.4.6-1s0-1-.6-1z"/>
-				</svg>
-				<span>${title}</span>
+				<span class="ghus-toc-toggle ghus-toc-icon">
+					<svg class="octicon" height="14" width="14" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 16 12">
+						<path d="M2 13c0 .6 0 1-.6 1H.6c-.6 0-.6-.4-.6-1s0-1 .6-1h.8c.6 0 .6.4.6 1zm2.6-9h6.8c.6 0 .6-.4.6-1s0-1-.6-1H4.6C4 2 4 2.4 4 3s0 1 .6 1zM1.4 7H.6C0 7 0 7.4 0 8s0 1 .6 1h.8C2 9 2 8.6 2 8s0-1-.6-1zm0-5H.6C0 2 0 2.4 0 3s0 1 .6 1h.8C2 4 2 3.6 2 3s0-1-.6-1zm10 5H4.6C4 7 4 7.4 4 8s0 1 .6 1h6.8c.6 0 .6-.4.6-1s0-1-.6-1zm0 5H4.6c-.6 0-.6.4-.6 1s0 1 .6 1h6.8c.6 0 .6-.4.6-1s0-1-.6-1z"/>
+					</svg>
+				</span>
+				<span class="ghus-toc-title">${title}</span>
 				<a class="ghus-toc-docs tooltipped tooltipped-w" aria-label="Go to documentation" href="https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-table-of-contents">
 					<svg class="octicon" xmlns="http://www.w3.org/2000/svg" height="16" width="14" viewBox="0 0 16 14">
 						<path d="M6 10h2v2H6V10z m4-3.5c0 2.14-2 2.5-2 2.5H6c0-0.55 0.45-1 1-1h0.5c0.28 0 0.5-0.22 0.5-0.5v-1c0-0.28-0.22-0.5-0.5-0.5h-1c-0.28 0-0.5 0.22-0.5 0.5v0.5H4c0-1.5 1.5-3 3-3s3 1 3 2.5zM7 2.3c3.14 0 5.7 2.56 5.7 5.7S10.14 13.7 7 13.7 1.3 11.14 1.3 8s2.56-5.7 5.7-5.7m0-1.3C3.14 1 0 4.14 0 8s3.14 7 7 7 7-3.14 7-7S10.86 1 7 1z" />
