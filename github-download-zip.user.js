@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Download ZIP
-// @version     0.2.1
+// @version     0.2.2
 // @description A userscript adds download links so that downloaded filenames include the SHA
 // @license     MIT
 // @author      Rob Garrison
@@ -72,7 +72,7 @@
 						</a>`;
 				});
 		  } else {
-				html = "<h4 class='ghdz-file'>No releases found</h4>";
+				html = "<h4 class='ghdz-file'>No release files found</h4>";
 		  }
 		} else {
 			// Error message
@@ -119,14 +119,18 @@
 
 	function updateLinks() {
 		// Branch dropdown on main repo page
-		const branch = $("summary[data-hotkey='w']");
+		const branch = $("summary[data-hotkey='w'] span");
 		// Download link in "Clone or Download" dropdown
 		const downloadLink = $("a[data-ga-click*='download zip']");
 		// Repo commits page
 		const commits = $(".commits-listing");
 
 		if (downloadLink && branch && !$(".ghdz-releases", downloadLink.parentNode)) {
-			downloadLink.href = buildURL(branch.title.trim());
+			const branchName = branch.textContent.indexOf('…') > -1
+				// Branch selector is showing trucated text; title has full text
+				? branch.parentNode.title
+				: branch.textContent;
+			downloadLink.href = buildURL(branchName.trim());
 			downloadLink.appendChild(span.cloneNode(true));
 			downloadLink.after(div.cloneNode(true));
 		}
