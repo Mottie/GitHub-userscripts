@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Download ZIP
-// @version     0.2.0
+// @version     0.2.1
 // @description A userscript adds download links so that downloaded filenames include the SHA
 // @license     MIT
 // @author      Rob Garrison
@@ -25,8 +25,8 @@
 	GM.addStyle(`
 		.ghdz-releases { width:100% !important; padding:10px; }
 		.ghdz-releases summary { text-align:left; padding-left:16px; }
-		.ghdz-files { width:100%; border:0; box-shadow:none; margin-bottom:0; }
-		.ghdz-file { text-align:left; }
+		.ghdz-files.select-menu-modal { width:100%; border:0; box-shadow:none !important; margin-bottom:0; }
+		.ghdz-file { text-align:left; padding-left:16px; }
 	`);
 
 	const zipIcon = `
@@ -59,18 +59,24 @@
 		return `https://api.github.com/repos/${user}/${repo}/zipball/${part}`;
 	}
 
-	function buildReleases(assets, container) {
+	function buildReleases(result, container) {
 		let html = "";
-		if (Array.isArray(assets)) {
-			assets.forEach(release => {
-				const url = release.browser_download_url;
-				html += `
-					<a href="${url}" class="dropdown-item ghdz-file" role="menuitem">
-						${url.split("/").slice(-1)}
-					</a>`;
-			});
+		if (Array.isArray(result)) {
+			const assets = result[0] && Object.keys(result[0]).length && result[0].assets;
+		  if (assets) {
+				assets.forEach(release => {
+					const url = release.browser_download_url;
+					html += `
+						<a href="${url}" class="dropdown-item ghdz-file" role="menuitem">
+							${url.split("/").slice(-1)}
+						</a>`;
+				});
+		  } else {
+				html = "<h4 class='ghdz-file'>No releases found</h4>";
+		  }
 		} else {
-			html = assets;
+			// Error message
+			html = result;
 		}
 		$(".ghdz-files", container).innerHTML = html;
 	}
@@ -95,8 +101,8 @@
 				} catch (err) {
 					return console.error(response);
 				}
-				if (json && json[0] && json[0].assets) {
-					buildReleases(json[0].assets, container);
+				if (json) {
+					buildReleases(json, container);
 				}
 			}
 		});
