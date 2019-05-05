@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        Gist Raw Links
-// @version     0.2.0
+// @version     0.2.1
 // @description Add a button that contains a list of gist raw file links
 // @license     MIT
 // @author      Rob Garrison
@@ -12,6 +12,7 @@
 // @grant       GM_xmlhttpRequest
 // @grant       GM.xmlHttpRequest
 // @connect     api.github.com
+// @connect     assets-cdn.github.com
 // @require     https://greasemonkey.github.io/gm4-polyfill/gm4-polyfill.js?updated=20180103
 // @icon        https://github.githubassets.com/pinned-octocat.svg
 // @updateURL   https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/gist-raw-links.user.js
@@ -32,16 +33,13 @@
 	function addButton(node) {
 		const button = item.cloneNode();
 		button.innerHTML = `
-			<details class="details-reset details-overlay select-menu">
-				<summary class="select-menu-button">
+			<details class="details-reset details-overlay select-menu ghrl-wrapper">
+				<summary class="select-menu-button" aria-haspopup="menu">
 					<span class="ghrl-get-list" data-menu-button>🍣 Raw urls</span>
 				</summary>
-				<details-menu class="select-menu-modal position-absolute ghrl-files" style="z-index: 99;" aria-label="Raw gist links">
-					<div class="select-menu-header">
-						<span class="select-menu-title">Filter options</span>
-					</div>
+				<details-menu class="select-menu-modal position-absolute ghrl-files" style="z-index: 99;" role="menu" aria-label="Raw gist links">
 					<div class="select-menu-list">
-						<img src="https://assets-cdn.github.com/images/spinners/octocat-spinner-32.gif" width="32" alt="">
+						<img src="https://assets-cdn.github.com/images/spinners/octocat-spinner-32.gif" width="32">
 					</div>
 				</details-menu>
 			</details>`;
@@ -68,22 +66,18 @@
 			// the latest version of the file - see #18
 			const url = files[file].raw_url.replace(/raw\/\w+\//, "raw/");
 			html += `
-				<a href="${url}" class="js-selected-navigation-item select-menu-item ghrl-file" role="menuitem" aria-current="page>
-					<span class="select-menu-item-text" data-menu-button-text>
-						${file}
-					</span>
+				<a href="${url}" class="select-menu-item ghrl-file" role="menuitem">
+					${file}
 				</a>`;
 		});
 		$(".ghrl-files", link.closest("li")).innerHTML = html;
 	}
 
 	function loadFileList(link) {
-		let url,
-			el = link.closest("li");
-		el = $("a", el.nextElementSibling);
+		let el = link.closest("li");
+		el = $("a", el && el.nextElementSibling);
 		if (el) {
-			url = el.href.split("/");
-			const gistid = url.pop();
+			const gistid = el.href.split("/").slice(-1);
 			GM.xmlHttpRequest({
 				method : "GET",
 				url : `https://api.github.com/gists/${gistid}`,
@@ -108,11 +102,9 @@
 
 	function addBindings() {
 		document.addEventListener("click", function(event) {
-			const target = event.target;
-			if (target.classList.contains("ghrl-get-list")) {
-				if (!$(".dropdown-item", target.parentNode)) {
-					loadFileList(target);
-				}
+			const target = event.target.closest("details");
+			if (target.classList.contains("ghrl-wrapper")) {
+				loadFileList(target);
 			}
 		});
 	}
