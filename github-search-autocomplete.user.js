@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Search Autocomplete
-// @version     1.0.1
+// @version     1.0.2
 // @description A userscript that adds autocomplete search filters to GitHub
 // @license     MIT
 // @author      Rob Garrison
@@ -11,7 +11,7 @@
 // @grant       GM_addStyle
 // @require     https://code.jquery.com/jquery-3.2.1.min.js
 // @require     https://cdnjs.cloudflare.com/ajax/libs/Caret.js/0.3.1/jquery.caret.min.js
-// @require     https://cdnjs.cloudflare.com/ajax/libs/at.js/1.5.3/js/jquery.atwho.min.js
+// @require     https://cdnjs.cloudflare.com/ajax/libs/at.js/1.5.4/js/jquery.atwho.min.js
 // @icon        https://github.githubassets.com/pinned-octocat.svg
 // @updateURL   https://raw.githubusercontent.com/Mottie/Github-userscripts/master/github-search-autocomplete.user.js
 // @downloadURL https://raw.githubusercontent.com/Mottie/Github-userscripts/master/github-search-autocomplete.user.js
@@ -557,7 +557,7 @@
 						if (tpl.indexOf("<li>") > -1) {
 							// menu template; text-emphasized needed for GitHub-Dark userstyle
 							return `
-								<li>
+								<li class="navigation-item">
 									<strong class="ghsa-key text-emphasized">
 										${escapeHTML(map.name)}
 									</strong>
@@ -583,7 +583,7 @@
 		});
 		// use classes from GitHub-Dark to make theme match GitHub-Dark
 		document.querySelectorAll(".atwho-view").forEach(el => {
-			el.classList.add(...["popover", "suggester"]);
+			el.classList.add(...["jump-to-suggestions-results-container", "Box"]);
 		});
 	}
 
@@ -641,8 +641,7 @@
 		.atwho-view ul li { display:block; padding:5px 10px;
 			border-bottom: 1px solid #ddd; cursor:pointer; text-align:right; }
 		.atwho-view small { font-size:smaller; color:#777; font-weight:normal; }
-		.atwho-view .ghsa-key { font-style:normal; float:left; margin-right:10px;
-			color:#111; }`
+		.atwho-view .ghsa-key { font-style:normal; float:left; margin-right:10px; }`
 	);
 
 	init();
