@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Sort Reactions
-// @version     0.2.10
+// @version     0.2.11
 // @description A userscript that sorts comments by reaction
 // @license     MIT
 // @author      Rob Garrison
@@ -18,24 +18,26 @@
 (() => {
 	"use strict";
 
-	const nonInteger = /[^\d]/g,
-		reactionValues = {
-			"THUMBS_UP": 1,
-			"HOORAY": 1,
-			"HEART": 1,
-			"LAUGH": 0.5,
-			"CONFUSED": -0.5,
-			"THUMBS_DOWN": -1
-		},
-		currentSort = {
-			init: false,
-			el: null,
-			dir: 0, // 0 = unsorted, 1 = desc, 2 = asc
-			busy: false,
-			type: GM_getValue("selected-reaction", "NONE")
-		},
+	const nonInteger = /[^\d]/g;
+	const reactionValues = {
+		"THUMBS_UP": 1,
+		"HOORAY": 1,
+		"HEART": 1,
+		"LAUGH": 0.5,
+		"CONFUSED": -0.5,
+		"THUMBS_DOWN": -1
+	};
+	const currentSort = {
+		init: false,
+		el: null,
+		dir: 0, // 0 = unsorted, 1 = desc, 2 = asc
+		busy: false,
+		type: GM_getValue("selected-reaction", "NONE")
+	};
 
-		sortBlock = `
+	const emojiSrc = 'https://github.githubassets.com/images/icons/emoji/unicode';
+
+	const sortBlock = `
 <div class="timeline-comment-wrapper ghsr-sort-block ghsr-is-collapsed">
 	<div class="timeline-comment">
 		<div class="avatar-parent-child timeline-comment-avatar border ghsr-sort-avatar ghsr-no-selection">
@@ -52,28 +54,28 @@
 		<div class="timeline-comment-header comment comment-body">
 			<h3 class="timeline-comment-header-text f5 text-normal">
 				<button class="ghsr-sort-button btn btn-sm tooltipped tooltipped-n" type="button" aria-label="Sort by +1 reaction" data-sort="THUMBS_UP">
-					<g-emoji alias="+1" class="emoji" fallback-src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f44d.png">👍</g-emoji>
+					<g-emoji alias="+1" class="emoji" fallback-src="${emojiSrc}/1f44d.png">👍</g-emoji>
 				</button>
 				<button class="ghsr-sort-button btn btn-sm tooltipped tooltipped-n" type="button" aria-label="Sort by -1 reaction" data-sort="THUMBS_DOWN">
-					<g-emoji alias="-1" class="emoji" fallback-src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f44e.png">👎</g-emoji>
+					<g-emoji alias="-1" class="emoji" fallback-src="${emojiSrc}/1f44e.png">👎</g-emoji>
 				</button>
 				<button class="ghsr-sort-button btn btn-sm tooltipped tooltipped-n" type="button" aria-label="Sort by laugh reaction" data-sort="LAUGH">
-					<g-emoji alias="smile" class="emoji" fallback-src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f604.png">😄</g-emoji>
+					<g-emoji alias="smile" class="emoji" fallback-src="${emojiSrc}/1f604.png">😄</g-emoji>
 				</button>
 				<button class="ghsr-sort-button btn btn-sm tooltipped tooltipped-n" type="button" aria-label="Sort by hooray reaction" data-sort="HOORAY">
-					<g-emoji alias="tada" class="emoji" fallback-src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f389.png">🎉</g-emoji>
+					<g-emoji alias="tada" class="emoji" fallback-src="${emojiSrc}/1f389.png">🎉</g-emoji>
 				</button>
 				<button class="ghsr-sort-button btn btn-sm tooltipped tooltipped-n" type="button" aria-label="Sort by confused reaction" data-sort="CONFUSED">
-					<g-emoji alias="thinking_face" class="emoji" fallback-src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f615.png">😕</g-emoji>
+					<g-emoji alias="thinking_face" class="emoji" fallback-src="${emojiSrc}/1f615.png">😕</g-emoji>
 				</button>
 				<button class="ghsr-sort-button btn btn-sm tooltipped tooltipped-n" type="button" aria-label="Sort by heart reaction" data-sort="HEART">
-					<g-emoji alias="heart" class="emoji" fallback-src="https://assets-cdn.github.com/images/icons/emoji/unicode/2764.png">❤️</g-emoji>
+					<g-emoji alias="heart" class="emoji" fallback-src="${emojiSrc}/2764.png">❤️</g-emoji>
 				</button>
 				<button class="ghsr-sort-button btn btn-sm tooltipped tooltipped-n tooltipped-multiline" type="button" aria-label="Sort by reaction evaluation
 (thumbs up, hooray & heart = +1;
 laugh = +0.5; confused = -0.5;
 thumbs down = -1)" data-sort="ACTIVE">
-					<g-emoji alias="speak_no_evil" class="emoji" fallback-src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f64a.png">🙊</g-emoji>
+					<g-emoji alias="speak_no_evil" class="emoji" fallback-src="${emojiSrc}/1f64a.png">🙊</g-emoji>
 				</button>
 			</h3>
 		</div>
