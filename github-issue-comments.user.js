@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Issue Comments
-// @version     1.3.7
+// @version     1.3.8
 // @description A userscript that toggles issues/pull request comments & messages
 // @license     MIT
 // @author      Rob Garrison
@@ -54,145 +54,145 @@
 		.timeline-comment-wrapper.ghic-highlight .comment { border-color:#800 !important; }
 `);
 
-	const regex = /(svg|path)/i,
-		// ZenHub addon active (include ZenHub Enterprise)
-		hasZenHub = $(".zhio, .zhe") ? true : false,
+	const regex = /(svg|path)/i;
+	// ZenHub addon active (include ZenHub Enterprise)
+	const hasZenHub = $(".zhio, .zhe") ? true : false;
 
-		exceptions = [
-			"ghsr-sort-block" // sort reactions block (github-sort-reactions.user.js)
-		],
+	const exceptions = [
+		"ghsr-sort-block" // sort reactions block (github-sort-reactions.user.js)
+	];
 
-		settings = {
-			// example: https://github.com/Mottie/Keyboard/issues/448
-			title: {
-				isHidden: false,
-				name: "ghic-title",
-				selector: ".discussion-item-renamed",
-				label: "Title Changes"
-			},
-			labels: {
-				isHidden: false,
-				name: "ghic-labels",
-				selector: ".discussion-item-labeled, .discussion-item-unlabeled",
-				label: "Label Changes"
-			},
-			state: {
-				isHidden: false,
-				name: "ghic-state",
-				selector: ".discussion-item-reopened, .discussion-item-closed",
-				label: "State Changes (close/reopen)"
-			},
+	const settings = {
+		// example: https://github.com/Mottie/Keyboard/issues/448
+		title: {
+			isHidden: false,
+			name: "ghic-title",
+			selector: ".discussion-item-renamed",
+			label: "Title Changes"
+		},
+		labels: {
+			isHidden: false,
+			name: "ghic-labels",
+			selector: ".discussion-item-labeled, .discussion-item-unlabeled",
+			label: "Label Changes"
+		},
+		state: {
+			isHidden: false,
+			name: "ghic-state",
+			selector: ".discussion-item-reopened, .discussion-item-closed",
+			label: "State Changes (close/reopen)"
+		},
 
-			// example: https://github.com/jquery/jquery/issues/2986
-			milestone: {
-				isHidden: false,
-				name: "ghic-milestone",
-				selector: ".discussion-item-milestoned",
-				label: "Milestone Changes"
-			},
-			refs: {
-				isHidden: false,
-				name: "ghic-refs",
-				selector: ".discussion-item",
-				contains: ".discussion-item-ref-title",
-				label: "References"
-			},
-			assigned: {
-				isHidden: false,
-				name: "ghic-assigned",
-				selector: ".discussion-item-assigned",
-				label: "Assignment Changes"
-			},
+		// example: https://github.com/jquery/jquery/issues/2986
+		milestone: {
+			isHidden: false,
+			name: "ghic-milestone",
+			selector: ".discussion-item-milestoned",
+			label: "Milestone Changes"
+		},
+		refs: {
+			isHidden: false,
+			name: "ghic-refs",
+			selector: ".discussion-item",
+			contains: ".discussion-item-ref-title",
+			label: "References"
+		},
+		assigned: {
+			isHidden: false,
+			name: "ghic-assigned",
+			selector: ".discussion-item-assigned",
+			label: "Assignment Changes"
+		},
 
-			// Pull Requests
-			commits: {
-				isHidden: false,
-				name: "ghic-commits",
-				selector: ".discussion-commits",
-				label: "Commits"
-			},
-			reviews: {
-				isHidden: false,
-				name: "ghic-reviews",
-				selector: ".discussion-item-review, .discussion-item-review_requested",
-				label: "Reviews (All)"
-			},
-			outdated: {
-				isHidden: false,
-				name: "ghic-outdated",
-				selector: ".discussion-item-review",
-				contains: ".outdated-comment-label",
-				label: "Reviews (Outdated)"
-			},
-			// example: https://github.com/jquery/jquery/pull/3014
-			diffOld: {
-				isHidden: false,
-				name: "ghic-diffOld",
-				selector: ".outdated-diff-comment-container",
-				label: "Diff (outdated) Comments"
-			},
-			diffNew: {
-				isHidden: false,
-				name: "ghic-diffNew",
-				selector: "[id^=diff-for-comment-]:not(.outdated-diff-comment-container)",
-				label: "Diff (current) Comments"
-			},
-			// example: https://github.com/jquery/jquery/pull/2949
-			merged: {
-				isHidden: false,
-				name: "ghic-merged",
-				selector: ".discussion-item-merged",
-				label: "Merged"
-			},
-			integrate: {
-				isHidden: false,
-				name: "ghic-integrate",
-				selector: ".discussion-item-integrations-callout",
-				label: "Integrations"
-			},
+		// Pull Requests
+		commits: {
+			isHidden: false,
+			name: "ghic-commits",
+			selector: ".discussion-commits",
+			label: "Commits"
+		},
+		reviews: {
+			isHidden: false,
+			name: "ghic-reviews",
+			selector: ".discussion-item-review, .discussion-item-review_requested",
+			label: "Reviews (All)"
+		},
+		outdated: {
+			isHidden: false,
+			name: "ghic-outdated",
+			selector: ".discussion-item-review",
+			contains: ".outdated-comment-label",
+			label: "Reviews (Outdated)"
+		},
+		// example: https://github.com/jquery/jquery/pull/3014
+		diffOld: {
+			isHidden: false,
+			name: "ghic-diffOld",
+			selector: ".outdated-diff-comment-container",
+			label: "Diff (outdated) Comments"
+		},
+		diffNew: {
+			isHidden: false,
+			name: "ghic-diffNew",
+			selector: "[id^=diff-for-comment-]:not(.outdated-diff-comment-container)",
+			label: "Diff (current) Comments"
+		},
+		// example: https://github.com/jquery/jquery/pull/2949
+		merged: {
+			isHidden: false,
+			name: "ghic-merged",
+			selector: ".discussion-item-merged",
+			label: "Merged"
+		},
+		integrate: {
+			isHidden: false,
+			name: "ghic-integrate",
+			selector: ".discussion-item-integrations-callout",
+			label: "Integrations"
+		},
 
-			// similar comments
-			similar: {
-				isHidden: false,
-				name: "ghic-similar",
-				selector: `.js-discussion > .Details-element.details-reset,
-					#js-progressive-timeline-item-container > .Details-element.details-reset`,
-				label: "Similar comments"
-			},
+		// similar comments
+		similar: {
+			isHidden: false,
+			name: "ghic-similar",
+			selector: `.js-discussion > .Details-element.details-reset,
+				#js-progressive-timeline-item-container > .Details-element.details-reset`,
+			label: "Similar comments"
+		},
 
-			// extras (special treatment - no selector)
-			plus1: {
-				isHidden: false,
-				name: "ghic-plus1",
-				label: "+1 Comments"
-			},
-			reactions: {
-				isHidden: false,
-				name: "ghic-reactions",
-				label: "Reactions"
-			},
-			projects: {
-				isHidden: false,
-				name: "ghic-projects",
-				selector: `.discussion-item-added_to_project,
-					.discussion-item-moved_columns_in_project,
-					.discussion-item-removed_from_project`,
-				label: "Project Changes"
-			},
-			// page with lots of users to hide:
-			// https://github.com/isaacs/github/issues/215
+		// extras (special treatment - no selector)
+		plus1: {
+			isHidden: false,
+			name: "ghic-plus1",
+			label: "+1 Comments"
+		},
+		reactions: {
+			isHidden: false,
+			name: "ghic-reactions",
+			label: "Reactions"
+		},
+		projects: {
+			isHidden: false,
+			name: "ghic-projects",
+			selector: `.discussion-item-added_to_project,
+				.discussion-item-moved_columns_in_project,
+				.discussion-item-removed_from_project`,
+			label: "Project Changes"
+		},
+		// page with lots of users to hide:
+		// https://github.com/isaacs/github/issues/215
 
-			// ZenHub pipeline change
-			pipeline: {
-				isHidden: false,
-				name: "ghic-pipeline",
-				selector: ".discussion-item.zh-discussion-item",
-				label: "ZenHub Pipeline Changes"
-			}
-		};
+		// ZenHub pipeline change
+		pipeline: {
+			isHidden: false,
+			name: "ghic-pipeline",
+			selector: ".discussion-item.zh-discussion-item",
+			label: "ZenHub Pipeline Changes"
+		}
+	};
 
-	const iconHidden = `<svg class="octicon" xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 9 9"><path fill="#777" d="M7.07 4.5c0-.47-.12-.9-.35-1.3L3.2 6.7c.4.25.84.37 1.3.37.35 0 .68-.07 1-.2.32-.14.6-.32.82-.55.23-.23.4-.5.55-.82.13-.32.2-.65.2-1zM2.3 5.8l3.5-3.52c-.4-.23-.83-.35-1.3-.35-.35 0-.68.07-1 .2-.3.14-.6.32-.82.55-.23.23-.4.5-.55.82-.13.32-.2.65-.2 1 0 .47.12.9.36 1.3zm6.06-1.3c0 .7-.17 1.34-.52 1.94-.34.6-.8 1.05-1.4 1.4-.6.34-1.24.52-1.94.52s-1.34-.18-1.94-.52c-.6-.35-1.05-.8-1.4-1.4C.82 5.84.64 5.2.64 4.5s.18-1.35.52-1.94.8-1.06 1.4-1.4S3.8.64 4.5.64s1.35.17 1.94.52 1.06.8 1.4 1.4c.35.6.52 1.24.52 1.94z"/></svg>`,
-		plus1Icon = `<img src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f44d.png" class="emoji" title=":+1:" alt=":+1:" height="20" width="20" align="absmiddle">`;
+	const iconHidden = `<svg class="octicon" xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 9 9"><path fill="#777" d="M7.07 4.5c0-.47-.12-.9-.35-1.3L3.2 6.7c.4.25.84.37 1.3.37.35 0 .68-.07 1-.2.32-.14.6-.32.82-.55.23-.23.4-.5.55-.82.13-.32.2-.65.2-1zM2.3 5.8l3.5-3.52c-.4-.23-.83-.35-1.3-.35-.35 0-.68.07-1 .2-.3.14-.6.32-.82.55-.23.23-.4.5-.55.82-.13.32-.2.65-.2 1 0 .47.12.9.36 1.3zm6.06-1.3c0 .7-.17 1.34-.52 1.94-.34.6-.8 1.05-1.4 1.4-.6.34-1.24.52-1.94.52s-1.34-.18-1.94-.52c-.6-.35-1.05-.8-1.4-1.4C.82 5.84.64 5.2.64 4.5s.18-1.35.52-1.94.8-1.06 1.4-1.4S3.8.64 4.5.64s1.35.17 1.94.52 1.06.8 1.4 1.4c.35.6.52 1.24.52 1.94z"/></svg>`;
+	const plus1Icon = `<img src="https://github.githubassets.com/images/icons/emoji/unicode/1f44d.png" class="emoji" title=":+1:" alt=":+1:" height="20" width="20" align="absmiddle">`;
 
 	function addMenu() {
 		if ($("#discussion_bucket") && !$(".ghic-button")) {
