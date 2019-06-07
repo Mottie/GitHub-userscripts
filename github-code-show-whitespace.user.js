@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Code Show Whitespace
-// @version     1.2.8
+// @version     1.2.9
 // @description A userscript that shows whitespace (space, tabs and carriage returns) in code blocks
 // @license     MIT
 // @author      Rob Garrison
@@ -29,24 +29,24 @@
 
 	// include em-space & en-space?
 	const whitespace = {
-			// Applies \xb7 (·) to every space
-			"%20"  : "<span class='pl-space ghcw-whitespace'> </span>",
-			// Applies \xb7 (·) to every non-breaking space (alternative: \u2423 (␣))
-			"%A0"  : "<span class='pl-nbsp ghcw-whitespace'>&nbsp;</span>",
-			// Applies \xbb (») to every tab
-			"%09"  : "<span class='pl-tab ghcw-whitespace'>\x09</span>",
-			// non-matching key; applied manually
-			// Applies \u231d (⌝) to the end of every line
-			// (alternatives: \u21b5 (↵) or \u2938 (⤸))
-			"CRLF" : "<span class='pl-crlf ghcw-whitespace'></span>\n"
-		},
-		span = document.createElement("span"),
-		// ignore +/- in diff code blocks
-		regexWS = /(\x20|&nbsp;|\x09)/g,
-		regexCR = /\r*\n$/,
-		regexExceptions = /(\.md)$/i,
+		// Applies \xb7 (·) to every space
+		"%20" : "<span class='pl-space ghcw-whitespace'> </span>",
+		// Applies \xb7 (·) to every non-breaking space (alternative: \u2423 (␣))
+		"%A0" : "<span class='pl-nbsp ghcw-whitespace'>&nbsp;</span>",
+		// Applies \xbb (») to every tab
+		"%09" : "<span class='pl-tab ghcw-whitespace'>\x09</span>",
+		// non-matching key; applied manually
+		// Applies \u231d (⌝) to the end of every line
+		// (alternatives: \u21b5 (↵) or \u2938 (⤸))
+		"CRLF" : "<span class='pl-crlf ghcw-whitespace'></span>\n"
+	};
+	const span = document.createElement("span");
+	// ignore +/- in diff code blocks
+	const regexWS = /(\x20|&nbsp;|\x09)/g;
+	const regexCR = /\r*\n$/;
+	const regexExceptions = /(\.md)$/i;
 
-		toggleButton = document.createElement("div");
+	const toggleButton = document.createElement("div");
 	toggleButton.className = "ghcw-toggle btn btn-sm tooltipped tooltipped-s";
 	toggleButton.setAttribute("aria-label", "Toggle Whitespace");
 	toggleButton.innerHTML = "<span class='pl-tab'></span>";
@@ -54,7 +54,7 @@
 	GM.addStyle(`
 		div.file-actions > div,
 		.ghcw-active .ghcw-whitespace,
-		.gist-content-wrapper .file-actions .btn-group {
+		.gist-content-wrapper .file-actions .btnGroup {
 			position: relative;
 			display: inline;
 		}
@@ -97,7 +97,23 @@
 		}
 	`);
 
+	function addFileActions() {
+		// file-actions removed from repo file view;
+		// still used in gists & file diffs
+		if (!$(".file-actions")) {
+			const rawBtn = $("#raw-url");
+			if (rawBtn) {
+				const group = rawBtn.closest(".BtnGroup");
+				const fileActionWrap = group && group.parentNode;
+				if (fileActionWrap) {
+					fileActionWrap.classList.add("file-actions");
+				}
+			}
+		}
+	}
+
 	function addToggle() {
+		addFileActions();
 		$$(".file-actions").forEach(el => {
 			if (!$(".ghcw-toggle", el)) {
 				el.insertBefore(toggleButton.cloneNode(true), el.childNodes[0]);
@@ -219,13 +235,13 @@
 	}
 
 	function showAll() {
-		$$(".file .highlight").forEach(target => {
+		$$(".blob-wrapper .highlight, .file .highlight").forEach(target => {
 			show(target, true);
 		});
 	}
 
 	function show(target, state) {
-		const wrap = target.closest(".file");
+		const wrap = target.closest(".file, .Box");
 		const block = $(".highlight", wrap);
 		if (block) {
 			wrap.querySelector(".ghcw-toggle").classList.toggle("selected", state);
