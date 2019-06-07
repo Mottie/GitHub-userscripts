@@ -111,7 +111,7 @@
 	function addBindings() {
 		document.addEventListener("click", function(event) {
 			const target = event.target.closest("details");
-			if (target.classList.contains("ghdz-releases")) {
+			if (target && target.classList.contains("ghdz-releases")) {
 				getReleases(target);
 			}
 		});
