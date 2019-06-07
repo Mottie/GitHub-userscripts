@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        Gist Raw Links
-// @version     0.2.1
+// @version     0.2.2
 // @description Add a button that contains a list of gist raw file links
 // @license     MIT
 // @author      Rob Garrison
@@ -39,7 +39,7 @@
 				</summary>
 				<details-menu class="select-menu-modal position-absolute ghrl-files" style="z-index: 99;" role="menu" aria-label="Raw gist links">
 					<div class="select-menu-list">
-						<img src="https://assets-cdn.github.com/images/spinners/octocat-spinner-32.gif" width="32">
+						<img src="https://github.githubassets.com/images/spinners/octocat-spinner-32.gif" width="32">
 					</div>
 				</details-menu>
 			</details>`;
