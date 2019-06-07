@@ -22,9 +22,9 @@ Userscripts to add functionality to GitHub.
 	| Userscript Wiki                        | ![][ico] | Direct<br>Install | Sites                 | Created    | Updated    | Deprecated |
 	|----------------------------------------|:---:|:------------------:|:-------------------------:|:----------:|:----------:|:----------:|
 	| [GitHub code colors][ccr-wiki]         |     | [install][ccr-raw] | [GF][ccr-gf] [OU][ccr-ou] | 2016.03.20 | 2019.02.16 |            |
-	| [GitHub code folding][cfd-wiki]        |     | [install][cfd-raw] | [GF][cfd-gf] [OU][cfd-ou] | 2016.12.28 | 2019.02.16 |            |
+	| [GitHub code folding][cfd-wiki]        |     | [install][cfd-raw] | [GF][cfd-gf] [OU][cfd-ou] | 2016.12.28 | 2019.06.07 |            |
 	| [GitHub code guides][cgl-wiki]         |     | [install][cgl-raw] | [GF][cgl-gf] [OU][cgl-ou] | 2016.08.27 | 2018.02.16 |            |
-	| [GitHub code show whitespace][csw-wiki]|     | [install][csw-raw] | [GF][csw-gf] [OU][csw-ou] | 2017.03.26 | 2019.04.28 |            |
+	| [GitHub code show whitespace][csw-wiki]|     | [install][csw-raw] | [GF][csw-gf] [OU][csw-ou] | 2017.03.26 | 2019.06.07 |            |
 	| [GitHub collapse in comment][cic-wiki] |  *  | [install][cic-raw] | [GF][cic-gf] [OU][cic-ou] | 2016.06.27 | 2019.02.16 |            |
 	| [GitHub collapse markdown][cmd-wiki]   |  *  | [install][cmd-raw] | [GF][cmd-gf] [OU][cmd-ou] | 2016.06.27 | 2019.03.29 |            |
 	| [GitHub copy code snippet][ccs-wiki]   |     | [install][ccs-raw] | [GF][ccs-gf] [OU][ccs-ou] | 2018.01.12 | 2019.02.16 |            |
@@ -34,12 +34,12 @@ Userscripts to add functionality to GitHub.
 	| [GitHub diff filename][dfn-wiki]       |     | [install][dfn-raw] | [GF][dfn-gf] [OU][dfn-ou] | 2017.08.27 | 2019.02.16 |            |
 	| [GitHub diff files filter][dff-wiki]   |     | [install][dff-raw] | [GF][dff-gf] [OU][dff-ou] | 2016.12.31 | 2019.03.29 |            |
 	| [GitHub diff links][dfl-wiki]          |     | [install][dfl-raw] | [GF][dfl-gf] [OU][dfl-ou] | 2016.07.21 | 2019.04.28 |            |
-	| [GitHub download zip][dlz-wiki]        |     | [install][dlz-raw] | [GF][dlz-gf] [OU][dlz-ou] | 2018.10.22 | 2019.05.05 |            |
+	| [GitHub download zip][dlz-wiki]        |     | [install][dlz-raw] | [GF][dlz-gf] [OU][dlz-ou] | 2018.10.22 | 2019.06.07 |            |
 	| [GitHub files filter][gff-wiki]        |     | [install][gff-raw] | [GF][gff-gf] [OU][gff-ou] | 2017.06.26 | 2019.02.16 |            |
-	| [GitHub font preview][fpv-wiki]        |     | [install][fpv-raw] | [GF][fpv-gf] [OU][fpv-ou] | 2016.06.11 | 2019.02.16 |            |
+	| [GitHub font preview][fpv-wiki]        |     | [install][fpv-raw] | [GF][fpv-gf] [OU][fpv-ou] | 2016.06.11 | 2019.06.07 |            |
 	| [GitHub hide own feed meta][hof-wiki]  |     | [install][hof-raw] | [GF][hof-gf] [OU][hof-ou] | 2017.12.21 | 2019.02.16 |            |
 	| [GitHub html preview][ghp-wiki]        |     | [install][ghp-raw] | [GF][ghp-gf] [OU][ghp-ou] | 2019.03.29 | 2019.04.28 |            |
-	| [GitHub image preview][ipv-wiki]       |     | [install][ipv-raw] | [GF][ipv-gf] [OU][ipv-ou] | 2016.05.17 | 2019.02.16 |            |
+	| [GitHub image preview][ipv-wiki]       |     | [install][ipv-raw] | [GF][ipv-gf] [OU][ipv-ou] | 2016.05.17 | 2019.06.07 |            |
 	| [GitHub indent comments][ioc-wiki]     |     | [install][ioc-raw] | [GF][ioc-gf] [OU][ioc-ou] | 2017.03.15 | 2019.02.16 |            |
 	| [GitHub issue add details][iad-wiki]   |     | [install][iad-raw] | [GF][iad-gf] [OU][iad-ou] | 2018.01.05 | 2019.02.16 |            |
 	| [GitHub issue comments][ic1-wiki]      |     | [install][ic1-raw] | [GF][ic1-gf] [OU][ic1-ou] | 2016.04.04 | 2019.05.23 |            |
@@ -59,7 +59,7 @@ Userscripts to add functionality to GitHub.
 	| [GitHub toggle diff comments][tdc-wiki]|     | [install][tdc-raw] | [GF][tdc-gf] [OU][tdc-ou] | 2017.12.10 | 2019.02.16 |            |
 	| [GitHub toggle expanders][tex-wiki]    |     | [install][tex-raw] | [GF][tex-gf] [OU][tex-ou] | 2016.09.17 | 2018.02.16 |            |
 	| [GitHub toggle wiki sidebar][tws-wiki] |     | [install][tws-raw] | [GF][tws-gf] [OU][tws-ou] | 2016.04.01 | 2019.02.16 |            |
-	| [Gist raw links][grl-wiki]             |     | [install][grl-raw] | [GF][grl-gf] [OU][grl-ou] | 2017.05.19 | 2019.05.05 |            |
+	| [Gist raw links][grl-wiki]             |     | [install][grl-raw] | [GF][grl-gf] [OU][grl-ou] | 2017.05.19 | 2019.06.07 |            |
 	| [Gist to dabblet][g2d-wiki]            |     | [install][g2d-raw] | [GF][g2d-gf] [OU][g2d-ou] | 2012.01.26 | 2017.02.16 |            |
 
 \* The ![][ico] column indicates that the userscript has been included in the [Octopatcher](https://github.com/Mottie/Octopatcher) browser extension/addon.
