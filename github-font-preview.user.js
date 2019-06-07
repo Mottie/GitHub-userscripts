@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Font Preview
-// @version     1.0.21
+// @version     1.0.22
 // @description A userscript that adds a font file preview
 // @license     MIT
 // @author      Rob Garrison
@@ -22,29 +22,39 @@
 (() => {
 	"use strict";
 
-	let font,
-		showUnicode = GM_getValue("gfp-show-unicode", false),
-		showPoints = GM_getValue("gfp-show-points", true),
-		showArrows = GM_getValue("gfp-show-arrows", true),
-		currentIndex = 0;
+	let font;
+	let showUnicode = GM_getValue("gfp-show-unicode", false);
+	let showPoints = GM_getValue("gfp-show-points", true);
+	let showArrows = GM_getValue("gfp-show-arrows", true);
+	let currentIndex = 0;
 
 	// supported font types
-	const fontExt = /\.(otf|ttf|woff)$/i,
+	const fontExt = /\.(otf|ttf|woff)$/i;
 
-		// canvas colors
-		glyphFillColor = "#808080", // (big) (mini) fill color
-		bigGlyphStrokeColor = "#111111", // (big) stroke color
-		bigGlyphMarkerColor = "#f00", // (big) min & max width marker
-		miniGlyphMarkerColor = "#606060", // (mini) glyph index (bottom left corner)
-		glyphRulerColor = "#a0a0a0"; // (mini) min & max width marker & (big) glyph horizontal lines
+	// canvas colors
+	const glyphFillColor = "#808080"; // (big) (mini) fill color
+	const bigGlyphStrokeColor = "#111111"; // (big) stroke color
+	const bigGlyphMarkerColor = "#f00"; // (big) min & max width marker
+	const miniGlyphMarkerColor = "#606060"; // (mini) glyph index (bottom left corner)
+	const glyphRulerColor = "#a0a0a0"; // (mini) min & max width marker & (big) glyph horizontal lines
 
-	function getFont(url) {
+	function startLoad() {
+		const block = $(".blob-wrapper a[href*='?raw=true']");
+		const body = block && block.closest(".Box-body");
+		if (body) {
+			body.classList.add("ghfp-body");
+			body.innerHTML = "<span class='gfp-loading ghd-invert'></span>";
+		}
+		return block && block.href;
+	}
+
+	function getFont() {
+		const url = startLoad();
 		if (url) {
 			// add loading indicator
-			$(".file .image").innerHTML = "<span class='gfp-loading ghd-invert'></span>";
 			GM_xmlhttpRequest({
 				method: "GET",
-				url: url,
+				url,
 				responseType: "arraybuffer",
 				onload: response => {
 					setupFont(response.response);
@@ -54,16 +64,16 @@
 	}
 
 	function setupFont(data) {
-		let target = $(".file .image"),
-			el = $(".final-path");
-		if (target && el) {
+		const block = $(".ghfp-body");
+		const el = $(".final-path");
+		if (block && el) {
 			try {
 				font = opentype.parse(data);
-				addHTML(target, el);
+				addHTML(block, el);
 				showErrorMessage("");
 				onFontLoaded(font);
 			} catch (err) {
-				target.innerHTML = "<h2 class='gfp-message cdel'></h2>";
+				block.innerHTML = "<h2 class='gfp-message cdel'></h2>";
 				showErrorMessage(err.toString());
 				if (err.stack) {
 					console.error(err.stack);
@@ -73,9 +83,9 @@
 		}
 	}
 
-	function addHTML(target, el) {
+	function addHTML(block, el) {
 		let name = el.textContent || "";
-		target.innerHTML = `
+		block.innerHTML = `
 			<div id="gfp-wrapper">
 				<span class="gfp-info" id="gfp-font-name">${name}</span>
 				<h2 class="gfp-message cdel"></h2>
@@ -122,7 +132,7 @@
 			indx = tableHeaders.length;
 		while (indx--) {
 			tableHeaders[indx].addEventListener("click", event => {
-				event.target.classList.toggle("gfp-collapsed");
+				event.target && event.target.classList.toggle("gfp-collapsed");
 			}, false);
 		}
 		addBindings();
@@ -135,6 +145,7 @@
 			displayGlyphPage(pageSelected);
 			return false;
 		}, false);
+
 		$("#gfp-glyph-data").addEventListener("change", function() {
 			showPoints = $(".gfp-show-points", this).checked;
 			showArrows = $(".gfp-show-arrows", this).checked;
@@ -150,19 +161,11 @@
 	}
 
 	function init() {
-		// view raw container
-		let target = $(".file .image"),
-			// get file name from bread crumb
-			el = $(".final-path");
-		if (target && el) {
-			// font extension supported?
-			if (fontExt.test(el.textContent || "")) {
-				// get URL from "View Raw" link
-				el = $("a", target);
-				if (el) {
-					getFont(el.href || "");
-				}
-			}
+		// get file name from bread crumb
+		let el = $(".final-path");
+		// font extension supported?
+		if (el && fontExt.test(el.textContent || "")) {
+			getFont();
 		}
 	}
 
@@ -171,16 +174,16 @@
 
 	/* Code modified from http://opentype.js.org/ demos */
 	GM_addStyle(`
-		#gfp-wrapper { text-align:left; }
+		#gfp-wrapper { text-align:left; padding:20px; }
 		#gfp-wrapper canvas { background-image:none !important; background-color:transparent !important; }
 		.gfp-message { position:relative; top:-3px; padding:1px 5px; font-weight:bold; border-radius:2px; display:none; clear:both; }
 		#gfp-glyphs { width:950px; }
-		.gfp-info { float:right; font-size:11px; color:#999; }
+		.gfp-info { float:right; font-size:14px; color:#999; }
 		#gfp-wrapper hr { clear:both; border:none; border-bottom:1px solid #ccc; margin:20px 0 20px 0; padding:0; }
 		/* Font Inspector */
 		#gfp-font-data div { font-weight:normal; margin:0; cursor:pointer; }
-		#gfp-font-data div:before { font-size:85%; content:"▼ "; }
-		#gfp-font-data div.gfp-collapsed:before { font-size:85%; content:"► "; }
+		#gfp-font-data div:before { font-size:85%; content:"▼"; display:inline-block; margin-right:6px; transform:unset; }
+		#gfp-font-data .gfp-collapsed:before { transform:rotate(-90deg); }
 		#gfp-font-data div.gfp-collapsed + dl { display:none; }
 		#gfp-font-data dl { margin-top:0; padding-left:2em; color:#777; }
 		#gfp-font-data dt { float:left; }
@@ -205,7 +208,7 @@
 		pre.gfp-contour { margin:0 0 1em 2em; border-bottom:solid 1px #a0a0a0; }
 		span.gfp-oncurve { color:blue; }
 		span.gfp-offcurve { color:red; }
-		.gfp-loading { display:inline-block; margin:0 auto; border-radius:50%; border-width:2px; border-style:solid; border-color: transparent transparent #000 #000; width:30px; height:30px; animation:gfploading .5s infinite linear; }
+		.gfp-loading { display:block; margin:20px auto; border-radius:50%; border-width:2px; border-style:solid; border-color: transparent transparent #000 #000; width:30px; height:30px; animation:gfploading .5s infinite linear; }
 		@keyframes gfploading { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 	`);
 
@@ -325,9 +328,9 @@
 
 	function contourToString(contour) {
 		return '<pre class="gfp-contour">' + contour.map(point => {
-			// ".alert.tip" class modified by GitHub Dark style - more readable blue
+			// ".text-blue" class modified by GitHub Dark style
 			// ".cdel" class modified by GitHub Dark style - more readable red
-			return '<span class="gfp-' + (point.onCurve ? 'oncurve alert tip' : 'offcurve cdel') +
+			return '<span class="gfp-' + (point.onCurve ? 'oncurve text-blue' : 'offcurve cdel') +
 				'">x=' + point.x + ' y=' + point.y + '</span>';
 		}).join('\n') + '</pre>';
 	}
