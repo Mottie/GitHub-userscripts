@@ -103,7 +103,7 @@
 	function addBindings() {
 		document.addEventListener("click", function(event) {
 			const target = event.target.closest("details");
-			if (target.classList.contains("ghrl-wrapper")) {
+			if (target && target.classList.contains("ghrl-wrapper")) {
 				loadFileList(target);
 			}
 		});
