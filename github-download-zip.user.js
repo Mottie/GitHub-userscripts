@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Download ZIP
-// @version     0.2.2
+// @version     0.2.3
 // @description A userscript adds download links so that downloaded filenames include the SHA
 // @license     MIT
 // @author      Rob Garrison
@@ -50,7 +50,7 @@
 		</summary>
 		<details-menu class="select-menu-modal dropdown-menu-s ghdz-files" style="z-index: 99;" role="menu" aria-label="Releases links">
 			<div class="select-menu-list">
-				<img src="https://assets-cdn.github.com/images/spinners/octocat-spinner-32.gif" width="32" alt="">
+				<img src="https://github.githubassets.com/images/spinners/octocat-spinner-32.gif" width="32" alt="">
 			</div>
 		</details-menu>`;
 
