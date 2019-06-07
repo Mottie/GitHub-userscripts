@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Image Preview
-// @version     1.2.2
+// @version     1.2.3
 // @description A userscript that adds clickable image thumbnails
 // @license     MIT
 // @author      Rob Garrison
@@ -60,7 +60,7 @@
 	// supported img types
 	const imgExt = /(png|jpg|jpeg|gif|tif|tiff|bmp|webp)$/i,
 		svgExt = /svg$/i,
-		spinner = "https://assets-cdn.github.com/images/spinners/octocat-spinner-32.gif",
+		spinner = "https://github.githubassets.com/images/spinners/octocat-spinner-32.gif",
 
 		folderIconClasses = `
 			.octicon-file-directory,
