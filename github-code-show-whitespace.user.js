@@ -121,7 +121,8 @@
 	function addToggle() {
 		addFileActions();
 		$$(".file-actions").forEach(el => {
-			if (!$(".ghcw-toggle", el)) {
+			// Don't add a toggle for new gists (editor showing)
+			if (!$(".ghcw-toggle", el) && !$("#indent-mode", el)) {
 				const dropdown = $(".dropdown", el);
 				// (* + sibling) Indicates where the whitespace toggle is added
 				// PR Layout: div.file-actions > div.flex-items-stretch > (details.dropdown + *)
