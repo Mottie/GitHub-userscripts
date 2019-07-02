@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Toggle Expanders
-// @version     1.1.4
+// @version     1.2.0
 // @description A userscript that toggles all expanders when one expander is shift-clicked
 // @license     MIT
 // @author      Rob Garrison
@@ -38,7 +38,9 @@
 
 	document.body.addEventListener("click", event => {
 		const target = event.target;
-		const mod = event.ctrlKey || event.metaKey;
+		const mod = event.ctrlKey
+			|| event.metaKey
+			|| window.location.pathname.includes("/compare/");
 		if (target && event.getModifierState("Shift")) {
 			// give GitHub time to update the elements
 			setTimeout(() => {
