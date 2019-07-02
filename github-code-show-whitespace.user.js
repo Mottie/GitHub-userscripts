@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Code Show Whitespace
-// @version     1.2.9
+// @version     1.2.10
 // @description A userscript that shows whitespace (space, tabs and carriage returns) in code blocks
 // @license     MIT
 // @author      Rob Garrison
@@ -57,6 +57,12 @@
 		.gist-content-wrapper .file-actions .btnGroup {
 			position: relative;
 			display: inline;
+		}
+		.gist-content-wrapper .ghcw-toggle {
+			padding: 5px 10px; /* gist only */
+		}
+		.ghcw-toggle + .BtnGroup {
+			margin-left: 4px;
 		}
 		.ghcw-active .ghcw-whitespace:before {
 			position: absolute;
@@ -116,6 +122,14 @@
 		addFileActions();
 		$$(".file-actions").forEach(el => {
 			if (!$(".ghcw-toggle", el)) {
+				const dropdown = $(".dropdown", el);
+				// (* + sibling) Indicates where the whitespace toggle is added
+				// PR Layout: div.file-actions > div.flex-items-stretch > (details.dropdown + *)
+				// Repo file: div.file-actions > (* + div.BtnGroup) > a#raw-url
+				// Gist: div.file-actions > (* + a)
+				if (dropdown) {
+					el = dropdown.parentNode; // Fixes #91
+				}
 				el.insertBefore(toggleButton.cloneNode(true), el.childNodes[0]);
 			}
 			if (showWhiteSpace === "true") {
