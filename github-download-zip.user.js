@@ -126,7 +126,7 @@
 		const commits = $(".commits-listing");
 
 		if (downloadLink && branch && !$(".ghdz-releases", downloadLink.parentNode)) {
-			const branchName = branch.textContent.indexOf('…') > -1
+			const branchName = branch.textContent.indexOf("…") > -1
 				// Branch selector is showing trucated text; title has full text
 				? branch.parentNode.title
 				: branch.textContent;

@@ -35,7 +35,7 @@
 		type: GM_getValue("selected-reaction", "NONE")
 	};
 
-	const emojiSrc = 'https://github.githubassets.com/images/icons/emoji/unicode';
+	const emojiSrc = "https://github.githubassets.com/images/icons/emoji/unicode";
 
 	const sortBlock = `
 <div class="timeline-comment-wrapper ghsr-sort-block ghsr-is-collapsed">
