@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Diff Files Filter
-// @version     2.1.0
+// @version     2.1.1
 // @description A userscript that adds filters that toggle diff & PR folders, and files by extension
 // @license     MIT
 // @author      Rob Garrison
@@ -38,12 +38,26 @@
 				el.classList.toggle("selected", show);
 			});
 		} else if (subgroup === "folder") {
-			Object.keys(folders).forEach(folder => {
-				if (folders[folder].length) {
-					show = $(`.gdf-folder-filter a[data-item=${folder}]`).classList.contains("selected");
+			Object.keys(folders)
+				.reduce((acc, folder) => {
+					if (folders[folder].length) {
+						acc.push({
+							folder,
+							show: $(`.gdf-folder-filter a[data-item=${folder}]`).classList.contains("selected")
+						});
+					}
+					return acc;
+				}, [])
+				// sort show:true to the end; to fix hiding files that should be shown
+				.sort((a, b) => {
+					if (a.show && b.show) {
+						return 0;
+					}
+					return a.show && !b.show ? 1 : -1;
+				})
+				.forEach(({folder, show}) => {
 					toggleGroup({group: folders[folder], subgroup, show });
-				}
-			});
+				});
 		} else if (exts[type]) {
 			toggleGroup({group: exts[type], subgroup, show});
 		}
@@ -95,13 +109,13 @@
 		folders[rootLabel] = [];
 		// TOC in file diffs and pr-toolbar in Pull requests
 		$$(".file-header .file-info > a").forEach(file => {
-			let txt = (file.title || file.textContent || "").trim(),
-				path = txt.split("/"),
-				filename = txt.split("/").splice(-1)[0],
-				// test for no extension, then get extension name
-				// regexp from https://github.com/silverwind/file-extension
-				ext = /\./.test(filename) ? /[^./\\]*$/.exec(filename)[0] : noExtLabel,
-				min = /\.min\./.test(filename);
+			let txt = (file.title || file.textContent || "").trim();
+			const path = txt.split("/");
+			const filename = path.splice(-1)[0];
+			// test for no extension, then get extension name
+			// regexp from https://github.com/silverwind/file-extension
+			let ext = /\./.test(filename) ? /[^./\\]*$/.exec(filename)[0] : noExtLabel;
+			const min = /\.min\./.test(filename);
 			// Add filter for renamed files: {old path} → {new path}
 			if (txt.indexOf(" → ") > -1) {
 				ext = renameFileLabel;
@@ -118,8 +132,7 @@
 					exts[minFileLabel].push(sha);
 				}
 			}
-			if (path.length > 1) {
-				path.splice(-1); // remove filename
+			if (path.length > 0) {
 				path.forEach(folder => {
 					if (!folders[folder]) {
 						folders[folder] = [];
@@ -134,16 +147,16 @@
 
 	function makeFilter({subgroup, label}) {
 		const files = $("#files");
-		let filters = 0,
-			group = subgroup === "folder" ? folders : exts,
-			keys = Object.keys(group),
-			html = `${label}: <div class="BtnGroup gdf-${subgroup}-filter">`,
-			btnClass = "btn btn-sm selected BtnGroup-item tooltipped tooltipped-n";
+		let filters = 0;
+		const group = subgroup === "folder" ? folders : exts;
+		const keys = Object.keys(group);
+		let html = `${label}: <div class="BtnGroup gdf-${subgroup}-filter">`;
+		const btnClass = "btn btn-sm selected BtnGroup-item tooltipped tooltipped-n";
 		// get length, but don't count empty arrays
 		keys.forEach(item => {
 			filters += group[item].length > 0 ? 1 : 0;
 		});
-		// Don't bother if only one extension is found
+		// Don't bother showing the filter if only one extension is found
 		if (files && filters > 1) {
 			filters = $(`.gdf-${subgroup}-filter-wrapper`);
 			if (!filters) {
