@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Code Colors
-// @version     2.0.0
+// @version     2.0.1
 // @description A userscript that adds a color swatch next to the code color definition
 // @license     MIT
 // @author      Rob Garrison
@@ -154,7 +154,6 @@
 	}
 
 	function checkPopup(event) {
-		event.preventDefault();
 		const el = event.target;
 		if (el && el.classList.contains("ghcc-block")) {
 			if (event.type === "click") {
