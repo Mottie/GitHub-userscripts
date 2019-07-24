@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Code Colors
-// @version     2.0.1
+// @version     2.0.2
 // @description A userscript that adds a color swatch next to the code color definition
 // @license     MIT
 // @author      Rob Garrison
@@ -27,7 +27,8 @@
 		background-image:none; cursor:pointer; }
 	.ghcc-popup { position:absolute; background:#333; color:#fff;
 		min-width:350px; top:100%; left:0px; padding:10px; z-index:100;
-		white-space:pre; cursor:text; text-align:left; }
+		white-space:pre; cursor:text; text-align:left; -webkit-user-select:text;
+		-moz-user-select:text; -ms-user-select:text; user-select:text; }
 	.markdown-body .highlight pre, .markdown-body pre {
 		overflow:visible !important; }`);
 
