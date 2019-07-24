@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Code Colors
-// @version     1.2.5
+// @version     2.0.0
 // @description A userscript that adds a color swatch next to the code color definition
 // @license     MIT
 // @author      Rob Garrison
@@ -11,6 +11,7 @@
 // @grant       GM_addStyle
 // @require     https://greasemonkey.github.io/gm4-polyfill/gm4-polyfill.js?updated=20180103
 // @require     https://greasyfork.org/scripts/28721-mutations/code/mutations.js?version=666427
+// @require     https://greasyfork.org/scripts/387811-color-bundle/code/color-bundle.js?version=719499
 // @icon        https://github.githubassets.com/pinned-octocat.svg
 // @updateURL   https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-code-colors.user.js
 // @downloadURL https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-code-colors.user.js
@@ -18,62 +19,175 @@
 (() => {
 	"use strict";
 
+	// whitespace:initial => overrides code-wrap css in content
 	GM.addStyle(`
-		.ghcc-block { width:12px; height:12px; display:inline-block;
-			vertical-align:middle; margin-right:4px; border-radius:3px;
-			border:1px solid rgba(119, 119, 119, 0.5); }
-	`);
+	.ghcc-block { width:14px; height:14px; display:inline-block;
+		vertical-align:middle; margin-right:4px; border-radius:4px;
+		border:1px solid rgba(119, 119, 119, 0.5); position:relative;
+		background-image:none; cursor:pointer; }
+	.ghcc-popup { position:absolute; background:#333; color:#fff;
+		min-width:350px; top:100%; left:0px; padding:10px; z-index:100;
+		white-space:pre; cursor:text; text-align:left; }
+	.markdown-body .highlight pre, .markdown-body pre {
+		overflow:visible !important; }`);
 
-	const namedColors = [
-		"aliceblue", "antiquewhite", "aqua", "aquamarine", "azure", "beige",
-		"bisque", "black", "blanchedalmond", "blue", "blueviolet", "brown",
-		"burlywood", "cadetblue", "chartreuse", "chocolate", "coral",
-		"cornflowerblue", "cornsilk", "crimson", "cyan", "darkblue", "darkcyan",
-		"darkgoldenrod", "darkgray", "darkgrey", "darkgreen", "darkkhaki",
-		"darkmagenta", "darkolivegreen", "darkorange", "darkorchid", "darkred",
-		"darksalmon", "darkseagreen", "darkslateblue", "darkslategray",
-		"darkslategrey", "darkturquoise", "darkviolet", "deeppink", "deepskyblue",
-		"dimgray", "dimgrey", "dodgerblue", "firebrick", "floralwhite",
-		"forestgreen", "fuchsia", "gainsboro", "ghostwhite", "gold", "goldenrod",
-		"gray", "grey", "green", "greenyellow", "honeydew", "hotpink",
-		"indianred", "indigo", "ivory", "khaki", "lavender", "lavenderblush",
-		"lawngreen", "lemonchiffon", "lightblue", "lightcoral", "lightcyan",
-		"lightgoldenrodyellow", "lightgray", "lightgrey", "lightgreen",
-		"lightpink", "lightsalmon", "lightseagreen", "lightskyblue",
-		"lightslategray", "lightslategrey", "lightsteelblue", "lightyellow",
-		"lime", "limegreen", "linen", "magenta", "maroon", "mediumaquamarine",
-		"mediumblue", "mediumorchid", "mediumpurple", "mediumseagreen",
-		"mediumslateblue", "mediumspringgreen", "mediumturquoise",
-		"mediumvioletred", "midnightblue", "mintcream", "mistyrose", "moccasin",
-		"navajowhite", "navy", "oldlace", "olive", "olivedrab", "orange",
-		"orangered", "orchid", "palegoldenrod", "palegreen", "paleturquoise",
-		"palevioletred", "papayawhip", "peachpuff", "peru", "pink", "plum",
-		"powderblue", "purple", "rebeccapurple", "red", "rosybrown", "royalblue",
-		"saddlebrown", "salmon", "sandybrown", "seagreen", "seashell", "sienna",
-		"silver", "skyblue", "slateblue", "slategray", "slategrey", "snow",
-		"springgreen", "steelblue", "tan", "teal", "thistle", "tomato",
-		"turquoise", "violet", "wheat", "white", "whitesmoke", "yellow",
-		"yellowgreen"
-	].join("|");
-
-	const regexNamed = new RegExp("^(" + namedColors + ")$", "i");
-	// Ex: #123, #123456 or 0x123456 (unix style colors, used by three.js)
-	const regexHex = /^(#|0x)([0-9A-F]{6,8}|[0-9A-F]{3,4})$/i;
-	// Ex: rgb(0,0,0) or rgba(0,0,0,0.2)
-	const regexRGB = /^rgba?(\([^\)]+\))?/i;
-	const regexRGBA = /rgba/i;
-	// Ex: hsl(0,0%,0%) or hsla(0,0%,0%,0.2);
-	const regexHSL = /^hsla?(\([^\)]+\))?/i;
+	const namedColors = Object.keys(Color.namedColors);
+	const namedColorsList = namedColors.reduce((acc, name) => {
+		acc[name] = `rgb(${Color.namedColors[name].join(", ")})`;
+		return acc;
+	}, {});
 
 	// Misc regex
-	const regexQuotes = /['"]/g;
-	const regexUnix = /^0x/;
-	const regexPercent = /%%/g;
+	const regex = {
+		quotes: /['"]/g,
+		unix: /^0x/,
+		percent: /%%/g
+	};
 
 	// Don't use a div, because GitHub-Dark adds a :hover background
 	// color definition on divs
-	const block = document.createElement("span");
+	const block = document.createElement("button")
 	block.className = "ghcc-block";
+	block.tabIndex = 0;
+	// prevent submitting on click in comment preview
+	block.type = "button";
+	block.onclick = "event => event.stopPropagation()";
+
+	const popup = document.createElement("span");
+	popup.className = "ghcc-popup";
+
+	const formats = {
+		named: {
+			regex: new RegExp("^(" + namedColors.join("|") + ")$", "i"),
+			convert: color => {
+				const rgb = color.rgb().toString();
+				if (Object.values(namedColorsList).includes(rgb)) {
+					// There may be more than one named color
+					// e.g. "slategray" & "slategrey"
+					return Object.keys(namedColorsList)
+						.filter(n => namedColorsList[n] === rgb)
+						.join("<br />");
+				}
+				return "";
+			},
+		},
+		hex: {
+			// Ex: #123, #123456 or 0x123456 (unix style colors, used by three.js)
+			regex: /^(#|0x)([0-9A-F]{6,8}|[0-9A-F]{3,4})$/i,
+			convert: color => `${color.hex().toString()}`,
+		},
+		rgb: {
+			regex: /^rgba?(\([^\)]+\))?/i,
+			regexAlpha: /rgba/i,
+			find: (els, el, txt) => {
+				// Color in a string contains everything
+				if (el.classList.contains("pl-s")) {
+					txt = txt.match(formats.rgb.regex)[0];
+				} else {
+					// Rgb(a) colors contained in multiple "pl-c1" spans
+					let indx = formats.rgb.regexAlpha.test(txt) ? 4 : 3;
+					const tmp = [];
+					while (indx) {
+						tmp.push(getTextContent(els.shift()));
+						indx--;
+					}
+					txt += "(" + tmp.join(",") + ")";
+				}
+				addNode(el, txt);
+				return els;
+			},
+			convert: color => {
+				const rgb = color.rgb().alpha(1).toString();
+				const rgba = color.rgb().toString();
+				return `${rgb}${rgb === rgba ? "" : "; " + rgba}`;
+			}
+		},
+		hsl: {
+			// Ex: hsl(0,0%,0%) or hsla(0,0%,0%,0.2);
+			regex: /^hsla?(\([^\)]+\))?/i,
+			find: (els, el, txt) => {
+				const tmp = /a$/i.test(txt);
+				if (el.classList.contains("pl-s")) {
+					// Color in a string contains everything
+					txt = txt.match(formats.hsl.regex)[0];
+				} else {
+					// Traverse this HTML... & els only contains the pl-c1 nodes
+					// <span class="pl-c1">hsl</span>(<span class="pl-c1">1</span>,
+					// <span class="pl-c1">1</span><span class="pl-k">%</span>,
+					// <span class="pl-c1">1</span><span class="pl-k">%</span>);
+					// using getTextContent in case of invalid css
+					txt = txt + "(" + getTextContent(els.shift()) + "," +
+						getTextContent(els.shift()) + "%," +
+						// Hsla needs one more parameter
+						getTextContent(els.shift()) + "%" +
+						(tmp ? "," + getTextContent(els.shift()) : "") + ")";
+				}
+				// Sometimes (previews only?) the .pl-k span is nested inside
+				// the .pl-c1 span, so we end up with "%%"
+				addNode(el, txt.replace(regex.percent, "%"));
+				return els;
+			},
+			convert: color => {
+				const hsl = color.hsl().alpha(1).round().toString();
+				const hsla = color.hsl().round().toString();
+				return `${hsl}${hsl === hsla ? "" : "; " + hsla}`;
+			}
+		},
+		hwb: {
+			convert: color => color.hwb().round().toString()
+		},
+		cymk: {
+			convert: color => {
+				const cmyk = color.cmyk().round().array(); // array of numbers
+				return `device-cmyk(${cmyk.shift()}, ${cmyk.join("%, ")})`;
+			}
+		},
+	};
+
+	function showPopup(el) {
+		const popup = createPopup(el.style.backgroundColor);
+		el.appendChild(popup);
+	}
+
+	function hidePopup(el) {
+		el.textContent = "";
+	}
+
+	function checkPopup(event) {
+		event.preventDefault();
+		const el = event.target;
+		if (el && el.classList.contains("ghcc-block")) {
+			if (event.type === "click") {
+				if (el.textContent) {
+					hidePopup(el)
+				} else {
+					showPopup(el);
+				}
+			}
+		}
+		if (event.type === "keyup" && event.key === "Escape") {
+			// hide all popups
+			[...document.querySelectorAll(".ghcc-block")].forEach(el => {
+				el.textContent = "";
+			});
+		}
+	}
+
+	function createPopup(val) {
+		const color = Color(val);
+		const el = popup.cloneNode();
+		const content = Object.keys(formats).reduce((acc, type) => {
+			if (typeof formats[type].convert === "function") {
+				const val = formats[type].convert(color);
+				if (val) {
+					acc.push(val);
+				}
+				return acc;
+			}
+		}, []);
+		el.innerHTML = content.join("<br />");
+		return el;
+	}
 
 	function addNode(el, val) {
 		const node = block.cloneNode();
@@ -86,47 +200,6 @@
 
 	function getTextContent(el) {
 		return el ? el.textContent : "";
-	}
-
-	function rgb(els, el, txt) {
-		// Color in a string contains everything
-		if (el.classList.contains("pl-s")) {
-			txt = txt.match(regexRGB)[0];
-		} else {
-			// Rgb(a) colors contained in multiple "pl-c1" spans
-			let indx = regexRGBA.test(txt) ? 4 : 3;
-			const tmp = [];
-			while (indx) {
-				tmp.push(getTextContent(els.shift()));
-				indx--;
-			}
-			txt += "(" + tmp.join(",") + ")";
-		}
-		addNode(el, txt);
-		return els;
-	}
-
-	function hsl(els, el, txt) {
-		const tmp = /a$/i.test(txt);
-		if (el.classList.contains("pl-s")) {
-			// Color in a string contains everything
-			txt = txt.match(regexHSL)[0];
-		} else {
-			// Traverse this HTML... & els only contains the pl-c1 nodes
-			// <span class="pl-c1">hsl</span>(<span class="pl-c1">1</span>,
-			// <span class="pl-c1">1</span><span class="pl-k">%</span>,
-			// <span class="pl-c1">1</span><span class="pl-k">%</span>);
-			// using getTextContent in case of invalid css
-			txt = txt + "(" + getTextContent(els.shift()) + "," +
-				getTextContent(els.shift()) + "%," +
-				// Hsla needs one more parameter
-				getTextContent(els.shift()) + "%" +
-				(tmp ? "," + getTextContent(els.shift()) : "") + ")";
-		}
-		// Sometimes (previews only?) the .pl-k span is nested inside
-		// the .pl-c1 span, so we end up with "%%"
-		addNode(el, txt.replace(regexPercent, "%"));
-		return els;
 	}
 
 	// Loop with delay to allow user interaction
@@ -144,14 +217,14 @@
 				// noop
 			} else if (!el.querySelector(".ghcc-block")) {
 				if (el.classList.contains("pl-s")) {
-					txt = txt.replace(regexQuotes, "");
+					txt = txt.replace(regex.quotes, "");
 				}
-				if (regexHex.test(txt) || regexNamed.test(txt)) {
-					addNode(el, txt.replace(regexUnix, "#"));
-				} else if (regexRGB.test(txt)) {
-					els = rgb(els, el, txt);
-				} else if (regexHSL.test(txt)) {
-					els = hsl(els, el, txt);
+				if (formats.hex.regex.test(txt) || formats.named.regex.test(txt)) {
+					addNode(el, txt.replace(regex.unix, "#"));
+				} else if (formats.rgb.regex.test(txt)) {
+					els = formats.rgb.find(els, el, txt);
+				} else if (formats.hsl.regex.test(txt)) {
+					els = formats.hsl.find(els, el, txt);
 				}
 			}
 			last = txt;
@@ -176,8 +249,11 @@
 			loop();
 		}
 	}
+
 	document.addEventListener("ghmo:container", addColors);
 	document.addEventListener("ghmo:preview", addColors);
+	document.addEventListener("click", checkPopup);
+	document.addEventListener("keyup", checkPopup);
 	addColors();
 
 })();
