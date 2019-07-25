@@ -46,7 +46,7 @@ Userscripts to add functionality to GitHub.
 	| [GitHub issue counts][ic2-wiki]        |     | [install][ic2-raw] | [GF][ic2-gf] [OU][ic2-ou] | 2012.01.16 | 2019.02.16 |            |
 	| [GitHub issue highlighter][gih-wiki]   |     | [install][gih-raw] | [GF][gih-gf] [OU][gih-ou] | 2016.05.21 | 2018.02.16 | 2018.07.26 |
 	| [GitHub issue show status][iss-wiki]   |     | [install][iss-raw] | [GF][iss-gf] [OU][iss-ou] | 2017.06.02 | 2019.02.16 | 2019.01.04 |
-	| [GitHub label color picker][glc-wiki]  |     | [install][glc-raw] | [GF][glc-gf] [OU][glc-ou] | 2016.09.16 | 2018.02.16 |            |
+	| [GitHub label color picker][glc-wiki]  |     | [install][glc-raw] | [GF][glc-gf] [OU][glc-ou] | 2016.09.16 | 2019.07.25 |            |
 	| [GitHub remove diff signs][rds-wiki]   |     | [install][rds-raw] | [GF][rds-gf] [OU][rds-ou] | 2016.04.05 | 2018.02.16 | 2018.07.31 |
 	| [GitHub reveal header][rhd-wiki]       |     | [install][rhd-raw] | [GF][rhd-gf] [OU][rhd-ou] | 2017.06.03 | 2019.03.29 |            |
 	| [GitHub rtl comments][rtl-wiki]        |     | [install][rtl-raw] | [GF][rtl-gf] [OU][rtl-ou] | 2016.06.13 | 2019.02.16 |            |
