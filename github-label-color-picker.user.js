@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Label Color Picker
-// @version     1.0.6
+// @version     1.0.7
 // @description A userscript that adds a color picker to the label color input
 // @license     MIT
 // @author      Rob Garrison
@@ -22,7 +22,7 @@
 
 	// GitHub-Dark changes "text-black" to #c0c0c0
 	GM_addStyle(`
-		div.cp-app { margin-top:110px; margin-left:-8px; z-index:10; }
+		div.cp-app { margin:0; z-index:10; }
 		.js-new-label-color-icon { pointer-events:none; }
 		.js-new-label-color-icon.text-black { color:#000 !important; }
 	`);
