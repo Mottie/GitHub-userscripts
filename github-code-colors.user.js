@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Code Colors
-// @version     2.0.3
+// @version     2.0.4
 // @description A userscript that adds a color swatch next to the code color definition
 // @license     MIT
 // @author      Rob Garrison
@@ -16,6 +16,7 @@
 // @updateURL   https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-code-colors.user.js
 // @downloadURL https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-code-colors.user.js
 // ==/UserScript==
+/* global Color */
 (() => {
 	"use strict";
 
@@ -25,18 +26,30 @@
 		vertical-align:middle; margin-right:4px; border-radius:4px;
 		border:1px solid rgba(119, 119, 119, 0.5); position:relative;
 		background-image:none; cursor:pointer; }
-	.ghcc-popup { position:absolute; background:#333; color:#fff;
+	.ghcc-popup { position:absolute; background:#222; color:#eee;
 		min-width:350px; top:100%; left:0px; padding:10px; z-index:100;
 		white-space:pre; cursor:text; text-align:left; -webkit-user-select:text;
 		-moz-user-select:text; -ms-user-select:text; user-select:text; }
 	.markdown-body .highlight pre, .markdown-body pre {
-		overflow-y:visible !important; }`);
+		overflow-y:visible !important; }
+	.ghcc-copy { padding:2px 6px; margin-right:4px; background:transparent;
+		border:0; }`);
 
 	const namedColors = Object.keys(Color.namedColors);
 	const namedColorsList = namedColors.reduce((acc, name) => {
 		acc[name] = `rgb(${Color.namedColors[name].join(", ")})`;
 		return acc;
 	}, {});
+
+	const copyButton = document.createElement("clipboard-copy");
+	copyButton.className = "btn btn-sm btn-blue tooltipped tooltipped-w ghcc-copy";
+	copyButton.setAttribute("aria-label", "Copy to clipboard");
+	// This hint isn't working yet (GitHub needs to fix it)
+	copyButton.setAttribute("data-copied-hint", "Copied!");
+	copyButton.innerHTML = `
+		<svg aria-hidden="true" class="octicon octicon-clippy" height="14" viewBox="0 0 14 16" width="14">
+			<path fill-rule="evenodd" d="M2 13h4v1H2v-1zm5-6H2v1h5V7zm2 3V8l-3 3 3 3v-2h5v-2H9zM4.5 9H2v1h2.5V9zM2 12h2.5v-1H2v1zm9 1h1v2c-.02.28-.11.52-.3.7-.19.18-.42.28-.7.3H1c-.55 0-1-.45-1-1V4c0-.55.45-1 1-1h3c0-1.11.89-2 2-2 1.11 0 2 .89 2 2h3c.55 0 1 .45 1 1v5h-1V6H1v9h10v-2zM2 5h8c0-.55-.45-1-1-1H8c-.55 0-1-.45-1-1s-.45-1-1-1-1 .45-1 1-.45 1-1 1H3c-.55 0-1 .45-1 1z"></path>
+		</svg>`;
 
 	// Misc regex
 	const regex = {
@@ -47,12 +60,14 @@
 
 	// Don't use a div, because GitHub-Dark adds a :hover background
 	// color definition on divs
-	const block = document.createElement("button")
+	const block = document.createElement("button");
 	block.className = "ghcc-block";
 	block.tabIndex = 0;
 	// prevent submitting on click in comment preview
 	block.type = "button";
 	block.onclick = "event => event.stopPropagation()";
+
+	const br = document.createElement("br");
 
 	const popup = document.createElement("span");
 	popup.className = "ghcc-popup";
@@ -176,16 +191,20 @@
 	function createPopup(val) {
 		const color = Color(val);
 		const el = popup.cloneNode();
-		const content = Object.keys(formats).reduce((acc, type) => {
+		const fragment = document.createDocumentFragment();
+		const content = Object.keys(formats).forEach(type => {
 			if (typeof formats[type].convert === "function") {
 				const val = formats[type].convert(color);
 				if (val) {
-					acc.push(val);
+					const button = copyButton.cloneNode(true);
+					button.value = val;
+					fragment.appendChild(button);
+					fragment.appendChild(document.createTextNode(val));
+					fragment.appendChild(br.cloneNode());
 				}
-				return acc;
 			}
-		}, []);
-		el.innerHTML = content.join("<br />");
+		});
+		el.appendChild(fragment);
 		return el;
 	}
 
