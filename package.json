@@ -10,10 +10,10 @@
 		"url": "https://github.com/Mottie"
 	},
 	"devDependencies": {
-		"eslint": "^5.14.0",
+		"eslint": "^6.3.0",
 		"github-reserved-names": "^1.1.5",
-		"make-fetch-happen": "^4.0.1",
-		"ver": "^4.0.1"
+		"make-fetch-happen": "^5.0.0",
+		"ver": "^5.1.4"
 	},
 	"scripts": {
 		"authors": "bash tools/authors.sh",
@@ -22,7 +22,7 @@
 		"lint": "npx eslint *.js",
 		"test": "eslint *.js",
 		"patch": "npm run lint && npx ver patch",
-    "minor": "npm run lint && npx ver minor",
-    "major": "npm run lint && npx ver major"
+		"minor": "npm run lint && npx ver minor",
+		"major": "npm run lint && npx ver major"
 	}
 }
