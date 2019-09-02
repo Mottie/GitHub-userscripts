@@ -225,7 +225,7 @@ Userscripts to add functionality to GitHub.
 [tbn-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Title_Notification
 [tdc-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Toggle_Diff_Comments
 [tex-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Toggle_Expanders
-[toc-ou]: https://openuserjs.org/scripts/Mottie/GitHub_TOC
+[toc-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Table_of_Contents
 [tws-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Toggle_Wiki_Sidebar
 
 [ico]: https://raw.githubusercontent.com/Mottie/Octopatcher/master/src/images/icon16.png
