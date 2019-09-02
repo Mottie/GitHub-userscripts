@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Table of Contents
-// @version     1.3.4
+// @version     2.0.0
 // @description A userscript that adds a table of contents to readme & wiki pages
 // @license     MIT
 // @author      Rob Garrison
@@ -24,9 +24,23 @@
 (async () => {
 	"use strict";
 
+	const defaults = {
+		title: "Table of Contents", // popup title
+		top: "64px", // popup top position when reset
+		left: "auto", // popup left position when reset
+		right: "10px", // popup right position when reset
+		headerPad: "48px", // padding added to header when TOC is collapsed
+		headerSelector: [".header", ".Header"],
+		headerWrap: ".js-header-wrapper",
+		toggle: "g+t", // keyboard toggle shortcut
+		restore: "g+r", // keyboard reset popup position shortcut
+		delay: 1000, // ms between keyboard shortcuts
+	};
+
 	GM.addStyle(`
 		/* z-index > 1000 to be above the */
-		.ghus-toc { position:fixed; z-index:1001; min-width:200px; top:64px; right:10px; }
+		.ghus-toc { position:fixed; z-index:1001; min-width:200px; top:${defaults.top};
+			right:${defaults.right}; }
 		.ghus-toc h3 { cursor:move; }
 		.ghus-toc-title { padding-left:20px; }
 		/* icon toggles TOC container & subgroups */
@@ -42,7 +56,7 @@
 		}
 		.ghus-toc.collapsed > h3 { cursor:pointer; padding-top:5px; border:none; background:#222; color:#ddd; }
 		.ghus-toc.collapsed .ghus-toc-docs { display:none; }
-		.ghus-toc:not(.ghus-toc-hidden).collapsed ~ .js-header-wrapper .Header { padding-right: 48px !important; }
+		.ghus-toc:not(.ghus-toc-hidden).collapsed + .Header { padding-right: ${defaults.headerPad} !important; }
 		/* move header text out-of-view when collapsed */
 		.ghus-toc.collapsed > h3 svg { margin-top:6px; }
 		.ghus-toc-hidden, .ghus-toc.collapsed .boxed-group-inner,
@@ -70,27 +84,24 @@
 	let tocInit = false;
 
 	// modifiable title
-	let title = await GM.getValue("github-toc-title", "Table of Contents");
+	let title = await GM.getValue("github-toc-title", defaults.title);
 
 	const container = document.createElement("div");
 	const useClient = !!document.all;
 
 	// keyboard shortcuts
 	const keyboard = {
-		toggle  : "g+t",
-		restore : "g+r",
-		timer   : null,
-		lastKey : null,
-		delay   : 1000 // ms between keyboard shortcuts
+		timer: null,
+		lastKey: null
 	};
 
 	// drag variables
 	const drag = {
-		el    :  null,
-		elmX  : 0,
-		elmY  : 0,
-		time  : 0,
-		unsel : null
+		el: null,
+		elmX: 0,
+		elmY: 0,
+		time: 0,
+		unsel: null
 	};
 
 	const stopPropag = event => {
@@ -131,9 +142,39 @@
 		drag.el = null;
 	}
 
-	async function dragSave(clear) {
-		let val = clear ? null : [container.style.left, container.style.top];
+	async function dragSave(restore) {
+		let adjLeft = null;
+		let top = null;
+		let val = null;
+		if (restore) {
+			// position restore (reset) popup to default position
+			setPosition(defaults.left, defaults.top, defaults.right);
+		} else {
+			// Adjust saved left position to be measured from the center of the window
+			// See issue #102
+			const winHalf = window.innerWidth / 2;
+			const left = winHalf - parseInt(container.style.left, 10);
+			adjLeft = left * (left > winHalf ? 1 : -1);
+			top = parseInt(container.style.top, 10);
+			val = [adjLeft, top];
+		}
+		drag.elmX = adjLeft;
+		drag.elmY = top;
 		await GM.setValue("github-toc-location", val);
+	}
+
+	function resize(_, left = drag.elmX, top = drag.elmY) {
+		if (left !== null) {
+			drag.elmX = left;
+			drag.elmY = top;
+			setPosition(((window.innerWidth / 2) + left) + "px", top + "px");
+		}
+	}
+
+	function setPosition(left, top, right = "auto") {
+		container.style.left = left;
+		container.style.right = right;
+		container.style.top = top;
 	}
 
 	// stop text selection while dragging
@@ -207,8 +248,8 @@
 			if (len > 1) {
 				for (indx = 0; indx < len; indx++) {
 					anchor = anchors[indx];
-					if (anchor.parentNode) {
-						header = anchor.parentNode;
+					if (anchor.parentElement) {
+						header = anchor.parentElement;
 						// replace single & double quotes with right angled quotes
 						txt = header.textContent.trim().replace(/'/g, "&#8217;").replace(/"/g, "&#8221;");
 						content += `
@@ -234,15 +275,16 @@
 		let indx, el, next, count, num, group;
 		const els = $$("li", container);
 		const len = els.length;
+		const regex = /\d/;
 		for (indx = 0; indx < len; indx++) {
 			count = 0;
 			group = [];
 			el = els[indx];
 			next = el && el.nextElementSibling;
 			if (next) {
-				num = el.className.match(/\d/)[0];
+				num = el.className.match(regex)[0];
 				while (next && !next.classList.contains("ghus-toc-h" + num)) {
-					if (next.className.match(/\d/)[0] > num) {
+					if (next.className.match(regex)[0] > num) {
 						count++;
 						group[group.length] = next;
 					}
@@ -257,13 +299,13 @@
 		group = [];
 		on(container, "click", event => {
 			// Allow doc link to work
-			if (event.target.nodeName.toLowerCase() === "a") {
+			if (event.target.nodeName === "A") {
 				return;
 			}
 			stopPropag(event);
 			// click on icon, then target LI parent
 			let els, name, indx;
-			const el = event.target.parentNode;
+			const el = event.target.parentElement;
 			const collapse = el.classList.contains("collapsed");
 			if (event.target.classList.contains("ghus-toc-icon")) {
 				if (event.shiftKey) {
@@ -301,8 +343,8 @@
 		clearTimeout(keyboard.timer);
 		// use "g+t" to toggle the panel; "g+r" to reset the position
 		// keypress may be needed for non-alphanumeric keys
-		const tocToggleKeys = keyboard.toggle.split("+");
-		const tocReset = keyboard.restore.split("+");
+		const tocToggleKeys = defaults.toggle.split("+");
+		const tocReset = defaults.restore.split("+");
 		const key = String.fromCharCode(event.which).toLowerCase();
 		const panelHidden = container.classList.contains("collapsed");
 
@@ -331,30 +373,28 @@
 		keyboard.lastKey = key;
 		keyboard.timer = setTimeout(() => {
 			keyboard.lastKey = null;
-		}, keyboard.delay);
+		}, defaults.delay);
 	}
 
 	async function init() {
 		// there is no ".header" on github.com/contact; and some other pages
-		if (!$(".header, .Header, .js-header-wrapper") || tocInit) {
+		const header = $([...defaults.headerSelector, defaults.headerWrap].join(","));
+		if (!header || tocInit) {
 			return;
 		}
 		// insert TOC after header
 		const location = await GM.getValue("github-toc-location", null);
 		// restore last position
-		if (location) {
-			container.style.left = location[0];
-			container.style.top = location[1];
-			container.style.right = "auto";
-		}
+		resize(null, ...(location ? location : [null]));
 
 		// TOC saved state
 		const hidden = await GM.getValue("github-toc-hidden", false);
 		container.className = "ghus-toc boxed-group wiki-pages-box readability-sidebar" + (hidden ? " collapsed" : "");
 		container.setAttribute("role", "navigation");
 		container.setAttribute("unselectable", "on");
+		container.setAttribute("index", "0");
 		container.innerHTML = `
-			<h3 class="js-wiki-toggle-collapse wiki-auxiliary-content" data-hotkey="g t">
+			<h3 class="js-wiki-toggle-collapse wiki-auxiliary-content" data-hotkey="${defaults.toggle.replace(/\+/g, " ")}">
 				<span class="ghus-toc-toggle ghus-toc-icon">
 					<svg class="octicon" height="14" width="14" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 16 12">
 						<path d="M2 13c0 .6 0 1-.6 1H.6c-.6 0-.6-.4-.6-1s0-1 .6-1h.8c.6 0 .6.4.6 1zm2.6-9h6.8c.6 0 .6-.4.6-1s0-1-.6-1H4.6C4 2 4 2.4 4 3s0 1 .6 1zM1.4 7H.6C0 7 0 7.4 0 8s0 1 .6 1h.8C2 9 2 8.6 2 8s0-1-.6-1zm0-5H.6C0 2 0 2.4 0 3s0 1 .6 1h.8C2 4 2 3.6 2 3s0-1-.6-1zm10 5H4.6C4 7 4 7.4 4 8s0 1 .6 1h6.8c.6 0 .6-.4.6-1s0-1-.6-1zm0 5H4.6c-.6 0-.6.4-.6 1s0 1 .6 1h6.8c.6 0 .6-.4.6-1s0-1-.6-1z"/>
@@ -371,8 +411,8 @@
 		`;
 
 		// add container
-		const el = $(".header, .js-header-wrapper");
-		el.parentNode.insertBefore(container, el);
+		const el = $(defaults.headerSelector.join(","));
+		el.parentElement.insertBefore(container, el);
 
 		// make draggable
 		on($("h3", container), "mousedown", dragInit);
@@ -384,6 +424,8 @@
 		on(container, "onselectstart", stopPropag);
 		// keyboard shortcuts
 		on(document, "keydown", keyboardCheck);
+		// keep window relative to middle on resize
+		on(window, "resize", resize);
 
 		tocInit = true;
 		tocAdd();
