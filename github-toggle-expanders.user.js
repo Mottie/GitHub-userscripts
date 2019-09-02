@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Toggle Expanders
-// @version     1.2.0
+// @version     2.0.0
 // @description A userscript that toggles all expanders when one expander is shift-clicked
 // @license     MIT
 // @author      Rob Garrison
@@ -14,26 +14,43 @@
 (() => {
 	"use strict";
 
-	function toggle(el, modKey) {
-		const stateNode = el.closest(".js-details-container, details");
-		const state = stateNode.nodeName === "DETAILS" ?
-			stateNode.open :
-			stateNode.classList.contains("open");
-		const parentNode = stateNode.closest(modKey ?
-			".container, .js-discussion" :
-			".commit-group, .js-timeline-item"
+	function toggleButton(el, modKey) {
+		const stateNode = el.closest(".js-details-container");
+		const state = stateNode && (
+			// Resolved expander
+			stateNode.classList.contains("open") ||
+			// compare detail expander
+			stateNode.classList.contains("Details--on")
 		);
-		const containers = parentNode.querySelectorAll(
-			".js-details-container, .outdated-comment"
+		const parentNode = stateNode && stateNode.closest(modKey
+			// shift+ctrl+click = expand all on page
+			? ".repository-content"
+			// shift+click = expand all in date
+			: ".commit-group"
 		);
-
-		[...containers].forEach(node => {
-			if (node.nodeName === "DETAILS") {
-				node.open = state;
-			} else {
+		if (parentNode) {
+			const containers = parentNode.querySelectorAll(".js-details-container");
+			[...containers].forEach(node => {
 				node.classList.toggle("open", state);
-			}
-		});
+				node.classList.toggle("Details--on", state);
+			});
+		}
+	}
+
+	function toggleDetails(el, modKey) {
+		const state = el && el.open;
+		const parentNode = el && el.closest(modKey
+			? "#discussion_bucket" // .js-discussion
+			: ".discussion-item-body" // .container?
+		);
+		if (parentNode) {
+			const containers = parentNode.querySelectorAll(
+				".outdated-comment, .js-comment-container"
+			);
+			[...containers].forEach(node => {
+				node.open = state;
+			});
+		}
 	}
 
 	document.body.addEventListener("click", event => {
@@ -41,13 +58,16 @@
 		const mod = event.ctrlKey
 			|| event.metaKey
 			|| window.location.pathname.includes("/compare/");
+
 		if (target && event.getModifierState("Shift")) {
 			// give GitHub time to update the elements
 			setTimeout(() => {
 				if (target.matches(".js-details-target")) {
-					toggle(target, mod);
-				} else if (target.matches(".btn-link, .js-toggle-outdated-comments")) {
-					toggle(target.closest("details"), mod);
+					toggleButton(target, mod);
+				} else if (
+					target.matches(".Details-content--closed, .Details-content--open")
+				) {
+					toggleDetails(target.closest("details"), mod);
 				}
 			}, 100);
 		}
