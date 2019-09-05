@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Table of Contents
-// @version     2.0.0
+// @version     2.0.1
 // @description A userscript that adds a table of contents to readme & wiki pages
 // @license     MIT
 // @author      Rob Garrison
@@ -463,7 +463,7 @@
 	GM.registerMenuCommand("Set Table of Contents Title", async () => {
 		title = prompt("Table of Content Title:", title);
 		await GM.setValue("github-toc-title", title);
-		$("h3 span", container).textContent = title;
+		$("h3 .ghus-toc-title", container).textContent = title;
 	});
 
 	on(document, "ghmo:container", tocAdd);
