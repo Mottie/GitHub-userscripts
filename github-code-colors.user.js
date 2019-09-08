@@ -192,7 +192,7 @@
 		const color = Color(val);
 		const el = popup.cloneNode();
 		const fragment = document.createDocumentFragment();
-		const content = Object.keys(formats).forEach(type => {
+		Object.keys(formats).forEach(type => {
 			if (typeof formats[type].convert === "function") {
 				const val = formats[type].convert(color);
 				if (val) {
