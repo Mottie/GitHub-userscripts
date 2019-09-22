@@ -19,13 +19,12 @@
     "radix": 2,
     "brace-style": 1,
     "camelcase": 2,
-    "indent": [2,"tab"],
+    "indent": [2, "tab"],
     "no-array-constructor": 2,
-    "quotes": [2,"double", {
+    "quotes": [2, "double", {
       "allowTemplateLiterals": true,
       "avoidEscape": true
     }],
-    "spaced-comment": 2,
     "arrow-spacing": 2,
     "no-var": 2,
     "no-unused-vars": 1
