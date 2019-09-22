@@ -103,24 +103,17 @@
 
 	// Image preview userscript support
 	function toggleImagePreview(ext, mode) {
-		if ($(".ghip-image-previews")) {
-			let selector = "a",
-				hasType = types[ext];
-			if (!hasType) {
-				selector += `[href$="${ext}"]`;
-			}
-			$$(`.ghip-image-previews ${selector}`).forEach(el => {
-				if (!$(".ghip-folder, .ghip-up-tree", el)) {
-					if (hasType && ext !== ":all") {
-						// image preview includes the filename
-						let elm = $(".ghip-file-name", el);
-						if (elm && !hasType.is(elm.textContent)) {
-							return;
-						}
+		const previews = $(".ghip-image-previews");
+		if (previews) {
+			const files = ext === ":toggle" ? ["*"] : list[ext];
+			if (files.length) {
+				files.forEach(file => {
+					const el = $(`a${file === "*" ? "" : `[href$="${file}"]`}`, previews);
+					if (!$(".ghip-folder, .ghip-up-tree", el)) {
+						el.style.display = mode === "show" ? "" : "none";
 					}
-					el.style.display = mode === "show" ? "" : "none";
-				}
-			});
+				});
+			}
 		}
 	}
 
@@ -152,6 +145,7 @@
 				const modeBool = !settings[name];
 				settings[name] = modeBool;
 				el.classList.toggle("selected", modeBool);
+				toggleImagePreview(name, modeBool ? "show" : "hide");
 			}
 		});
 		updateSettings();
@@ -171,6 +165,8 @@
 			elm.classList.toggle("selected", mode === "show");
 		}
 		updateSettings(filter, mode);
+		// Update view for github-image-preview.user.js
+		toggleImagePreview(filter, mode);
 	}
 
 	function toggleBlocks(filter, mode) {
@@ -179,8 +175,6 @@
 		} else if (list[filter]) {
 			toggleFilter(filter, mode);
 		}
-		// Update view for github-image-preview.user.js
-		toggleImagePreview(filter, mode);
 	}
 
 	function addExt(ext, txt) {
