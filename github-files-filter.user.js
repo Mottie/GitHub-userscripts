@@ -22,56 +22,67 @@
 	// animation delay; See #46
 	GM_addStyle(`
 		.gff-filter .btn.selected { font-variant: small-caps; }
-		.gff-filter .btn:not(.selected):not(:first-child) {
+		.gff-filter .btn:not(.selected) {
 			text-decoration: line-through;
 		}
-		.gff-filter .gff-all:not(.selected):focus,
-		.gff-filter .gff-all:not(.selected) ~ .btn:focus,
-		.gff-filter .gff-all:not(.selected) ~ .btn.selected:focus,
-		.gff-filter .gff-all:not(.selected):hover,
-		.gff-filter .gff-all:not(.selected) ~ .btn:hover,
-		.gff-filter .gff-all:not(.selected) ~ .btn.selected:hover {
+		.gff-filter .gff-toggle:not(.selected):focus,
+		.gff-filter .btn:focus,
+		.gff-filter .btn.selected:focus,
+		.gff-filter .gff-toggle:not(.selected):hover,
+		.gff-filter .btn:hover,
+		.gff-filter .btn.selected:hover {
 			border-color: #777 !important;
 		}
-		.gff-filter .btn:before, .gff-filter .btn:after {
+		.gff-filter .gff-toggle {
+			margin-right: 4px;
+		}
+		.gff-filter .gff-toggle svg {
+			pointer-events: none;
+		}
+		.gff-filter .btn:before,
+		.gff-filter .btn:after {
 			animation-delay: unset !important;
 			filter: invert(10%);
 		}
 	`);
 
-	let settings,
-		list = {};
+	let list = {};
 	const types = {
-			// including ":" in key since it isn't allowed in a file name
-			":all": {
-				// return false to prevent adding files under this type
-				is: () => false,
-				text: "\u00ABall\u00BB"
-			},
-			":noExt": {
-				is: name => !/\./.test(name),
-				text: "\u00ABno-ext\u00BB"
-			},
-			":dot": {
-				// this will include ".travis.yml"... should we add to "yml" instead?
-				is: name => /^\./.test(name),
-				text: "\u00ABdot-files\u00BB"
-			},
-			":min": {
-				is: name => /\.min\./.test(name),
-				text: "\u00ABmin\u00BB"
-			}
+		// Including ":" in these special keys since it isn't allowed in a file name
+		":toggle": {
+			// Return false to prevent adding files under this type
+			is: () => false,
+			className: "gff-toggle",
+			title: "Invert filter state",
+			text:
+				`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 16" width="12" height="16" class="octicon" aria-hidden="true">
+					<path d="M12 0H0v4h2V2h8v4H8l4 4M0 16h12v-4h-2v2H2v-4h2L0 6"/>
+				</svg>`
 		},
-		// TODO: add toggle for submodule and dot-folders
-		folderIconClasses = [
-			".octicon-file-directory",
-			".octicon-file-symlink-directory",
-			".octicon-file-submodule"
-		].join(",");
+		":noExt": {
+			is: name => !/\./.test(name),
+			text: "\u00ABno-ext\u00BB"
+		},
+		":dot": {
+			// This will include ".travis.yml"... should we add to "yml" instead?
+			is: name => /^\./.test(name),
+			text: "\u00ABdot-files\u00BB"
+		},
+		":min": {
+			is: name => /\.min\./.test(name),
+			text: "\u00ABmin\u00BB"
+		}
+	};
+	// TODO: add toggle for submodule and dot-folders
+	const folderIconClasses = [
+		".octicon-file-directory",
+		".octicon-file-symlink-directory",
+		".octicon-file-submodule"
+	].join(",");
 
-	// default to all file types visible; remember settings between sessions
-	list[":all"] = true; // list gets cleared in buildList function
-	settings = GM_getValue("gff-filter-settings", list);
+	// Default to all file types visible; remember settings between sessions
+	list[":toggle"] = false; // List gets cleared in buildList function
+	let settings = GM_getValue("gff-filter-settings", list);
 
 	function updateFilter(event) {
 		event.preventDefault();
@@ -84,23 +95,13 @@
 	}
 
 	function updateSettings(name, mode) {
-		settings[name] = mode === "show";
+		if (name) {
+			settings[name] = mode === "show";
+		}
 		GM_setValue("gff-filter-settings", settings);
 	}
 
-	function updateAllButton() {
-		if ($(".gff-filter")) {
-			const buttons = $(".file-wrap .gff-filter"),
-				filters = $$(".btn:not(.gff-all)", buttons),
-				selected = $$(".btn:not(.gff-all).selected", buttons);
-			// set "all" button
-			$(".gff-all", buttons).classList.toggle(
-				"selected",
-				filters.length === selected.length
-			);
-		}
-	}
-
+	// Image preview userscript support
 	function toggleImagePreview(ext, mode) {
 		if ($(".ghip-image-previews")) {
 			let selector = "a",
@@ -125,29 +126,41 @@
 
 	function toggleRow(el, mode) {
 		const row = el.closest("tr.js-navigation-item");
-		// don't toggle folders
+		// Don't toggle folders
 		if (row && !$(folderIconClasses, row)) {
-			row.style.display = mode === "show" ? "" : "none";
+			let state;
+			if (mode) {
+				state = mode === "show" ? "" : "none";
+			} else {
+				// Toggle
+				state = row.style.display === "none" ? "" : "none";
+			}
+			row.style.display = state;
 		}
 	}
 
-	function toggleAll(mode) {
-		const files = $(".file-wrap");
-		// Toggle "all" blocks
+	function toggleAll() {
+		const files = $("div.file-wrap");
+		// Toggle all blocks
 		$$("td.content .js-navigation-open", files).forEach(el => {
-			toggleRow(el, mode);
+			toggleRow(el);
 		});
-		// update filter buttons
+		// Update filter buttons
 		$$(".gff-filter .btn", files).forEach(el => {
-			el.classList.toggle("selected", mode === "show");
+			const name = el.dataset.ext;
+			if (name !== ":toggle") {
+				const modeBool = !settings[name];
+				settings[name] = modeBool;
+				el.classList.toggle("selected", modeBool);
+			}
 		});
-		updateSettings(":all", mode);
+		updateSettings();
 	}
 
 	function toggleFilter(filter, mode) {
-		const files = $(".file-wrap"),
-			elm = $(`.gff-filter .btn[data-ext="${filter}"]`, files);
-		/* list[filter] contains an array of file names */
+		const files = $("div.file-wrap");
+		const elm = $(`.gff-filter .btn[data-ext="${filter}"]`, files);
+		/* The list[filter] contains an array of file names */
 		list[filter].forEach(name => {
 			const el = $(`a[title="${name}"]`, files);
 			if (el) {
@@ -161,14 +174,13 @@
 	}
 
 	function toggleBlocks(filter, mode) {
-		if (filter === ":all") {
-			toggleAll(mode);
+		if (filter === ":toggle") {
+			toggleAll();
 		} else if (list[filter]) {
 			toggleFilter(filter, mode);
 		}
-		// update view for github-image-preview.user.js
+		// Update view for github-image-preview.user.js
 		toggleImagePreview(filter, mode);
-		updateAllButton();
 	}
 
 	function addExt(ext, txt) {
@@ -183,22 +195,23 @@
 	function buildList() {
 		list = {};
 		Object.keys(types).forEach(item => {
-			if (item !== ":all") {
+			if (item !== ":toggle") {
 				list[item] = [];
 			}
 		});
-		// get all files
+		// Get all files
 		$$("table.files tr.js-navigation-item").forEach(file => {
 			if ($("td.icon .octicon-file", file)) {
-				let ext, parts, sub,
-					link = $("td.content .js-navigation-open", file),
-					txt = (link.title || link.textContent || "").trim(),
-					name = txt.split("/").slice(-1)[0];
-				// test extension types; fallback to regex extraction
+				let ext, parts, sub;
+				const link = $("td.content .js-navigation-open", file);
+				const txt = (link.title || link.textContent || "").trim();
+				const name = txt.split("/").slice(-1)[0];
+				// Test extension types; fallback to regex extraction
 				ext = Object.keys(types).find(item => {
 					return types[item].is(name);
 				}) || /[^./\\]*$/.exec(name)[0];
 				parts = name.split(".");
+				// Include sub-extension filters like "user.js" or "min.js"
 				if (!ext.startsWith(":") && parts.length > 2 && parts[0] !== "") {
 					sub = parts.slice(0, -1).join(".");
 					// Prevent version numbers & "vs. " from adding a filter button
@@ -215,7 +228,7 @@
 
 	function sortList() {
 		return Object.keys(list).sort((a, b) => {
-			// move ":" filters to the beginning, then sort the rest of the
+			// Move ":" filters to the beginning, then sort the rest of the
 			// extensions; test on https://github.com/rbsec/sslscan, where
 			// the ".1" extension *was* appearing between ":" filters
 			if (a[0] === ":") {
@@ -230,17 +243,18 @@
 
 	function makeFilter() {
 		let filters = 0;
-		// get length, but don't count empty arrays
+		// Get length, but don't count empty arrays
 		Object.keys(list).forEach(ext => {
 			filters += list[ext].length > 0 ? 1 : 0;
 		});
-		// Don't bother if only one extension is found
-		const files = $(".file-wrap");
+		// Don't bother showing filter if only one extension type is found
+		// Sometimes "file-wrap" class is applied to fragment element
+		const files = $("div.file-wrap"); console.log($('.file-wrap'));
 		if (files && filters > 1) {
 			filters = $(".gff-filter-wrapper");
 			if (!filters) {
 				filters = document.createElement("div");
-				// "commitinfo" allows GitHub-Dark styling
+				// Use "commitinfo" for GitHub-Dark styling
 				filters.className = "gff-filter-wrapper commitinfo";
 				filters.style = "padding:3px 5px 2px;border-bottom:1px solid #eaecef";
 				files.insertBefore(filters, files.firstChild);
@@ -251,46 +265,54 @@
 		}
 	}
 
-	function buildButton(name, label, ext, text) {
-		return `<button type="button" ` +
-			`class="btn btn-sm selected BtnGroup-item tooltipped tooltipped-n` +
-			(name ? name : "") + ` gff-btn" ` +
-			`data-ext="${ext}" aria-label="${label}">${text}</button>`;
+	function buildButton(ext, title) {
+		const data = types[ext] || {};
+		const className = "btn btn-sm tooltipped tooltipped-n gff-btn " +
+			(data.className ? data.className : "BtnGroup-item selected");
+		return (
+			`<button
+				type="button"
+				class=" ${className}"
+				data-ext="${ext}"
+				aria-label="${title || data.title}"
+			>${data.text || ext}</button>`
+		);
 	}
 
 	function buildHTML() {
-		let len,
-			html = `<div class="BtnGroup gff-filter">` +
-				// add a filter "all" button to the beginning
-				buildButton(" gff-all", "Toggle all files", ":all", types[":all"].text);
+		let html = `<div class="gff-filter">` +
+			// Add a filter "toggle" button to the beginning
+			buildButton(":toggle") +
+			// Separate toggle from other filters
+			"<div class='BtnGroup'>";
+		// Prepend filter buttons
 		sortList().forEach(ext => {
-			len = list[ext].length;
+			const len = list[ext].length;
 			if (len) {
-				html += buildButton("", len, ext, types[ext] && types[ext].text || ext);
+				html += buildButton(ext, len);
 			}
 		});
-		// prepend filter buttons
-		$(".gff-filter-wrapper").innerHTML = html + "</div>";
+		$(".gff-filter-wrapper").innerHTML = html + "</div></div>";
 	}
 
 	function getWidth(el) {
 		return parseFloat(window.getComputedStyle(el).width);
 	}
 
-	// lock-in the table cell widths, or the navigation up link jumps when you
+	// Lock-in the table cell widths, or the navigation up link jumps when you
 	// hide all files... using percentages in case someone is using GitHub wide
 	function fixWidth() {
-		let group, width,
-			html = "",
-			table = $("table.files"),
-			tableWidth = getWidth(table),
-			cells = $$("tbody:last-child tr:last-child td", table);
+		let group;
+		let html = "";
+		const table = $("table.files");
+		const tableWidth = getWidth(table);
+		const cells = $$("tbody:last-child tr:last-child td", table);
 		if (table && cells.length > 1 && !$("colgroup", table)) {
 			group = document.createElement("colgroup");
 			table.insertBefore(group, table.childNodes[0]);
 			cells.forEach(el => {
-				// keep two decimal point accuracy
-				width = parseInt(getWidth(el) / tableWidth * 1e4, 10) / 100;
+				// Keep two decimal point accuracy
+				const width = parseInt(getWidth(el) / tableWidth * 1e4, 10) / 100;
 				html += `<col style="width:${width}%">`;
 			});
 			group.innerHTML = html;
@@ -298,16 +320,11 @@
 	}
 
 	function applyInitSettings() {
-		// list doesn't include type.all entry
-		if (settings[":all"] === false) {
-			toggleBlocks(":all", "hide");
-		} else {
-			Object.keys(list).forEach(name => {
-				if (settings[name] === false) {
-					toggleBlocks(name, "hide");
-				}
-			});
-		}
+		Object.keys(list).forEach(name => {
+			if (name !== ":toggle" && settings[name] === false) {
+				toggleBlocks(name, "hide");
+			}
+		});
 	}
 
 	function init() {
@@ -322,7 +339,7 @@
 	}
 
 	function $$(str, el) {
-		return Array.from((el || document).querySelectorAll(str));
+		return [...(el || document).querySelectorAll(str)];
 	}
 
 	document.addEventListener("click", e => {
@@ -332,10 +349,10 @@
 	});
 
 	document.addEventListener("ghmo:container", () => {
-		// init after a short delay to allow rendering of file list
+		// Init after a short delay to allow rendering of file list
 		setTimeout(() => {
 			init();
-		}, 200);
+		}, 300);
 	});
 	init();
 
