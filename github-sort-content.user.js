@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Sort Content
-// @version     3.0.0
+// @version     3.0.1
 // @description A userscript that makes some lists & markdown tables sortable
 // @license     MIT
 // @author      Rob Garrison
@@ -444,15 +444,17 @@
 
 	function addRepoFileThead() {
 		const $table = $("table.files");
-		if ($table && !$(".ghsc-header", $table)) {
-			const thead = document.createElement("thead");
-			thead.innerHTML = `<tr class="ghsc-header">
+		if ($table) {
+			// GitHub now adds an invisible thead (for screen readers)
+			if (!$("thead", $table)) {
+				$table.prepend(document.createElement("thead"));
+			}
+			$("thead", $table).innerHTML = `<tr class="ghsc-header">
 				<td></td>
 				<th>Content</th>
 				<th>Message</th>
 				<th class="ghsc-age">Age</th>
 			</tr>`;
-			$table.prepend(thead);
 		}
 	}
 
