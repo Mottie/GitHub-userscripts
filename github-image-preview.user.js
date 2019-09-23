@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Image Preview
-// @version     1.2.3
+// @version     1.2.4
 // @description A userscript that adds clickable image thumbnails
 // @license     MIT
 // @author      Rob Garrison
@@ -58,43 +58,44 @@
 	`);
 
 	// supported img types
-	const imgExt = /(png|jpg|jpeg|gif|tif|tiff|bmp|webp)$/i,
-		svgExt = /svg$/i,
-		spinner = "https://github.githubassets.com/images/spinners/octocat-spinner-32.gif",
+	const imgExt = /(png|jpg|jpeg|gif|tif|tiff|bmp|webp)$/i;
+	const svgExt = /svg$/i;
+	const spinner = "https://github.githubassets.com/images/spinners/octocat-spinner-32.gif";
 
-		folderIconClasses = `
-			.octicon-file-directory,
-			.octicon-file-symlink-directory,
-			.octicon-file-submodule`,
+	const folderIconClasses = `
+		.octicon-file-directory,
+		.octicon-file-symlink-directory,
+		.octicon-file-submodule`;
 
-		tiled = `
-			<svg class="octicon" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 16 16">
-				<path d="M0 0h7v7H0zM9 9h7v7H9zM9 0h7v7H9zM0 9h7v7H0z"/>
-			</svg>
-		`,
-		fullWidth = `
-			<svg class="octicon" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 16 16">
-				<path d="M0 0h16v7H0zM0 9h16v7H0z"/>
-			</svg>
-		`,
-		imgTemplate = [
-			// not using backticks here
-			"<a href='${url}' class='exploregrid-item image m-3 float-left js-navigation-open' rel='nofollow'>",
-			"<span class='border-wrap'>${image}</span>",
-			"</a>"
-		].join(""),
-		spanTemplate = [
-			"<span class='exploregrid-item image m-3 float-left'>",
-			"<span class='border-wrap'>${image}</span>",
-			"</span>"
-		].join("");
+	const tiled = `
+		<svg class="octicon" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 16 16">
+			<path d="M0 0h7v7H0zM9 9h7v7H9zM9 0h7v7H9zM0 9h7v7H0z"/>
+		</svg>`;
+
+	const fullWidth = `
+		<svg class="octicon" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 16 16">
+			<path d="M0 0h16v7H0zM0 9h16v7H0z"/>
+		</svg>`;
+
+	const imgTemplate = [
+		// not using backticks here
+		"<a href='${url}' class='exploregrid-item image m-3 float-left js-navigation-open' rel='nofollow'>",
+		"<span class='border-wrap'>${image}</span>",
+		"</a>"
+	].join("");
+
+	const spanTemplate = [
+		"<span class='exploregrid-item image m-3 float-left'>",
+		"<span class='border-wrap'>${image}</span>",
+		"</span>"
+	].join("");
 
 	function addToggles() {
 		if ($(".gh-img-preview")) {
 			return;
 		}
-		const div = document.createElement("div"),
-			btn = `btn btn-sm BtnGroup-item tooltipped tooltipped-n" aria-label="Show`;
+		const div = document.createElement("div");
+		const btn = `btn btn-sm BtnGroup-item tooltipped tooltipped-n" aria-label="Show`;
 		div.className = "BtnGroup float-right gh-img-preview";
 		div.innerHTML = `
 			<button type="button" class="ghip-tiled ${btn} tiled files with image preview">${tiled}</button>
@@ -132,9 +133,9 @@
 
 	function showPreview(name) {
 		buildPreviews();
-		const table = $("table.files"),
-			selected = "ghip-" + name,
-			notSelected = "ghip-" + (name === "fullw" ? "tiled" : "fullw");
+		const table = $("table.files");
+		const selected = "ghip-" + name;
+		const notSelected = "ghip-" + (name === "fullw" ? "tiled" : "fullw");
 		table.classList.add("ghip-show-previews", selected);
 		$(".btn." + selected).classList.add("selected");
 		table.classList.remove(notSelected);
@@ -152,13 +153,13 @@
 	}
 
 	function buildPreviews() {
-		let template, url, temp, noExt, fileName,
-			imgs = "<td colspan='4' class='ghip-content'>",
-			indx = 0;
-		const row = document.createElement("tr"),
-			table = $("table.files tbody:last-child"),
-			files = $$("tr.js-navigation-item"),
-			len = files.length;
+		let template, url, temp, noExt, fileName;
+		let imgs = "<td colspan='4' class='ghip-content'>";
+		let indx = 0;
+		const row = document.createElement("tr");
+		const table = $("table.files tbody:last-child");
+		const files = $$("tr.js-navigation-item");
+		const len = files.length;
 		row.className = "ghip-image-previews";
 		if ($(".ghip-image-previews")) {
 			temp = $(".ghip-image-previews");
@@ -268,8 +269,6 @@
 			imgs.forEach(function(img) {
 				imgObserver.observe(img);
 			});
-		} else {
-			console.error("IntersectionObserver is not supported");
 		}
 	}
 
