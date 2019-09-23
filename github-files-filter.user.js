@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Files Filter
-// @version     1.1.8
+// @version     2.0.0
 // @description A userscript that adds filters that toggle the view of repo files by extension
 // @license     MIT
 // @author      Rob Garrison
@@ -46,7 +46,10 @@
 		}
 	`);
 
+	// list[":dot"] = [".gitignore", ".gitattributes", ...]
 	let list = {};
+
+	// Special filter buttons
 	const types = {
 		// Including ":" in these special keys since it isn't allowed in a file name
 		":toggle": {
@@ -73,6 +76,7 @@
 			text: "\u00ABmin\u00BB"
 		}
 	};
+
 	// TODO: add toggle for submodule and dot-folders
 	const folderIconClasses = [
 		".octicon-file-directory",
@@ -82,39 +86,39 @@
 
 	// Default to all file types visible; remember settings between sessions
 	list[":toggle"] = false; // List gets cleared in buildList function
+
+	// settings[":dot"] = true; // dot files are visible
 	let settings = GM_getValue("gff-filter-settings", list);
 
-	function updateFilter(event) {
-		event.preventDefault();
-		event.stopPropagation();
-		const el = event.target;
-		toggleBlocks(
-			el.getAttribute("data-ext"),
-			el.classList.contains("selected") ? "hide" : "show"
-		);
+	// Update filter button state using settings
+	function updateAllFilters({ invert = false }) {
+		$$(".gff-filter .btn").forEach(el => {
+			const ext = el.dataset.ext;
+			if (ext !== ":toggle") {
+				const modeBool = invert ? !settings[ext] : settings[ext];
+				settings[ext] = modeBool;
+				el.classList.toggle("selected", modeBool);
+				toggleImagePreview(ext, modeBool ? "show" : "hide");
+			}
+		});
 	}
 
-	function updateSettings(name, mode) {
-		if (name) {
-			settings[name] = mode === "show";
+	function updateSettings(ext, mode) {
+		if (ext) {
+			settings[ext] = mode === "show";
 		}
 		GM_setValue("gff-filter-settings", settings);
 	}
 
-	// Image preview userscript support
-	function toggleImagePreview(ext, mode) {
-		const previews = $(".ghip-image-previews");
-		if (previews) {
-			const files = ext === ":toggle" ? ["*"] : list[ext];
-			if (files.length) {
-				files.forEach(file => {
-					const el = $(`a${file === "*" ? "" : `[href$="${file}"]`}`, previews);
-					if (!$(".ghip-folder, .ghip-up-tree", el)) {
-						el.style.display = mode === "show" ? "" : "none";
-					}
-				});
+	function toggleRows(ext, mode) {
+		const files = $("div.file-wrap");
+		/* The list[ext] contains an array of file names */
+		list[ext].forEach(fileName => {
+			const el = $(`a[title="${fileName}"]`, files);
+			if (el) {
+				toggleRow(el, mode);
 			}
-		}
+		});
 	}
 
 	function toggleRow(el, mode) {
@@ -138,42 +142,61 @@
 		$$("td.content .js-navigation-open", files).forEach(el => {
 			toggleRow(el);
 		});
-		// Update filter buttons
-		$$(".gff-filter .btn", files).forEach(el => {
-			const name = el.dataset.ext;
-			if (name !== ":toggle") {
-				const modeBool = !settings[name];
-				settings[name] = modeBool;
-				el.classList.toggle("selected", modeBool);
-				toggleImagePreview(name, modeBool ? "show" : "hide");
-			}
-		});
+		updateAllFilters({ invert: true });
 		updateSettings();
 	}
 
-	function toggleFilter(filter, mode) {
-		const files = $("div.file-wrap");
-		const elm = $(`.gff-filter .btn[data-ext="${filter}"]`, files);
-		/* The list[filter] contains an array of file names */
-		list[filter].forEach(name => {
-			const el = $(`a[title="${name}"]`, files);
-			if (el) {
-				toggleRow(el, mode);
-			}
-		});
+	function toggleFilter(ext, mode) {
+		updateSettings(ext, mode);
+		toggleRows(ext, mode);
+		const elm = $(`.gff-filter .btn[data-ext="${ext}"]`);
 		if (elm) {
 			elm.classList.toggle("selected", mode === "show");
 		}
-		updateSettings(filter, mode);
 		// Update view for github-image-preview.user.js
-		toggleImagePreview(filter, mode);
+		toggleImagePreview(ext, mode);
 	}
 
-	function toggleBlocks(filter, mode) {
-		if (filter === ":toggle") {
+	// Disable all except current filter (initial ctrl + click)
+	function toggleSet(ext) {
+		Object.keys(list).forEach(block => {
+			const modeBool = block === ext;
+			settings[block] = modeBool;
+			toggleRows(block, modeBool ? "show" : "hide");
+			// Update view for github-image-preview.user.js
+			toggleImagePreview(ext, modeBool ? "show" : "hide");
+		});
+		updateAllFilters({ invert: false });
+		updateSettings();
+	}
+
+	function toggleBlocks(ext, mode, modKey) {
+		if (ext === ":toggle") {
 			toggleAll();
-		} else if (list[filter]) {
-			toggleFilter(filter, mode);
+		} else if (list[ext]) {
+			if (modKey) {
+				toggleSet(ext, mode);
+			} else {
+				toggleFilter(ext, mode);
+			}
+		}
+	}
+
+	// Image preview userscript support
+	function toggleImagePreview(ext, mode) {
+		const previews = $(".ghip-image-previews");
+		if (previews) {
+			const files = ext === ":toggle" ? ["*"] : list[ext];
+			if (files.length) {
+				files.forEach(file => {
+					const selector = file === "*" ? "a" : `a[href$="${file}"]`;
+					const el = $(selector, previews);
+					// Don't touch folders and submodules
+					if (el && !$(".ghip-folder, .ghip-up-tree", el)) {
+						el.style.display = mode === "show" ? "" : "none";
+					}
+				});
+			}
 		}
 	}
 
@@ -242,8 +265,8 @@
 			filters += list[ext].length > 0 ? 1 : 0;
 		});
 		// Don't bother showing filter if only one extension type is found
-		// Sometimes "file-wrap" class is applied to fragment element
-		const files = $("div.file-wrap"); console.log($('.file-wrap'));
+		// Sometimes "file-wrap" class is applied to an <include-fragment>
+		const files = $("div.file-wrap");
 		if (files && filters > 1) {
 			filters = $(".gff-filter-wrapper");
 			if (!filters) {
@@ -314,9 +337,9 @@
 	}
 
 	function applyInitSettings() {
-		Object.keys(list).forEach(name => {
-			if (name !== ":toggle" && settings[name] === false) {
-				toggleBlocks(name, "hide");
+		Object.keys(list).forEach(ext => {
+			if (ext !== ":toggle" && settings[ext] === false) {
+				toggleBlocks(ext, "hide");
 			}
 		});
 	}
@@ -336,9 +359,16 @@
 		return [...(el || document).querySelectorAll(str)];
 	}
 
-	document.addEventListener("click", e => {
-		if (e.target.classList.contains("gff-btn")) {
-			updateFilter(e);
+	document.addEventListener("click", event => {
+		const el = event.target;
+		if (el && el.classList.contains("gff-btn")) {
+			event.preventDefault();
+			event.stopPropagation();
+			toggleBlocks(
+				el.getAttribute("data-ext"),
+				el.classList.contains("selected") ? "hide" : "show",
+				event.ctrlKey
+			);
 		}
 	});
 
