@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Sort Reactions
-// @version     0.2.11
+// @version     0.2.12
 // @description A userscript that sorts comments by reaction
 // @license     MIT
 // @author      Rob Garrison
@@ -38,7 +38,7 @@
 	const emojiSrc = "https://github.githubassets.com/images/icons/emoji/unicode";
 
 	const sortBlock = `
-<div class="timeline-comment-wrapper ghsr-sort-block ghsr-is-collapsed">
+<div class="TimelineItem ghsr-sort-block ghsr-is-collapsed">
 	<div class="timeline-comment">
 		<div class="avatar-parent-child timeline-comment-avatar border ghsr-sort-avatar ghsr-no-selection">
 			<div class="ghsr-icon-wrap tooltipped tooltipped-n" aria-label="Click to toggle reaction sort menu">
@@ -231,7 +231,7 @@ thumbs down = -1)" data-sort="ACTIVE">
 
 	function addSortBlock() {
 		currentSort.busy = true;
-		const first = $(".timeline-comment-wrapper");
+		const first = $(".TimelineItem");
 		first.classList.add("ghsr-skip-sort");
 		first.insertAdjacentHTML("afterEnd", sortBlock);
 		currentSort.busy = false;
