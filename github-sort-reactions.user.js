@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Sort Reactions
-// @version     0.2.12
+// @version     0.2.13
 // @description A userscript that sorts comments by reaction
 // @license     MIT
 // @author      Rob Garrison
@@ -38,19 +38,19 @@
 	const emojiSrc = "https://github.githubassets.com/images/icons/emoji/unicode";
 
 	const sortBlock = `
-<div class="TimelineItem ghsr-sort-block ghsr-is-collapsed">
-	<div class="timeline-comment">
-		<div class="avatar-parent-child timeline-comment-avatar border ghsr-sort-avatar ghsr-no-selection">
-			<div class="ghsr-icon-wrap tooltipped tooltipped-n" aria-label="Click to toggle reaction sort menu">
-				<svg aria-hidden="true" class="octicon ghsr-sort-icon" xmlns="http://www.w3.org/2000/svg" width="25" height="40" viewBox="0 0 16 16">
-					<path d="M15 8 1 8 8 0zM15 9 1 9 8 16z"/>
-				</svg>
-			</div>
-			<g-emoji></g-emoji>
-			<button class="ghsr-sort-button ghsr-avatar-sort btn btn-sm tooltipped tooltipped-n" aria-label="Toggle selected reaction sort direction">
-				<span></span>
-			</button>
+<div class="TimelineItem ghsr-sort-block ghsr-is-collapsed js-timeline-progressive-focus-container">
+	<div class="avatar-parent-child TimelineItem-avatar border ghsr-sort-avatar ghsr-no-selection">
+		<div class="ghsr-icon-wrap tooltipped tooltipped-n" aria-label="Click to toggle reaction sort menu">
+			<svg aria-hidden="true" class="octicon ghsr-sort-icon" xmlns="http://www.w3.org/2000/svg" width="25" height="40" viewBox="0 0 16 16">
+				<path d="M15 8 1 8 8 0zM15 9 1 9 8 16z"/>
+			</svg>
 		</div>
+		<g-emoji></g-emoji>
+		<button class="ghsr-sort-button ghsr-avatar-sort btn btn-sm tooltipped tooltipped-n" aria-label="Toggle selected reaction sort direction">
+			<span></span>
+		</button>
+	</div>
+	<div class="timeline-comment ml-n3">
 		<div class="timeline-comment-header comment comment-body">
 			<h3 class="timeline-comment-header-text f5 text-normal">
 				<button class="ghsr-sort-button btn btn-sm tooltipped tooltipped-n" type="button" aria-label="Sort by +1 reaction" data-sort="THUMBS_UP">
@@ -241,10 +241,11 @@ thumbs down = -1)" data-sort="ACTIVE">
 		if (!currentSort.init) {
 			GM_addStyle(`
 				.ghsr-sort-block .comment-body { padding: 0 10px; }
+				.ghsr-sort-block .timeline-comment-header { position: relative; }
 				.ghsr-sort-block .emoji { vertical-align: baseline; pointer-events: none; }
 				.ghsr-sort-block .btn.asc .emoji:after { content: "▲"; }
 				.ghsr-sort-block .btn.desc .emoji:after { content: "▼"; }
-				.ghsr-sort-avatar, .ghsr-icon-wrap { height: 44px; width: 44px; text-align: center; }
+				.ghsr-sort-avatar, .ghsr-icon-wrap { height: 48px; width: 44px; text-align: center; }
 				.ghsr-sort-avatar { background: rgba(128, 128, 128, 0.2); border: #777 1px solid; }
 				.ghsr-sort-avatar .emoji { position: relative; top: -36px; }
 				.ghsr-sort-avatar svg { pointer-events: none; }
@@ -260,7 +261,7 @@ thumbs down = -1)" data-sort="ACTIVE">
 				.ghsr-sort-block.ghsr-is-collapsed .timeline-comment:before,
 				.ghsr-sort-block.ghsr-is-collapsed .timeline-comment:after { display: none; }
 				.ghsr-sort-block.ghsr-is-collapsed .timeline-comment { margin: 10px 0; }
-				.ghsr-sort-block.ghsr-is-collapsed .timeline-comment-avatar { top: -22px; }
+				.ghsr-sort-block.ghsr-is-collapsed .TimelineItem-avatar { top: 6px; }
 			`);
 			document.addEventListener("ghmo:container", update);
 			document.addEventListener("ghmo:comments", update);
