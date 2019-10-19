@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Download ZIP
-// @version     0.2.3
+// @version     0.2.4
 // @description A userscript adds download links so that downloaded filenames include the SHA
 // @license     MIT
 // @author      Rob Garrison
@@ -27,6 +27,7 @@
 		.ghdz-releases summary { text-align:left; padding-left:16px; }
 		.ghdz-files.select-menu-modal { width:100%; border:0; box-shadow:none !important; margin-bottom:0; }
 		.ghdz-file { text-align:left; padding-left:16px; }
+		.commit-links-cell { min-width: 375px; width: auto; }
 	`);
 
 	const zipIcon = `
