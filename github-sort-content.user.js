@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Sort Content
-// @version     3.0.1
+// @version     3.0.2
 // @description A userscript that makes some lists & markdown tables sortable
 // @license     MIT
 // @author      Rob Garrison
@@ -163,7 +163,7 @@
 		// github.com/:org
 		"org-repos": {
 			setup: () => {
-				const form = $("form[data-results-container='org-repositories']");
+				const form = $("form[data-autosearch-results-container='org-repositories']");
 				if (form) {
 					form.parentElement.classList.add("ghsc-org-repos-header");
 				}
@@ -179,7 +179,7 @@
 					".ghsc-org-repos-header"
 				],
 				tweaks: [
-					`form[data-results-container='org-repositories'] {
+					`form[data-autosearch-results-container='org-repositories'] {
 						cursor: default;
 					}`
 				]
@@ -213,7 +213,7 @@
 		"team-members": {
 			// no ".org-toolbar" on this page :(
 			setup: () => {
-				const form = $("form[data-results-container='team-members']");
+				const form = $("form[data-autosearch-results-container='team-members']");
 				if (form) {
 					form.parentElement.classList.add("ghsc-team-members-header");
 				}
@@ -249,7 +249,7 @@
 		// github.com/:user?tab=repositories
 		"user-repos": {
 			setup: () => {
-				const form = $("form[data-results-container='user-repositories-list']");
+				const form = $("form[data-autosearch-results-container='user-repositories-list']");
 				if (form) {
 					form.parentElement.classList.add("ghsc-repos-header");
 				}
@@ -265,7 +265,7 @@
 					".ghsc-repos-header"
 				],
 				tweaks: [
-					`form[data-results-container='user-repositories-list'] {
+					`form[data-autosearch-results-container='user-repositories-list'] {
 						cursor: default;
 					}`
 				]
