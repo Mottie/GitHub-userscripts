@@ -41,7 +41,7 @@
 		/* for testing: ".ghic-hidden { opacity: 0.3; } */
 		body .ghic-hidden  { display:none !important; }
 		.ghic-hidden-participant, body .ghic-avatar svg, .dropdown-item.ghic-checked .ghic-count,
-			.ghic-hideReactions .TimelineItem .comment-reactions,
+			.ghic-hide-reactions .TimelineItem .comment-reactions,
 			.select-menu-header.ghic-active + .select-menu-list .dropdown-item:not(.ghic-has-content) { display:none; }
 		.ghic-menu-wrapper input[type=checkbox] { height:0; width:0; visibility:hidden; position:absolute; }
 		.ghic-menu-wrapper .ghic-toggle { cursor:pointer; text-indent:-9999px; width:20px; height:10px;
@@ -355,10 +355,10 @@
 		if (name === "plus1") {
 			hidePlus1(init, item);
 		} else if (item && name === "reactions") {
-			toggleClass($("body"), "ghic-hideReactions", isHidden);
-			toggleClass(item, "ghic-has-content", $$(".has-reactions").length - 1 > 0);
+			toggleClass($("body"), "ghic-hide-reactions", isHidden);
+			toggleClass(item, "ghic-has-content", $$(".has-reactions").length > 0);
 			// make first comment reactions visible
-			item = $(".TimelineItem .has-reactions");
+			item = $(".TimelineItem .comment-reactions");
 			if (item) {
 				item.style.display = "block";
 			}
