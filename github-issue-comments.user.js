@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Issue Comments
-// @version     1.3.8
+// @version     1.4.0
 // @description A userscript that toggles issues/pull request comments & messages
 // @license     MIT
 // @author      Rob Garrison
@@ -39,8 +39,9 @@
 		.ghic-button .select-menu-modal { margin:0; }
 		.ghic-button .ghic-participants { margin-bottom:20px; }
 		/* for testing: ".ghic-hidden { opacity: 0.3; } */
-		.ghic-hidden, .ghic-hidden-participant, .ghic-avatar svg, .ghic-button .ghic-count,
-			.ghic-hideReactions .comment-reactions,
+		body .ghic-hidden  { display:none !important; }
+		.ghic-hidden-participant, body .ghic-avatar svg, .dropdown-item.ghic-checked .ghic-count,
+			.ghic-hideReactions .TimelineItem .comment-reactions,
 			.select-menu-header.ghic-active + .select-menu-list .dropdown-item:not(.ghic-has-content) { display:none; }
 		.ghic-menu-wrapper input[type=checkbox] { height:0; width:0; visibility:hidden; position:absolute; }
 		.ghic-menu-wrapper .ghic-toggle { cursor:pointer; text-indent:-9999px; width:20px; height:10px;
@@ -51,7 +52,7 @@
 		.ghic-menu-wrapper input:checked + .ghic-toggle:after { top:0; left:calc(100% - 1px);
 			transform:translateX(-100%); }
 		.ghic-menu-wrapper .ghic-toggle:active:after { width:13px; }
-		.timeline-comment-wrapper.ghic-highlight .comment { border-color:#800 !important; }
+		.TimelineItem.ghic-highlight .comment { border-color:#800 !important; }
 `);
 
 	const regex = /(svg|path)/i;
@@ -67,19 +68,22 @@
 		title: {
 			isHidden: false,
 			name: "ghic-title",
-			selector: ".discussion-item-renamed",
+			selector: ".TimelineItem-badge .octicon-pencil",
+			containsText: "changed the title",
 			label: "Title Changes"
 		},
 		labels: {
 			isHidden: false,
 			name: "ghic-labels",
-			selector: ".discussion-item-labeled, .discussion-item-unlabeled",
+			selector: ".TimelineItem-badge .octicon-tag",
+			containsText: "label",
 			label: "Label Changes"
 		},
 		state: {
 			isHidden: false,
 			name: "ghic-state",
-			selector: ".discussion-item-reopened, .discussion-item-closed",
+			selector: `.TimelineItem-badge .octicon-primitive-dot,
+				.TimelineItem-badge .octicon-circle-slash`,
 			label: "State Changes (close/reopen)"
 		},
 
@@ -87,20 +91,27 @@
 		milestone: {
 			isHidden: false,
 			name: "ghic-milestone",
-			selector: ".discussion-item-milestoned",
+			selector: ".TimelineItem-badge .octicon-milestone",
 			label: "Milestone Changes"
 		},
 		refs: {
 			isHidden: false,
 			name: "ghic-refs",
-			selector: ".discussion-item",
-			contains: ".discussion-item-ref-title",
+			selector: ".TimelineItem-badge .octicon-bookmark",
+			containsText: "referenced",
 			label: "References"
+		},
+		mentioned: {
+			isHidden: false,
+			name: "ghic-mentions",
+			selector: ".TimelineItem-badge .octicon-bookmark",
+			containsText: "mentioned",
+			label: "Mentioned"
 		},
 		assigned: {
 			isHidden: false,
 			name: "ghic-assigned",
-			selector: ".discussion-item-assigned",
+			selector: ".TimelineItem-badge .octicon-person",
 			label: "Assignment Changes"
 		},
 
@@ -150,13 +161,19 @@
 			selector: ".discussion-item-integrations-callout",
 			label: "Integrations"
 		},
+		resolved: {
+			isHidden: false,
+			name: "ghic-resolved",
+			selector: ".js-minimizable-comment-group .minimized-comment:not(.d-none)",
+			label: "Resolved"
+		},
 
 		// similar comments
 		similar: {
 			isHidden: false,
 			name: "ghic-similar",
-			selector: `.js-discussion > .Details-element.details-reset,
-				#js-progressive-timeline-item-container > .Details-element.details-reset`,
+			selector: `.js-discussion > .Details-element.details-reset:not([open]),
+				#js-progressive-timeline-item-container > .Details-element.details-reset:not([open])`,
 			label: "Similar comments"
 		},
 
@@ -263,7 +280,7 @@
 			list = $(".ghic-list"),
 			unique = $$("span.ghic-avatar", list).map(el => el.getAttribute("aria-label")),
 			// get all avatars
-			avatars = $$(".timeline-comment-avatar img"),
+			avatars = $$(".TimelineItem-avatar img"),
 			len = avatars.length - 1, // last avatar is the new comment with the current user
 			updateAvatars = () => {
 				list.innerHTML += str;
@@ -273,8 +290,8 @@
 			loop = () => {
 				let el, name,
 					max = 0;
-				while (max < 50 && indx < len) {
-					if (indx >= len) {
+				while (max < 50 && indx <= len) {
+					if (indx > len) {
 						return updateAvatars();
 					}
 					el = avatars[indx];
@@ -321,7 +338,7 @@
 			menu = $(".ghic-menu");
 		for (name of keys) {
 			if (!(name === "pipeline" && !hasZenHub)) {
-				item = closest(".dropdown-item", $("." + settings[name].name, menu));
+				item = $("." + settings[name].name, menu).closest(".dropdown-item");
 				if (item) {
 					settings[name].isHidden = !$("input", item).checked;
 					toggleClass(item, "ghic-checked", !settings[name].isHidden);
@@ -341,15 +358,17 @@
 			toggleClass($("body"), "ghic-hideReactions", isHidden);
 			toggleClass(item, "ghic-has-content", $$(".has-reactions").length - 1 > 0);
 			// make first comment reactions visible
-			item = $(".has-reactions", $(".timeline-comment-wrapper"));
+			item = $(".TimelineItem .has-reactions");
 			if (item) {
 				item.style.display = "block";
 			}
 		} else if (item && obj.selector) {
-			results = $$(obj.selector);
-			if (obj.contains) {
+			results = $$(obj.selector).map(el =>
+				el.closest(".TimelineItem, .js-timeline-item, .Details-element")
+			);
+			if (obj.containsText) {
 				results = results.filter(el => {
-					return !!$(obj.contains, el);
+					return el.textContent.includes(obj.containsText);
 				});
 			}
 			toggleClass(item, "ghic-checked", !isHidden);
@@ -413,11 +432,10 @@
 			regexEmoji = /(:.*:)|[\u{1f300}-\u{1f64f}\u{1f680}-\u{1f6ff}\u{1f900}-\u{1f9ff}]/gu,
 			regexWhitespace = /\s+/g,
 
-			comments = $$(".js-discussion .timeline-comment-wrapper")
-				.filter(comment => {
-					const classes = comment.className.split(" ");
-					return !exceptions.some(ex => classes.includes(ex));
-				}),
+			comments = $$(".js-discussion .TimelineItem").filter(comment => {
+				const classes = comment.className.split(" ");
+				return !exceptions.some(ex => classes.includes(ex));
+			}),
 			len = comments.length,
 
 			loop = () => {
@@ -440,47 +458,49 @@
 						dupe = false;
 					}
 					el = $(".comment-body", wrapper);
-					// ignore quoted messages, but get all fragments
-					tmp = $$(".email-fragment", el);
-					// some posts only contain a link to related issues; these should not be counted as a +1
-					// see https://github.com/isaacs/github/issues/618#issuecomment-200869630
-					hasLink = $$(tmp.length ? ".email-fragment .issue-link" : ".issue-link", el).length;
-					if (tmp.length) {
-						// ignore quoted messages
-						txt = getAllText(tmp);
-					} else {
-						txt = (el ? el.textContent || "" : "").trim();
-					}
-					if (!txt) {
-						img = $("img", el);
-						if (img) {
-							txt = img.getAttribute("title") || img.getAttribute("alt");
+					if (el) {
+						// ignore quoted messages, but get all fragments
+						tmp = $$(".email-fragment", el);
+						// some posts only contain a link to related issues; these should not be counted as a +1
+						// see https://github.com/isaacs/github/issues/618#issuecomment-200869630
+						hasLink = $$(tmp.length ? ".email-fragment .issue-link" : ".issue-link", el).length;
+						if (tmp.length) {
+							// ignore quoted messages
+							txt = getAllText(tmp);
+						} else {
+							txt = (el ? el.textContent || "" : "").trim();
 						}
-					}
-					// remove fluff
-					txt = (txt || "")
-						.replace(regexEmoji, "")
-						.replace(regexHide, "")
-						.replace(regexPlus, "")
-						.replace(regexWhitespace, " ")
-						.trim();
-					if (txt === "" || (txt.length <= 4 && !hasLink)) {
-						if (init && !settings.plus1.isHidden) {
-							// +1 Comments has-content
-							item.classList.toggle("ghic-has-content", true);
-							return;
-						}
-						if (settings.plus1.isHidden) {
-							wrapper.classList.add("ghic-hidden", "ghic-highlight");
-							total++;
-							// one +1 per author
-							if (!dupe) {
-								count++;
+						if (!txt) {
+							img = $("img", el);
+							if (img) {
+								txt = img.getAttribute("title") || img.getAttribute("alt");
 							}
-						} else if (!init) {
-							wrapper.classList.remove("ghic-hidden");
 						}
-						max++;
+						// remove fluff
+						txt = (txt || "")
+							.replace(regexEmoji, "")
+							.replace(regexHide, "")
+							.replace(regexPlus, "")
+							.replace(regexWhitespace, " ")
+							.trim();
+						if (txt === "" || (txt.length <= 4 && !hasLink)) {
+							if (init && !settings.plus1.isHidden) {
+								// +1 Comments has-content
+								item.classList.toggle("ghic-has-content", true);
+								return;
+							}
+							if (settings.plus1.isHidden) {
+								wrapper.classList.add("ghic-hidden", "ghic-highlight");
+								total++;
+								// one +1 per author
+								if (!dupe) {
+									count++;
+								}
+							} else if (!init) {
+								wrapper.classList.remove("ghic-hidden");
+							}
+							max++;
+						}
 					}
 					indx++;
 				}
@@ -492,7 +512,9 @@
 					if (init) {
 						item.classList.toggle("ghic-has-content", count > 0);
 					}
-					$(".ghic-menu .ghic-plus1 .ghic-count").textContent = total ? "(" + total + " hidden)" : " ";
+					$(".ghic-menu .ghic-plus1 .ghic-count").textContent = total
+						? "(" + total + " hidden)"
+						: " ";
 					addCountToReaction(count);
 				}
 			};
@@ -517,7 +539,7 @@
 		}
 		let comment = $(".timeline-comment"),
 			tmp = $(
-				".has-reactions button[value='+1 react'], .has-reactions button[value='+1 unreact']",
+				".has-reactions button[value='THUMBS_UP react'], .has-reactions button[value='THUMBS_UP unreact']",
 				comment
 			),
 			el = $(".ghic-count", comment);
@@ -546,7 +568,7 @@
 			el.classList.toggle("comments-hidden");
 			let name = el.getAttribute("aria-label"),
 				results = $$(
-					".timeline-comment-wrapper, .commit-comment, .discussion-item"
+					".TimelineItem, .commit-comment, .discussion-item"
 				).filter(el => {
 					const author = $(".js-discussion .author", el);
 					return author ? name === author.textContent.trim() : false;
@@ -592,10 +614,10 @@
 					hideParticipant(target.nodeName === "IMG" ? target.parentNode : target);
 				} else if (regex.test(target.nodeName)) {
 					// clicking on the SVG may target the svg or path inside
-					hideParticipant(closest(".ghic-avatar", target));
+					hideParticipant(target.closest(".ghic-avatar"));
 				}
 			} else if (target.id === "ghic-only-active") {
-				closest(".select-menu-header", target).classList.toggle("ghic-active", target.checked);
+				target.closest(".select-menu-header").classList.toggle("ghic-active", target.checked);
 				GM_setValue("onlyActive", target.checked);
 			}
 			// Make button show if it is active
@@ -612,24 +634,14 @@
 	}
 
 	function $$(selector, el) {
-		return Array.from((el || document).querySelectorAll(selector));
-	}
-
-	function closest(selector, el) {
-		while (el && el.nodeType === 1) {
-			if (el.matches(selector)) {
-				return el;
-			}
-			el = el.parentNode;
-		}
-		return null;
+		return [...(el || document).querySelectorAll(selector)];
 	}
 
 	function addClass(els, name) {
 		let indx,
 			len = els.length;
 		for (indx = 0; indx < len; indx++) {
-			els[indx].classList.add(name);
+			els[indx] && els[indx].classList.add(name);
 		}
 		return len;
 	}
@@ -638,18 +650,19 @@
 		let indx,
 			len = els.length;
 		for (indx = 0; indx < len; indx++) {
-			els[indx].classList.remove(name);
+			els[indx] && els[indx].classList.remove(name);
 		}
 	}
 
 	function toggleClass(els, name, flag) {
 		els = Array.isArray(els) ? els : [els];
+		const undef = typeof flag === "undefined";
 		let el,
 			indx = els.length;
 		while (indx--) {
 			el = els[indx];
 			if (el) {
-				if (typeof flag === "undefined") {
+				if (undef) {
 					flag = !el.classList.contains(name);
 				}
 				if (flag) {
