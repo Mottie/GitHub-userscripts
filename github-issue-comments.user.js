@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Issue Comments
-// @version     1.4.2
+// @version     1.4.3
 // @description A userscript that toggles issues/pull request comments & messages
 // @license     MIT
 // @author      Rob Garrison
@@ -194,13 +194,13 @@
 			isHidden: false,
 			name: "ghic-plus1",
 			label: "+1 Comments",
-			function: hidePlus1,
+			callback: hidePlus1,
 		},
 		reactions: {
 			isHidden: false,
 			name: "ghic-reactions",
 			label: "Reactions",
-			function: hideReactions,
+			callback: hideReactions,
 		},
 		projects: {
 			isHidden: false,
@@ -559,7 +559,7 @@
 			".has-reactions button[value='THUMBS_UP react'], .has-reactions button[value='THUMBS_UP unreact']",
 			origPost
 		);
-		const el = $(".ghic-count", origPost);
+		let el = $(".ghic-count", origPost);
 		if (el) {
 			// the count may have been appended to the comment & now
 			// there is a reaction, so remove any "ghic-count" elements
