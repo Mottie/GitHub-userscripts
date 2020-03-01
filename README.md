@@ -42,7 +42,7 @@ Userscripts to add functionality to GitHub.
 	| [GitHub image preview][ipv-wiki]       |     | [install][ipv-raw] | [GF][ipv-gf] [OU][ipv-ou] | 2016.05.17 | 2019.09.22 |            |
 	| [GitHub indent comments][ioc-wiki]     |     | [install][ioc-raw] | [GF][ioc-gf] [OU][ioc-ou] | 2017.03.15 | 2019.02.16 |            |
 	| [GitHub issue add details][iad-wiki]   |     | [install][iad-raw] | [GF][iad-gf] [OU][iad-ou] | 2018.01.05 | 2019.02.16 |            |
-	| [GitHub issue comments][ic1-wiki]      |     | [install][ic1-raw] | [GF][ic1-gf] [OU][ic1-ou] | 2016.04.04 | 2020.02.18 |            |
+	| [GitHub issue comments][ic1-wiki]      |     | [install][ic1-raw] | [GF][ic1-gf] [OU][ic1-ou] | 2016.04.04 | 2020.02.29 |            |
 	| [GitHub issue counts][ic2-wiki]        |     | [install][ic2-raw] | [GF][ic2-gf] [OU][ic2-ou] | 2012.01.16 | 2019.02.16 |            |
 	| [GitHub issue highlighter][gih-wiki]   |     | [install][gih-raw] | [GF][gih-gf] [OU][gih-ou] | 2016.05.21 | 2018.02.16 | 2018.07.26 |
 	| [GitHub issue show status][iss-wiki]   |     | [install][iss-raw] | [GF][iss-gf] [OU][iss-ou] | 2017.06.02 | 2019.02.16 | 2019.01.04 |
@@ -211,7 +211,7 @@ Userscripts to add functionality to GitHub.
 [grl-ou]: https://openuserjs.org/scripts/Mottie/Gist_Raw_Links
 [gsr-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Sort_Reactions
 [iad-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Issue_Add_Details
-[ic1-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Toggle_Issue_Comments
+[ic1-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Issue_Comments
 [ic2-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Show_Repo_Issues
 [ioc-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Indent_Comment_Blocks
 [ipv-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Image_Preview
