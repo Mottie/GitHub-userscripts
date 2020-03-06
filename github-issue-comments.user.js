@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Issue Comments
-// @version     1.4.3
+// @version     1.4.4
 // @description A userscript that toggles issues/pull request comments & messages
 // @license     MIT
 // @author      Rob Garrison
@@ -209,6 +209,20 @@
 				.discussion-item-moved_columns_in_project,
 				.discussion-item-removed_from_project`,
 			label: "Project Changes"
+		},
+		// Jenkins auto-merged
+		autoMerged: {
+			isHidden: false,
+			name: "ghic-automerged",
+			selector: ".Details a[title*='auto-merged' i]",
+			label: "Auto merged"
+		},
+		// Jenkins temp deployments that have become inactive
+		inactive: {
+			isHidden: false,
+			name: "ghic-inactive",
+			selector: ".deployment-status-label.is-inactive, .Label[title*='inactive' i]",
+			label: "Inactive deployments"
 		},
 		// page with lots of users to hide:
 		// https://github.com/isaacs/github/issues/215
