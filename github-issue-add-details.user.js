@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Issue Add Details
-// @version     1.0.6
+// @version     1.0.7
 // @description A userscript that adds a button to insert a details block into comments
 // @license     MIT
 // @author      Rob Garrison
@@ -23,8 +23,8 @@
 		</svg>`,
 
 		detailsBlock = [
-			// Include "not-open" hint
-			"<details not-open><!-- remove 'not-' to start expanded -->\n<summary>Title</summary>\n\n<!-- leave a blank line above -->\n",
+			// start details block
+			"<details>\n<summary>Title</summary>\n\n<!-- leave a blank line above -->\n",
 			// selected content/caret will be placed here
 			"\n</details>\n"
 		];
@@ -37,7 +37,7 @@
 		button.setAttribute("aria-label", "Add a details/summary block");
 		button.setAttribute("tabindex", "-1");
 		button.innerHTML = icon;
-		$$(".toolbar-commenting").forEach(el => {
+		[...document.querySelectorAll(".toolbar-commenting")].forEach(el => {
 			if (el && !$(".ghad-details", el)) {
 				const btn = $("[aria-label='Add a task list']", el);
 				btn.parentNode.insertBefore(button.cloneNode(true), btn.nextSibling);
@@ -48,10 +48,9 @@
 	function addBindings() {
 		window.rangyInput.init();
 		$("body").addEventListener("click", event => {
-			let textarea;
 			const target = event.target;
 			if (target && target.classList.contains("ghad-details")) {
-				textarea = target.closest(".previewable-comment-form");
+				let textarea = target.closest(".previewable-comment-form");
 				textarea = $(".comment-form-textarea", textarea);
 				textarea.focus();
 				window.rangyInput.surroundSelectedText(
@@ -66,10 +65,6 @@
 
 	function $(str, el) {
 		return (el || document).querySelector(str);
-	}
-
-	function $$(str, el) {
-		return [...(el || document).querySelectorAll(str)];
 	}
 
 	document.addEventListener("ghmo:container", addDetailsButton);
