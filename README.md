@@ -55,7 +55,7 @@ Userscripts to add functionality to GitHub.
 	| [GitHub toggle diff comments][tdc-wiki]|     | [install][tdc-raw] | [GF][tdc-gf] [OU][tdc-ou] | 2017.12.10 | 2019.02.16 |
 	| [GitHub toggle expanders][tex-wiki]    |     | [install][tex-raw] | [GF][tex-gf] [OU][tex-ou] | 2016.09.17 | 2019.09.02 |
 	| [GitHub toggle wiki sidebar][tws-wiki] |     | [install][tws-raw] | [GF][tws-gf] [OU][tws-ou] | 2016.04.01 | 2019.02.16 |
-	| [GitHub update fork][ufk-wiki]         |     | [install][ufk-raw] | [GF][ufk-gf] [OU][ufk-ou] | 2020.02.16 | 2020.02.16 |
+	| [GitHub update fork][ufk-wiki]         |     | [install][ufk-raw] | [GF][ufk-gf] [OU][ufk-ou] | 2020.02.16 | 2020.03.19 |
 	| [Gist raw links][grl-wiki]             |     | [install][grl-raw] | [GF][grl-gf] [OU][grl-ou] | 2017.05.19 | 2019.06.07 |
 	| [Gist to dabblet][g2d-wiki]            |     | [install][g2d-raw] | [GF][g2d-gf] [OU][g2d-ou] | 2012.01.26 | 2017.02.16 |
 
