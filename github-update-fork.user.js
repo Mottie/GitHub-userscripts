@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Update Fork
-// @version     0.1.0
+// @version     0.1.1
 // @description A userscript that adds a link to update your fork
 // @license     MIT
 // @author      Rob Garrison
@@ -9,6 +9,8 @@
 // @run-at      document-idle
 // @grant       none
 // @icon        https://github.githubassets.com/pinned-octocat.svg
+// @updateURL   https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-update-fork.user.js
+// @downloadURL https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-update-fork.user.js
 // ==/UserScript==
 (() => {
 	"use strict";
