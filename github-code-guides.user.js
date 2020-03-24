@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Code Guides
-// @version     1.1.11
+// @version     1.1.12
 // @description A userscript that allows you to add one or more vertical guidelines to the code
 // @license     MIT
 // @author      Rob Garrison
@@ -45,10 +45,10 @@
 
 	function addGuides(vals) {
 		let css = "";
-		// to align the guides *after* the setting, we need to add 1, then add
-		// another 0.1 to give the guide a tiny bit of white space to the left
+		// to align the guides *after* the setting, we need to subtract 0.5, then
+		// add another 0.1 to give the guide a tiny bit of white space to the left
 		vals.forEach(guide => {
-			let start = parseFloat(guide.chars) + 1,
+			let start = parseFloat(guide.chars) - 0.5,
 				size = parseFloat(guide.width) || 0.2;
 			const color = guide.color || "rgba(0, 0, 0, .3)";
 			// each line needs to be at least 0.2ch in width to be visible
@@ -60,11 +60,11 @@
 				tab-size: ${tabSize};
 				-moz-tab-size: ${tabSize};
 			}
-			span.blob-code-inner:after,
-			td.blob-code-inner:not(.blob-code-hunk):after,
-			.blob-code-context .blob-code-inner:after,
-			.blob-code-addition .blob-code-inner:after,
-			.blob-code-deletion .blob-code-inner:after {
+			span.blob-code-inner:before,
+			td.blob-code-inner:not(.blob-code-hunk):before,
+			.blob-code-context .blob-code-inner:before,
+			.blob-code-addition .blob-code-inner:before,
+			.blob-code-deletion .blob-code-inner:before {
 				content: " ";
 				display: block;
 				position: absolute;
@@ -78,11 +78,11 @@
 			}
 			span.blob-code-inner,
 			td.blob-code-inner:not(.blob-code-hunk),
-			.blob-code-inner:after {
+			.blob-code-inner:before {
 				font-family: "${font}", Consolas, "Liberation Mono", Menlo, Courier, monospace !important;
 			}
-			span.blob-code-inner:after,
-			td.blob-code-inner:not(.blob-code-hunk):after {
+			span.blob-code-inner:before,
+			td.blob-code-inner:not(.blob-code-hunk):before {
 				background: linear-gradient(to right, transparent 0%, ${css} transparent 100%) !important;
 				pointer-events: none;
 			}
