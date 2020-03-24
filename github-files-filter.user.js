@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Files Filter
-// @version     2.0.0
+// @version     2.0.1
 // @description A userscript that adds filters that toggle the view of repo files by extension
 // @license     MIT
 // @author      Rob Garrison
@@ -111,7 +111,7 @@
 	}
 
 	function toggleRows(ext, mode) {
-		const files = $("div.file-wrap");
+		const files = $(".gff-wrapper");
 		/* The list[ext] contains an array of file names */
 		list[ext].forEach(fileName => {
 			const el = $(`a[title="${fileName}"]`, files);
@@ -137,7 +137,7 @@
 	}
 
 	function toggleAll() {
-		const files = $("div.file-wrap");
+		const files = $(".gff-wrapper");
 		// Toggle all blocks
 		$$("td.content .js-navigation-open", files).forEach(el => {
 			toggleRow(el);
@@ -265,8 +265,7 @@
 			filters += list[ext].length > 0 ? 1 : 0;
 		});
 		// Don't bother showing filter if only one extension type is found
-		// Sometimes "file-wrap" class is applied to an <include-fragment>
-		const files = $("div.file-wrap");
+		const files = $("table.files");
 		if (files && filters > 1) {
 			filters = $(".gff-filter-wrapper");
 			if (!filters) {
@@ -274,7 +273,7 @@
 				// Use "commitinfo" for GitHub-Dark styling
 				filters.className = "gff-filter-wrapper commitinfo";
 				filters.style = "padding:3px 5px 2px;border-bottom:1px solid #eaecef";
-				files.insertBefore(filters, files.firstChild);
+				files.before(filters, files.firstChild);
 			}
 			fixWidth();
 			buildHTML();
@@ -345,7 +344,9 @@
 	}
 
 	function init() {
-		if ($("table.files")) {
+		const table = $("table.files");
+		if (table) {
+			table.parentElement.classList.add("gff-wrapper");
 			buildList();
 			makeFilter();
 		}
