@@ -33,7 +33,7 @@ Userscripts to add functionality to GitHub.
 	| [GitHub diff filename][dfn-wiki]       |     | [install][dfn-raw] | [GF][dfn-gf] [OU][dfn-ou] | 2017.08.27 | 2019.02.16 |
 	| [GitHub diff files filter][dff-wiki]   |     | [install][dff-raw] | [GF][dff-gf] [OU][dff-ou] | 2016.12.31 | 2019.07.21 |
 	| [GitHub diff links][dfl-wiki]          |     | [install][dfl-raw] | [GF][dfl-gf] [OU][dfl-ou] | 2016.07.21 | 2019.04.28 |
-	| [GitHub download zip][dlz-wiki]        |     | [install][dlz-raw] | [GF][dlz-gf] [OU][dlz-ou] | 2018.10.22 | 2019.10.19 |
+	| [GitHub download zip][dlz-wiki]        |     | [install][dlz-raw] | [GF][dlz-gf] [OU][dlz-ou] | 2018.10.22 | 2020.03.27 |
 	| [GitHub files filter][gff-wiki]        |     | [install][gff-raw] | [GF][gff-gf] [OU][gff-ou] | 2017.06.26 | 2020.03.24 |
 	| [GitHub font preview][fpv-wiki]        |     | [install][fpv-raw] | [GF][fpv-gf] [OU][fpv-ou] | 2016.06.11 | 2019.06.07 |
 	| [GitHub hide own feed meta][hof-wiki]  |     | [install][hof-raw] | [GF][hof-gf] [OU][hof-ou] | 2017.12.21 | 2019.02.16 |
