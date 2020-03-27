@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Download ZIP
-// @version     0.2.4
+// @version     0.2.5
 // @description A userscript adds download links so that downloaded filenames include the SHA
 // @license     MIT
 // @author      Rob Garrison
@@ -49,7 +49,12 @@
 		<summary aria-haspopup="menu">
 			<span class="ghdz-get-list" data-menu-button>Latest Release Files</span>
 		</summary>
-		<details-menu class="select-menu-modal dropdown-menu-s ghdz-files" style="z-index: 99;" role="menu" aria-label="Releases links">
+		<details-menu
+			class="select-menu-modal dropdown-menu-s ghdz-files"
+			style="z-index: 99;"
+			role="menu"
+			aria-label="Releases links"
+		>
 			<div class="select-menu-list">
 				<img src="https://github.githubassets.com/images/spinners/octocat-spinner-32.gif" width="32" alt="">
 			</div>
@@ -60,24 +65,33 @@
 		return `https://api.github.com/repos/${user}/${repo}/zipball/${part}`;
 	}
 
+	function buildLink(url, text) {
+		return `<a href="${url}" class="dropdown-item ghdz-file" role="menuitem">
+			${text}
+		</a>`;
+	}
+
 	function buildReleases(result, container) {
-		let html = "";
-		if (Array.isArray(result)) {
-			const assets = result[0] && Object.keys(result[0]).length && result[0].assets;
-		  if (assets) {
-				assets.forEach(release => {
+		let html = `<h5 class="ghdz-file">${
+			typeof result === "string" ? result : "No release files or assets found"
+		}</h5>`;
+		// Example page with release files & assets:
+		// https://github.com/Maximus5/ConEmu/releases
+		if (
+			Array.isArray(result) &&
+			result.length &&
+			Object.keys(result[0] || {}).length
+		) {
+			html = "";
+			const last = result[0];
+			if (last.assets) {
+				last.assets.forEach(release => {
 					const url = release.browser_download_url;
-					html += `
-						<a href="${url}" class="dropdown-item ghdz-file" role="menuitem">
-							${url.split("/").slice(-1)}
-						</a>`;
+					html += buildLink(url, url.split("/").slice(-1));
 				});
-		  } else {
-				html = "<h4 class='ghdz-file'>No release files found</h4>";
-		  }
-		} else {
-			// Error message
-			html = result;
+			}
+			html += buildLink(last.zipball_url, "Source code (zip)");
+			html += buildLink(last.tarball_url, "Source code (tar.gz)");
 		}
 		$(".ghdz-files", container).innerHTML = html;
 	}
@@ -126,7 +140,7 @@
 		// Repo commits page
 		const commits = $(".commits-listing");
 
-		if (downloadLink && branch && !$(".ghdz-releases", downloadLink.parentNode)) {
+		if (downloadLink && branch && !$(".ghdz-releases", downloadLink.parentElement)) {
 			const branchName = branch.textContent.indexOf("…") > -1
 				// Branch selector is showing trucated text; title has full text
 				? branch.parentNode.title
@@ -134,6 +148,7 @@
 			downloadLink.href = buildURL(branchName.trim());
 			downloadLink.appendChild(span.cloneNode(true));
 			downloadLink.after(div.cloneNode(true));
+			downloadLink.parentElement.classList.add("flex-wrap");
 		}
 		// Branch doesn't matter when you're using the SHA (first 7 values)
 		if (commits) {
