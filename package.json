@@ -1,6 +1,6 @@
 {
 	"name": "github-userscripts",
-	"version": "1.0.265",
+	"version": "1.0.266",
 	"description": "Userscripts to add functionality to GitHub",
 	"license": "MIT",
 	"repository": "Mottie/GitHub-userscripts",
@@ -10,10 +10,10 @@
 		"url": "https://github.com/Mottie"
 	},
 	"devDependencies": {
-		"eslint": "^6.3.0",
-		"github-reserved-names": "^1.1.5",
-		"make-fetch-happen": "^5.0.0",
-		"ver": "^5.1.4"
+		"eslint": "^6.8.0",
+		"github-reserved-names": "^1.1.8",
+		"make-fetch-happen": "^8.0.4",
+		"ver": "^6.0.2"
 	},
 	"scripts": {
 		"authors": "bash tools/authors.sh",
