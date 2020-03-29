@@ -225,7 +225,7 @@ Userscripts to add functionality to GitHub.
 [glc-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Label_Color_Picker
 [grl-ou]: https://openuserjs.org/scripts/Mottie/Gist_Raw_Links
 [gsr-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Sort_Reactions
-[gul-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Unknown_License
+[gul-ou]: https://openuserjs.org/scripts/Mottie/GitHub_unknown_license
 [hof-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Hide_Own_Feed_Meta
 [iad-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Issue_Add_Details
 [ic1-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Issue_Comments
