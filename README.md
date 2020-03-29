@@ -56,6 +56,7 @@ Userscripts to add functionality to GitHub.
 	| [GitHub toggle diff comments][tdc-wiki]|     | [install][tdc-raw] | [GF][tdc-gf] [OU][tdc-ou] | 2017.12.10 | 2019.02.16 |
 	| [GitHub toggle expanders][tex-wiki]    |     | [install][tex-raw] | [GF][tex-gf] [OU][tex-ou] | 2016.09.17 | 2019.09.02 |
 	| [GitHub toggle wiki sidebar][tws-wiki] |     | [install][tws-raw] | [GF][tws-gf] [OU][tws-ou] | 2016.04.01 | 2019.02.16 |
+	| [GitHub unknown license][gul-wiki]     |     | [install][gul-raw] | [GF][gul-gf] [OU][gul-ou] | 2020.03.29 | 2020.03.29 |
 	| [GitHub update fork][ufk-wiki]         |     | [install][ufk-raw] | [GF][ufk-gf] [OU][ufk-ou] | 2020.02.16 | 2020.03.19 |
 	| [Gist raw links][grl-wiki]             |     | [install][grl-raw] | [GF][grl-gf] [OU][grl-ou] | 2017.05.19 | 2019.06.07 |
 	| [Gist to dabblet][g2d-wiki]            |     | [install][g2d-raw] | [GF][g2d-gf] [OU][g2d-ou] | 2012.01.26 | 2017.02.16 |
@@ -71,13 +72,13 @@ Userscripts to add functionality to GitHub.
 	| [GitHub remove diff signs][rds-wiki]   | [install][rds-raw] | [GF][rds-gf] [OU][rds-ou] | 2016.04.05 | 2018.07.31 |
 
 [ccr-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-code-colors
+[ccs-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-copy-code-snippet
 [cfd-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-code-folding
 [cgl-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-code-guides
 [chk-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-custom-hotkeys
 [cic-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-collapse-in-comment
 [cmd-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-collapse-markdown
 [cnv-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-custom-navigation
-[ccs-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-copy-code-snippet
 [csw-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-code-show-whitespace
 [dex-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-diff-expander
 [dff-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-diff-files-filter
@@ -85,18 +86,19 @@ Userscripts to add functionality to GitHub.
 [dfn-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-diff-filename
 [dlz-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-download-zip
 [fpv-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-font-preview
-[hof-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-hide-own-feed-meta
 [g2d-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/Gist-to-dabblet
 [gff-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-files-filter
 [ghp-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-html-preview
 [gih-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-issue-highlighter
 [glc-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-label-color-picker
-[iml-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-mentioned-links
 [grl-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/Gist-raw-links
 [gsr-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-sort-reactions
+[gul-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-unknown-license
+[hof-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-hide-own-feed-meta
 [iad-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-issue-add-details
 [ic1-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-issue-comments
 [ic2-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-issue-counts
+[iml-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-mentioned-links
 [ioc-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-indent-comments
 [ipv-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-image-preview
 [iss-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-issue-show-status
@@ -114,13 +116,13 @@ Userscripts to add functionality to GitHub.
 [ufk-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-update-fork
 
 [ccr-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-code-colors.user.js
+[ccs-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-copy-code-snippet.user.js
 [cfd-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-code-folding.user.js
 [cgl-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-code-guides.user.js
 [chk-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-custom-hotkeys.user.js
 [cic-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-collapse-in-comment.user.js
 [cmd-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-collapse-markdown.user.js
 [cnv-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-custom-navigation.user.js
-[ccs-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-copy-code-snippet.user.js
 [csw-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-code-show-whitespace.user.js
 [dex-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-diff-expander.user.js
 [dff-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-diff-files-filter.user.js
@@ -128,18 +130,19 @@ Userscripts to add functionality to GitHub.
 [dfn-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-diff-filename.user.js
 [dlz-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-download-zip.user.js
 [fpv-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-font-preview.user.js
-[hof-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-hide-own-feed-meta.user.js
 [g2d-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/gist-to-dabblet.user.js
 [gff-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-files-filter.user.js
 [ghp-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-html-preview.user.js
 [gih-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-issue-highlighter.user.js
 [glc-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-label-color-picker.user.js
-[iml-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-mentioned-links.user.js
 [grl-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/gist-raw-links.user.js
 [gsr-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-sort-reactions.user.js
+[gul-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-unknown-license.user.js
+[hof-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-hide-own-feed-meta.user.js
 [iad-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-issue-add-details.user.js
 [ic1-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-issue-comments.user.js
 [ic2-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-issue-counts.user.js
+[iml-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-mentioned-links.user.js
 [ioc-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-indent-comments.user.js
 [ipv-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-image-preview.user.js
 [iss-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-issue-show-status.user.js
@@ -157,13 +160,13 @@ Userscripts to add functionality to GitHub.
 [ufk-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-update-fork.user.js
 
 [ccr-gf]: https://greasyfork.org/en/scripts/18141-github-code-colors
+[ccs-gf]: https://greasyfork.org/en/scripts/37307-github-copy-code-snippet
 [cfd-gf]: https://greasyfork.org/en/scripts/26109-github-code-folding
 [cgl-gf]: https://greasyfork.org/en/scripts/22674-github-code-guides
 [chk-gf]: https://greasyfork.org/en/scripts/18675-github-custom-hotkeys
 [cic-gf]: https://greasyfork.org/en/scripts/20973-github-collapse-in-comment
 [cmd-gf]: https://greasyfork.org/en/scripts/20974-github-collapse-markdown
 [cnv-gf]: https://greasyfork.org/en/scripts/20830-github-custom-navigation
-[ccs-gf]: https://greasyfork.org/en/scripts/37307-github-copy-code-snippet
 [csw-gf]: https://greasyfork.org/en/scripts/28454-github-code-show-whitespace
 [dex-gf]: https://greasyfork.org/en/scripts/369373-github-diff-expander
 [dff-gf]: https://greasyfork.org/en/scripts/26191-github-diff-files-filter
@@ -171,18 +174,19 @@ Userscripts to add functionality to GitHub.
 [dfn-gf]: https://greasyfork.org/en/scripts/32634-github-diff-filename
 [dlz-gf]: https://greasyfork.org/en/scripts/373514-github-download-zip
 [fpv-gf]: https://greasyfork.org/en/scripts/20479-github-font-preview
-[hof-gf]: https://greasyfork.org/en/scripts/36598-github-hide-own-feed-meta
 [g2d-gf]: https://greasyfork.org/en/scripts/18254-gist-to-dabblet
 [gff-gf]: https://greasyfork.org/en/scripts/30940-github-files-filter
 [ghp-gf]: https://greasyfork.org/en/scripts/381133-github-html-preview
 [gih-gf]: https://greasyfork.org/en/scripts/19867-github-issue-highlighter
+[glc-gf]: https://greasyfork.org/en/scripts/23270-github-label-color-picker
 [grl-gf]: https://greasyfork.org/en/scripts/29888-gist-raw-links
 [gsr-gf]: https://greasyfork.org/en/scripts/38354-github-sort-reactions
-[glc-gf]: https://greasyfork.org/en/scripts/23270-github-label-color-picker
-[iml-gf]: https://greasyfork.org/en/scripts/398907-github-mentioned-links
+[gul-gf]: https://greasyfork.org/en/scripts/398945-github-unknown-license
+[hof-gf]: https://greasyfork.org/en/scripts/36598-github-hide-own-feed-meta
 [iad-gf]: https://greasyfork.org/en/scripts/37056-github-issue-add-details
 [ic1-gf]: https://greasyfork.org/en/scripts/18503-github-toggle-issue-comments
 [ic2-gf]: https://greasyfork.org/en/scripts/15560-github-show-repo-issues
+[iml-gf]: https://greasyfork.org/en/scripts/398907-github-mentioned-links
 [ioc-gf]: https://greasyfork.org/en/scripts/28176-github-indent-comment-blocks
 [ipv-gf]: https://greasyfork.org/en/scripts/19773-github-image-preview
 [iss-gf]: https://greasyfork.org/en/scripts/30268-github-issue-show-status
@@ -200,13 +204,13 @@ Userscripts to add functionality to GitHub.
 [ufk-gf]: https://greasyfork.org/en/scripts/398272-github-update-fork
 
 [ccr-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Code_Colors
+[ccs-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Copy_Code_Snippet
 [cfd-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Code_Folding
 [cgl-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Code_Guides
 [chk-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Custom_Hotkeys
 [cic-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Collapse_In_Comment
 [cmd-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Collapse_Markdown
 [cnv-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Custom_Navigation
-[ccs-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Copy_Code_Snippet
 [csw-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Code_Show_Whitespace
 [dex-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Diff_Expander
 [dff-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Diff_Files_Filter
@@ -214,18 +218,19 @@ Userscripts to add functionality to GitHub.
 [dfn-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Diff_Filename
 [dlz-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Download_ZIP
 [fpv-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Font_Preview
-[hof-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Hide_Own_Feed_Meta
 [g2d-ou]: https://openuserjs.org/scripts/Mottie/Gist_to_dabblet
 [gff-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Files_Filter
 [ghp-ou]: https://openuserjs.org/scripts/Mottie/GitHub_HTML_Preview
 [gih-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Issue_Highlighter
 [glc-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Label_Color_Picker
-[iml-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Mentioned_Links
 [grl-ou]: https://openuserjs.org/scripts/Mottie/Gist_Raw_Links
 [gsr-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Sort_Reactions
+[gul-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Unknown_License
+[hof-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Hide_Own_Feed_Meta
 [iad-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Issue_Add_Details
 [ic1-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Issue_Comments
 [ic2-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Show_Repo_Issues
+[iml-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Mentioned_Links
 [ioc-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Indent_Comment_Blocks
 [ipv-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Image_Preview
 [iss-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Issue_Show_Status
