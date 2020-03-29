@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub unknown license
-// @version     0.1.0
+// @version     0.1.1
 // @description A userscript that adds "unknown license" message in repos with no license set
 // @license     MIT
 // @author      Rob Garrison
@@ -16,7 +16,7 @@
 // ==/UserScript==
 (() => {
 	"use strict";
-	/* global $ */
+	/* global $ on */
 
 	// Example page with no license
 	// https://github.com/isaacs/github
@@ -49,7 +49,7 @@
 
 	function init() {
 		const summary = $(".numbers-summary");
-		if (!$(".octicon-law", summary)) {
+		if (summary && !$(".octicon-law", summary)) {
 			summary.append(entry.cloneNode(true));
 		}
 	}
