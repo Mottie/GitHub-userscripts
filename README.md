@@ -44,6 +44,7 @@ Userscripts to add functionality to GitHub.
 	| [GitHub issue comments][ic1-wiki]      |     | [install][ic1-raw] | [GF][ic1-gf] [OU][ic1-ou] | 2016.04.04 | 2020.03.06 |
 	| [GitHub issue counts][ic2-wiki]        |     | [install][ic2-raw] | [GF][ic2-gf] [OU][ic2-ou] | 2012.01.16 | 2019.02.16 |
 	| [GitHub label color picker][glc-wiki]  |     | [install][glc-raw] | [GF][glc-gf] [OU][glc-ou] | 2016.09.16 | 2019.07.25 |
+	| [GitHub mentioned links][iml-wiki]     |     | [install][iml-raw] | [GF][iml-gf] [OU][iml-ou] | 2020.03.28 | 2020.03.28 |
 	| [GitHub reveal header][rhd-wiki]       |     | [install][rhd-raw] | [GF][rhd-gf] [OU][rhd-ou] | 2017.06.03 | 2019.03.29 |
 	| [GitHub rtl comments][rtl-wiki]        |     | [install][rtl-raw] | [GF][rtl-gf] [OU][rtl-ou] | 2016.06.13 | 2019.02.16 |
 	| [GitHub search autocomplete][sac-wiki] |     | [install][sac-raw] | [GF][sac-gf] [OU][sac-ou] | 2017.03.31 | 2018.05.19 |
@@ -90,6 +91,7 @@ Userscripts to add functionality to GitHub.
 [ghp-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-html-preview
 [gih-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-issue-highlighter
 [glc-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-label-color-picker
+[iml-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-mentioned-links
 [grl-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/Gist-raw-links
 [gsr-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-sort-reactions
 [iad-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-issue-add-details
@@ -132,6 +134,7 @@ Userscripts to add functionality to GitHub.
 [ghp-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-html-preview.user.js
 [gih-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-issue-highlighter.user.js
 [glc-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-label-color-picker.user.js
+[iml-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-mentioned-links.user.js
 [grl-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/gist-raw-links.user.js
 [gsr-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-sort-reactions.user.js
 [iad-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-issue-add-details.user.js
@@ -176,6 +179,7 @@ Userscripts to add functionality to GitHub.
 [grl-gf]: https://greasyfork.org/en/scripts/29888-gist-raw-links
 [gsr-gf]: https://greasyfork.org/en/scripts/38354-github-sort-reactions
 [glc-gf]: https://greasyfork.org/en/scripts/23270-github-label-color-picker
+[iml-gf]: https://greasyfork.org/en/scripts/398907-github-mentioned-links
 [iad-gf]: https://greasyfork.org/en/scripts/37056-github-issue-add-details
 [ic1-gf]: https://greasyfork.org/en/scripts/18503-github-toggle-issue-comments
 [ic2-gf]: https://greasyfork.org/en/scripts/15560-github-show-repo-issues
@@ -216,6 +220,7 @@ Userscripts to add functionality to GitHub.
 [ghp-ou]: https://openuserjs.org/scripts/Mottie/GitHub_HTML_Preview
 [gih-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Issue_Highlighter
 [glc-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Label_Color_Picker
+[iml-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Mentioned_Links
 [grl-ou]: https://openuserjs.org/scripts/Mottie/Gist_Raw_Links
 [gsr-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Sort_Reactions
 [iad-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Issue_Add_Details
