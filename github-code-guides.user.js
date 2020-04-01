@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Code Guides
-// @version     1.1.12
+// @version     1.1.13
 // @description A userscript that allows you to add one or more vertical guidelines to the code
 // @license     MIT
 // @author      Rob Garrison
@@ -65,13 +65,13 @@
 			.blob-code-context .blob-code-inner:before,
 			.blob-code-addition .blob-code-inner:before,
 			.blob-code-deletion .blob-code-inner:before {
-				content: " ";
 				display: block;
 				position: absolute;
 				top: 0;
 				left: 1em;
 				width: 100%;
 				height: 100%;
+				text-indent: -1em;
 			}
 			.blob-code span.blob-code-inner {
 				display: block !important;
