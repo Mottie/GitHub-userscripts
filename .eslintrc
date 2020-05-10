@@ -9,7 +9,7 @@
   },
   "rules": {
     "curly": 1,
-    "dot-location": [2,"property"],
+    "dot-location": [2, "property"],
     "eqeqeq": 1,
     "linebreak-style": [2, "unix"],
     "no-else-return": 1,
