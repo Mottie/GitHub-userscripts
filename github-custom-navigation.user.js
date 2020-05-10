@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Custom Navigation
-// @version     1.1.8
+// @version     1.1.9
 // @description A userscript that allows you to customize GitHub's main navigation bar
 // @license     MIT
 // @author      Rob Garrison
@@ -276,7 +276,7 @@
 			.ghcn-settings-wrapper hr { margin: 10px 0; }
 			.ghcn-footer { margin-top:4px; border-top:#555 solid 1px; }
 			li[data-ghcn] a { min-width:25px; text-align: center; }
-			.Header-link { height:28px; padding:2px 5px; }
+			.Header-link { padding:2px 5px; margin:6px 0; }
 			.ghcn-nav .Header-link svg, .ghcn-nav .Header-link img,
 				#ghcn-nav-items .Header-link svg, #ghcn-nav-items .Header-link img,
 				.gu-mirror svg, .gu-mirror img {
