@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Code Folding
-// @version     1.1.0
+// @version     1.1.1
 // @description A userscript that adds code folding to GitHub files
 // @license     MIT
 // @author      Rob Garrison
@@ -26,10 +26,12 @@
 
 	GM.addStyle(`
 		td.blob-code.blob-code-inner { position:relative; padding-left:10px; }
-		.ghcf-collapser { position:absolute; left:2px; width:22px; cursor:pointer; }
-		.ghcf-collapser:after { display: inline-block; vertical-align: middle; content:"\u25bc"; opacity:.5; transition:.15s; }
+		.ghcf-collapser { position:absolute; left:2px; width:10px; cursor:pointer; }
+		.ghcf-collapser:after { display: inline-block; vertical-align: middle;
+			content:"\u25bc"; opacity:.5; transition:.15s; }
 		.ghcf-collapser:hover:after { opacity:1; }
-		.ghcf-collapsed.ghcf-collapser:after { transform:rotate(-90deg); opacity:.8; }
+		.ghcf-collapsed.ghcf-collapser:after { transform:rotate(-90deg);
+			opacity:.8; }
 		.ghcf-hidden-line { display:none; }
 		.ghcf-ellipsis { padding:1px 2px; margin-left:2px; cursor:pointer;
 			background:rgba(255,235,59,.4); position:relative; z-index:1; }
