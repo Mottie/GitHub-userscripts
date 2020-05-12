@@ -26,11 +26,10 @@
 
 	GM.addStyle(`
 		td.blob-code.blob-code-inner { position:relative; padding-left:10px; }
-		.ghcf-collapser { position:absolute; left:2px; width:22px; opacity:.5;
-			transition:.15s; cursor:pointer; }
-		.ghcf-collapser:after { content:"\u25bc"; }
-		.ghcf-collapser:hover { opacity:1; }
-		.ghcf-collapsed { transform:rotate(-90deg); transform-origin:16% 49%; opacity:.8; }
+		.ghcf-collapser { position:absolute; left:2px; width:22px; cursor:pointer; }
+		.ghcf-collapser:after { display: inline-block; vertical-align: middle; content:"\u25bc"; opacity:.5; transition:.15s; }
+		.ghcf-collapser:hover:after { opacity:1; }
+		.ghcf-collapsed.ghcf-collapser:after { transform:rotate(-90deg); opacity:.8; }
 		.ghcf-hidden-line { display:none; }
 		.ghcf-ellipsis { padding:1px 2px; margin-left:2px; cursor:pointer;
 			background:rgba(255,235,59,.4); position:relative; z-index:1; }
