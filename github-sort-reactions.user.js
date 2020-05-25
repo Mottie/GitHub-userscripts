@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Sort Reactions
-// @version     0.2.13
+// @version     0.2.14
 // @description A userscript that sorts comments by reaction
 // @license     MIT
 // @author      Rob Garrison
@@ -232,8 +232,10 @@ thumbs down = -1)" data-sort="ACTIVE">
 	function addSortBlock() {
 		currentSort.busy = true;
 		const first = $(".TimelineItem");
-		first.classList.add("ghsr-skip-sort");
-		first.insertAdjacentHTML("afterEnd", sortBlock);
+		if (first) {
+			first.classList.add("ghsr-skip-sort");
+			first.insertAdjacentHTML("afterEnd", sortBlock);
+		}
 		currentSort.busy = false;
 	}
 
