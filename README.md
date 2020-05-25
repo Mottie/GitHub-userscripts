@@ -49,11 +49,11 @@ Userscripts to add functionality to GitHub.
 	| [GitHub rtl comments][rtl-wiki]        |     | [install][rtl-raw] | [GF][rtl-gf] [OU][rtl-ou] | 2016.06.13 | 2019.02.16 |
 	| [GitHub search autocomplete][sac-wiki] |     | [install][sac-raw] | [GF][sac-gf] [OU][sac-ou] | 2017.03.31 | 2018.05.19 |
 	| [GitHub sort content][srt-wiki]        |     | [install][srt-raw] | [GF][srt-gf] [OU][srt-ou] | 2016.07.13 | 2019.11.10 |
-	| [GitHub sort reactions][gsr-wiki]      |     | [install][gsr-raw] | [GF][gsr-gf] [OU][gsr-ou] | 2018.02.10 | 2019.09.26 |
+	| [GitHub sort reactions][gsr-wiki]      |     | [install][gsr-raw] | [GF][gsr-gf] [OU][gsr-ou] | 2018.02.10 | 2020.05.25 |
 	| [GitHub static time][stt-wiki]         |     | [install][stt-raw] | [GF][stt-gf] [OU][stt-ou] | 2017.04.24 | 2019.02.16 |
 	| [GitHub table of contents][toc-wiki]   |     | [install][toc-raw] | [GF][toc-gf] [OU][toc-ou] | 2016.03.28 | 2019.09.05 |
 	| [GitHub title notification][tbn-wiki]  |     | [install][tbn-raw] | [GF][tbn-gf] [OU][tbn-ou] | 2016.03.24 | 2018.02.16 |
-	| [GitHub toggle diff comments][tdc-wiki]|     | [install][tdc-raw] | [GF][tdc-gf] [OU][tdc-ou] | 2017.12.10 | 2019.02.16 |
+	| [GitHub toggle diff comments][tdc-wiki]|     | [install][tdc-raw] | [GF][tdc-gf] [OU][tdc-ou] | 2017.12.10 | 2020.05.25 |
 	| [GitHub toggle expanders][tex-wiki]    |     | [install][tex-raw] | [GF][tex-gf] [OU][tex-ou] | 2016.09.17 | 2019.09.02 |
 	| [GitHub toggle wiki sidebar][tws-wiki] |     | [install][tws-raw] | [GF][tws-gf] [OU][tws-ou] | 2016.04.01 | 2019.02.16 |
 	| [GitHub unknown license][gul-wiki]     |     | [install][gul-raw] | [GF][gul-gf] [OU][gul-ou] | 2020.03.29 | 2020.03.29 |
