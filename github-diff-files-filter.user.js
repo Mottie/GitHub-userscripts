@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Diff Files Filter
-// @version     2.1.1
+// @version     2.1.2
 // @description A userscript that adds filters that toggle diff & PR folders, and files by extension
 // @license     MIT
 // @author      Rob Garrison
@@ -40,7 +40,7 @@
 		} else if (subgroup === "folder") {
 			Object.keys(folders)
 				.reduce((acc, folder) => {
-					if (folders[folder].length) {
+					if (folders[folder].length && !folder.includes("→")) {
 						acc.push({
 							folder,
 							show: $(`.gdf-folder-filter a[data-item=${folder}]`).classList.contains("selected")
@@ -66,15 +66,15 @@
 
 	function toggleGroup({group, subgroup, show}) {
 		const files = $("#files");
-		/* group contains an array of anchor names used to target the
+		/* group contains an array of div ids used to target the
 		 * hidden link added immediately above each file div container
 		 * <a name="diff-xxxxx"></a>
 		 * <div id="diff-#" class="file js-file js-details container">
 		 */
-		group.forEach(anchor => {
-			const file = $(`a[name="${anchor}"]`, files);
-			if (file && file.nextElementSibling) {
-				file.nextElementSibling.classList.toggle(`gdf-${subgroup}-hidden`, !show);
+		group.forEach(id => {
+			const file = $(`#${id}`, files);
+			if (file) {
+				file.classList.toggle(`gdf-${subgroup}-hidden`, !show);
 			}
 		});
 	}
@@ -110,37 +110,39 @@
 		// TOC in file diffs and pr-toolbar in Pull requests
 		$$(".file-header .file-info > a").forEach(file => {
 			let txt = (file.title || file.textContent || "").trim();
-			const path = txt.split("/");
-			const filename = path.splice(-1)[0];
-			// test for no extension, then get extension name
-			// regexp from https://github.com/silverwind/file-extension
-			let ext = /\./.test(filename) ? /[^./\\]*$/.exec(filename)[0] : noExtLabel;
-			const min = /\.min\./.test(filename);
-			// Add filter for renamed files: {old path} → {new path}
-			if (txt.indexOf(" → ") > -1) {
-				ext = renameFileLabel;
-			} else if (ext === filename.slice(1)) {
-				ext = dotExtLabel;
-			}
-			const sha = getSHA(file);
-			if (ext) {
-				if (!exts[ext]) {
-					exts[ext] = [];
+			if (txt) {
+				const path = txt.split("/");
+				const filename = path.splice(-1)[0];
+				// test for no extension, then get extension name
+				// regexp from https://github.com/silverwind/file-extension
+				let ext = /\./.test(filename) ? /[^./\\]*$/.exec(filename)[0] : noExtLabel;
+				const min = /\.min\./.test(filename);
+				// Add filter for renamed files: {old path} → {new path}
+				if (txt.indexOf(" → ") > -1) {
+					ext = renameFileLabel;
+				} else if (ext === filename.slice(1)) {
+					ext = dotExtLabel;
 				}
-				exts[ext].push(sha);
-				if (min) {
-					exts[minFileLabel].push(sha);
-				}
-			}
-			if (path.length > 0) {
-				path.forEach(folder => {
-					if (!folders[folder]) {
-						folders[folder] = [];
+				const sha = getSHA(file);
+				if (ext) {
+					if (!exts[ext]) {
+						exts[ext] = [];
 					}
-					folders[folder].push(sha);
-				});
-			} else {
-				folders[rootLabel].push(sha);
+					exts[ext].push(sha);
+					if (min) {
+						exts[minFileLabel].push(sha);
+					}
+				}
+				if (path.length > 0) {
+					path.forEach(folder => {
+						if (!folders[folder]) {
+							folders[folder] = [];
+						}
+						folders[folder].push(sha);
+					});
+				} else {
+					folders[rootLabel].push(sha);
+				}
 			}
 		});
 	}
