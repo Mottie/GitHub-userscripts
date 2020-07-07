@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Code Guides
-// @version     1.1.13
+// @version     1.1.14
 // @description A userscript that allows you to add one or more vertical guidelines to the code
 // @license     MIT
 // @author      Rob Garrison
@@ -85,6 +85,7 @@
 			td.blob-code-inner:not(.blob-code-hunk):before {
 				background: linear-gradient(to right, transparent 0%, ${css} transparent 100%) !important;
 				pointer-events: none;
+				content: '';
 			}
 		`;
 	}
