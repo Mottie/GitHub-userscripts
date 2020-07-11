@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Image Preview
-// @version     1.2.4
+// @version     2.0.0
 // @description A userscript that adds clickable image thumbnails
 // @license     MIT
 // @author      Rob Garrison
@@ -22,39 +22,47 @@
 	"use strict";
 
 	GM_addStyle(`
-		table.files tr.ghip-image-previews,
-			table.files.ghip-show-previews tbody tr.js-navigation-item {
-			display:none; }
-		table.files.ghip-show-previews tr.ghip-image-previews { display:table-row; }
-		table.files.ghip-show-previews .ghip-non-image {
+		.ghip-wrapper .ghip-content { display:none; }
+		.ghip-wrapper.ghip-show-previews .ghip-content { display:flex; width:100%; }
+		.ghip-wrapper.ghip-show-previews .Box-row { border:0 !important;
+			background-color:transparent !important; }
+		.ghip-show-previews .Box-row:not(.ghsc-header):not(.hidden) > div[role] {
+			display:none !important; }
+		.ghip-wrapper.ghip-show-previews .ghip-non-image {
 			height:80px; margin-top:15px; opacity:.2; }
-		table.files.ghip-show-previews .image { position:relative; overflow:hidden;
-			text-align:center; }
-		.ghip-image-previews .image { padding:10px; }
-		table.files.ghip-tiled .image { width:22.5%; height:180px;
-			margin:12px !important; /* GitHub uses !important flags now :( */ }
-		table.files.ghip-tiled .image .border-wrap img,
-			.ghip-image-previews .border-wrap svg { max-height:130px; }
-		table.files.ghip-fullw .image { width:97%; height:auto; }
+		.ghip-wrapper.ghip-show-previews .image { width:100%; position:relative;
+			overflow:hidden; text-align:center; }
+
+		.ghip-wrapper.ghip-tiled .Box-row:not(.ghsc-header):not(.hidden) {
+			width:24.5%; max-width:24.5%; justify-content:center; overflow:hidden;
+			display:inline-flex !important; padding:8px !important; }
+		.ghip-wrapper.ghip-tiled .image { height:180px;	margin:12px !important; }
+		.ghip-wrapper.ghip-tiled .image img,
+			.ghip-wrapper svg { max-height:130px; max-width:90%; }
 		/* zoom doesn't work in Firefox, but "-moz-transform:scale(3);"
 			doesn't limit the size of the image, so it overflows */
-		table.files.ghip-tiled .image:hover img:not(.ghip-non-image) { zoom:3; }
-		.ghip-image-previews .border-wrap img,
-			.ghip-image-previews .border-wrap svg { max-width:95%; }
-		.ghip-image-previews .border-wrap img.error { border:5px solid red;
+		.ghip-wrapper.ghip-tiled .image:hover img:not(.ghip-non-image) { zoom:3; }
+
+		.ghip-wrapper.ghip-fullw .image { height:unset; padding-bottom:0; }
+		
+		.ghip-wrapper .image span { display:block;	position:relative; }
+		.ghip-wrapper .ghip-folder { margin-bottom:2em; }
+		.image .ghip-file-type { font-size:40px; top:-2em; left:0; z-index:2;
+			position:relative; text-shadow:1px 1px 1px #fff, -1px 1px 1px #fff,
+			1px -1px 1px #fff, -1px -1px 1px #fff; }
+		.ghip-wrapper h4 { overflow:hidden; white-space:nowrap;
+			text-overflow:ellipsis; margin:0 12px 5px; }
+
+		.ghip-wrapper img, .ghip-wrapper svg { max-width:95%; }
+		.ghip-wrapper img.error { border:5px solid red;
 			border-radius:32px; }
-		.ghip-image-previews .border-wrap h4 { white-space:nowrap;
-			text-overflow:ellipsis; margin-bottom:5px; }
-		.ghip-image-previews .border-wrap h4.ghip-file-name { overflow:hidden; }
-		.btn.ghip-tiled > *, .btn.ghip-fullw > *, .ghip-image-previews iframe {
+		.btn.ghip-tiled > *, .btn.ghip-fullw > *, .ghip-wrapper iframe {
 			pointer-events:none; vertical-align:baseline; }
-		.image .ghip-file-type { font-size:30px; top:-1.8em; position:relative;
-			z-index:2; }
 		.ghip-content span.exploregrid-item .ghip-file-name { cursor:default; }
 		/* override GitHub-Dark styles */
-		table.files img[src*='octocat-spinner'], img[src='/images/spinner.gif'] {
+		.ghip-wrapper img[src*='octocat-spinner'], img[src='/images/spinner.gif'] {
 			width:auto !important; height:auto !important; }
-		table.files td .simplified-path { color:#888 !important; }
+		.ghip-wrapper td .simplified-path { color:#888 !important; }
 	`);
 
 	// supported img types
@@ -78,25 +86,36 @@
 		</svg>`;
 
 	const imgTemplate = [
-		// not using backticks here
+		// not using backticks here; we need to minimize extra whitespace everywhere
 		"<a href='${url}' class='exploregrid-item image m-3 float-left js-navigation-open' rel='nofollow'>",
-		"<span class='border-wrap'>${image}</span>",
+		"${content}",
 		"</a>"
 	].join("");
 
 	const spanTemplate = [
 		"<span class='exploregrid-item image m-3 float-left'>",
-		"<span class='border-wrap'>${image}</span>",
+		"${content}",
 		"</span>"
 	].join("");
+
+	const contentWrap = document.createElement("div");
+	contentWrap.className = "ghip-content";
+
+	function setupWraper() {
+		// set up wrapper
+		const grid = $("div[role='grid']", $("#files").parentElement);
+		if (grid) {
+			grid.parentElement.classList.add("ghip-wrapper");
+		}
+	}
 
 	function addToggles() {
 		if ($(".gh-img-preview")) {
 			return;
 		}
 		const div = document.createElement("div");
-		const btn = `btn btn-sm BtnGroup-item tooltipped tooltipped-n" aria-label="Show`;
-		div.className = "BtnGroup float-right gh-img-preview";
+		const btn = `btn BtnGroup-item tooltipped tooltipped-n" aria-label="Show`;
+		div.className = "BtnGroup ml-2 gh-img-preview";
 		div.innerHTML = `
 			<button type="button" class="ghip-tiled ${btn} tiled files with image preview">${tiled}</button>
 			<button type="button" class="ghip-fullw ${btn} full width files with image preview">${fullWidth}</button>
@@ -119,6 +138,11 @@
 	}
 
 	function openView(name, event) {
+		setupWraper();
+		const wrap = $(".ghip-wrapper");
+		if (!wrap) {
+			return;
+		}
 		const el = $(".ghip-" + name);
 		if (el) {
 			if (event) {
@@ -133,119 +157,107 @@
 
 	function showPreview(name) {
 		buildPreviews();
-		const table = $("table.files");
+		const wrap = $(".ghip-wrapper");
 		const selected = "ghip-" + name;
 		const notSelected = "ghip-" + (name === "fullw" ? "tiled" : "fullw");
-		table.classList.add("ghip-show-previews", selected);
+		wrap.classList.add("ghip-show-previews", selected);
 		$(".btn." + selected).classList.add("selected");
-		table.classList.remove(notSelected);
+		wrap.classList.remove(notSelected);
 		$(".btn." + notSelected).classList.remove("selected");
 		GM_setValue("gh-image-preview", name);
 	}
 
 	function showList() {
-		$("table.files").classList.remove(
-			"ghip-show-previews", "ghip-tiled", "ghip-fullw"
-		);
+		const wrap = $(".ghip-wrapper");
+		wrap.classList.remove("ghip-show-previews", "ghip-tiled", "ghip-fullw");
 		$(".btn.ghip-tiled").classList.remove("selected");
 		$(".btn.ghip-fullw").classList.remove("selected");
 		GM_setValue("gh-image-preview", "");
 	}
 
 	function buildPreviews() {
-		let template, url, temp, noExt, fileName;
-		let imgs = "<td colspan='4' class='ghip-content'>";
-		let indx = 0;
-		const row = document.createElement("tr");
-		const table = $("table.files tbody:last-child");
-		const files = $$("tr.js-navigation-item");
-		const len = files.length;
-		row.className = "ghip-image-previews";
-		if ($(".ghip-image-previews")) {
-			temp = $(".ghip-image-previews");
-			temp.parentNode.removeChild(temp);
+		const wrap = $(".ghip-wrapper");
+		if (!wrap) {
+			return;
 		}
-		if (table) {
-			for (indx = 0; indx < len; indx++) {
-				// not every submodule includes a link; reference examples from
-				// see https://github.com/electron/electron/tree/v1.1.1/vendor
-				temp = $("td.content a", files[indx]) ||
-					$("td.content span span", files[indx]);
-				// use innerHTML because some links include path - see "third_party/lss"
-				fileName = temp ? temp.innerHTML.trim() : "";
-				// temp = temp && $("a", temp);
-				url = temp && temp.nodeName === "A" ? temp.href : "";
-				// add link color
-				template = `<h4 class="ghip-file-name ${
-					(url ? " text-blue" : "")}" title="${fileName}">
-						${fileName}
-					</h4>`;
-				if (imgExt.test(url)) {
-					// *** image preview ***
-					template += "<img src='" + url + "?raw=true'/>";
-					imgs += imgTemplate
-						.replace("${url}", url)
-						.replace("${image}", template);
-				} else if (svgExt.test(url)) {
-					// *** svg preview ***
-					// loaded & encoded because GitHub sets content-type headers as
-					// a string
-					temp = url.substring(url.lastIndexOf("/") + 1, url.length);
-					template += `<img data-svg-holder="${temp}" data-svg-url="${url}" alt="${temp}" src="${spinner}" />`;
-					imgs += updateTemplate(url, template);
-				} else {
-					// *** non-images (file/folder icons) ***
-					temp = $("td.icon svg", files[indx]);
-					if (temp) {
-						// non-files svg class: "directory", "submodule" or "symlink"
-						// add "ghip-folder" class for file-filters userscript
-						noExt = temp.matches(folderIconClasses) ? " ghip-folder" : "";
-						// add xmlns otherwise the svg won't work inside an img
-						// GitHub doesn't include this attribute on any svg octicons
-						temp = temp.outerHTML
-							.replace("<svg", "<svg xmlns='http://www.w3.org/2000/svg'");
-						// include "leaflet-tile-container" to invert icon for GitHub-Dark
-						template += `<span class="leaflet-tile-container${noExt}">` +
-							`<img class="ghip-non-image" src="data:image/svg+xml;base64,` +
-							window.btoa(temp) + `"/></span>`;
-						// get file name + extension
-						temp = url.substring(url.lastIndexOf("/") + 1, url.length);
-						// don't include extension for folders, or files with no extension,
-						// or files starting with a "." (e.g. ".gitignore")
-						template += (!noExt && temp.indexOf(".") > 0) ?
-							"<h4 class='ghip-file-type'>" +
-							temp
-								.substring(temp.lastIndexOf(".") + 1, temp.length)
-								.toUpperCase() +
-							"</h4>" : "";
-						imgs += url ?
-							updateTemplate(url, template) :
-							// empty url; use non-link template
-							// see "depot_tools @ 4fa73b8" at
-							// https://github.com/electron/electron/tree/v1.1.1/vendor
-							updateTemplate(url, template, spanTemplate);
-					} else if (files[indx].classList.contains("up-tree")) {
-						// Up tree link
-						temp = $("td:nth-child(2) a", files[indx]);
-						url = temp ? temp.href : "";
-						imgs += url ?
-							updateTemplate(
-								url,
-								"<h4 class='text-blue ghip-up-tree'>&middot;&middot;</h4>"
-							) : "";
-					}
+		$$(".Box-row").forEach(row => {
+			let content = "";
+			// not every submodule includes a link; reference examples from
+			// see https://github.com/electron/electron/tree/v1.1.1/vendor
+			const el = $("a", row) ||	$("div[role='rowheader'] span[title]", row);
+			const url = el?.nodeName === "A" ? el.href : "";
+			// use innerHTML because some links include path - see "third_party/lss"
+			const fileName = el?.textContent.trim() || "";
+			// add link color
+			const title = (type = "file-name") =>
+				`<h4
+					class="ghip-${type} ${(url ? "text-blue" : "")}"
+					title="${fileName}"
+				>${fileName}</h4>`;
+
+			if (el?.title.includes("parent dir")) {
+				// *** up tree link ***
+				content = url ?
+					updateTemplate(
+						url,
+						"<h4 class='text-blue ghip-up-tree'>&middot;&middot;</h4>"
+					) : "";
+			} else if (imgExt.test(url)) {
+				// *** image preview ***
+				content = updateTemplate(
+					url,
+					`${title()}<img src='${url}?raw=true'/>`
+				);
+			} else if (svgExt.test(url)) {
+				// *** svg preview ***
+				// loaded & encoded because GitHub sets content-type headers as a string
+				content = updateTemplate(url, `${title()}${svgPlaceholder(url)}`);
+			} else {
+				// *** non-images (file/folder icons) ***
+				const svg = $("svg", row);
+				if (svg) {
+					// non-files svg class: "directory", "submodule" or "symlink"
+					// add "ghip-folder" class for file-filters userscript
+					const noExt = svg.matches(folderIconClasses) ? " ghip-folder" : "";
+					// add xmlns otherwise the svg won't work inside an img
+					// GitHub doesn't include this attribute on any svg octicons
+					const svgHTML = svg.outerHTML.replace("<svg", "<svg xmlns='http://www.w3.org/2000/svg'");
+					// include "leaflet-tile-container" to invert icon for GitHub-Dark
+					content = `${title("non-image")}<span class="leaflet-tile-container${noExt}">` +
+						`<img class="ghip-non-image" src="data:image/svg+xml;base64,` +
+						window.btoa(svgHTML) + `"/>`;
+					// get file name + extension
+					const str = url.substring(url.lastIndexOf("/") + 1, url.length);
+					// don't include extension for folders, or files with no extension,
+					// or files starting with a "." (e.g. ".gitignore")
+					content += (!noExt && str.indexOf(".") > 0) ?
+						"<h4 class='ghip-file-type'>" +
+						str
+							.substring(str.lastIndexOf(".") + 1, str.length)
+							.toUpperCase() +
+						"</h4></span>" : "</span>";
+					content = url ?
+						updateTemplate(url, content) :
+						// empty url; use non-link template
+						// see "depot_tools @ 4fa73b8" at
+						// https://github.com/electron/electron/tree/v1.1.1/vendor
+						updateTemplate(url, content, spanTemplate);
 				}
 			}
-			row.innerHTML = imgs + "</td>";
-			table.appendChild(row);
-			lazyLoadSVGs();
-		}
+			const preview = $(".ghip-content", row) || contentWrap.cloneNode();
+			preview.innerHTML = content;
+			row.append(preview);
+		});
+		lazyLoadSVGs();
 	}
 
-	function updateTemplate(url, img, tmpl) {
-		return (tmpl || imgTemplate)
-			.replace("${url}", url)
-			.replace("${image}", img);
+	function updateTemplate(url, content, template = imgTemplate) {
+		return template.replace("${url}", url).replace("${content}", content);
+	}
+
+	function svgPlaceholder(url) {
+		const str = url.substring(url.lastIndexOf("/") + 1, url.length);
+		return `<img data-svg-holder="${str}" data-svg-url="${url}" alt="${str}" src="${spinner}" />`;
 	}
 
 	function lazyLoadSVGs() {
@@ -306,7 +318,8 @@
 	}
 
 	function init() {
-		if ($("table.files")) {
+		if ($("#files")) {
+			setupWraper();
 			addToggles();
 			setTimeout(setInitState, 0);
 		}
