@@ -1,11 +1,11 @@
 {
   "env": {
     "browser": true,
-    "es6": true,
+    "es2020": true,
     "greasemonkey": true
   },
   "parserOptions": {
-    "ecmaVersion": 2018
+    "ecmaVersion": 11
   },
   "rules": {
     "curly": 1,
