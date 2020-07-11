@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub RTL Comments
-// @version     1.2.17
+// @version     1.3.0
 // @description A userscript that adds a button to insert RTL text blocks in comments
 // @license     MIT
 // @author      Rob Garrison
@@ -9,7 +9,9 @@
 // @include     https://gist.github.com/*
 // @run-at      document-idle
 // @grant       GM_addStyle
+// @grant       GM.addStyle
 // @connect     github.com
+// @require     https://greasemonkey.github.io/gm4-polyfill/gm4-polyfill.js?updated=20180103
 // @require     https://greasyfork.org/scripts/28721-mutations/code/mutations.js?version=666427
 // @require     https://greasyfork.org/scripts/28239-rangy-inputs-mod-js/code/rangy-inputs-modjs.js?version=181769
 // @icon        https://github.githubassets.com/pinned-octocat.svg
@@ -32,7 +34,7 @@
 		regexClose = /\u200e/ig,
 		regexSplit = /(\u200f|\u200e)/ig;
 
-	GM_addStyle(`
+	GM.addStyle(`
 		.ghu-rtl-css { direction:rtl; text-align:right; }
 		/* delegated binding; ignore clicks on svg & path */
 		.ghu-rtl > * { pointer-events:none; }
