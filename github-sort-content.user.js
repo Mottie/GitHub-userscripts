@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Sort Content
-// @version     3.0.2
+// @version     3.1.0
 // @description A userscript that makes some lists & markdown tables sortable
 // @license     MIT
 // @author      Rob Garrison
@@ -11,7 +11,7 @@
 // @grant       GM.addStyle
 // @grant       GM_addStyle
 // @require     https://greasemonkey.github.io/gm4-polyfill/gm4-polyfill.js?updated=20180103
-// @require     https://cdnjs.cloudflare.com/ajax/libs/tinysort/2.3.6/tinysort.min.js
+// @require     https://cdnjs.cloudflare.com/ajax/libs/tinysort/3.2.5/tinysort.min.js
 // @require     https://greasyfork.org/scripts/28721-mutations/code/mutations.js?version=666427
 // @icon        https://github.githubassets.com/pinned-octocat.svg
 // @updateURL   https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-sort-content.user.js
@@ -35,38 +35,54 @@
 	 * Org projects - https://github.com/:org/projects
 	 * User repos - https://github.com/:user?tab=repositories
 	 * User stars - https://github.com/:user?tab=stars
-	 * User Followers - https://github.com/:user?tab=followers & https://github.com/:user/followers(/you_know)
-	 * User Following - https://github.com/:user?tab=following & https://github.com/:user/following(/you_know)
 	 * watching - https://github.com/watching
+	 * User subscriptions - https://github.com/notifications/subscriptions
 	 * Repo stargazers - https://github.com/:user/:repo/stargazers
 	 * Repo watchers - https://github.com/:user/:repo/watchers
 	 */
 	/**
-	 * sortables[entry].setup - exec on userscript init (optional)
+	 * sortables[entry].setup - exec on userscript init (optional);
+	 *  param = window.location
 	 * sortables[entry].check - exec on doc.body click; return truthy/falsy or
-	 *  header element (passed to the sort)
+	 *  header element (passed to the sort);
+	 *  param = (event.target, window.location)
 	 * sortables[entry].sort - exec if check returns true or a header element;
-	 *  el param is the element returned by check or original click target
+	 *  param = (el) - the element returned by check or original click target
 	 * sortables[entry].css - specific css as an array of selectors, applied to
-	 *  the entry elements; "unsorted", "asc" (optional), "desc" (optional),
-	 *  "tweaks" (optional)
+	 *  the entry elements; "unsorted", "ascending" (optional),
+	 *  "descending" (optional), "tweaks" (optional)
 	 */
 	const sortables = {
 		// markdown tables
 		"tables": {
-			// init after a short delay to allow rendering of file list
-			setup: () => setTimeout(() => addRepoFileThead(), 200),
 			check: el => el.nodeName === "TH" &&
-				el.matches(".markdown-body table thead th, table.files thead th"),
+				el.matches(".markdown-body table thead th"),
 			sort: el => initSortTable(el),
 			css: {
 				unsorted: [
 					".markdown-body table thead th",
-					".markdown-body table.csv-data thead th",
-					"table.files thead th"
+					".markdown-body table.csv-data thead th"
 				],
 				tweaks: [
-					`body .markdown-body table thead th, body table.files thead th {
+					`body .markdown-body table thead th {
+						text-align: left;
+						background-position: 3px center !important;
+					}`
+				]
+			}
+		},
+		// repo files
+		"repo-files": {
+			check: el => el.classList.contains("ghsc-header-cell"),
+			// init after a short delay to allow rendering of file list
+			setup: () => setTimeout(() => addRepoFileHeader(), 1e3),
+			sort: el => initSortFiles(el),
+			css: {
+				unsorted: [
+					".ghsc-header-cell"
+				],
+				tweaks: [
+					`body .ghsc-header-cell {
 						text-align: left;
 						background-position: 3px center !important;
 					}`
@@ -151,13 +167,7 @@
 			css: {
 				unsorted: [
 					".js-pinned-items-reorder-container h2"
-				],
-				// tweaks: [
-				// 	`.js-pinned-items-reorder-container h2 {
-				// 		padding-left: 22px;
-				// 		background-position: left center !important;
-				// 	}`
-				// ]
+				]
 			}
 		},
 		// github.com/:org
@@ -308,50 +318,27 @@
 		},
 		// github.com/:user?tab=follow(ers|ing)
 		"user-tab-follow": {
-			setup: () => {
-				const tab = $("a[href*='?tab=follow'].selected");
-				if (tab) {
-					tab.parentElement.parentElement.classList.add("ghsc-follow-nav");
+			setup: loc => {
+				if (loc.search.includes("tab=follow")) {
+					const tab = $("nav.UnderlineNav-body");
+					if (tab) {
+						tab.classList.add("ghsc-follow-nav");
+					}
 				}
 			},
 			check: (el, loc) => loc.search.indexOf("tab=follow") > -1 &&
 				el.matches(".ghsc-follow-nav"),
 			sort: el => {
-				const wrap = el.parentElement;
 				initSortList(
 					el,
-					$$(".position-relative .d-table", wrap),
-					{ selector: ".col-9 a" }
+					$$(".position-relative .d-table"),
+					{ selector: ".col-9 .link-gray" } // GitHub user name
 				);
 				movePaginate(wrap);
 			},
 			css: {
 				unsorted: [
-					"div.ghsc-follow-nav"
-				]
-			}
-		},
-		// github.com/:user/follow(ers|ing)
-		// github.com/:user/follow(ers|ing)/you_know
-		"user-follow": {
-			setup: loc => {
-				if (loc.href.indexOf("/follow") > -1) {
-					const list = $(".follow-list");
-					const wrap = list && list.closest(".container");
-					if (wrap) {
-						$("h2", wrap).classList.add("ghsc-follow-header");
-					}
-				}
-			},
-			check: el => el.matches(".ghsc-follow-header"),
-			sort: el => initSortList(
-				el,
-				$$(".follow-list li"),
-				{ selector: ".follow-list-name span", attr: "title" }
-			),
-			css: {
-				unsorted: [
-					".ghsc-follow-header"
+					"nav.ghsc-follow-nav"
 				]
 			}
 		},
@@ -376,6 +363,26 @@
 			css: {
 				unsorted: [
 					".ghsc-watching-header"
+				]
+			}
+		},
+		// github.com/notifications/subscriptions
+		"user-subscriptions": {
+			setup: loc => {
+				if (loc.href.indexOf("/subscriptions") > -1) {
+					const header = $(".tabnav");
+					header.classList.add("ghsc-subs-header");
+					header.title = "Sort list by repo name plus issue title";
+				}
+			},
+			check: el => el.matches(".ghsc-subs-header"),
+			sort: el => {
+				const list = $$("li.notification-thread-subscription");
+				initSortList(el, list, { selector: ".flex-auto" });
+			},
+			css: {
+				unsorted: [
+					".ghsc-subs-header"
 				]
 			}
 		},
@@ -409,11 +416,11 @@
 		unsorted: color => `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="${color}">
 			<path d="M15 8H1l7-8zm0 1H1l7 7z" opacity=".2"/>
 		</svg>`,
-		asc: color => `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="${color}">
+		ascending: color => `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="${color}">
 			<path d="M15 8H1l7-8z"/>
 			<path d="M15 9H1l7 7z" opacity=".2"/>
 		</svg>`,
-		desc: color => `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="${color}">
+		descending: color => `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="${color}">
 			<path d="M15 8H1l7-8z" opacity=".2"/>
 			<path d="M15 9H1l7 7z"/>
 		</svg>`
@@ -442,47 +449,81 @@
 		return false;
 	}
 
-	function addRepoFileThead() {
-		const $table = $("table.files");
-		if ($table) {
-			// GitHub now adds an invisible thead (for screen readers)
-			if (!$("thead", $table)) {
-				$table.prepend(document.createElement("thead"));
-			}
-			$("thead", $table).innerHTML = `<tr class="ghsc-header">
-				<td></td>
-				<th>Content</th>
-				<th>Message</th>
-				<th class="ghsc-age">Age</th>
-			</tr>`;
-		}
+	function getDirection(el) {
+		return (el.getAttribute("aria-sort") || "").includes(sorts[0])
+			? sorts[1]
+			: sorts[0];
+	}
+
+	function setDirection(els, currentElm, dir) {
+		els.forEach(elm => {
+			// aria-sort uses "ascending", "descending" or "none"
+			const cellDir = currentElm === elm ? `${dir}ending` : "none";
+			elm.setAttribute("aria-sort", cellDir);
+		});
 	}
 
 	function initSortTable(el) {
 		removeSelection();
-		const dir = el.classList.contains(sorts[0]) ? sorts[1] : sorts[0],
-			table = el.closest("table"),
-			options = {
-				order: dir,
-				natural: true,
-				selector: `td:nth-child(${el.cellIndex + 1})`
-			};
+		const dir = getDirection(el);
+		const table = el.closest("table");
+		const options = {
+			order: dir,
+			natural: true,
+			selector: `td:nth-child(${el.cellIndex + 1})`
+		};
+		tinysort($$("tbody tr", table), options);
+		setDirection($$("th", table), el, dir);
+	}
+
+	function addRepoFileHeader() {
+		const $header = $("#files");
+		// h2#files is a sibling of the grid wrapper
+		const $target = $("div[role='grid'] .sr-only", $header.parentElement);
+		if ($header && $target) {
+			$target.className = "Box-row Box-row--focus-gray py-2 d-flex position-relative js-navigation-item ghsc-header";
+			$target.innerHTML = `
+				<div role="gridcell" class="mr-3 flex-shrink-0" style="width: 16px;"></div>
+				<div role="columnheader" aria-sort="none" data-index="2" class="flex-auto min-width-0 col-md-2 mr-3 ghsc-header-cell">
+					Content
+				</div>
+				<div role="columnheader" aria-sort="none" data-index="3" class="flex-auto min-width-0 d-none d-md-block col-5 mr-3 ghsc-header-cell">
+					Message
+				</div>
+				<div role="columnheader" aria-sort="none" data-index="4" class="text-gray-light ghsc-age ghsc-header-cell" style="width:100px;">
+					Age&nbsp;
+				</div>
+			`;
+		}
+	}
+
+	function initSortFiles(el) {
+		removeSelection();
+		const dir = getDirection(el);
+		const grid = el.closest("[role='grid']");
+		const options = {
+			order: dir,
+			natural: true,
+			selector: `div:nth-child(${el.dataset.index})`
+		};
 		if (el.classList.contains("ghsc-age")) {
 			// sort repo age column using ISO 8601 datetime format
 			options.selector += " [datetime]";
 			options.attr = "datetime";
 		}
-		tinysort($$("tbody tr:not(.up-tree)", table), options);
-		$$("th", table).forEach(elm => {
-			elm.classList.remove(...sorts);
-		});
-		el.classList.add(dir);
+		// check for parent directory link; don't sort it
+		const parentDir = $("a[title*='parent dir']", grid);
+		if (parentDir) {
+			parentDir.closest("div[role='row']").classList.add("ghsc-header");
+		}
+		tinysort($$(".Box-row:not(.ghsc-header)", grid), options);
+		setDirection($$(".ghsc-header-cell", grid), el, dir);
 	}
 
 	function initSortList(header, list, opts = {}) {
 		if (list) {
 			removeSelection();
-			const dir = header.classList.contains(sorts[0]) ? sorts[1] : sorts[0];
+			const dir = getDirection(header);
 			const options = {
 				order: dir,
 				natural: true,
@@ -490,8 +531,7 @@
 				...opts
 			};
 			tinysort(list, options);
-			header.classList.remove(...sorts);
-			header.classList.add(dir);
+			setDirection([header], header, dir);
 		}
 	}
 
@@ -504,9 +544,11 @@
 			} else if (type !== "unsorted" && type !== "tweaks") {
 				const useUnsorted = css.unsorted || [];
 				if (useUnsorted.length) {
-					// if "asc" or "desc" isn't defined, then append that class to the
-					// unsorted value
-					acc.push(`${useUnsorted.join(`.${type},`)}.${type}`);
+					// if "ascending" or "descending" isn't defined, then append
+					// that class to the unsorted value
+					acc.push(
+						`${useUnsorted.join(`[aria-sort='${type}'],`)}[aria-sort='${type}']`
+					);
 				}
 			}
 			return acc;
@@ -570,12 +612,12 @@
 				background-repeat: no-repeat !important;
 				background-position: left center !important;
 			}
-			${getCss("asc")} {
-				background-image: url(${getIcon("asc", color)}) !important;
+			${getCss("ascending")} {
+				background-image: url(${getIcon("ascending", color)}) !important;
 				background-repeat: no-repeat !important;
 			}
-			${getCss("desc")} {
-				background-image: url(${getIcon("desc", color)}) !important;
+			${getCss("descending")} {
+				background-image: url(${getIcon("descending", color)}) !important;
 				background-repeat: no-repeat !important;
 			}
 			/* specific tweaks */
