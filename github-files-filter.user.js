@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Files Filter
-// @version     2.0.1
+// @version     2.1.0
 // @description A userscript that adds filters that toggle the view of repo files by extension
 // @license     MIT
 // @author      Rob Garrison
@@ -43,6 +43,9 @@
 		.gff-filter .btn:after {
 			animation-delay: unset !important;
 			filter: invert(10%);
+		}
+		.Box-row.hidden {
+			display: none !important;
 		}
 	`);
 
@@ -98,7 +101,6 @@
 				const modeBool = invert ? !settings[ext] : settings[ext];
 				settings[ext] = modeBool;
 				el.classList.toggle("selected", modeBool);
-				toggleImagePreview(ext, modeBool ? "show" : "hide");
 			}
 		});
 	}
@@ -122,24 +124,25 @@
 	}
 
 	function toggleRow(el, mode) {
-		const row = el.closest("tr.js-navigation-item");
-		// Don't toggle folders
-		if (row && !$(folderIconClasses, row)) {
-			let state;
+		const row = el.closest("div.Box-row");
+		if (
+			row &&
+			// Don't toggle folders or link to parent folder row
+			!($(folderIconClasses, row) || $("a[title*='parent dir']", row))
+		) {
 			if (mode) {
-				state = mode === "show" ? "" : "none";
+				row.classList.toggle("hidden", mode !== "show");
 			} else {
 				// Toggle
-				state = row.style.display === "none" ? "" : "none";
+				row.classList.toggle("hidden");
 			}
-			row.style.display = state;
 		}
 	}
 
 	function toggleAll() {
 		const files = $(".gff-wrapper");
 		// Toggle all blocks
-		$$("td.content .js-navigation-open", files).forEach(el => {
+		$$(".Box-row", files).forEach(el => {
 			toggleRow(el);
 		});
 		updateAllFilters({ invert: true });
@@ -153,8 +156,6 @@
 		if (elm) {
 			elm.classList.toggle("selected", mode === "show");
 		}
-		// Update view for github-image-preview.user.js
-		toggleImagePreview(ext, mode);
 	}
 
 	// Disable all except current filter (initial ctrl + click)
@@ -163,8 +164,6 @@
 			const modeBool = block === ext;
 			settings[block] = modeBool;
 			toggleRows(block, modeBool ? "show" : "hide");
-			// Update view for github-image-preview.user.js
-			toggleImagePreview(ext, modeBool ? "show" : "hide");
 		});
 		updateAllFilters({ invert: false });
 		updateSettings();
@@ -178,24 +177,6 @@
 				toggleSet(ext, mode);
 			} else {
 				toggleFilter(ext, mode);
-			}
-		}
-	}
-
-	// Image preview userscript support
-	function toggleImagePreview(ext, mode) {
-		const previews = $(".ghip-image-previews");
-		if (previews) {
-			const files = ext === ":toggle" ? ["*"] : list[ext];
-			if (files.length) {
-				files.forEach(file => {
-					const selector = file === "*" ? "a" : `a[href$="${file}"]`;
-					const el = $(selector, previews);
-					// Don't touch folders and submodules
-					if (el && !$(".ghip-folder, .ghip-up-tree", el)) {
-						el.style.display = mode === "show" ? "" : "none";
-					}
-				});
 			}
 		}
 	}
@@ -216,31 +197,35 @@
 				list[item] = [];
 			}
 		});
-		// Get all files
-		$$("table.files tr.js-navigation-item").forEach(file => {
-			if ($("td.icon .octicon-file", file)) {
-				let ext, parts, sub;
-				const link = $("td.content .js-navigation-open", file);
-				const txt = (link.title || link.textContent || "").trim();
-				const name = txt.split("/").slice(-1)[0];
-				// Test extension types; fallback to regex extraction
-				ext = Object.keys(types).find(item => {
-					return types[item].is(name);
-				}) || /[^./\\]*$/.exec(name)[0];
-				parts = name.split(".");
-				// Include sub-extension filters like "user.js" or "min.js"
-				if (!ext.startsWith(":") && parts.length > 2 && parts[0] !== "") {
-					sub = parts.slice(0, -1).join(".");
-					// Prevent version numbers & "vs. " from adding a filter button
-					// See https://github.com/tpn/pdfs
-					if (!/[()]/.test(sub) && !/[\b\w]\.[\b\d]/.test(sub)) {
-						addExt(ext, txt);
-						ext = parts.slice(-2).join(".");
+		const wrapper = $(".gff-wrapper");
+		if (wrapper) {
+			// Get all files
+			$$(".Box-row", wrapper).forEach(file => {
+				const fileWrap = $("div[role='rowheader']", file);
+				if (fileWrap) {
+					let ext, parts, sub;
+					const link = $("a, span[title]", fileWrap);
+					const txt = (link?.title || link?.textContent || "").trim();
+					const name = txt.split("/").slice(-1)[0];
+					// Test extension types; fallback to regex extraction
+					ext = Object.keys(types).find(item => {
+						return types[item].is(name);
+					}) || /[^./\\]*$/.exec(name)[0];
+					parts = name.split(".");
+					// Include sub-extension filters like "user.js" or "min.js"
+					if (!ext.startsWith(":") && parts.length > 2 && parts[0] !== "") {
+						sub = parts.slice(0, -1).join(".");
+						// Prevent version numbers & "vs. " from adding a filter button
+						// See https://github.com/tpn/pdfs
+						if (!/[()]/.test(sub) && !/[\b\w]\.[\b\d]/.test(sub)) {
+							addExt(ext, txt);
+							ext = parts.slice(-2).join(".");
+						}
 					}
+					addExt(ext, txt);
 				}
-				addExt(ext, txt);
-			}
-		});
+			});
+		}
 	}
 
 	function sortList() {
@@ -265,17 +250,16 @@
 			filters += list[ext].length > 0 ? 1 : 0;
 		});
 		// Don't bother showing filter if only one extension type is found
-		const files = $("table.files");
-		if (files && filters > 1) {
+		const wrapper = $(".gff-wrapper");
+		if (wrapper && filters > 1) {
 			filters = $(".gff-filter-wrapper");
 			if (!filters) {
 				filters = document.createElement("div");
 				// Use "commitinfo" for GitHub-Dark styling
 				filters.className = "gff-filter-wrapper commitinfo";
 				filters.style = "padding:3px 5px 2px;border-bottom:1px solid #eaecef";
-				files.before(filters, files.firstChild);
+				wrapper.prepend(filters);
 			}
-			fixWidth();
 			buildHTML();
 			applyInitSettings();
 		}
@@ -311,30 +295,6 @@
 		$(".gff-filter-wrapper").innerHTML = html + "</div></div>";
 	}
 
-	function getWidth(el) {
-		return parseFloat(window.getComputedStyle(el).width);
-	}
-
-	// Lock-in the table cell widths, or the navigation up link jumps when you
-	// hide all files... using percentages in case someone is using GitHub wide
-	function fixWidth() {
-		let group;
-		let html = "";
-		const table = $("table.files");
-		const tableWidth = getWidth(table);
-		const cells = $$("tbody:last-child tr:last-child td", table);
-		if (table && cells.length > 1 && !$("colgroup", table)) {
-			group = document.createElement("colgroup");
-			table.insertBefore(group, table.childNodes[0]);
-			cells.forEach(el => {
-				// Keep two decimal point accuracy
-				const width = parseInt(getWidth(el) / tableWidth * 1e4, 10) / 100;
-				html += `<col style="width:${width}%">`;
-			});
-			group.innerHTML = html;
-		}
-	}
-
 	function applyInitSettings() {
 		Object.keys(list).forEach(ext => {
 			if (ext !== ":toggle" && settings[ext] === false) {
@@ -344,9 +304,11 @@
 	}
 
 	function init() {
-		const table = $("table.files");
-		if (table) {
-			table.parentElement.classList.add("gff-wrapper");
+		const files = $("#files");
+		// h2#files is a sibling of the div wrapping role="grid"
+		const grid = $("div[role='grid']", files && files.parentElement);
+		if (files && grid) {
+			grid.parentElement.classList.add("gff-wrapper");
 			buildList();
 			makeFilter();
 		}
