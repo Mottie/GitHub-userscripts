@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Image Preview
-// @version     2.0.0
+// @version     2.0.1
 // @description A userscript that adds clickable image thumbnails
 // @license     MIT
 // @author      Rob Garrison
@@ -180,11 +180,11 @@
 		if (!wrap) {
 			return;
 		}
-		$$(".Box-row").forEach(row => {
+		$$(".Box-row", wrap).forEach(row => {
 			let content = "";
 			// not every submodule includes a link; reference examples from
 			// see https://github.com/electron/electron/tree/v1.1.1/vendor
-			const el = $("a", row) ||	$("div[role='rowheader'] span[title]", row);
+			const el = $("a", row) || $("div[role='rowheader'] span[title]", row);
 			const url = el?.nodeName === "A" ? el.href : "";
 			// use innerHTML because some links include path - see "third_party/lss"
 			const fileName = el?.textContent.trim() || "";
