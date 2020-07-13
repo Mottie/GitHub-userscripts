@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Files Filter
-// @version     2.1.0
+// @version     2.1.1
 // @description A userscript that adds filters that toggle the view of repo files by extension
 // @license     MIT
 // @author      Rob Garrison
@@ -205,7 +205,7 @@
 				if (fileWrap) {
 					let ext, parts, sub;
 					const link = $("a, span[title]", fileWrap);
-					const txt = (link?.title || link?.textContent || "").trim();
+					const txt = link && (link.title || link.textContent || "").trim();
 					const name = txt.split("/").slice(-1)[0];
 					// Test extension types; fallback to regex extraction
 					ext = Object.keys(types).find(item => {
