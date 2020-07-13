@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Image Preview
-// @version     2.0.1
+// @version     2.0.2
 // @description A userscript that adds clickable image thumbnails
 // @license     MIT
 // @author      Rob Garrison
@@ -28,8 +28,8 @@
 			background-color:transparent !important; }
 		.ghip-show-previews .Box-row:not(.ghsc-header):not(.hidden) > div[role] {
 			display:none !important; }
-		.ghip-wrapper.ghip-show-previews .ghip-non-image {
-			height:80px; margin-top:15px; opacity:.2; }
+		.ghip-wrapper.ghip-show-previews img.ghip-non-image { height:80px;
+			margin-top:15px; opacity:.2; }
 		.ghip-wrapper.ghip-show-previews .image { width:100%; position:relative;
 			overflow:hidden; text-align:center; }
 
@@ -185,9 +185,9 @@
 			// not every submodule includes a link; reference examples from
 			// see https://github.com/electron/electron/tree/v1.1.1/vendor
 			const el = $("a", row) || $("div[role='rowheader'] span[title]", row);
-			const url = el?.nodeName === "A" ? el.href : "";
+			const url = el && el.nodeName === "A" ? el.href : "";
 			// use innerHTML because some links include path - see "third_party/lss"
-			const fileName = el?.textContent.trim() || "";
+			const fileName = el && el.textContent.trim() || "";
 			// add link color
 			const title = (type = "file-name") =>
 				`<h4
@@ -195,7 +195,7 @@
 					title="${fileName}"
 				>${fileName}</h4>`;
 
-			if (el?.title.includes("parent dir")) {
+			if (el && el.title.includes("parent dir")) {
 				// *** up tree link ***
 				content = url ?
 					updateTemplate(
