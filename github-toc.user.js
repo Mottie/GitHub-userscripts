@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Table of Contents
-// @version     2.0.1
+// @version     2.0.2
 // @description A userscript that adds a table of contents to readme & wiki pages
 // @license     MIT
 // @author      Rob Garrison
@@ -79,6 +79,8 @@
 		.ghus-toc li.collapsible.collapsed .ghus-toc-icon { -webkit-transform:rotate(-90deg); transform:rotate(-90deg); height:10px; width:12px; margin-right:2px; }
 		.ghus-toc-icon svg, .ghus-toc-docs svg { pointer-events:none; }
 		.ghus-toc-no-selection { -webkit-user-select:none !important; -moz-user-select:none !important; user-select:none !important; }
+		/* prevent google translate from breaking links */
+		.ghus-toc li a font { pointer-events:none; }
 	`);
 
 	let tocInit = false;
