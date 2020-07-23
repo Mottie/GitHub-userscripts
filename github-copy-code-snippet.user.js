@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Copy Code Snippet
-// @version     0.3.5
+// @version     0.3.6
 // @description A userscript adds a copy to clipboard button on hover of markdown code snippets
 // @license     MIT
 // @author      Rob Garrison
@@ -22,7 +22,7 @@
 		codeSelector = "pre:not(.gh-csc-pre)",
 
 		copyButton = document.createElement("clipboard-copy");
-	copyButton.className = "btn btn-sm btn-blue tooltipped tooltipped-w gh-csc-button";
+	copyButton.className = "btn btn-sm tooltipped tooltipped-w gh-csc-button";
 	copyButton.setAttribute("aria-label", "Copy to clipboard");
 	// This hint isn't working yet (GitHub needs to fix it)
 	copyButton.setAttribute("data-copied-hint", "Copied!");
