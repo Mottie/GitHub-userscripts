@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Table of Contents
-// @version     2.0.2
+// @version     2.0.3
 // @description A userscript that adds a table of contents to readme & wiki pages
 // @license     MIT
 // @author      Rob Garrison
@@ -422,6 +422,7 @@
 		on(document, "mouseup", dragStop);
 		// toggle TOC
 		on($(".ghus-toc-icon", container), "mouseup", tocToggle);
+		on($("h3", container), "dblclick", tocToggle);
 		// prevent container content selection
 		on(container, "onselectstart", stopPropag);
 		// keyboard shortcuts
