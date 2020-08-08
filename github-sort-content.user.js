@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Sort Content
-// @version     3.1.0
+// @version     3.1.1
 // @description A userscript that makes some lists & markdown tables sortable
 // @license     MIT
 // @author      Rob Garrison
@@ -479,7 +479,8 @@
 	function addRepoFileHeader() {
 		const $header = $("#files");
 		// h2#files is a sibling of the grid wrapper
-		const $target = $("div[role='grid'] .sr-only", $header.parentElement);
+		const $target = $header &&
+			$("div[role='grid'] .sr-only", $header.parentElement);
 		if ($header && $target) {
 			$target.className = "Box-row Box-row--focus-gray py-2 d-flex position-relative js-navigation-item ghsc-header";
 			$target.innerHTML = `
