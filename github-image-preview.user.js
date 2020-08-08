@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Image Preview
-// @version     2.0.2
+// @version     2.0.3
 // @description A userscript that adds clickable image thumbnails
 // @license     MIT
 // @author      Rob Garrison
@@ -110,7 +110,7 @@
 	}
 
 	function addToggles() {
-		if ($(".gh-img-preview")) {
+		if ($(".gh-img-preview") || !$(".file-navigation")) {
 			return;
 		}
 		const div = document.createElement("div");
