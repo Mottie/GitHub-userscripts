@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Custom Hotkeys
-// @version     1.0.26
+// @version     1.1.0
 // @description A userscript that allows you to add custom GitHub keyboard hotkeys
 // @license     MIT
 // @author      Rob Garrison
@@ -11,6 +11,7 @@
 // @grant       GM_addStyle
 // @grant       GM_getValue
 // @grant       GM_setValue
+// @require     https://greasyfork.org/scripts/398877-utils-js/code/utilsjs.js?version=785415
 // @icon        https://github.githubassets.com/pinned-octocat.svg
 // @updateURL   https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-custom-hotkeys.user.js
 // @downloadURL https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-custom-hotkeys.user.js
@@ -23,7 +24,7 @@
 			{ "f1" : "#hotkey-settings" },
 			{ "g g": "{repo}/graphs/code-frequency" },
 			{ "g p": "{repo}/pulse" },
-			{ "g u": "{user}" },
+			{ "g u": [ "{user}", true ] },
 			{ "g s": "{upstream}" }
 		],
 		"{repo}/issues": [
@@ -37,79 +38,79 @@
 	}
 	*/
 	let data = GM_getValue("github-hotkeys", {
-			all: [{
-				f1: "#hotkey-settings"
-			}]
-		}),
-		lastHref = window.location.href;
+		all: [{
+			f1: "#hotkey-settings"
+		}]
+	});
+	const lastHref = window.location.href;
 
-	const openHash = "#hotkey-settings",
+	const openHash = "#hotkey-settings";
 
-		templates = {
-			remove: "<svg class='ghch-remove octicon' fill='currentColor' xmlns='http://www.w3.org/2000/svg' width='9' height='9' viewBox='0 0 9 9'><path d='M9 1L5.4 4.4 9 8 8 9 4.6 5.4 1 9 0 8l3.6-3.5L0 1l1-1 3.5 3.6L8 0l1 1z'/></svg>",
-			hotkey: "Hotkey: <input type='text' class='ghch-hotkey form-control'>&nbsp; URL: <input type='text' class='ghch-url form-control'>",
-			scope: "<ul><li class='ghch-hotkey-add'>+ Click to add a new hotkey</li></ul>"
-		},
+	const templates = {
+		remove: `<svg class="octicon" fill="currentColor" xmlns="http://www.w3.org/2000/svg" width="9" height="9" viewBox="0 0 9 9"><path d="M9 1L5.4 4.4 9 8 8 9 4.6 5.4 1 9 0 8l3.6-3.5L0 1l1-1 3.5 3.6L8 0l1 1z"/></svg>`,
+		hotkey: `
+			<label class="tooltipped tooltipped-n" aria-label="hotkey"><input type="text" class="ghch-hotkey form-control"></label>
+			<label class="tooltipped tooltipped-n" aria-label="URL"><input type="text" class="ghch-url form-control"></label>
+			<label class="tooltipped tooltipped-w" aria-label="Open in a new tab?"><input type="checkbox" class="ghch-new-tab"></label>`,
+		scope: "<ul><li><button class='ghch-hotkey-add'>+ Click to add a new hotkey</button></li></ul>"
+	};
 
-		// https://github.com/{nonUser}
-		// see https://github.com/Mottie/github-reserved-names
-		nonUser = new RegExp("^(" + [
-			/* BUILD:RESERVED-NAMES-START (v1.1.8) */
-			"400", "401", "402", "403", "404", "405", "406", "407", "408", "409", 
-			"410", "411", "412", "413", "414", "415", "416", "417", "418", "419", 
-			"420", "421", "422", "423", "424", "425", "426", "427", "428", "429", 
-			"430", "431", "500", "501", "502", "503", "504", "505", "506", "507", 
-			"508", "509", "510", "511", "about", "access", "account", "admin", 
-			"anonymous", "any", "api", "apps", "attributes", "auth", "billing", 
-			"blob", "blog", "bounty", "branches", "business", "businesses", "c", 
-			"cache", "case-studies", "categories", "central", "certification", 
-			"changelog", "cla", "cloud", "codereview", "collection", 
-			"collections", "comments", "commit", "commits", "community", 
-			"companies", "compare", "contact", "contributing", "cookbook", 
-			"coupons", "customer", "customers", "dashboard", "dashboards", 
-			"design", "develop", "developer", "diff", "discover", "discussions", 
-			"docs", "downloads", "downtime", "editor", "editors", "edu", 
-			"enterprise", "events", "explore", "featured", "features", "files", 
-			"fixtures", "forked", "garage", "ghost", "gist", "gists", "graphs", 
-			"guide", "guides", "help", "help-wanted", "home", "hooks", "hosting", 
-			"hovercards", "identity", "images", "inbox", "individual", "info", 
-			"integration", "interfaces", "introduction", "invalid-email-address", 
-			"investors", "issues", "jobs", "join", "journal", "journals", "lab", 
-			"labs", "languages", "launch", "layouts", "learn", "legal", "library", 
-			"linux", "listings", "lists", "login", "logos", "logout", "mac", 
-			"maintenance", "malware", "man", "marketplace", "mention", 
-			"mentioned", "mentioning", "mentions", "migrating", "milestones", 
-			"mine", "mirrors", "mobile", "navigation", "network", "new", "news", 
-			"none", "nonprofit", "nonprofits", "notices", "notifications", 
-			"oauth", "offer", "open-source", "organisations", "organizations", 
-			"orgs", "pages", "partners", "payments", "personal", "plans", 
-			"plugins", "popular", "popularity", "posts", "press", "pricing", 
-			"professional", "projects", "pulls", "raw", "readme", 
-			"recommendations", "redeem", "releases", "render", "reply", 
-			"repositories", "resources", "restore", "revert", 
-			"save-net-neutrality", "saved", "scraping", "search", "security", 
-			"services", "sessions", "settings", "shareholders", "shop", 
-			"showcases", "signin", "signup", "site", "spam", "sponsors", "ssh", 
-			"staff", "starred", "stars", "static", "status", "statuses", 
-			"storage", "store", "stories", "styleguide", "subscriptions", 
-			"suggest", "suggestion", "suggestions", "support", "suspended", 
-			"talks", "teach", "teacher", "teachers", "teaching", "teams", "ten", 
-			"terms", "timeline", "topic", "topics", "tos", "tour", "train", 
-			"training", "translations", "tree", "trending", "updates", "username", 
-			"users", "visualization", "w", "watching", "wiki", "windows", 
-			"works-with", "www0", "www1", "www2", "www3", "www4", "www5", "www6", 
-			"www7", "www8", "www9"
-			/* BUILD:RESERVED-NAMES-END */
-		].join("|") + ")$");
+	// https://github.com/{nonUser}
+	// see https://github.com/Mottie/github-reserved-names
+	const nonUser = new RegExp("^(" + [
+		/* BUILD:RESERVED-NAMES-START (v1.1.10) */
+		"400", "401", "402", "403", "404", "405", "406", "407", "408", "409",
+		"410", "411", "412", "413", "414", "415", "416", "417", "418", "419",
+		"420", "421", "422", "423", "424", "425", "426", "427", "428", "429",
+		"430", "431", "500", "501", "502", "503", "504", "505", "506", "507",
+		"508", "509", "510", "511", "about", "access", "account", "admin",
+		"anonymous", "any", "api", "apps", "attributes", "auth", "billing", "blob",
+		"blog", "bounty", "branches", "business", "businesses", "c", "cache",
+		"case-studies", "categories", "central", "certification", "changelog",
+		"cla", "cloud", "codereview", "collection", "collections", "comments",
+		"commit", "commits", "community", "companies", "compare", "contact",
+		"contributing", "cookbook", "coupons", "customer", "customers",
+		"dashboard", "dashboards", "design", "develop", "developer", "diff",
+		"discover", "discussions", "docs", "downloads", "downtime", "editor",
+		"editors", "edu", "enterprise", "events", "explore", "featured",
+		"features", "files", "fixtures", "forked", "garage", "ghost", "gist",
+		"gists", "graphs", "guide", "guides", "help", "help-wanted", "home",
+		"hooks", "hosting", "hovercards", "identity", "images", "inbox",
+		"individual", "info", "integration", "interfaces", "introduction",
+		"invalid-email-address", "investors", "issues", "jobs", "join", "journal",
+		"journals", "lab", "labs", "languages", "launch", "layouts", "learn",
+		"legal", "library", "linux", "listings", "lists", "login", "logos",
+		"logout", "mac", "maintenance", "malware", "man", "marketplace", "mention",
+		"mentioned", "mentioning", "mentions", "migrating", "milestones", "mine",
+		"mirrors", "mobile", "navigation", "network", "new", "news", "none",
+		"nonprofit", "nonprofits", "notices", "notifications", "oauth", "offer",
+		"open-source", "organisations", "organizations", "orgs", "pages",
+		"partners", "payments", "personal", "plans", "plugins", "popular",
+		"popularity", "posts", "press", "pricing", "professional", "projects",
+		"pulls", "raw", "readme", "recommendations", "redeem", "releases",
+		"render", "reply", "repositories", "resources", "restore", "revert",
+		"save-net-neutrality", "saved", "scraping", "search", "security",
+		"services", "sessions", "settings", "shareholders", "shop", "showcases",
+		"signin", "signup", "site", "spam", "sponsors", "ssh", "staff", "starred",
+		"stars", "static", "status", "statuses", "storage", "store", "stories",
+		"styleguide", "subscriptions", "suggest", "suggestion", "suggestions",
+		"support", "suspended", "talks", "teach", "teacher", "teachers",
+		"teaching", "teams", "ten", "terms", "timeline", "topic", "topics", "tos",
+		"tour", "train", "training", "translations", "tree", "trending", "updates",
+		"username", "users", "visualization", "w", "watching", "wiki", "windows",
+		"works-with", "www0", "www1", "www2", "www3", "www4", "www5", "www6",
+		"www7", "www8", "www9"
+		/* BUILD:RESERVED-NAMES-END */
+	].join("|") + ")$");
 
 	function getUrlParts() {
-		const loc = window.location,
-			root = "https://github.com",
-			parts = {
-				root,
-				origin: loc.origin,
-				page: ""
-			};
+		const loc = window.location;
+		const root = "https://github.com";
+		const parts = {
+			root,
+			origin: loc.origin,
+			page: ""
+		};
 		// me
 		let tmp = $("meta[name='user-login']");
 		parts.m = tmp && tmp.getAttribute("content") || "";
@@ -167,7 +168,7 @@
 		});
 	}
 
-	function fixUrl(parts, url) {
+	function fixUrl(parts, url = "") {
 		let valid = true; // use true in case a full URL is used
 		url = url
 			// allow {issues+#} to go inc or desc
@@ -180,7 +181,7 @@
 			.replace(/\{page([\-+]\d+)?\}/, (s, n) => {
 				const loc = window.location,
 					val = n ? parseInt(parts.page || "", 10) + parseInt(n, 10) : "";
-				let search;
+				let search = "";
 				valid = val !== "" && val > 0;
 				if (valid) {
 					search = loc.origin + loc.pathname;
@@ -207,7 +208,7 @@
 	function removeElms(src, selector) {
 		const links = $$(selector, src);
 		let len = links.length;
-		while (len--) {
+		while (len-- > 0) {
 			src.removeChild(links[len]);
 		}
 	}
@@ -215,19 +216,24 @@
 	function addHotkeys(parts, scope, hotkeys) {
 		// Shhh, don't tell anyone, but GitHub checks the data-hotkey attribute
 		// of any link on the page, so we only need to add dummy links :P
-		let indx, url, key, link;
-		const len = hotkeys.length,
-			body = $("body");
+		let indx, url, key, entry, link, isArray;
+		const len = hotkeys.length;
+		const body = $("body");
 		for (indx = 0; indx < len; indx++) {
 			key = Object.keys(hotkeys[indx])[0];
-			url = fixUrl(parts, hotkeys[indx][key]);
+			entry = hotkeys[indx][key];
+			isArray = Array.isArray(entry);
+			url = fixUrl(parts, isArray ? entry[0] : entry);
 			if (url) {
 				link = document.createElement("a");
 				link.className = "ghch-link";
 				link.href = url;
+				if (isArray) {
+					link.target = "_blank";
+				}
 				link.setAttribute("data-hotkey", key);
 				body.appendChild(link);
-				debug("Adding '" + key + "' keyboard hotkey linked to: " + url);
+				debug(`Adding "${key}" keyboard hotkey linked to "${url}"`);
 			}
 		}
 	}
@@ -235,8 +241,12 @@
 	function addHotkey(el) {
 		const li = document.createElement("li");
 		li.className = "ghch-hotkey-set";
-		li.innerHTML = templates.hotkey + templates.remove;
-		el.parentNode.insertBefore(li, el);
+		li.innerHTML = `
+			<div class="ghch-hotkey-wrap">
+				${templates.hotkey}
+				<button class="ghch-remove">${templates.remove}</button>
+			</div>`;
+		el.parentElement.before(li);
 		return li;
 	}
 
@@ -246,7 +256,7 @@
 		scope.innerHTML = `
 			<legend>
 				<span class="simple-box" contenteditable>Enter Scope</span>&nbsp;
-				${templates.remove}
+				<button class="ghch-remove">${templates.remove}</button>
 			</legend>
 			${templates.scope}
 		`;
@@ -257,23 +267,25 @@
 	function addMenu() {
 		GM_addStyle(`
 			#ghch-open-menu { cursor:pointer; }
-			#ghch-menu { position:fixed; z-index: 65535; top:0; bottom:0; left:0; right:0; opacity:0; visibility:hidden; }
-			#ghch-menu.ghch-open { opacity:1; visibility:visible; background:rgba(0,0,0,.5); }
+			#ghch-menu { position:fixed; z-index:65535; top:0; bottom:0; left:0; right:0; opacity:0; display:none; }
+			#ghch-menu.ghch-open { opacity:1; display:block; background:rgba(0,0,0,.5); }
 			#ghch-settings-inner { position:fixed; left:50%; top:50%; transform:translate(-50%,-50%); width:25rem; box-shadow:0 .5rem 1rem #111; }
 			#ghch-settings-inner h3 .btn { float:right; font-size:.8em; padding:0 6px 2px 6px; margin-left:3px; }
-			.ghch-remove, .ghch-remove svg, #ghch-settings-inner .ghch-close svg { vertical-align:middle; cursor:pointer; }
+			.ghch-remove { background:transparent; border:0; white-space:initial; margin-bottom:6px; }
+			.ghch-remove svg, #ghch-settings-inner .ghch-close svg { vertical-align:middle; pointer-events:none; }
+			.ghch-menu-inner li .ghch-remove { margin-left:0; padding:0; }
+			.ghch-menu-inner li .ghch-remove:hover, .ghch-menu-inner legend .ghch-remove:hover { color:#800; }
 			.ghch-menu-inner { max-height:60vh; overflow-y:auto; }
 			.ghch-menu-inner ul { list-style:none; }
-			.ghch-menu-inner li { white-space:pre; margin-bottom:4px; }
+			.ghch-hotkey-wrap, .ghch-hotkey-add { width:100%; display:flex; align-items:center; justify-content:space-evenly; white-space:pre; margin-bottom:4px; }
 			.ghch-scope-all, .ghch-scope-add, .ghch-scope-custom { width:100%; border:2px solid rgba(85,85,85,0.5); border-radius:4px; padding:10px; margin:0; }
-			.ghch-scope-add, .ghch-hotkey-add { border:2px dashed #555; border-radius:4px; opacity:0.6; text-align:center; cursor:pointer; margin-top:10px; }
+			.ghch-scope-add, .ghch-hotkey-add { background:transparent; border:2px dashed #555; border-radius:4px; opacity:0.6; text-align:center; cursor:pointer; margin-top:10px; }
 			.ghch-scope-add:hover, .ghch-hotkey-add:hover { opacity:1;  }
 			.ghch-menu-inner legend span { padding:0 6px; min-width:30px; border:0; }
-			.ghch-hotkey { width:60px; }
-			.ghch-menu-inner li .ghch-remove { margin-left:10px; }
-			.ghch-menu-inner li .ghch-remove:hover, .ghch-menu-inner legend .ghch-remove:hover { color:#800; }
-			.ghch-json-code { display:none; font-family:Menlo, Inconsolata, 'Droid Mono', monospace; font-size:1em; }
+			.ghch-hotkey { width:80px; }
+			.ghch-json-code { display:none; font-family:Menlo, Inconsolata, "Droid Mono", monospace; font-size:1em; }
 			.ghch-json-code.ghch-open { position:absolute; top:37px; bottom:0; left:2px; right:2px; z-index:0; width:396px; max-width:396px; max-height:calc(100% - 37px); display:block; }
+			.ghch-menu-inner textarea { resize:none; }
 		`);
 
 		// add menu
@@ -283,7 +295,7 @@
 			<div id="ghch-settings-inner" class="boxed-group">
 				<h3>
 					GitHub Custom Hotkey Settings
-					<button type="button" class="btn btn-sm ghch-close tooltipped tooltipped-n" aria-label="Close";>
+					<button type="button" class="btn btn-sm ghch-close tooltipped tooltipped-n" aria-label="Close">
 						${templates.remove}
 					</button>
 					<button type="button" class="ghch-code btn btn-sm tooltipped tooltipped-n" aria-label="Toggle JSON data view">{ }</button>
@@ -296,8 +308,8 @@
 						</legend>
 						${templates.scope}
 					</fieldset>
-					<div class="ghch-scope-add">+ Click to add a new scope</div>
-					<textarea class="ghch-json-code"></textarea>
+					<button class="ghch-scope-add">+ Click to add a new scope</button>
+					<textarea class="ghch-json-code form-control"></textarea>
 				</div>
 			</div>
 		`;
@@ -330,7 +342,7 @@
 
 	function closePanel() {
 		const menu = $("#ghch-menu");
-		if (menu.classList.contains("ghch-open")) {
+		if (menu?.classList.contains("ghch-open")) {
 			// update data in case a "change" event didn't fire
 			refreshData();
 			checkScope();
@@ -347,7 +359,10 @@
 			.stringify(data, null, 2)
 			// compress JSON a little
 			.replace(/\n\s{4}\}/g, " }")
-			.replace(/\{\n\s{6}/g, "{ ");
+			.replace(/\{\n\s{6}/g, "{ ")
+			.replace(/\[\s{9}/g, "[ ")
+			.replace(/\,\s{9}/g, ", ")
+			.replace(/\s{7}\]/g, " ]");
 	}
 
 	function processJSON() {
@@ -361,37 +376,45 @@
 
 	function updateMenu() {
 		const menu = $(".ghch-menu-inner");
-		removeElms(menu, ".ghch-scope-custom");
-		removeElms($(".ghch-scope-all ul", menu), ".ghch-hotkey-set");
-		let scope, selector;
-		// Add scopes
-		Object.keys(data).forEach(key => {
-			if (key === "all") {
-				selector = "all";
-				scope = $(".ghch-scope-all .ghch-hotkey-add", menu);
-			} else if (key !== selector) {
-				selector = key;
-				scope = addScope($(".ghch-scope-add"));
-				$("legend span", scope).innerHTML = key;
-				scope = $(".ghch-hotkey-add", scope);
-			}
-			// add hotkey entries
-			// eslint-disable-next-line no-loop-func
-			data[key].forEach(val => {
-				const target = addHotkey(scope),
-					tmp = Object.keys(val)[0];
-				$(".ghch-hotkey", target).value = tmp;
-				$(".ghch-url", target).value = val[tmp];
+		if (menu) {
+			removeElms(menu, ".ghch-scope-custom");
+			removeElms($(".ghch-scope-all ul", menu), ".ghch-hotkey-set");
+			let scope, selector;
+			// Add scopes
+			Object.keys(data).forEach(key => {
+				if (key === "all") {
+					selector = "all";
+					scope = $(".ghch-scope-all .ghch-hotkey-add", menu);
+				} else if (key !== selector) {
+					selector = key;
+					scope = addScope($(".ghch-scope-add"));
+					$("legend span", scope).innerHTML = key;
+					scope = $(".ghch-hotkey-add", scope);
+				}
+				// add hotkey entries
+				// eslint-disable-next-line no-loop-func
+				data[key].forEach(val => {
+					const target = addHotkey(scope);
+					const tmp = Object.keys(val)[0];
+					const entry = val[tmp];
+					$(".ghch-hotkey", target).value = tmp;
+					if (Array.isArray(entry)) {
+						$(".ghch-url", target).value = entry[0];
+						$(".ghch-new-tab", target).checked = entry[1]
+					} else {
+						$(".ghch-url", target).value = entry;
+					}
+				});
 			});
-		});
+		}
 	}
 
 	function refreshData() {
 		data = {};
 		let tmp, scope, sIndx, hotkeys, scIndx, scLen, val;
-		const menu = $(".ghch-menu-inner"),
-			scopes = $$("fieldset", menu),
-			sLen = scopes.length;
+		const menu = $(".ghch-menu-inner");
+		const scopes = $$("fieldset", menu);
+		const sLen = scopes.length;
 		for (sIndx = 0; sIndx < sLen; sIndx++) {
 			tmp = $("legend span", scopes[sIndx]);
 			if (tmp) {
@@ -404,7 +427,11 @@
 					val = (tmp[0] && tmp[0].value) || "";
 					if (val) {
 						data[scope][scIndx] = {};
-						data[scope][scIndx][val] = tmp[1].value || "";
+						if (tmp[2].checked) {
+							data[scope][scIndx][val] = [tmp[1].value || "", true];
+						} else {
+							data[scope][scIndx][val] = tmp[1].value || "";
+						}
 					}
 				}
 			}
@@ -499,27 +526,8 @@
 		}, 1000);
 	}
 
-	function $(str, el) {
-		return (el || document).querySelector(str);
-	}
-
-	function $$(str, el) {
-		return Array.from((el || document).querySelectorAll(str));
-	}
-
-	function on(els, name, callback) {
-		els = Array.isArray(els) ? els : [els];
-		const events = name.split(/\s+/);
-		els.forEach(el => {
-			if (el) {
-				events.forEach(ev => {
-					el.addEventListener(ev, callback);
-				});
-			}
-		});
-	}
-
-	// include a "debug" anywhere in the browser URL (search parameter) to enable debugging
+	// include a "debug" anywhere in the browser URL search parameter to enable
+	// debugging
 	function debug() {
 		if (/debug/.test(window.location.search)) {
 			console.log.apply(console, arguments);
