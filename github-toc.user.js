@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Table of Contents
-// @version     2.0.4
+// @version     2.0.5
 // @description A userscript that adds a table of contents to readme & wiki pages
 // @license     MIT
 // @author      Rob Garrison
@@ -242,10 +242,11 @@
 		if (!tocInit) {
 			return;
 		}
-		if ($("#wiki-content, #readme")) {
+		const wrapper = $("#wiki-body, #readme");
+		if (wrapper) {
 			let indx, header, anchor, txt;
 			let content = "<ul>";
-			const anchors = $$(".markdown-body .anchor");
+			const anchors = $$(".markdown-body .anchor", wrapper);
 			const len = anchors.length;
 			if (len > 1) {
 				for (indx = 0; indx < len; indx++) {
