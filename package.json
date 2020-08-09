@@ -10,9 +10,9 @@
 		"url": "https://github.com/Mottie"
 	},
 	"devDependencies": {
-		"eslint": "^7.4.0",
+		"eslint": "^7.6.0",
 		"github-reserved-names": "^1.1.10",
-		"make-fetch-happen": "^8.0.8",
+		"make-fetch-happen": "^8.0.9",
 		"ver": "^6.0.2"
 	},
 	"scripts": {
