@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Custom Hotkeys
-// @version     1.1.0
+// @version     1.1.1
 // @description A userscript that allows you to add custom GitHub keyboard hotkeys
 // @license     MIT
 // @author      Rob Garrison
@@ -42,7 +42,7 @@
 			f1: "#hotkey-settings"
 		}]
 	});
-	const lastHref = window.location.href;
+	let lastHref = window.location.href;
 
 	const openHash = "#hotkey-settings";
 
