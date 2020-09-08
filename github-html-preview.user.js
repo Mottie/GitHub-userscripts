@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub HTML Preview
-// @version     0.1.1
+// @version     1.0.0
 // @description A userscript that adds preview links to HTML files
 // @license     MIT
 // @author      Rob Garrison
@@ -9,10 +9,12 @@
 // @run-at      document-idle
 // @grant       none
 // @require     https://greasyfork.org/scripts/28721-mutations/code/mutations.js?version=666427
+// @require     https://greasyfork.org/scripts/398877-utils-js/code/utilsjs.js?version=785415
 // @icon        https://github.githubassets.com/pinned-octocat.svg
 // @updateURL   https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-html-preview.user.js
 // @downloadURL https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-html-preview.user.js
 // ==/UserScript==
+/* global $ $$ on */
 (() => {
 	"use strict";
 	// Example page: https://github.com/codrops/DecorativeLetterAnimations
@@ -22,7 +24,7 @@
 	const regex = /\.html?$/;
 
 	const link = document.createElement("a");
-	link.className = "ghhp-btn btn btn-sm py-0 px-1 mx-1 v-align-baseline tooltipped tooltipped-n";
+	link.className = "ghhp-btn py-0 v-align-baseline tooltipped tooltipped-e";
 	link.setAttribute("aria-label", "Open in new tab");
 	link.target = "_blank";
 	link.innerHTML = `
@@ -31,8 +33,8 @@
 		</svg>`;
 
 	function addLink(el) {
-		const cell = el.closest(".js-navigation-item div:nth-child(2) span");
-		if (!$(".ghhp-btn", cell)) {
+		const cell = el.closest(".js-navigation-item div[role='rowheader'] span");
+		if (cell && !$(".ghhp-btn", cell)) {
 			const preview = link.cloneNode(true);
 			preview.href = prefix + el.href;
 			cell.appendChild(preview);
@@ -40,9 +42,9 @@
 	}
 
 	function init() {
-		if ($(".js-details-container")) {
+		if ($("#files")) {
 			const files = $("#files").parentElement;
-			$$(".js-navigation-item div:nth-child(2) .js-navigation-open", files).forEach(el => {
+			$$(".js-navigation-item div[role='rowheader'] .js-navigation-open", files).forEach(el => {
 				if (regex.test(el.title)) {
 					addLink(el);
 				}
@@ -50,15 +52,7 @@
 		}
 	}
 
-	function $(str, el) {
-		return (el || document).querySelector(str);
-	}
-
-	function $$(str, el) {
-		return [...(el || document).querySelectorAll(str)];
-	}
-
-	document.addEventListener("ghmo:container", () => {
+	on(document, "ghmo:container", () => {
 		// init after a short delay to allow rendering of file list
 		setTimeout(() => {
 			init();
