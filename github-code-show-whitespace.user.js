@@ -22,6 +22,7 @@
 // @updateURL   https://raw.githubusercontent.com/Mottie/Github-userscripts/master/github-code-show-whitespace.user.js
 // @downloadURL https://raw.githubusercontent.com/Mottie/Github-userscripts/master/github-code-show-whitespace.user.js
 // ==/UserScript==
+/* global GM */
 (async () => {
 	"use strict";
 

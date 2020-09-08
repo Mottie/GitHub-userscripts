@@ -16,6 +16,7 @@
 // @updateURL   https://raw.githubusercontent.com/Mottie/Github-userscripts/master/github-code-folding.user.js
 // @downloadURL https://raw.githubusercontent.com/Mottie/Github-userscripts/master/github-code-folding.user.js
 // ==/UserScript==
+/* global GM */
 /**
  * This userscript has been heavily modified from the "github-code-folding"
  * Chrome extension Copyright 2016 by Noam Lustiger; under an MIT license

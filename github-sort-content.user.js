@@ -17,7 +17,7 @@
 // @updateURL   https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-sort-content.user.js
 // @downloadURL https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-sort-content.user.js
 // ==/UserScript==
-/* global tinysort */
+/* global GM tinysort */
 (() => {
 	"use strict";
 	/** Example pages:

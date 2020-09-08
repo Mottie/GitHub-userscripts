@@ -19,6 +19,7 @@
 // @updateURL   https://raw.githubusercontent.com/Mottie/Github-userscripts/master/github-download-zip.user.js
 // @downloadURL https://raw.githubusercontent.com/Mottie/Github-userscripts/master/github-download-zip.user.js
 // ==/UserScript==
+/* global GM */
 (() => {
 	"use strict";
 

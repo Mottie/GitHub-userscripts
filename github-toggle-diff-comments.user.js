@@ -16,7 +16,7 @@
 // @updateURL   https://raw.githubusercontent.com/Mottie/Github-userscripts/master/github-toggle-diff-comments.user.js
 // @downloadURL https://raw.githubusercontent.com/Mottie/Github-userscripts/master/github-toggle-diff-comments.user.js
 // ==/UserScript==
-/* global $ $$ on debounce make */
+/* global GM $ $$ on debounce make */
 (() => {
 	"use strict";
 

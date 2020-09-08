@@ -15,9 +15,9 @@
 // @updateURL   https://raw.githubusercontent.com/Mottie/Github-userscripts/master/github-mentioned-links.user.js
 // @downloadURL https://raw.githubusercontent.com/Mottie/Github-userscripts/master/github-mentioned-links.user.js
 // ==/UserScript==
+/* global $ $$ on */
 (() => {
 	"use strict";
-	/* global $ $$ on */
 
 	// GitHub loves to change class names
 	const selectors = {

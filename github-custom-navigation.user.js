@@ -16,6 +16,7 @@
 // @updateURL   https://raw.githubusercontent.com/Mottie/Github-userscripts/master/github-custom-navigation.user.js
 // @downloadURL https://raw.githubusercontent.com/Mottie/Github-userscripts/master/github-custom-navigation.user.js
 // ==/UserScript==
+/* global dragula */
 (() => {
 	"use strict";
 

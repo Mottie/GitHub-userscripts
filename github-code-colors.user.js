@@ -16,7 +16,7 @@
 // @updateURL   https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-code-colors.user.js
 // @downloadURL https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-code-colors.user.js
 // ==/UserScript==
-/* global Color */
+/* global GM Color */
 (() => {
 	"use strict";
 

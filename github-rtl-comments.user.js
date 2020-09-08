@@ -18,6 +18,7 @@
 // @updateURL   https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-rtl-comments.user.js
 // @downloadURL https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-rtl-comments.user.js
 // ==/UserScript==
+/* global GM */
 (() => {
 	"use strict";
 

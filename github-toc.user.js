@@ -21,6 +21,7 @@
 // @updateURL   https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-toc.user.js
 // @downloadURL https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-toc.user.js
 // ==/UserScript==
+/* global GM */
 (async () => {
 	"use strict";
 

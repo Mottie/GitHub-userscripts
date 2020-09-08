@@ -17,6 +17,7 @@
 // @updateURL   https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-label-color-picker.user.js
 // @downloadURL https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-label-color-picker.user.js
 // ==/UserScript==
+/* global jsColorPicker */
 (() => {
 	"use strict";
 

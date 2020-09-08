@@ -18,6 +18,7 @@
 // @updateURL   https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/gist-raw-links.user.js
 // @downloadURL https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/gist-raw-links.user.js
 // ==/UserScript==
+/* global GM */
 (() => {
 	"use strict";
 

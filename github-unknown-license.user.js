@@ -14,9 +14,9 @@
 // @updateURL   https://raw.githubusercontent.com/Mottie/Github-userscripts/master/github-unknown-license.user.js
 // @downloadURL https://raw.githubusercontent.com/Mottie/Github-userscripts/master/github-unknown-license.user.js
 // ==/UserScript==
+/* global $ on */
 (() => {
 	"use strict";
-	/* global $ on */
 
 	// Example page with no license
 	// https://github.com/isaacs/github

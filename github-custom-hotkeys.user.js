@@ -16,6 +16,7 @@
 // @updateURL   https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-custom-hotkeys.user.js
 // @downloadURL https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-custom-hotkeys.user.js
 // ==/UserScript==
+/* global $ $$ on */
 (() => {
 	"use strict";
 	/* "g p" here overrides the GitHub default "g p" which takes you to the Pull Requests page
