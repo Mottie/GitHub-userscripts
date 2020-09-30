@@ -151,7 +151,7 @@
 		.ghtc-toggle input:checked ~ .ghtc-primary,
 		.ghtc-collapsed .${selectors.tdDiv} > *,
 		.ghtc-collapsed .last-${selectors.tdDiv},
-		.ghtc-collapsed .inline-comment-form-container {
+		.ghtc-collapsed .inline-comment-form-container:not(.open) {
 			display: none;
 		}
 		.diff-table .ghtc-collapsed td.line-comments {
