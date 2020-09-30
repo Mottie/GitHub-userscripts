@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Toggle Wiki Sidebar
-// @version     1.0.17
+// @version     1.1.0
 // @description A userscript that adds a button to toggle the GitHub Wiki sidebar
 // @license     MIT
 // @author      Rob Garrison
@@ -11,10 +11,12 @@
 // @grant       GM_getValue
 // @grant       GM_setValue
 // @require     https://greasyfork.org/scripts/28721-mutations/code/mutations.js?version=666427
+// @require     https://greasyfork.org/scripts/398877-utils-js/code/utilsjs.js?version=785415
 // @icon        https://github.githubassets.com/pinned-octocat.svg
 // @updateURL   https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-toggle-wiki-sidebar.user.js
 // @downloadURL https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-toggle-wiki-sidebar.user.js
 // ==/UserScript==
+/* global $ make on */
 (() => {
 	"use strict";
 
@@ -37,35 +39,37 @@
 	function addToggle() {
 		if ($("#wiki-wrapper") && !$(".ghtws-button")) {
 			let el = $(".gh-header-actions") || $(".gh-header-title");
-			const button = document.createElement("div");
-			button.className = "btn btn-sm tooltipped tooltipped-s ghtws-button";
-			button.innerHTML = toggleIcon;
-			button.setAttribute("aria-label", "Toggle Sidebar");
+			const button = make({
+				el: "button",
+				className: `btn btn-sm tooltipped tooltipped-s ghtws-button${isHidden ? " selected" : ""}`,
+				html: toggleIcon,
+				attrs: {
+					type: "button",
+					"aria-label": "Toggle Sidebar"
+				}
+			});
 			if (el.nodeName === "H1") {
 				// non-editable wiki pages
 				button.style.float = "right";
 				el = el.parentNode;
 			}
 			// editable wikis have a "header-actions" area
-			// prepend button
-			el.insertBefore(button, el.childNodes[0]);
+			el.prepend(button);
 			if (isHidden) {
 				toggleSidebar();
 			}
 		}
 	}
 
-	function toggleSidebar() {
-		const sidebar = $("#wiki-rightbar"),
-			wrapper = sidebar && sidebar.parentNode;
-		if (sidebar) {
-			if (isHidden) {
-				sidebar.style.display = "none";
-				wrapper.classList.remove("has-rightbar");
-			} else {
-				sidebar.style.display = "";
-				wrapper.classList.add("has-rightbar");
-			}
+	function toggleSidebar(button) {
+		const sidebar = $(".wiki-rightbar");
+		const wrapper = sidebar?.parentNode;
+		if (sidebar && wrapper) {
+			const action = isHidden ? "remove" : "add";
+			button?.classList.toggle("selected", isHidden);
+			wrapper.style.display = isHidden ? "none" : "";
+			wrapper.classList[action]("has-rightbar");
+			wrapper.previousElementSibling?.classList[action]("col-md-9");
 			GM_setValue("sidebar-state", isHidden);
 		}
 	}
@@ -74,12 +78,8 @@
 		const target = event.target;
 		if (target && target.classList.contains("ghtws-button")) {
 			isHidden = !isHidden;
-			toggleSidebar();
+			toggleSidebar(target);
 		}
-	}
-
-	function $(selector, el) {
-		return (el || document).querySelector(selector);
 	}
 
 	function init() {
@@ -88,6 +88,6 @@
 		addToggle();
 	}
 
-	document.addEventListener("ghmo:container", addToggle);
+	on(document, "ghmo:container", addToggle);
 	init();
 })();
