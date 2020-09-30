@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Toggle Diff Comments
-// @version     0.2.0
+// @version     0.3.0
 // @description A userscript that toggles diff/PR and commit comments
 // @license     MIT
 // @author      Rob Garrison
@@ -119,13 +119,13 @@
 		td.${selectors.tdWrapper} {
 			position: relative;
 		}
-		.${selectors.tdDiv} {
+		td .${selectors.tdDiv} {
 			cursor: pointer;
 		}
 		.js-resolvable-thread-contents {
 			cursor: default;
 		}
-		.${selectors.tdDiv}:before {
+		td .${selectors.tdDiv}:before {
 			content: "\\25be";
 			font-size: 40px;
 			position: absolute;
