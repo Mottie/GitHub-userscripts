@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Update Fork
-// @version     0.1.1
+// @version     0.2.0
 // @description A userscript that adds a link to update your fork
 // @license     MIT
 // @author      Rob Garrison
@@ -15,16 +15,14 @@
 (() => {
 	"use strict";
 
-	function getUpstreamBranch(fork, info) {
-		const upstreamLink = $("a", fork);
+	function getUpstreamBranch(compareLink, info) {
 		// Look for "commit behind" or "commits behind"
-		if (upstreamLink && info && /commits?\sbehind/.test(info.textContent)) {
+		if (compareLink && info && /commits?\sbehind/.test(info.textContent)) {
 			// forked from link text ":user/:repo"
-			const user = upstreamLink.textContent.split("/")[0];
-			const regexp = new RegExp(`(${user.trim()}:[-\\w.]+)`);
+			const regexp = /behind\s*(.+:[-\w.]+)/;
 			// The match will include the sentence period because branch names may
 			// include a version number, e.g. "user:my-branch-v1.0"
-			const branch = (info.textContent.match(regexp) || [])[0];
+			const branch = (info.textContent.match(regexp) || [])[1];
 			return branch
 				? branch.substring(0, branch.length - 1)
 				: null;
@@ -38,15 +36,14 @@
 		const index = path.indexOf("/tree/");
 		return index > -1
 			? path.substring(index + 6, path.length)
-			: "";
+			: "master";
 	}
 
-	function addLink(fork, info) {
-		const branch = getUpstreamBranch(fork, info);
+	function addLink(compareLink, info) {
+		const branch = getUpstreamBranch(compareLink, info);
 		if (branch) {
 			const userBranch = getUserBranch();
-			const compareLink = $("a[href*='/compare']", info);
-			const prLink = $("a[href*='/pull']", info);
+			const prLink = compareLink.previousElementSibling;
 			const link = prLink.cloneNode();
 			// https://github.com/<FORK>/<REPO>/compare/<BRANCH>...<SOURCE>:<BRANCH>
 			link.href = `${compareLink.href}/${userBranch}...${branch}`;
@@ -58,10 +55,10 @@
 	}
 
 	function init() {
-		const fork = $(".fork-flag");
-		const info = $(".branch-infobar");
-		if (fork && info) {
-			addLink(fork, info);
+		const compareLink = $("a[href*='pull/new'] + a[href$='/compare']");
+		const info = compareLink?.closest(".Box")?.firstElementChild;
+		if (compareLink && info) {
+			addLink(compareLink, info);
 		}
 	}
 
