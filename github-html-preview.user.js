@@ -19,7 +19,7 @@
 	"use strict";
 	// Example page: https://github.com/codrops/DecorativeLetterAnimations
 	// Source: https://github.com/htmlpreview/htmlpreview.github.com
-	const prefix = "http://htmlpreview.github.io/?";
+	const prefix = "https://htmlpreview.github.io/?";
 	// html & htm extensions
 	const regex = /\.html?$/;
 
@@ -33,7 +33,7 @@
 		</svg>`;
 
 	function addLink(el) {
-		const cell = el.closest(".js-navigation-item div[role='rowheader'] span");
+		const cell = el.closest(".js-navigation-item div[role='rowheader']");
 		if (cell && !$(".ghhp-btn", cell)) {
 			const preview = link.cloneNode(true);
 			preview.href = prefix + el.href;
