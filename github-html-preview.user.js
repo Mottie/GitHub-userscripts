@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub HTML Preview
-// @version     1.0.0
+// @version     1.0.1
 // @description A userscript that adds preview links to HTML files
 // @license     MIT
 // @author      Rob Garrison
