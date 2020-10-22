@@ -11,6 +11,8 @@
 // @require     https://greasyfork.org/scripts/28721-mutations/code/mutations.js?version=666427
 // @require     https://greasyfork.org/scripts/398877-utils-js/code/utilsjs.js?version=785415
 // @icon        https://github.githubassets.com/pinned-octocat.svg
+// @updateURL   https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-html-preview.user.js
+// @downloadURL https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-html-preview.user.js
 // ==/UserScript==
 /* global $ $$ on */
 (() => {
