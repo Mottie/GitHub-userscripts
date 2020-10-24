@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Diff Filename
-// @version     1.0.6
+// @version     1.1.0
 // @description A userscript that highlights filename & permission alterations
 // @license     MIT
 // @author      Rob Garrison
@@ -10,29 +10,43 @@
 // @grant       GM_getValue
 // @grant       GM_setValue
 // @require     https://greasyfork.org/scripts/28721-mutations/code/mutations.js?version=666427
+// @require     https://greasyfork.org/scripts/398877-utils-js/code/utilsjs.js?version=785415
 // @icon        https://github.githubassets.com/pinned-octocat.svg
 // @updateURL   https://raw.githubusercontent.com/Mottie/Github-userscripts/master/github-diff-filename.user.js
 // @downloadURL https://raw.githubusercontent.com/Mottie/Github-userscripts/master/github-diff-filename.user.js
 // ==/UserScript==
+/* global $ $$ on */
 (() => {
 	"use strict";
 
-	const arrow = "\u2192", // "→"
-		regex = new RegExp(`\\s${arrow}\\s`);
+	const arrow = "\u2192"; // "→"
+	const regex = new RegExp(`\\s${arrow}\\s`);
 
 	function processFileInfo(el) {
 		let node;
 		if (!$(".ghdfn", el)) {
-			const link = $("a", el);
 			// A file can be moved AND include permission changes
 			// e.g. main.js → scripts/main.js 100755 → 100644
-			// with file name inside link and permission changes outside in a text node
+			// see https://github.com/openstyles/stylus/pull/110/files#diff-5186ece9a52b5e8b0d2e221fdf139ae963ae774267b2f52653c7e45e2a0bda52
+
+			const link = $("a", el);
+			// file name/location changes are inside the link
 			if (link && regex.test(link.textContent)) {
-				node = findMatchingNode(link)[0];
-				processNode(node);
+				modifyLinkText(link);
 			}
-			node = findMatchingNode(el)[0];
+			// permission changes in a text node as a direct child of the wrapper
+			// process permission change (if it exists)
+			node = findTextNode(el)[0];
 			processNode(node);
+		}
+	}
+
+	function modifyLinkText(link) {
+		if (link) {
+			const [oldFile, newFile] = (link.title || "").split(regex);
+			link.innerHTML = `
+				<span class="ghdfn text-red">${oldFile}</span> ${arrow}
+				<span class="ghdfn text-green">${newFile}</span>`;
 		}
 	}
 
@@ -61,7 +75,7 @@
 		}
 	}
 
-	function findMatchingNode(el) {
+	function findTextNode(el) {
 		return [...el.childNodes].filter(
 			node => regex.test(node.textContent) && node.nodeType === 3
 		);
@@ -80,24 +94,14 @@
 		}
 	}
 
-	function $(str, el = document) {
-		return el.querySelector(str);
-	}
-
-	function $$(str, el = document) {
-	  return [...el.querySelectorAll(str)];
-	}
-
 	function init() {
 		if ($("#files")) {
-			$$("#files .file-info").forEach(el => {
-				processFileInfo(el);
-			});
+			$$("#files .file-info").forEach(processFileInfo);
 		}
 	}
 
-	document.addEventListener("ghmo:container", init);
-	document.addEventListener("ghmo:diff", init);
+	on(document, "ghmo:container", init);
+	on(document, "ghmo:diff", init);
 	init();
 
 })();
