@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Diff Filename
-// @version     1.1.0
+// @version     1.1.1
 // @description A userscript that highlights filename & permission alterations
 // @license     MIT
 // @author      Rob Garrison
@@ -29,7 +29,7 @@
 			// e.g. main.js → scripts/main.js 100755 → 100644
 			// see https://github.com/openstyles/stylus/pull/110/files#diff-5186ece9a52b5e8b0d2e221fdf139ae963ae774267b2f52653c7e45e2a0bda52
 
-			const link = $("a", el);
+			const link = $("a[title]", el);
 			// file name/location changes are inside the link
 			if (link && regex.test(link.textContent)) {
 				modifyLinkText(link);
