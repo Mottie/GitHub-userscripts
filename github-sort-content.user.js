@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Sort Content
-// @version     3.1.1
+// @version     3.2.0
 // @description A userscript that makes some lists & markdown tables sortable
 // @license     MIT
 // @author      Rob Garrison
@@ -407,6 +407,33 @@
 					".ghsc-gazer-header"
 				]
 			}
+		},
+		// github.com/(:user|:org)/:repo/pull/:pr
+		"pull-request-checks": {
+			check: el => el.matches(".merge-status-list"),
+			sort: el => {
+				removeSelection();
+				tinysort(
+					$$("div.merge-status-item"),
+					// first by status
+					{
+						order: 'asc',
+						selector: 'path',
+						attr: 'd'
+					},
+					// then by check name
+					{
+						order: 'asc',
+						natural: true,
+						selector: `strong.text-emphasized`
+					}
+				)
+			},
+			css: {
+				unsorted: [
+					".merge-status-list"
+				]
+			}
 		}
 	};
 
@@ -521,6 +548,13 @@
 		setDirection($$(".ghsc-header-cell", grid), el, dir);
 	}
 
+	/**
+	 *
+	 * @param {*} header The element containing the header
+	 * @param {*} list The element containing the list
+	 * @param {*} opts Options passed to tinysort. See <a href="http://tinysort.sjeiti.com/">TinySort</a> for details.
+	 *                 Multiple selectors have to be passed using a single selector with an appropriate query, e.g. <code>{ selector: "a[id], a.f4" }</code>
+	 */
 	function initSortList(header, list, opts = {}) {
 		if (list) {
 			removeSelection();
