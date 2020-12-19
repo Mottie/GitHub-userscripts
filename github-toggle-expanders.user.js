@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Toggle Expanders
-// @version     2.0.0
+// @version     2.0.1
 // @description A userscript that toggles all expanders when one expander is shift-clicked
 // @license     MIT
 // @author      Rob Garrison
@@ -26,8 +26,9 @@
 			// shift+ctrl+click = expand all on page
 			? ".repository-content"
 			// shift+click = expand all in date
-			: ".commit-group"
+			: ".Box--condensed"
 		);
+
 		if (parentNode) {
 			const containers = parentNode.querySelectorAll(".js-details-container");
 			[...containers].forEach(node => {
