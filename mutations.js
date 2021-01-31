@@ -1,4 +1,4 @@
-/* GitHub mutations observer library script v0.3.0
+/* GitHub mutations observer library script v0.4.3
  * Detect changes to various elements and trigger an event
  * This script is meant to be used as a library for GitHub-based userscripts
  * Copyright © 2020 Rob Garrison
@@ -36,6 +36,17 @@
 			".js-diff-progressive-container, .data.blob-wrapper, .js-diff-load-container, .diff-table tbody": {
 				count: 0,
 				name: "diff"
+			},
+			// issues/pr sidebar & timeline sections: e.g. form actions, commit
+			// references, deployment state & PR checks container
+			".js-updatable-content, .js-updatable-content-preserve-scroll-position": {
+				count: 0,
+				name: "updatable"
+			},
+			// user profile menu (loads on hover)
+			"details-menu": {
+				count: 0,
+				name: "menu"
 			}
 		},
 		list = Object.keys(targets);
