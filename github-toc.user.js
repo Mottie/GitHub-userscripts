@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Table of Contents
-// @version     2.0.6
+// @version     2.1.0
 // @description A userscript that adds a table of contents to readme & wiki pages
 // @license     MIT
 // @author      Rob Garrison
@@ -15,13 +15,14 @@
 // @grant       GM.setValue
 // @grant       GM_addStyle
 // @grant       GM.addStyle
-// @require     https://greasyfork.org/scripts/28721-mutations/code/mutations.js?version=882023
+// @require     https://greasyfork.org/scripts/398877-utils-js/code/utilsjs.js?version=895926
+// @require     https://greasyfork.org/scripts/28721-mutations/code/mutations.js?version=666427
 // @require     https://greasemonkey.github.io/gm4-polyfill/gm4-polyfill.js?updated=20180103
 // @icon        https://github.githubassets.com/pinned-octocat.svg
 // @updateURL   https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-toc.user.js
 // @downloadURL https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-toc.user.js
 // ==/UserScript==
-/* global GM */
+/* global $ $$ on addClass removeClass */
 (async () => {
 	"use strict";
 
@@ -40,8 +41,8 @@
 
 	GM.addStyle(`
 		/* z-index > 1000 to be above the */
-		.ghus-toc { position:fixed; z-index:1001; min-width:200px; top:${defaults.top};
-			right:${defaults.right}; }
+		.ghus-toc { position:fixed; z-index:1001; min-width:200px; min-height:100px; top:${defaults.top};
+			right:${defaults.right}; resize:both; overflow:hidden; padding: 0 3px 38px 0; margin:0; }
 		.ghus-toc h3 { cursor:move; }
 		.ghus-toc-title { padding-left:20px; }
 		/* icon toggles TOC container & subgroups */
@@ -52,19 +53,20 @@
 		.ghus-toc .ghus-toc-docs { float:right; }
 		/* move collapsed TOC to top right corner */
 		.ghus-toc.collapsed {
-			width:30px; height:30px; min-width:auto; overflow:hidden; top:16px !important; left:auto !important;
-			right:10px !important; border:1px solid rgba(128, 128, 128, 0.5); border-radius:3px;
+			width:30px !important; height:34px !important; min-width:auto; min-height:auto; overflow:hidden;
+			top:16px !important; left:auto !important; right:10px !important; margin:0; padding:0;
+			border:1px solid rgba(128, 128, 128, 0.5); border-radius:3px; resize:none;
 		}
 		.ghus-toc.collapsed > h3 { cursor:pointer; padding-top:5px; border:none; background:#222; color:#ddd; }
-		.ghus-toc.collapsed .ghus-toc-docs { display:none; }
+		.ghus-toc.collapsed .ghus-toc-docs, .ghus-toc.collapsed .ghus-toc-title { display:none; }
 		.ghus-toc:not(.ghus-toc-hidden).collapsed + .Header { padding-right: ${defaults.headerPad} !important; }
 		/* move header text out-of-view when collapsed */
 		.ghus-toc.collapsed > h3 svg { margin-top:6px; }
-		.ghus-toc-hidden, .ghus-toc.collapsed .boxed-group-inner,
-			.ghus-toc li:not(.collapsible) .ghus-toc-icon { display:none; }
-		.ghus-toc .boxed-group-inner { max-width:250px; max-height:400px; overflow-y:auto; overflow-x:hidden; }
+		.ghus-toc-hidden, .ghus-toc.collapsed .boxed-group-inner { display:none; }
+		.ghus-toc .boxed-group-inner { width:100%; height:100%; overflow-x:hidden; overflow-y:auto;
+			margin-bottom:50px; }
 		.ghus-toc ul { list-style:none; }
-		.ghus-toc li { max-width:230px; white-space:nowrap; overflow-x:hidden; text-overflow:ellipsis; }
+		.ghus-toc li { white-space:nowrap; overflow:hidden; text-overflow:ellipsis; position:relative; }
 		.ghus-toc .ghus-toc-h1 { padding-left:15px; }
 		.ghus-toc .ghus-toc-h2 { padding-left:30px; }
 		.ghus-toc .ghus-toc-h3 { padding-left:45px; }
@@ -72,14 +74,15 @@
 		.ghus-toc .ghus-toc-h5 { padding-left:75px; }
 		.ghus-toc .ghus-toc-h6 { padding-left:90px; }
 		/* anchor collapsible icon */
-		.ghus-toc li.collapsible .ghus-toc-icon {
-			width:16px; height:10px; display:inline-block; margin-left:-16px;
+		.ghus-toc li.collapsible .ghus-toc-icon:before {
+			content:' '; position:absolute; width:10px; height:10px; display:inline-block; left:-12px; top:-10px;
 			background: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGNsYXNzPSdvY3RpY29uJyBoZWlnaHQ9JzE0JyB2aWV3Qm94PScwIDAgMTIgMTYnPjxwYXRoIGQ9J00wIDVsNiA2IDYtNkgweic+PC9wYXRoPjwvc3ZnPg==) left center no-repeat;
 		}
-		/* on rotate, height becomes width, so this is keeping things lined up */
-		.ghus-toc li.collapsible.collapsed .ghus-toc-icon { -webkit-transform:rotate(-90deg); transform:rotate(-90deg); height:10px; width:12px; margin-right:2px; }
+		.ghus-toc li.collapsible.collapsed .ghus-toc-icon:before { -webkit-transform:rotate(-90deg);
+			transform:rotate(-90deg); }
 		.ghus-toc-icon svg, .ghus-toc-docs svg { pointer-events:none; }
-		.ghus-toc-no-selection { -webkit-user-select:none !important; -moz-user-select:none !important; user-select:none !important; }
+		.ghus-toc-no-selection { -webkit-user-select:none !important; -moz-user-select:none !important;
+			user-select:none !important; }
 		/* prevent google translate from breaking links */
 		.ghus-toc li a font { pointer-events:none; }
 	`);
@@ -90,7 +93,6 @@
 	let title = await GM.getValue("github-toc-title", defaults.title);
 
 	const container = document.createElement("div");
-	const useClient = !!document.all;
 
 	// keyboard shortcuts
 	const keyboard = {
@@ -107,6 +109,16 @@
 		unsel: null
 	};
 
+	const regex = {
+		quote: /'/g,
+		doubleQuote: /"/g,
+		number: /\d/,
+		toggle: /\+/g,
+		header: /ghus-toc-h\d/,
+		collapsible: /collapsible-(\d+)/,
+		ignore: /(input|textarea)/i,
+	};
+
 	const stopPropag = event => {
 		event.preventDefault();
 		event.stopPropagation();
@@ -115,11 +127,9 @@
 	// drag code adapted from http://jsfiddle.net/tovic/Xcb8d/light/
 	function dragInit(event) {
 		if (!container.classList.contains("collapsed")) {
-			const x = useClient ? window.event.clientX : event.pageX;
-			const y = useClient ? window.event.clientY : event.pageY;
 			drag.el = container;
-			drag.elmX = x - drag.el.offsetLeft;
-			drag.elmY = y - drag.el.offsetTop;
+			drag.elmX = event.pageX - drag.el.offsetLeft;
+			drag.elmY = event.pageY - drag.el.offsetTop;
 			selectionToggle(true);
 		} else {
 			drag.el = null;
@@ -129,20 +139,26 @@
 
 	function dragMove(event) {
 		if (drag.el !== null) {
-			const x = useClient ? window.event.clientX : event.pageX;
-			const y = useClient ? window.event.clientY : event.pageY;
-			drag.el.style.left = (x - drag.elmX) + "px";
-			drag.el.style.top = (y - drag.elmY) + "px";
+			drag.el.style.left = `${event.pageX - drag.elmX}px`;
+			drag.el.style.top = `${event.pageY - drag.elmY}px`;
 			drag.el.style.right = "auto";
 		}
 	}
 
-	function dragStop() {
+	async function dragStop(event) {
 		if (drag.el !== null) {
 			dragSave();
 			selectionToggle();
 		}
 		drag.el = null;
+
+		if (event.target === container) {
+			// save container size on mouseup
+			await GM.setValue(
+				"github-toc-size",
+				[container.clientWidth, container.clientHeight]
+			);
+		}
 	}
 
 	async function dragSave(restore) {
@@ -180,6 +196,12 @@
 		container.style.top = top;
 	}
 
+	async function setSize() {
+		const size = await GM.getValue("github-toc-size", [250, 250]);
+		container.style.width = `${size[0]}px`;
+		container.style.height = `${size[1]}px`;
+	}
+
 	// stop text selection while dragging
 	function selectionToggle(disable) {
 		const body = $("body");
@@ -194,7 +216,7 @@
 				body.setAttribute("unselectable", drag.unsel);
 			}
 			body.classList.remove("ghus-toc-no-selection");
-			body.removeEventListener("onselectstart", stopPropag);
+			off(body, "onselectstart", stopPropag);
 		}
 		removeSelection();
 	}
@@ -255,7 +277,10 @@
 					if (anchor.parentElement) {
 						header = anchor.parentElement;
 						// replace single & double quotes with right angled quotes
-						txt = header.textContent.trim().replace(/'/g, "&#8217;").replace(/"/g, "&#8221;");
+						txt = header.textContent
+							.trim()
+							.replace(regex.quote, "&#8217;")
+							.replace(regex.doubleQuote, "&#8221;");
 						content += `
 							<li class="ghus-toc-${header.nodeName.toLowerCase()}">
 								<span class="ghus-toc-icon octicon ghd-invert"></span>
@@ -279,16 +304,15 @@
 		let indx, el, next, count, num, group;
 		const els = $$("li", container);
 		const len = els.length;
-		const regex = /\d/;
 		for (indx = 0; indx < len; indx++) {
 			count = 0;
 			group = [];
 			el = els[indx];
-			next = el && el.nextElementSibling;
+			next = el?.nextElementSibling;
 			if (next) {
-				num = el.className.match(regex)[0];
+				num = el.className.match(regex.number)[0];
 				while (next && !next.classList.contains("ghus-toc-h" + num)) {
-					if (next.className.match(regex)[0] > num) {
+					if (next.className.match(regex.number)[0] > num) {
 						count++;
 						group[group.length] = next;
 					}
@@ -313,7 +337,7 @@
 			const collapse = el.classList.contains("collapsed");
 			if (event.target.classList.contains("ghus-toc-icon")) {
 				if (event.shiftKey) {
-					name = el.className.match(/ghus-toc-h\d/);
+					name = el.className.match(regex.header);
 					els = name ? $$("." + name, container) : [];
 					indx = els.length;
 					while (indx--) {
@@ -328,7 +352,7 @@
 	}
 
 	function collapseChildren(el, collapse) {
-		const name = el && el.className.match(/collapsible-(\d+)/);
+		const name = el?.className.match(regex.collapsible);
 		const children = name ? $$(".ghus-toc-childof-" + name[1], container) : null;
 		if (children) {
 			if (collapse) {
@@ -358,7 +382,7 @@
 			return;
 		}
 		// prevent opening panel while typing in comments
-		if (/(input|textarea)/i.test(document.activeElement.nodeName)) {
+		if (regex.ignore.test(document.activeElement.nodeName)) {
 			return;
 		}
 		// toggle TOC (g+t)
@@ -372,6 +396,7 @@
 		// reset TOC window position (g+r)
 		if (keyboard.lastKey === tocReset[0] && key === tocReset[1]) {
 			container.setAttribute("style", "");
+			setSize();
 			dragSave(true);
 		}
 		keyboard.lastKey = key;
@@ -393,12 +418,13 @@
 
 		// TOC saved state
 		const hidden = await GM.getValue("github-toc-hidden", false);
+		setSize();
 		container.className = "ghus-toc boxed-group wiki-pages-box readability-sidebar" + (hidden ? " collapsed" : "");
 		container.setAttribute("role", "navigation");
 		container.setAttribute("unselectable", "on");
 		container.setAttribute("index", "0");
 		container.innerHTML = `
-			<h3 class="js-wiki-toggle-collapse wiki-auxiliary-content" data-hotkey="${defaults.toggle.replace(/\+/g, " ")}">
+			<h3 class="js-wiki-toggle-collapse wiki-auxiliary-content" data-hotkey="${defaults.toggle.replace(regex.toggle, " ")}">
 				<span class="ghus-toc-toggle ghus-toc-icon">
 					<svg class="octicon" height="14" width="14" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 16 12">
 						<path d="M2 13c0 .6 0 1-.6 1H.6c-.6 0-.6-.4-.6-1s0-1 .6-1h.8c.6 0 .6.4.6 1zm2.6-9h6.8c.6 0 .6-.4.6-1s0-1-.6-1H4.6C4 2 4 2.4 4 3s0 1 .6 1zM1.4 7H.6C0 7 0 7.4 0 8s0 1 .6 1h.8C2 9 2 8.6 2 8s0-1-.6-1zm0-5H.6C0 2 0 2.4 0 3s0 1 .6 1h.8C2 4 2 3.6 2 3s0-1-.6-1zm10 5H4.6C4 7 4 7.4 4 8s0 1 .6 1h6.8c.6 0 .6-.4.6-1s0-1-.6-1zm0 5H4.6c-.6 0-.6.4-.6 1s0 1 .6 1h6.8c.6 0 .6-.4.6-1s0-1-.6-1z"/>
@@ -434,34 +460,6 @@
 
 		tocInit = true;
 		tocAdd();
-	}
-
-	function $(str, el) {
-		return (el || document).querySelector(str);
-	}
-
-	function $$(str, el) {
-		return Array.from((el || document).querySelectorAll(str));
-	}
-
-	function on(el, name, handler) {
-		el.addEventListener(name, handler);
-	}
-
-	function addClass(els, name) {
-		let indx;
-		const len = els.length;
-		for (indx = 0; indx < len; indx++) {
-			els[indx].classList.add(name);
-		}
-	}
-
-	function removeClass(els, name) {
-		let indx;
-		const len = els.length;
-		for (indx = 0; indx < len; indx++) {
-			els[indx].classList.remove(name);
-		}
 	}
 
 	// Add GM options
