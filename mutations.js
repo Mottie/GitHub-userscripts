@@ -1,7 +1,7 @@
 /* GitHub mutations observer library script v0.4.3
  * Detect changes to various elements and trigger an event
  * This script is meant to be used as a library for GitHub-based userscripts
- * Copyright © 2020 Rob Garrison
+ * Copyright © 2021 Rob Garrison
  * License: MIT
  */
 (() => {
