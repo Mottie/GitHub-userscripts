@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Custom Hotkeys
-// @version     1.1.1
+// @version     1.1.2
 // @description A userscript that allows you to add custom GitHub keyboard hotkeys
 // @license     MIT
 // @author      Rob Garrison
@@ -12,6 +12,7 @@
 // @grant       GM_getValue
 // @grant       GM_setValue
 // @require     https://greasyfork.org/scripts/398877-utils-js/code/utilsjs.js?version=785415
+// @require     https://greasyfork.org/scripts/28721-mutations/code/mutations.js?version=882023
 // @icon        https://github.githubassets.com/pinned-octocat.svg
 // @updateURL   https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-custom-hotkeys.user.js
 // @downloadURL https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-custom-hotkeys.user.js
@@ -59,48 +60,48 @@
 	// https://github.com/{nonUser}
 	// see https://github.com/Mottie/github-reserved-names
 	const nonUser = new RegExp("^(" + [
-		/* BUILD:RESERVED-NAMES-START (v1.1.10) */
-		"400", "401", "402", "403", "404", "405", "406", "407", "408", "409",
-		"410", "411", "412", "413", "414", "415", "416", "417", "418", "419",
-		"420", "421", "422", "423", "424", "425", "426", "427", "428", "429",
-		"430", "431", "500", "501", "502", "503", "504", "505", "506", "507",
-		"508", "509", "510", "511", "about", "access", "account", "admin",
-		"anonymous", "any", "api", "apps", "attributes", "auth", "billing", "blob",
-		"blog", "bounty", "branches", "business", "businesses", "c", "cache",
-		"case-studies", "categories", "central", "certification", "changelog",
-		"cla", "cloud", "codereview", "collection", "collections", "comments",
-		"commit", "commits", "community", "companies", "compare", "contact",
-		"contributing", "cookbook", "coupons", "customer", "customers",
-		"dashboard", "dashboards", "design", "develop", "developer", "diff",
-		"discover", "discussions", "docs", "downloads", "downtime", "editor",
-		"editors", "edu", "enterprise", "events", "explore", "featured",
-		"features", "files", "fixtures", "forked", "garage", "ghost", "gist",
-		"gists", "graphs", "guide", "guides", "help", "help-wanted", "home",
-		"hooks", "hosting", "hovercards", "identity", "images", "inbox",
-		"individual", "info", "integration", "interfaces", "introduction",
-		"invalid-email-address", "investors", "issues", "jobs", "join", "journal",
-		"journals", "lab", "labs", "languages", "launch", "layouts", "learn",
-		"legal", "library", "linux", "listings", "lists", "login", "logos",
-		"logout", "mac", "maintenance", "malware", "man", "marketplace", "mention",
-		"mentioned", "mentioning", "mentions", "migrating", "milestones", "mine",
-		"mirrors", "mobile", "navigation", "network", "new", "news", "none",
-		"nonprofit", "nonprofits", "notices", "notifications", "oauth", "offer",
-		"open-source", "organisations", "organizations", "orgs", "pages",
-		"partners", "payments", "personal", "plans", "plugins", "popular",
-		"popularity", "posts", "press", "pricing", "professional", "projects",
-		"pulls", "raw", "readme", "recommendations", "redeem", "releases",
-		"render", "reply", "repositories", "resources", "restore", "revert",
-		"save-net-neutrality", "saved", "scraping", "search", "security",
-		"services", "sessions", "settings", "shareholders", "shop", "showcases",
-		"signin", "signup", "site", "spam", "sponsors", "ssh", "staff", "starred",
-		"stars", "static", "status", "statuses", "storage", "store", "stories",
-		"styleguide", "subscriptions", "suggest", "suggestion", "suggestions",
-		"support", "suspended", "talks", "teach", "teacher", "teachers",
-		"teaching", "teams", "ten", "terms", "timeline", "topic", "topics", "tos",
-		"tour", "train", "training", "translations", "tree", "trending", "updates",
-		"username", "users", "visualization", "w", "watching", "wiki", "windows",
-		"works-with", "www0", "www1", "www2", "www3", "www4", "www5", "www6",
-		"www7", "www8", "www9"
+		/* BUILD:RESERVED-NAMES-START (v2.0.4) */
+		"400", "401", "402", "403", "404", "405", "406", "407", "408", "409", 
+		"410", "411", "412", "413", "414", "415", "416", "417", "418", "419", 
+		"420", "421", "422", "423", "424", "425", "426", "427", "428", "429", 
+		"430", "431", "500", "501", "502", "503", "504", "505", "506", "507", 
+		"508", "509", "510", "511", "about", "access", "account", "admin", 
+		"advisories", "anonymous", "any", "api", "apps", "attributes", "auth", 
+		"billing", "blob", "blog", "bounty", "branches", "business", "businesses", 
+		"c", "cache", "case-studies", "categories", "central", "certification", 
+		"changelog", "cla", "cloud", "codereview", "collection", "collections", 
+		"comments", "commit", "commits", "community", "companies", "compare", 
+		"contact", "contributing", "cookbook", "coupons", "customer-stories", 
+		"customer", "customers", "dashboard", "dashboards", "design", "develop", 
+		"developer", "diff", "discover", "discussions", "docs", "downloads", 
+		"downtime", "editor", "editors", "edu", "enterprise", "events", "explore", 
+		"featured", "features", "files", "fixtures", "forked", "garage", "ghost", 
+		"gist", "gists", "graphs", "guide", "guides", "help", "help-wanted", 
+		"home", "hooks", "hosting", "hovercards", "identity", "images", "inbox", 
+		"individual", "info", "integration", "interfaces", "introduction", 
+		"invalid-email-address", "investors", "issues", "jobs", "join", "journal", 
+		"journals", "lab", "labs", "languages", "launch", "layouts", "learn", 
+		"legal", "library", "linux", "listings", "lists", "login", "logos", 
+		"logout", "mac", "maintenance", "malware", "man", "marketplace", "mention", 
+		"mentioned", "mentioning", "mentions", "migrating", "milestones", "mine", 
+		"mirrors", "mobile", "navigation", "network", "new", "news", "none", 
+		"nonprofit", "nonprofits", "notices", "notifications", "oauth", "offer", 
+		"open-source", "organisations", "organizations", "orgs", "pages", 
+		"partners", "payments", "personal", "plans", "plugins", "popular", 
+		"popularity", "posts", "press", "pricing", "professional", "projects", 
+		"pulls", "raw", "readme", "recommendations", "redeem", "releases", 
+		"render", "reply", "repositories", "resources", "restore", "revert", 
+		"save-net-neutrality", "saved", "scraping", "search", "security", 
+		"services", "sessions", "settings", "shareholders", "shop", "showcases", 
+		"signin", "signup", "site", "spam", "sponsors", "ssh", "staff", "starred", 
+		"stars", "static", "status", "statuses", "storage", "store", "stories", 
+		"styleguide", "subscriptions", "suggest", "suggestion", "suggestions", 
+		"support", "suspended", "talks", "teach", "teacher", "teachers", 
+		"teaching", "team", "teams", "ten", "terms", "timeline", "topic", "topics", 
+		"tos", "tour", "train", "training", "translations", "tree", "trending", 
+		"updates", "username", "users", "visualization", "w", "watching", "wiki", 
+		"windows", "works-with", "www0", "www1", "www2", "www3", "www4", "www5", 
+		"www6", "www7", "www8", "www9"
 		/* BUILD:RESERVED-NAMES-END */
 	].join("|") + ")$");
 
@@ -290,7 +291,7 @@
 		`);
 
 		// add menu
-		let menu = document.createElement("div");
+		const menu = document.createElement("div");
 		menu.id = "ghch-menu";
 		menu.innerHTML = `
 			<div id="ghch-settings-inner" class="boxed-group">
@@ -315,23 +316,6 @@
 			</div>
 		`;
 		$("body").appendChild(menu);
-		// Create our menu entry
-		menu = document.createElement("a");
-		menu.id = "ghch-open-menu";
-		menu.className = "dropdown-item";
-		menu.innerHTML = "GitHub Hotkey Settings";
-
-		const els = $$(`
-			.header .dropdown-item[href="/settings/profile"],
-			.header .dropdown-item[data-ga-click*="go to profile"],
-			.Header .dropdown-item[href="/settings/profile"],
-			.Header .dropdown-item[data-ga-click*="go to profile"],
-			.js-header-wrapper .dropdown-item[href="/settings/profile"],
-			.js-header-wrapper .dropdown-item[data-ga-click*="go to profile"]
-		`);
-		if (els.length) {
-			els[els.length - 1].parentNode.insertBefore(menu, els[els.length - 1].nextSibling);
-		}
 		addBindings();
 	}
 
@@ -441,12 +425,31 @@
 		debug("Data refreshed", data);
 	}
 
+	function addDropdownLink() {
+		if (!$("#ghch-open-menu")) { console.log('adding link')
+			// Create our menu entry
+			const menu = document.createElement("a");
+			menu.id = "ghch-open-menu";
+			menu.role = "menuitem";
+			menu.className = "dropdown-item";
+			menu.innerHTML = "GitHub Hotkey Settings";
+			menu.onclick = openPanel;
+
+			const els =  $$(".Header-item .dropdown-item[href='/settings/profile']");
+			console.log(els)
+			if (els.length) {
+				els[els.length - 1].after(menu);
+			}
+		}
+	}
+
 	function addBindings() {
 		let tmp;
 		const menu = $("#ghch-menu");
+		if (!menu) {
+			return;
+		}
 
-		// open menu
-		on($("#ghch-open-menu"), "click", openPanel);
 		// close menu
 		on(menu, "click", closePanel);
 		on($("body"), "keydown", event => {
@@ -534,6 +537,11 @@
 			console.log.apply(console, arguments);
 		}
 	}
+
+	on(document, "ghmo:menu", () => {
+		// user menu needs to call an API now
+		addDropdownLink();
+	});
 
 	// initialize
 	checkScope();
