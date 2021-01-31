@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Table of Contents
-// @version     2.1.1
+// @version     2.1.2
 // @description A userscript that adds a table of contents to readme & wiki pages
 // @license     MIT
 // @author      Rob Garrison
@@ -32,7 +32,7 @@
 		left: "auto", // popup left position when reset
 		right: "10px", // popup right position when reset
 		headerPad: "48px", // padding added to header when TOC is collapsed
-		headerSelector: [".header", ".Header"],
+		headerSelector: [".header", ".Header", ".header-logged-out > div"],
 		headerWrap: ".js-header-wrapper",
 		toggle: "g+t", // keyboard toggle shortcut
 		restore: "g+r", // keyboard reset popup position shortcut
