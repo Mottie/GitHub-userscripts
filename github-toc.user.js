@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Table of Contents
-// @version     2.1.0
+// @version     2.1.1
 // @description A userscript that adds a table of contents to readme & wiki pages
 // @license     MIT
 // @author      Rob Garrison
@@ -75,11 +75,11 @@
 		.ghus-toc .ghus-toc-h6 { padding-left:90px; }
 		/* anchor collapsible icon */
 		.ghus-toc li.collapsible .ghus-toc-icon:before {
-			content:' '; position:absolute; width:10px; height:10px; display:inline-block; left:-12px; top:-10px;
+			content:' '; position:absolute; width:20px; height:20px; display:inline-block; left:-16px; top:-14px;
 			background: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGNsYXNzPSdvY3RpY29uJyBoZWlnaHQ9JzE0JyB2aWV3Qm94PScwIDAgMTIgMTYnPjxwYXRoIGQ9J00wIDVsNiA2IDYtNkgweic+PC9wYXRoPjwvc3ZnPg==) left center no-repeat;
 		}
 		.ghus-toc li.collapsible.collapsed .ghus-toc-icon:before { -webkit-transform:rotate(-90deg);
-			transform:rotate(-90deg); }
+			transform:rotate(-90deg); top:-20px; left:-20px; }
 		.ghus-toc-icon svg, .ghus-toc-docs svg { pointer-events:none; }
 		.ghus-toc-no-selection { -webkit-user-select:none !important; -moz-user-select:none !important;
 			user-select:none !important; }
@@ -325,30 +325,31 @@
 			}
 		}
 		group = [];
-		on(container, "click", event => {
-			// Allow doc link to work
-			if (event.target.nodeName === "A") {
-				return;
-			}
-			stopPropag(event);
-			// click on icon, then target LI parent
-			let els, name, indx;
-			const el = event.target.parentElement;
-			const collapse = el.classList.contains("collapsed");
-			if (event.target.classList.contains("ghus-toc-icon")) {
-				if (event.shiftKey) {
-					name = el.className.match(regex.header);
-					els = name ? $$("." + name, container) : [];
-					indx = els.length;
-					while (indx--) {
-						collapseChildren(els[indx], collapse);
-					}
-				} else {
-					collapseChildren(el, collapse);
+	}
+
+	function toggleChildrenHandler(event) {
+		// Allow doc link to work
+		if (event.target.nodeName === "A") {
+			return;
+		}
+		stopPropag(event);
+		// click on icon, then target LI parent
+		let els, name, indx;
+		const el = event.target.closest("li");
+		const collapse = el?.classList.contains("collapsed");
+		if (event.target.classList.contains("ghus-toc-icon")) {
+			if (event.shiftKey) {
+				name = el.className.match(regex.header);
+				els = name ? $$("." + name, container) : [];
+				indx = els.length;
+				while (indx--) {
+					collapseChildren(els[indx], collapse);
 				}
-				removeSelection();
+			} else {
+				collapseChildren(el, collapse);
 			}
-		});
+			removeSelection();
+		}
 	}
 
 	function collapseChildren(el, collapse) {
@@ -453,6 +454,7 @@
 		on($("h3", container), "dblclick", tocHide);
 		// prevent container content selection
 		on(container, "onselectstart", stopPropag);
+		on(container, "click", toggleChildrenHandler);
 		// keyboard shortcuts
 		on(document, "keydown", keyboardCheck);
 		// keep window relative to middle on resize
