@@ -39,6 +39,7 @@ Userscripts to add functionality to GitHub.
 	| [GitHub hide own feed meta][hof-wiki]  |     | [install][hof-raw] | [GF][hof-gf] [OU][hof-ou] | 2017.12.21 | 2021.01.31 |
 	| [GitHub html preview][ghp-wiki]        |     | [install][ghp-raw] | [GF][ghp-gf] [OU][ghp-ou] | 2019.03.29 | 2021.01.31 |
 	| [GitHub image preview][ipv-wiki]       |     | [install][ipv-raw] | [GF][ipv-gf] [OU][ipv-ou] | 2016.05.17 | 2021.01.31 |
+	| [GitHub in VSCode][ivs-wiki]           |     | [install][ivs-raw] | [GF][ivs-gf] [OU][ivs-ou] | 2021.02.11 | 2021.02.11 |
 	| [GitHub indent comments][ioc-wiki]     |     | [install][ioc-raw] | [GF][ioc-gf] [OU][ioc-ou] | 2017.03.15 | 2021.01.31 |
 	| [GitHub issue add details][iad-wiki]   |     | [install][iad-raw] | [GF][iad-gf] [OU][iad-ou] | 2018.01.05 | 2021.01.31 |
 	| [GitHub issue comments][ic1-wiki]      |     | [install][ic1-raw] | [GF][ic1-gf] [OU][ic1-ou] | 2016.04.04 | 2021.01.31 |
@@ -102,6 +103,7 @@ Userscripts to add functionality to GitHub.
 [ioc-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-indent-comments
 [ipv-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-image-preview
 [iss-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-issue-show-status
+[ivs-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-in-VSCode
 [rds-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-remove-diff-signs
 [rhd-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-reveal-header
 [rtl-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-rtl-comments
@@ -146,6 +148,7 @@ Userscripts to add functionality to GitHub.
 [ioc-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-indent-comments.user.js
 [ipv-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-image-preview.user.js
 [iss-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-issue-show-status.user.js
+[ivs-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-in-vscode.user.js
 [rds-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-remove-diff-signs.user.js
 [rhd-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-reveal-header.user.js
 [rtl-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-rtl-comments.user.js
@@ -190,6 +193,7 @@ Userscripts to add functionality to GitHub.
 [ioc-gf]: https://greasyfork.org/en/scripts/28176-github-indent-comment-blocks
 [ipv-gf]: https://greasyfork.org/en/scripts/19773-github-image-preview
 [iss-gf]: https://greasyfork.org/en/scripts/30268-github-issue-show-status
+[ivs-gf]: https://greasyfork.org/en/scripts/421606-github-in-vscode
 [rds-gf]: https://greasyfork.org/en/scripts/18520-github-remove-diff-signs
 [rhd-gf]: https://greasyfork.org/en/scripts/30308-github-reveal-header
 [rtl-gf]: https://greasyfork.org/en/scripts/20542-github-rtl-comment-blocks
@@ -234,6 +238,7 @@ Userscripts to add functionality to GitHub.
 [ioc-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Indent_Comment_Blocks
 [ipv-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Image_Preview
 [iss-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Issue_Show_Status
+[ivs-ou]: https://openuserjs.org/scripts/Mottie/GitHub_in_VSCode
 [rds-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Remove_Diff_Signs
 [rhd-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Reveal_Header
 [rtl-ou]: https://openuserjs.org/scripts/Mottie/GitHub_RTL_Comment_Blocks
