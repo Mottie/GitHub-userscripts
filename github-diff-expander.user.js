@@ -12,6 +12,7 @@
 // @icon        https://github.githubassets.com/pinned-octocat.svg
 // @updateURL   https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-diff-expander.user.js
 // @downloadURL https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-diff-expander.user.js
+// @supportURL  https://github.com/Mottie/GitHub-userscripts/issues
 // ==/UserScript==
 (() => {
 	"use strict";

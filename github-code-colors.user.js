@@ -15,6 +15,7 @@
 // @icon        https://github.githubassets.com/pinned-octocat.svg
 // @updateURL   https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-code-colors.user.js
 // @downloadURL https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-code-colors.user.js
+// @supportURL  https://github.com/Mottie/GitHub-userscripts/issues
 // ==/UserScript==
 /* global GM Color */
 (() => {

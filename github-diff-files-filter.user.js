@@ -10,6 +10,7 @@
 // @grant       GM_addStyle
 // @require     https://greasyfork.org/scripts/28721-mutations/code/mutations.js?version=882023
 // @icon        https://github.githubassets.com/pinned-octocat.svg
+// @supportURL  https://github.com/Mottie/GitHub-userscripts/issues
 // ==/UserScript==
 (() => {
 	"use strict";

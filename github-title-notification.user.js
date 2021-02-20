@@ -13,6 +13,7 @@
 // @icon        https://github.githubassets.com/pinned-octocat.svg
 // @updateURL   https://raw.githubusercontent.com/Mottie/Github-userscripts/master/github-title-notification.user.js
 // @downloadURL https://raw.githubusercontent.com/Mottie/Github-userscripts/master/github-title-notification.user.js
+// @supportURL  https://github.com/Mottie/GitHub-userscripts/issues
 // ==/UserScript==
 (() => {
 	"use strict";
