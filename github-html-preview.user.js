@@ -13,6 +13,7 @@
 // @icon        https://github.githubassets.com/pinned-octocat.svg
 // @updateURL   https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-html-preview.user.js
 // @downloadURL https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-html-preview.user.js
+// @supportURL  https://github.com/Mottie/GitHub-userscripts/issues
 // ==/UserScript==
 /* global $ $$ on */
 (() => {
