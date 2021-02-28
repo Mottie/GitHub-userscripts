@@ -59,6 +59,7 @@ Userscripts to add functionality to GitHub.
 	| [GitHub toggle wiki sidebar][tws-wiki] |     | [install][tws-raw] | [GF][tws-gf] [OU][tws-ou] | 2016.04.01 | 2021.01.31 |
 	| [GitHub unknown license][gul-wiki]     |     | [install][gul-raw] | [GF][gul-gf] [OU][gul-ou] | 2020.03.29 | 2021.01.31 |
 	| [GitHub update fork][ufk-wiki]         |     | [install][ufk-raw] | [GF][ufk-gf] [OU][ufk-ou] | 2020.02.16 | 2020.10.01 |
+	| [GitHub watcher][wat-wiki]             |     | [install][wat-raw] | [GF][wat-gf] [OU][wat-ou] | 2021.02.28 | 2021.02.28 |
 	| [Gist raw links][grl-wiki]             |     | [install][grl-raw] | [GF][grl-gf] [OU][grl-ou] | 2017.05.19 | 2019.06.07 |
 	| [Gist to dabblet][g2d-wiki]            |     | [install][g2d-raw] | [GF][g2d-gf] [OU][g2d-ou] | 2012.01.26 | 2017.02.16 |
 
@@ -116,6 +117,7 @@ Userscripts to add functionality to GitHub.
 [toc-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-table-of-contents
 [tws-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-toggle-wiki-sidebar
 [ufk-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-update-fork
+[wat-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-watcher
 
 [ccr-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-code-colors.user.js
 [ccs-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-copy-code-snippet.user.js
@@ -161,6 +163,7 @@ Userscripts to add functionality to GitHub.
 [toc-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-toc.user.js
 [tws-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-toggle-wiki-sidebar.user.js
 [ufk-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-update-fork.user.js
+[wat-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-watcher.user.js
 
 [ccr-gf]: https://greasyfork.org/en/scripts/18141-github-code-colors
 [ccs-gf]: https://greasyfork.org/en/scripts/37307-github-copy-code-snippet
@@ -206,6 +209,7 @@ Userscripts to add functionality to GitHub.
 [toc-gf]: https://greasyfork.org/en/scripts/18344-github-toc
 [tws-gf]: https://greasyfork.org/en/scripts/18433-github-toggle-wiki-sidebar
 [ufk-gf]: https://greasyfork.org/en/scripts/398272-github-update-fork
+[wat-gf]: https://greasyfork.org/en/scripts/422445-github-watcher
 
 [ccr-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Code_Colors
 [ccs-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Copy_Code_Snippet
@@ -251,6 +255,7 @@ Userscripts to add functionality to GitHub.
 [toc-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Table_of_Contents
 [tws-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Toggle_Wiki_Sidebar
 [ufk-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Update_Fork
+[wat-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Watcher
 
 [ico]: https://raw.githubusercontent.com/Mottie/Octopatcher/master/src/images/icon16.png
 
