@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Analyse Forks
-// @version     0.1.0
+// @version     0.1.1
 // @description A userscript that analyzes GitHub forks, helps you to find out the worthiest fork.
 // @license     MIT
 // @author      Sean Zhang
@@ -24,6 +24,8 @@
 
     const sleep=t=>new Promise(f=>setTimeout(f,t));
 
+    const gm=(u,f)=>GM_xmlhttpRequest({url:u,onload:f});
+
     function init() {
 		const root = $(".network");
 		const repos = $$(".network .repo");
@@ -35,18 +37,34 @@
                 // Get fork repo info
                 let repo = $('a:last-child', el).attributes.href.nodeValue;
                 // Delay 2 minutes every 300 requests to avoid GitHub limits
-                sleep(b * 10 + (Math.floor(b / 300) * 120000)).then(()=>{
-                    console.log('r', b, (new Date()).format('yyyy-MM-dd HH:mm:ss'));
-                    GM_xmlhttpRequest({
-                        url:`https://github.com${repo}`,
-                        onload:function(xhr){
+                sleep(b + (Math.floor(b / 100) * 120000)).then(()=>{
+                    //console.log('r', b, (new Date()).format('yyyy-MM-dd HH:mm:ss'));
+                    gm(`https://github.com${repo}`, (xhr)=>{
                             // Get latest commit time
                             let html = xhr.responseText,
-                                i = html.indexOf('datetime');
+                                i = html.indexOf('tree-commit');
                             if (i > -1) {
-                                let dt = html.substring(i + 10, html.indexOf('"', i + 10));
-                                dt = new Date(dt).format('yyyy-MM-dd HH:mm:ss');
-                                el.innerHTML = el.innerHTML + ' <b>' + dt + '</b>';
+                                let link = html.substring(html.lastIndexOf('"', i) + 1, html.indexOf('"', i));
+                                gm(`https://github.com${link}`, (xhr)=>{
+                                    let html = xhr.responseText,
+                                        i = html.indexOf('datetime');
+                                    if (i > -1) {
+                                        let dt = html.substring(i + 10, html.indexOf('"', i + 10));
+                                        dt = new Date(dt).format('yyyy-MM-dd HH:mm:ss');
+                                        el.innerHTML = el.innerHTML + ' <b>' + dt + '</b>';
+                                    }
+                                    let e = html.indexOf('Whoa there!');
+                                    if (e > -1) {
+                                        console.log('res', b, 'Whoa there!');
+                                    }
+                                });
+                            } else {
+                                i = html.indexOf('datetime');
+                                if (i > -1) {
+                                    let dt = html.substring(i + 10, html.indexOf('"', i + 10));
+                                    dt = new Date(dt).format('yyyy-MM-dd HH:mm:ss');
+                                    el.innerHTML = el.innerHTML + ' <b>' + dt + '</b>';
+                                }
                             }
                             // Get fork compare info
                             i = html.indexOf('This branch is');
@@ -75,11 +93,9 @@
                             let e = html.indexOf('Whoa there!');
                             if (e > -1) {
                                 console.log('res', b, 'Whoa there!');
-                            } else {
-                                console.log('res', b);
                             }
                         }
-                    });
+                    );
                 });
             });
 		}
