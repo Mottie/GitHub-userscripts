@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Analyse Forks
-// @version     0.2.0
+// @version     0.2.1
 // @description A userscript that analyzes GitHub forks, shows compare info between fork repos and parent repo, helps you to find out the worthiest fork.
 // @license     MIT
 // @author      Sean Zhang
@@ -24,7 +24,7 @@
 
     const sleep=(t)=>new Promise(f=>setTimeout(f,t));
 
-    const gm=(u,f)=>GM_xmlhttpRequest({url:u,onload:(xhr)=>{let h=xhr.responseText;let e=h.indexOf('Whoa there!');if(e>-1)f('Whoa Github limits!');f(h);}});
+    const gm=(u,f)=>GM_xmlhttpRequest({url:u,onload:(xhr)=>{let h=xhr.responseText,e=h.indexOf('Whoa there!');f(e==-1?h:'Whoa Github limits!');}});
 
     const show=(e,b,c=0)=>{e.innerHTML+=" <b"+(0==c?"":' style="color:'+(c>0?"red":"#01cc1b")+';"')+">"+b+"</b>"};
 
@@ -39,7 +39,7 @@
             if (ix == 0) {
                 myDt = dt
             } else {
-                let df = Math.round((dt - myDt) / (1000 * 60 * 60 * 24), 0);
+                let df = Math.round((dt - myDt) / 8640000, 0);
                 show(el, df == 0 ? 'same day' : ((df > 0 ? 'ahead' : 'behind') + ' ' + Math.abs(df) + ' day' + (Math.abs(df) > 1 ? 's' : '')), df);
             }
         }
@@ -102,11 +102,9 @@
         if (root && repos.length > 0) {
             console.log('Fork repos', repos.length);
 
-            repos.forEach((el, b)=>{
+            repos.forEach((el, i)=>{
                 // Delay 1 minute every 100 requests to avoid Github limits
-                sleep(b + (Math.floor(b / 100) * 60000)).then(()=>{
-                    analyse(el, b);
-                });
+                sleep(i + (Math.floor(i / 100) * 60000)).then(()=>analyse(el, i));
             });
 
         }
