@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Code Folding
-// @version     1.1.2
+// @version     1.1.3
 // @description A userscript that adds code folding to GitHub files
 // @license     MIT
 // @author      Rob Garrison
@@ -12,12 +12,13 @@
 // @grant       GM_addStyle
 // @require     https://greasemonkey.github.io/gm4-polyfill/gm4-polyfill.js?updated=20180103
 // @require     https://greasyfork.org/scripts/28721-mutations/code/mutations.js?version=882023
+// @require     https://greasyfork.org/scripts/398877-utils-js/code/utilsjs.js?version=895926
 // @icon        https://github.githubassets.com/pinned-octocat.svg
 // @updateURL   https://raw.githubusercontent.com/Mottie/Github-userscripts/master/github-code-folding.user.js
 // @downloadURL https://raw.githubusercontent.com/Mottie/Github-userscripts/master/github-code-folding.user.js
 // @supportURL  https://github.com/Mottie/GitHub-userscripts/issues
 // ==/UserScript==
-/* global GM */
+/* global $ $$ on */
 /**
  * This userscript has been heavily modified from the "github-code-folding"
  * Chrome extension Copyright 2016 by Noam Lustiger; under an MIT license
@@ -141,7 +142,7 @@
 	}
 
 	function addBindings() {
-		document.addEventListener("click", event => {
+		on(document, "click", event => {
 			let index, elm, isCollapsed;
 			const el = event.target;
 			const codeBlock = el.closest(".highlight");
@@ -238,14 +239,6 @@
 		}
 	}
 
-	function $(selector, el) {
-		return (el || document).querySelector(selector);
-	}
-
-	function $$(selector, el) {
-		return Array.from((el || document).querySelectorAll(selector));
-	}
-
 	function removeEls(selector, el) {
 		let els = $$(selector, el);
 		let index = els.length;
@@ -268,7 +261,7 @@
 		}
 	}
 
-	document.addEventListener("ghmo:container", addCodeFolding);
+	on(document, "ghmo:container", addCodeFolding);
 	addCodeFolding();
 	addBindings();
 
