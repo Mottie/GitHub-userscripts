@@ -113,7 +113,7 @@
 					elm = $(".ghcf-collapser", codeLines[start - 1]);
 					elm.parentNode.insertBefore(
 						ellipsis.cloneNode(true),
-						elm.nextSibling
+						null
 					);
 				}
 			});
@@ -221,7 +221,7 @@
 								// prepend triangle
 								el = triangle.cloneNode();
 								el.dataset.depth = count + 1;
-								codeLines[top].appendChild(el, codeLines[top].childNodes[0]);
+								codeLines[top].insertBefore(el, codeLines[top].childNodes[0]);
 								stack.pop();
 								return tryPair();
 							}
