@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Analyse Forks
-// @version     0.2.1
+// @version     0.2.3
 // @description A userscript that analyzes GitHub forks, shows compare info between fork repos and parent repo, helps you to find out the worthiest fork.
 // @license     MIT
 // @author      Sean Zhang
@@ -39,7 +39,7 @@
             if (ix == 0) {
                 myDt = dt
             } else {
-                let df = Math.round((dt - myDt) / 8640000, 0);
+                let df = Math.round((dt - myDt) / 86400000, 0);
                 show(el, df == 0 ? 'same day' : ((df > 0 ? 'ahead' : 'behind') + ' ' + Math.abs(df) + ' day' + (Math.abs(df) > 1 ? 's' : '')), df);
             }
         }
@@ -80,7 +80,7 @@
                 let a = compare.indexOf('ahead');
                 if (a > -1) {
                     let num = compare.substring(compare.lastIndexOf('is', a) + 3, compare.lastIndexOf('commit', a) - 1);
-                    compare = compare.replace(num, '<b style="color:red;">' + num + '</b>');
+                    compare = compare.replace(' ' + num + ' ', '<b style="color:red;"> ' + num + ' </b>');
                 }
                 let b = compare.indexOf('behind');
                 if (b > -1) {
@@ -89,7 +89,7 @@
                         d = compare.lastIndexOf('is', b) + 1;
                     }
                     let num = compare.substring(d + 2, compare.lastIndexOf('commit', b) - 1);
-                    compare = compare.replace(num, '<b style="color:#01cc1b;">' + num + '</b>');
+                    compare = compare.replace(' ' + num + ' ', '<b style="color:#01cc1b;"> ' + num + ' </b>');
                 }
                 el.innerHTML += ' ' + compare;
             }
