@@ -9,7 +9,7 @@
 // @run-at      document-idle
 // @grant       none
 // @icon        https://github.githubassets.com/pinned-octocat.svg
-// @updateURL   https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-update-fork.user.js
+// @updateURL   https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/meta/github-update-fork.meta.js
 // @downloadURL https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-update-fork.user.js
 // @supportURL  https://github.com/Mottie/GitHub-userscripts/issues
 // ==/UserScript==

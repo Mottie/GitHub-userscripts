@@ -19,7 +19,7 @@
 // @require     https://greasyfork.org/scripts/28721-mutations/code/mutations.js?version=666427
 // @require     https://greasemonkey.github.io/gm4-polyfill/gm4-polyfill.js?updated=20180103
 // @icon        https://github.githubassets.com/pinned-octocat.svg
-// @updateURL   https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-toc.user.js
+// @updateURL   https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/meta/github-toc.meta.js
 // @downloadURL https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-toc.user.js
 // @supportURL  https://github.com/Mottie/GitHub-userscripts/issues
 // ==/UserScript==

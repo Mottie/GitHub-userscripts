@@ -9,7 +9,7 @@
 // @run-at      document-idle
 // @grant       none
 // @icon        https://github.githubassets.com/pinned-octocat.svg
-// @updateURL   https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/gist-to-dabblet.user.js
+// @updateURL   https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/meta/gist-to-dabblet.meta.js
 // @downloadURL https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/gist-to-dabblet.user.js
 // @supportURL  https://github.com/Mottie/GitHub-userscripts/issues
 // ==/UserScript==

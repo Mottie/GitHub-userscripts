@@ -14,7 +14,7 @@
 // @grant       GM_registerMenuCommand
 // @require     https://greasyfork.org/scripts/23181-colorpicker/code/colorPicker.js?version=147862
 // @icon        https://github.githubassets.com/pinned-octocat.svg
-// @updateURL   https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-label-color-picker.user.js
+// @updateURL   https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/meta/github-label-color-picker.meta.js
 // @downloadURL https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-label-color-picker.user.js
 // @supportURL  https://github.com/Mottie/GitHub-userscripts/issues
 // ==/UserScript==

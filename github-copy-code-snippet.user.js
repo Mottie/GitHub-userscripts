@@ -11,7 +11,7 @@
 // @grant       GM_addStyle
 // @require     https://greasyfork.org/scripts/28721-mutations/code/mutations.js?version=882023
 // @icon        https://github.githubassets.com/pinned-octocat.svg
-// @updateURL   https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-copy-code-snippet.user.js
+// @updateURL   https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/meta/github-copy-code-snippet.meta.js
 // @downloadURL https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-copy-code-snippet.user.js
 // @supportURL  https://github.com/Mottie/GitHub-userscripts/issues
 // ==/UserScript==

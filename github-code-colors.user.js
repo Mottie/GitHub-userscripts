@@ -13,7 +13,7 @@
 // @require     https://greasyfork.org/scripts/28721-mutations/code/mutations.js?version=882023
 // @require     https://greasyfork.org/scripts/387811-color-bundle/code/color-bundle.js?version=719499
 // @icon        https://github.githubassets.com/pinned-octocat.svg
-// @updateURL   https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-code-colors.user.js
+// @updateURL   https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/meta/github-code-colors.meta.js
 // @downloadURL https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-code-colors.user.js
 // @supportURL  https://github.com/Mottie/GitHub-userscripts/issues
 // ==/UserScript==

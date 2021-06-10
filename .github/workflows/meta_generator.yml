@@ -1,0 +1,27 @@
+name: Meta Generator
+
+on:
+  push:
+    paths:
+      - '*.user.js'
+  pull_request:
+    paths:
+      - '*.user.js'
+  workflow_dispatch:
+
+jobs:
+  start:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      
+      - name: Generate Meta
+        run: python3 ./.github/workflows/meta_generator.py
+      
+      - name: Commit changes
+        run: |
+          git config --local user.email "46617994+touhidurrr@users.noreply.github.com"
+          git config --local user.name "touhidurrr"
+          git add meta
+          git commit -m "Generated Meta"
+          git push

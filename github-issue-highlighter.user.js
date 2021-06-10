@@ -11,7 +11,7 @@
 // @grant       GM_addStyle
 // @require     https://greasemonkey.github.io/gm4-polyfill/gm4-polyfill.js?updated=20180103
 // @icon        https://github.githubassets.com/pinned-octocat.svg
-// @updateURL   https://raw.githubusercontent.com/Mottie/Github-userscripts/master/github-issue-highlighter.user.js
+// @updateURL   https://raw.githubusercontent.com/Mottie/Github-userscripts/master/meta/github-issue-highlighter.meta.js
 // @downloadURL https://raw.githubusercontent.com/Mottie/Github-userscripts/master/github-issue-highlighter.user.js
 // @supportURL  https://github.com/Mottie/GitHub-userscripts/issues
 // ==/UserScript==
