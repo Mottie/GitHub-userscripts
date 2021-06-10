@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Update Fork
-// @version     0.2.0
+// @version     0.2.1
 // @description A userscript that adds a link to update your fork
 // @license     MIT
 // @author      Rob Garrison

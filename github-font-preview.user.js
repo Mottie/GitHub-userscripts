@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Font Preview
-// @version     1.0.23
+// @version     1.0.24
 // @description A userscript that adds a font file preview
 // @license     MIT
 // @author      Rob Garrison

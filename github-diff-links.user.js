@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Diff Links
-// @version     1.2.16
+// @version     1.2.17
 // @description A userscript that adds links to diff and pull request headers to jump back & forth between files
 // @license     MIT
 // @author      Rob Garrison

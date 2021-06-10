@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Static Time
-// @version     1.0.8
+// @version     1.0.9
 // @description A userscript that replaces relative times with a static time formatted as you like it
 // @license     MIT
 // @author      Rob Garrison

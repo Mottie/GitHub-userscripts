@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Issue Show Status
-// @version     1.0.7
+// @version     1.0.8
 // @description A userscript that adds an obvious indicator showing if an issue or pull request is open or closed
 // @license     MIT
 // @author      Rob Garrison

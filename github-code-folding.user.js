@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Code Folding
-// @version     1.1.3
+// @version     1.1.4
 // @description A userscript that adds code folding to GitHub files
 // @license     MIT
 // @author      Rob Garrison

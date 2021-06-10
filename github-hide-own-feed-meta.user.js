@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Hide Own Feed Meta
-// @version     0.1.7
+// @version     0.1.8
 // @description A userscript that hides your own repo metadata in the GitHub feed
 // @license     MIT
 // @author      Rob Garrison

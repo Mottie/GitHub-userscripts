@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Label Color Picker
-// @version     1.0.7
+// @version     1.0.8
 // @description A userscript that adds a color picker to the label color input
 // @license     MIT
 // @author      Rob Garrison

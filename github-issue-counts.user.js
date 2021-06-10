@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Issue Counts
-// @version     3.0.18
+// @version     3.0.19
 // @description A userscript that adds a repo issues count to the repository tab & organization page (https://github.com/:user)
 // @license     MIT
 // @author      Rob Garrison

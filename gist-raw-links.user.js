@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        Gist Raw Links
-// @version     0.2.2
+// @version     0.2.3
 // @description Add a button that contains a list of gist raw file links
 // @license     MIT
 // @author      Rob Garrison

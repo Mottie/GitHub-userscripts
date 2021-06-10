@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Sort Reactions
-// @version     0.2.15
+// @version     0.2.16
 // @description A userscript that sorts comments by reaction
 // @license     MIT
 // @author      Rob Garrison

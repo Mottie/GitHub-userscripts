@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Toggle Diff Comments
-// @version     0.3.1
+// @version     0.3.2
 // @description A userscript that toggles diff/PR and commit comments
 // @license     MIT
 // @author      Rob Garrison

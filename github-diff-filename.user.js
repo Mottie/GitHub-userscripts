@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Diff Filename
-// @version     1.1.2
+// @version     1.1.3
 // @description A userscript that highlights filename & permission alterations
 // @license     MIT
 // @author      Rob Garrison
