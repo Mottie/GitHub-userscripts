@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub in VSCode
-// @version     0.1.0
+// @version     0.1.1
 // @description A userscript that adds a button to open a repo in VSCode using github1s
 // @license     MIT
 // @author      Rob Garrison
@@ -78,7 +78,9 @@
 			className: `ghiv-link btn ${margin} tooltipped tooltipped-n`,
 			attrs: {
 				href: `https://github1s.com${window.location.pathname}`,
-				"aria-label": "Open this repo in VS Code using github1s"
+				"aria-label": "Open this repo in VS Code using github1s",
+				target: "_blank",
+				rel: "noopener noreferrer"
 			},
 			html: vsCodeIcon
 		});
