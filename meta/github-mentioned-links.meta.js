@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Mentioned Links
-// @version     0.1.1
+// @version     0.1.2
 // @description A userscript adds all mentioned links in the side bar
 // @license     MIT
 // @author      Rob Garrison

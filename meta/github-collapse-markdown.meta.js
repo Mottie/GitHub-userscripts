@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Collapse Markdown
-// @version     1.2.1
+// @version     1.2.2
 // @description A userscript that collapses markdown headers
 // @license     MIT
 // @author      Rob Garrison

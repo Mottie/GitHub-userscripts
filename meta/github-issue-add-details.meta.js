@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Issue Add Details
-// @version     1.0.8
+// @version     1.0.9
 // @description A userscript that adds a button to insert a details block into comments
 // @license     MIT
 // @author      Rob Garrison

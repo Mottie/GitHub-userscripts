@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Image Preview
-// @version     2.0.4
+// @version     2.0.5
 // @description A userscript that adds clickable image thumbnails
 // @license     MIT
 // @author      Rob Garrison

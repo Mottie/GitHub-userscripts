@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub in VSCode
-// @version     0.1.1
+// @version     0.1.2
 // @description A userscript that adds a button to open a repo in VSCode using github1s
 // @license     MIT
 // @author      Rob Garrison

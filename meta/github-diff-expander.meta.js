@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Diff Expander
-// @version     0.1.4
+// @version     0.1.5
 // @description A userscript that adds more diff code expanding buttons
 // @license     MIT
 // @author      Rob Garrison

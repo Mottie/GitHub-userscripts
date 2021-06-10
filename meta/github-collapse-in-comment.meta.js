@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Collapse In Comment
-// @version     1.0.21
+// @version     1.0.22
 // @description A userscript that adds a header that can toggle long code and quote blocks in comments
 // @license     MIT
 // @author      Rob Garrison

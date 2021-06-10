@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Reveal Header
-// @version     0.1.4
+// @version     0.1.5
 // @description A userscript that reveals the header when hovering near the top of the screen
 // @license     MIT
 // @author      Rob Garrison

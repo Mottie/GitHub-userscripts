@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Code Colors
-// @version     2.0.5
+// @version     2.0.6
 // @description A userscript that adds a color swatch next to the code color definition
 // @license     MIT
 // @author      Rob Garrison

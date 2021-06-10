@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Issue Comments
-// @version     1.4.5
+// @version     1.4.6
 // @description A userscript that toggles issues/pull request comments & messages
 // @license     MIT
 // @author      Rob Garrison

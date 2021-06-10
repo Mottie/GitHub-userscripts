@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Toggle Expanders
-// @version     2.0.1
+// @version     2.0.2
 // @description A userscript that toggles all expanders when one expander is shift-clicked
 // @license     MIT
 // @author      Rob Garrison

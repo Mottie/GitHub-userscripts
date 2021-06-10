@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub unknown license
-// @version     0.1.2
+// @version     0.1.3
 // @description A userscript that adds "unknown license" message in repos with no license set
 // @license     MIT
 // @author      Rob Garrison

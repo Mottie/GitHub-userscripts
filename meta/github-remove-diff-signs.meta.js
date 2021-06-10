@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Remove Diff Signs
-// @version     1.3.2
+// @version     1.3.3
 // @description A userscript that hides the "+" and "-" from code diffs
 // @license     MIT
 // @author      Rob Garrison

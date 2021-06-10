@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        Gist to dabblet
-// @version     2.1.5
+// @version     2.1.6
 // @description Add a dabblet.com link button to any gist with dabblet information
 // @license     MIT
 // @author      Rob Garrison

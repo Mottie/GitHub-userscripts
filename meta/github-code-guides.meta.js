@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Code Guides
-// @version     1.1.14
+// @version     1.1.15
 // @description A userscript that allows you to add one or more vertical guidelines to the code
 // @license     MIT
 // @author      Rob Garrison
