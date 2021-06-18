@@ -23,6 +23,15 @@
 	const arrow = "\u2192"; // "→"
 	const regex = new RegExp(`\\s${arrow}\\s`);
 
+    function createStyleSheet(green, red){
+        let style = document.createElement('style');
+        style.innerHTML = `
+        .ghdfn.text-green{ color: ${green}; }
+        .ghdfn.text-red{ color: ${red}; }
+        `
+        document.head.appendChild(style);
+    }
+
 	function processFileInfo(el) {
 		let node;
 		if (!$(".ghdfn", el)) {
@@ -101,6 +110,7 @@
 		}
 	}
 
+    createStyleSheet('#1FFD53', 'red');
 	on(document, "ghmo:container", init);
 	on(document, "ghmo:diff", init);
 	init();
