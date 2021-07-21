@@ -11,8 +11,8 @@
 // @require     https://greasyfork.org/scripts/28721-mutations/code/mutations.js?version=952601
 // @require     https://greasyfork.org/scripts/398877-utils-js/code/utilsjs.js?version=952600
 // @icon        https://github.githubassets.com/pinned-octocat.svg
-// @updateURL   https://raw.githubusercontent.com/Mottie/Github-userscripts/master/github-unknown-license.user.js
-// @downloadURL https://raw.githubusercontent.com/Mottie/Github-userscripts/master/github-unknown-license.user.js
+// @updateURL   https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-unknown-license.user.js
+// @downloadURL https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-unknown-license.user.js
 // @supportURL  https://github.com/Mottie/GitHub-userscripts/issues
 // ==/UserScript==
 /* global $ on */
