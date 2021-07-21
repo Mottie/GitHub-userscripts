@@ -14,7 +14,8 @@
 		targets = {
 			// pjax container (covers general, repo & gists)
 			// .news = newsfeed layout
-			"[data-pjax-container], .news": {
+			// .repository-content = file code (code folding)
+			"[data-pjax-container], .news, .repository-content": {
 				count: 0,
 				name: "container"
 			},
