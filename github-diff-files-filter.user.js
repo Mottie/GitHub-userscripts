@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Diff Files Filter
-// @version     2.1.3
+// @version     2.1.4
 // @description A userscript that adds filters that toggle diff & PR folders, and files by extension
 // @license     MIT
 // @author      Rob Garrison
@@ -8,7 +8,7 @@
 // @include     https://github.com/*
 // @run-at      document-idle
 // @grant       GM_addStyle
-// @require     https://greasyfork.org/scripts/28721-mutations/code/mutations.js?version=882023
+// @require     https://greasyfork.org/scripts/28721-mutations/code/mutations.js?version=952601
 // @icon        https://github.githubassets.com/pinned-octocat.svg
 // @supportURL  https://github.com/Mottie/GitHub-userscripts/issues
 // ==/UserScript==

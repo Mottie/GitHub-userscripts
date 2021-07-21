@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub unknown license
-// @version     0.1.2
+// @version     0.1.3
 // @description A userscript that adds "unknown license" message in repos with no license set
 // @license     MIT
 // @author      Rob Garrison
@@ -8,8 +8,8 @@
 // @include     https://github.com/*
 // @run-at      document-idle
 // @grant       none
-// @require     https://greasyfork.org/scripts/28721-mutations/code/mutations.js?version=882023
-// @require     https://greasyfork.org/scripts/398877-utils-js/code/utilsjs.js?version=895926
+// @require     https://greasyfork.org/scripts/28721-mutations/code/mutations.js?version=952601
+// @require     https://greasyfork.org/scripts/398877-utils-js/code/utilsjs.js?version=952600
 // @icon        https://github.githubassets.com/pinned-octocat.svg
 // @updateURL   https://raw.githubusercontent.com/Mottie/Github-userscripts/master/github-unknown-license.user.js
 // @downloadURL https://raw.githubusercontent.com/Mottie/Github-userscripts/master/github-unknown-license.user.js
