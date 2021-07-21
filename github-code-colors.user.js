@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Code Colors
-// @version     2.0.5
+// @version     2.0.6
 // @description A userscript that adds a color swatch next to the code color definition
 // @license     MIT
 // @author      Rob Garrison
@@ -17,7 +17,7 @@
 // @downloadURL https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-code-colors.user.js
 // @supportURL  https://github.com/Mottie/GitHub-userscripts/issues
 // ==/UserScript==
-/* global GM Color */
+/* global Color */
 (() => {
 	"use strict";
 
@@ -256,7 +256,7 @@
 		if (document.querySelector(".highlight")) {
 			let status;
 			// .pl-c1 targets css hex colors, "rgb" and "hsl"
-			const els = [...document.querySelectorAll(".pl-c1, .pl-s")];
+			const els = [...document.querySelectorAll(".pl-c1, .pl-s, .pl-en, .pl-pds")];
 			const iter = addBlock(els);
 			const loop = () => {
 				for (let i = 0; i < 40; i++) {
