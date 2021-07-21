@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Diff Links
-// @version     1.2.16
+// @version     1.2.17
 // @description A userscript that adds links to diff and pull request headers to jump back & forth between files
 // @license     MIT
 // @author      Rob Garrison
@@ -9,11 +9,13 @@
 // @run-at      document-idle
 // @grant       GM_addStyle
 // @require     https://greasyfork.org/scripts/28721-mutations/code/mutations.js?version=882023
+// @require     https://greasyfork.org/scripts/398877-utils-js/code/utilsjs.js?version=895926
 // @icon        https://github.githubassets.com/pinned-octocat.svg
 // @updateURL   https://raw.githubusercontent.com/Mottie/Github-userscripts/master/github-diff-links.user.js
 // @downloadURL https://raw.githubusercontent.com/Mottie/Github-userscripts/master/github-diff-links.user.js
 // @supportURL  https://github.com/Mottie/GitHub-userscripts/issues
 // ==/UserScript==
+/* global $ $$ on */
 (() => {
 	"use strict";
 
@@ -70,7 +72,8 @@
 		if (links.length) {
 			// links & file-actions "should" be the same length
 			last = links.length - 1;
-			$$(".file-actions").forEach((el, indx) => {
+			$$(".file-actions").forEach((wrap, indx) => {
+				const el = wrap.firstElementChild;
 				// remove disabled buttons added before progressive
 				// content has completed loading
 				temp = $(".gh-diff-links.disabled", el);
@@ -103,17 +106,9 @@
 		}
 	}
 
-	function $(selector, el) {
-		return (el || document).querySelector(selector);
-	}
-
-	function $$(selector, el) {
-		return Array.from((el || document).querySelectorAll(selector));
-	}
-
 	// DOM targets - to detect GitHub dynamic ajax page loading
-	document.addEventListener("ghmo:container", init);
-	document.addEventListener("ghmo:diff", addLinks);
+	on(document, "ghmo:container", init);
+	on(document, "ghmo:diff", addLinks);
 	init();
 
 })();
