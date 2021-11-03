@@ -6,9 +6,9 @@ Userscripts to add functionality to GitHub.
 
 1. Make sure you have user scripts enabled in your browser (these instructions refer to the latest versions of the browser):
 
-	* Firefox - install [Tampermonkey](https://tampermonkey.net/?ext=dhdg&browser=firefox), [Greasemonkey](https://addons.mozilla.org/firefox/addon/greasemonkey/) (GM v4+ is **not supported**!) or [Violentmonkey](https://addons.mozilla.org/firefox/addon/violentmonkey/).
-	* Chrome - install [Tampermonkey](https://tampermonkey.net/?ext=dhdg&browser=chrome) or [Violentmonkey](https://chrome.google.com/webstore/detail/violentmonkey/jinjaccalgkegednnccohejagnlnfdag).
-	* Opera - install [Tampermonkey](https://tampermonkey.net/?ext=dhdg&browser=opera) or [Violentmonkey](https://chrome.google.com/webstore/detail/violentmonkey/jinjaccalgkegednnccohejagnlnfdag).
+	* Firefox - install [Tampermonkey](https://tampermonkey.net/?ext=dhdg&browser=firefox), [Greasemonkey](https://addons.mozilla.org/firefox/addon/greasemonkey/) (GM v4+ is **not supported**!) or [Violentmonkey](https://violentmonkey.github.io/get-it/).
+	* Chrome - install [Tampermonkey](https://tampermonkey.net/?ext=dhdg&browser=chrome) or [Violentmonkey](https://violentmonkey.github.io/get-it/).
+	* Opera - install [Tampermonkey](https://tampermonkey.net/?ext=dhdg&browser=opera) or [Violentmonkey](https://violentmonkey.github.io/get-it/).
 	* Safari - install [Tampermonkey](https://tampermonkey.net/?ext=dhdg&browser=safari).
 	* Dolphin - install [Tampermonkey](https://tampermonkey.net/?ext=dhdg&browser=dolphin).
 	* UC Browser - install [Tampermonkey](https://tampermonkey.net/?ext=dhdg&browser=ucweb).
