@@ -8,7 +8,7 @@ Userscripts to add functionality to GitHub.
 
 	* [Tampermonkey](https://www.tampermonkey.net/) (proprietary)
 	* [Violentmonkey](https://violentmonkey.github.io/get-it/)
-	* [Greasemonkey](https://addons.mozilla.org/firefox/addon/greasemonkey/) (**version since 4.0 is not supported**!)
+	* [Greasemonkey](https://addons.mozilla.org/firefox/addon/greasemonkey/) (some scripts are **not compatible with Greasemonkey 4**!)
 
 2. Get information or install:
 	* Learn more about the userscript by clicking on the named link. You will be taken to the specific wiki page.
