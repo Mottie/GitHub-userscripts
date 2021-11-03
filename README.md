@@ -6,12 +6,9 @@ Userscripts to add functionality to GitHub.
 
 1. Make sure you have user scripts enabled in your browser (these instructions refer to the latest versions of the browser):
 
-	* Firefox - install [Tampermonkey](https://tampermonkey.net/?ext=dhdg&browser=firefox), [Greasemonkey](https://addons.mozilla.org/firefox/addon/greasemonkey/) (GM v4+ is **not supported**!) or [Violentmonkey](https://violentmonkey.github.io/get-it/).
-	* Chrome - install [Tampermonkey](https://tampermonkey.net/?ext=dhdg&browser=chrome) or [Violentmonkey](https://violentmonkey.github.io/get-it/).
-	* Opera - install [Tampermonkey](https://tampermonkey.net/?ext=dhdg&browser=opera) or [Violentmonkey](https://violentmonkey.github.io/get-it/).
-	* Safari - install [Tampermonkey](https://tampermonkey.net/?ext=dhdg&browser=safari).
-	* Dolphin - install [Tampermonkey](https://tampermonkey.net/?ext=dhdg&browser=dolphin).
-	* UC Browser - install [Tampermonkey](https://tampermonkey.net/?ext=dhdg&browser=ucweb).
+	* [Tampermonkey](https://www.tampermonkey.net/) (proprietary)
+	* [Violentmonkey](https://violentmonkey.github.io/get-it/)
+	* [Greasemonkey](https://addons.mozilla.org/firefox/addon/greasemonkey/) (**version since 4.0 is not supported**!)
 
 2. Get information or install:
 	* Learn more about the userscript by clicking on the named link. You will be taken to the specific wiki page.
