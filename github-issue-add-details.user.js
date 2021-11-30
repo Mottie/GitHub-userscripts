@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Issue Add Details
-// @version     1.0.9
+// @version     1.0.10
 // @description A userscript that adds a button to insert a details block into comments
 // @license     MIT
 // @author      Rob Garrison
@@ -40,8 +40,8 @@
 		button.innerHTML = icon;
 		[...document.querySelectorAll(".toolbar-commenting")].forEach(el => {
 			if (el && !$(".ghad-details", el)) {
-				const btn = $("[aria-label='Add a task list']", el);
-				btn.parentNode.insertBefore(button.cloneNode(true), btn.nextSibling);
+				const btn = $("[aria-label*='Add a task list']", el);
+				btn.before(button.cloneNode(true));
 			}
 		});
 	}
