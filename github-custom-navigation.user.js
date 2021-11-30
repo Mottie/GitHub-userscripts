@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Custom Navigation
-// @version     1.1.9
+// @version     1.1.10
 // @description A userscript that allows you to customize GitHub's main navigation bar
 // @license     MIT
 // @author      Rob Garrison
@@ -592,7 +592,7 @@
 			indx = els.length;
 		while (indx--) {
 			item = els[indx].getAttribute("data-ghcn");
-			if (item !== "separator" && !settings.items.hasOwnProperty(item)) {
+			if (item !== "separator" && !settings.items?.item) {
 				destroyLink(item);
 			}
 		}
@@ -742,9 +742,9 @@
 			hasGists = false,
 			hasItems = false;
 		if (val) {
-			hasGitHub = val.hasOwnProperty("github");
-			hasGists = val.hasOwnProperty("gists");
-			hasItems = val.hasOwnProperty("items");
+			hasGitHub = val?.github;
+			hasGists = val?.gists;
+			hasItems = val?.items;
 			// simple validation
 			if (hasGitHub && hasGists && hasItems) {
 				if (!init) {
@@ -856,7 +856,7 @@
 		}
 		if (obj.attr) {
 			for (key in obj.attr) {
-				if (obj.attr.hasOwnProperty(key)) {
+				if (obj.attr?.[key]) {
 					el.setAttribute(key, obj.attr[key]);
 				}
 			}
