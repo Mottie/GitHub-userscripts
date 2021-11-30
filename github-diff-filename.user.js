@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Diff Filename
-// @version     1.1.3
+// @version     1.1.4
 // @description A userscript that highlights filename & permission alterations
 // @license     MIT
 // @author      Rob Garrison
@@ -46,8 +46,8 @@
 		if (link) {
 			const [oldFile, newFile] = (link.title || "").split(regex);
 			link.innerHTML = `
-				<span class="ghdfn text-red">${oldFile}</span> ${arrow}
-				<span class="ghdfn text-green">${newFile}</span>`;
+				<span class="ghdfn color-text-danger">${oldFile}</span> ${arrow}
+				<span class="ghdfn color-text-success">${newFile}</span>`;
 		}
 	}
 
@@ -60,7 +60,7 @@
 				wrapParts({
 					start: middle + 2,
 					end: txt.length,
-					name: "ghdfn text-green",
+					name: "ghdfn color-text-success",
 					node
 				});
 			}
@@ -69,7 +69,7 @@
 				wrapParts({
 					start: 0,
 					end: middle - 1,
-					name: "ghdfn text-red",
+					name: "ghdfn color-text-danger",
 					node
 				});
 			}
