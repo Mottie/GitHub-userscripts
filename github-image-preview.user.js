@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Image Preview
-// @version     2.0.5
+// @version     2.0.6
 // @description A userscript that adds clickable image thumbnails
 // @license     MIT
 // @author      Rob Garrison
@@ -192,7 +192,7 @@
 			// add link color
 			const title = (type = "file-name") =>
 				`<h4
-					class="ghip-${type} ${(url ? "text-blue" : "")}"
+					class="ghip-${type}"
 					title="${fileName}"
 				>${fileName}</h4>`;
 
@@ -201,7 +201,7 @@
 				content = url ?
 					updateTemplate(
 						url,
-						"<h4 class='text-blue ghip-up-tree'>&middot;&middot;</h4>"
+						"<h4 class='ghip-up-tree'>&middot;&middot;</h4>"
 					) : "";
 			} else if (imgExt.test(url)) {
 				// *** image preview ***
