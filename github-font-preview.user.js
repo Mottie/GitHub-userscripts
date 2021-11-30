@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Font Preview
-// @version     1.0.24
+// @version     1.0.25
 // @description A userscript that adds a font file preview
 // @license     MIT
 // @author      Rob Garrison
@@ -194,8 +194,8 @@
 		#gfp-font-data .gfp-langname { padding-right:0.5em; }
 		#gfp-font-data .gfp-underline { border-bottom:1px solid #555; }
 		/* Glyph Inspector */
-		#gfp-pagination span { margin:0 0.3em; cursor:pointer; }
-		#gfp-pagination span.gfp-page-selected { font-weight:bold; cursor:default; -webkit-filter:brightness(150%); filter:brightness(150%); }
+		#gfp-pagination a { margin:0 0.3em; cursor:pointer; }
+		#gfp-pagination .gfp-page-selected { font-weight:bold; cursor:default; -webkit-filter:brightness(150%); filter:brightness(150%); }
 		canvas.gfp-item { float:left; border:solid 1px #a0a0a0; margin-right:-1px; margin-bottom:-1px; cursor:pointer; }
 		canvas.gfp-item:hover { opacity:.8; }
 		#gfp-glyph-list-end { clear:both; height:20px; }
@@ -208,8 +208,8 @@
 		#gfp-glyph-data pre { font-size:11px; }
 		pre.gfp-path { margin:0; }
 		pre.gfp-contour { margin:0 0 1em 2em; border-bottom:solid 1px #a0a0a0; }
-		span.gfp-oncurve { color:blue; }
-		span.gfp-offcurve { color:red; }
+		span.gfp-oncurve { color:var(--color-scale-blue-6); }
+		span.gfp-offcurve { color:var(--color-scale-red-6); }
 		.gfp-loading { display:block; margin:20px auto; border-radius:50%; border-width:2px; border-style:solid; border-color: transparent transparent #000 #000; width:30px; height:30px; animation:gfploading .5s infinite linear; }
 		@keyframes gfploading { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 	`);
@@ -330,9 +330,7 @@
 
 	function contourToString(contour) {
 		return '<pre class="gfp-contour">' + contour.map(point => {
-			// ".text-blue" class modified by GitHub Dark style
-			// ".cdel" class modified by GitHub Dark style - more readable red
-			return '<span class="gfp-' + (point.onCurve ? 'oncurve text-blue' : 'offcurve cdel') +
+			return '<span class="gfp-' + (point.onCurve ? 'oncurve' : 'offcurve') +
 				'">x=' + point.x + ' y=' + point.y + '</span>';
 		}).join('\n') + '</pre>';
 	}
@@ -532,6 +530,8 @@
 
 	function displayGlyphPage(pageNum) {
 		pageSelected = pageNum;
+    const last = $('.gfp-page-selected');
+    if (last) last.className = '';
 		document.getElementById('gfp-p' + pageNum).className = 'gfp-page-selected';
 		let indx,
 			firstGlyph = pageNum * cellCount;
@@ -541,7 +541,6 @@
 	}
 
 	function pageSelect(event) {
-		document.getElementsByClassName('gfp-page-selected')[0].className = 'text-blue';
 		displayGlyphPage((event.target.id || '').replace('gfp-p', ''));
 	}
 
@@ -592,11 +591,10 @@
 		pagination.innerHTML = '';
 
 		for (indx = 0; indx < numPages; indx++) {
-			link = document.createElement('span');
+			link = document.createElement('a');
 			lastIndex = Math.min(font.numGlyphs - 1, (indx + 1) * cellCount - 1);
 			link.textContent = indx * cellCount + '-' + lastIndex;
 			link.id = 'gfp-p' + indx;
-			link.className = 'text-blue';
 			link.addEventListener('click', pageSelect, false);
 			fragment.appendChild(link);
 			// A white space allows to break very long lines into multiple lines.
