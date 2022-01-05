@@ -1,13 +1,13 @@
 // ==UserScript==
 // @name        GitHub in VSCode
-// @version     0.1.2
+// @version     0.1.3
 // @description A userscript that adds a button to open a repo in VSCode using github1s
 // @license     MIT
 // @author      Rob Garrison
 // @namespace   https://github.com/Mottie
 // @include     https://github.com/*
 // @run-at      document-idle
-// @grant       none
+// @grant       GM_addStyle
 // @connect     github.com
 // @connect     githubusercontent.com
 // @require     https://greasyfork.org/scripts/398877-utils-js/code/utilsjs.js?version=952600
@@ -75,6 +75,7 @@
 		const margin = goToFile.classList.contains("mr-2") ? "mr-2" : "ml-2";
 		const link = make({
 			el: "a",
+			id: "github-in-vscode",
 			className: `ghiv-link btn ${margin} tooltipped tooltipped-n`,
 			attrs: {
 				href: `https://github1s.com${window.location.pathname}`,
@@ -85,6 +86,7 @@
 			html: vsCodeIcon
 		});
 		goToFile.before(link);
+		GM_addStyle("@media print { #github-in-vscode { display: none; } }");
 	}
 
 	on(document, "ghmo:container pjax:end", init);
