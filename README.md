@@ -36,7 +36,7 @@ Userscripts to add functionality to GitHub.
 	| [GitHub hide own feed meta][hof-wiki]  |     | [install][hof-raw] | [GF][hof-gf] [OU][hof-ou] | 2017.12.21 | 2021.07.21 |
 	| [GitHub html preview][ghp-wiki]        |     | [install][ghp-raw] | [GF][ghp-gf] [OU][ghp-ou] | 2019.03.29 | 2021.07.21 |
 	| [GitHub image preview][ipv-wiki]       |     | [install][ipv-raw] | [GF][ipv-gf] [OU][ipv-ou] | 2016.05.17 | 2021.11.30 |
-	| [GitHub in VSCode][ivs-wiki]           |     | [install][ivs-raw] | [GF][ivs-gf] [OU][ivs-ou] | 2021.02.11 | 2021.07.21 |
+	| [GitHub in VSCode][ivs-wiki]           |     | [install][ivs-raw] | [GF][ivs-gf] [OU][ivs-ou] | 2021.02.11 | 2022.01.05 |
 	| [GitHub indent comments][ioc-wiki]     |     | [install][ioc-raw] | [GF][ioc-gf] [OU][ioc-ou] | 2017.03.15 | 2021.07.21 |
 	| [GitHub issue add details][iad-wiki]   |     | [install][iad-raw] | [GF][iad-gf] [OU][iad-ou] | 2018.01.05 | 2021.11.30 |
 	| [GitHub issue comments][ic1-wiki]      |     | [install][ic1-raw] | [GF][ic1-gf] [OU][ic1-ou] | 2016.04.04 | 2021.07.21 |
