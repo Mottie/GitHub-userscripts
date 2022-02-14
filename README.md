@@ -236,7 +236,7 @@ Userscripts to add functionality to GitHub.
 [ic1-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Issue_Comments
 [ic2-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Show_Repo_Issues
 [iml-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Mentioned_Links
-[ioc-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Indent_Comment_Blocks
+[ioc-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Indent_Comments
 [ipv-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Image_Preview
 [iss-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Issue_Show_Status
 [ivs-ou]: https://openuserjs.org/scripts/Mottie/GitHub_in_VSCode
