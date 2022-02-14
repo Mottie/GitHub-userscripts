@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Issue Add Details
-// @version     1.0.10
+// @version     1.0.11
 // @description A userscript that adds a button to insert a details block into comments
 // @license     MIT
 // @author      Rob Garrison
@@ -9,12 +9,14 @@
 // @run-at      document-idle
 // @grant       none
 // @require     https://greasyfork.org/scripts/28721-mutations/code/mutations.js?version=952601
+// @require     https://greasyfork.org/scripts/398877-utils-js/code/utilsjs.js?version=952600
 // @require     https://greasyfork.org/scripts/28239-rangy-inputs-mod-js/code/rangy-inputs-modjs.js?version=181769
 // @icon        https://github.githubassets.com/pinned-octocat.svg
 // @updateURL   https://raw.githubusercontent.com/Mottie/Github-userscripts/master/github-issue-add-details.user.js
 // @downloadURL https://raw.githubusercontent.com/Mottie/Github-userscripts/master/github-issue-add-details.user.js
 // @supportURL  https://github.com/Mottie/GitHub-userscripts/issues
 // ==/UserScript==
+/* global $ $$ on make */
 (() => {
 	"use strict";
 
@@ -31,45 +33,48 @@
 		];
 
 	// Add insert details button
-	function addDetailsButton() {
-		const button = document.createElement("button");
-		button.type = "button";
-		button.className = "ghad-details toolbar-item tooltipped tooltipped-n";
-		button.setAttribute("aria-label", "Add a details/summary block");
-		button.setAttribute("tabindex", "-1");
-		button.innerHTML = icon;
-		[...document.querySelectorAll(".toolbar-commenting")].forEach(el => {
+	const addDetailsButton = () => {
+		const button = make({
+			el: "button",
+			className: "ghad-details btn-link toolbar-item btn-octicon no-underline tooltipped tooltipped-n",
+			attrs: {
+				"aria-label": "Add a details/summary block",
+				tabindex: "-1",
+				type: "button"
+			},
+			html: icon
+		});
+		$$(".toolbar-commenting").forEach(el => {
 			if (el && !$(".ghad-details", el)) {
-				const btn = $("[aria-label*='Add a task list']", el);
+				const btn = $("md-quote", el);
 				btn.before(button.cloneNode(true));
 			}
 		});
-	}
+	};
 
-	function addBindings() {
+	const addBindings = () => {
 		window.rangyInput.init();
-		$("body").addEventListener("click", event => {
-			const target = event.target;
-			if (target && target.classList.contains("ghad-details")) {
-				let textarea = target.closest(".previewable-comment-form");
-				textarea = $(".comment-form-textarea", textarea);
-				textarea.focus();
-				window.rangyInput.surroundSelectedText(
-					textarea,
-					detailsBlock[0], // prefix
-					detailsBlock[1] // suffix
-				);
+		on($("body"), "click", event => {
+			const { target } = event;
+			if (target?.classList.contains("ghad-details")) {
+				event.preventDefault();
+				const form = target.closest(".previewable-comment-form");
+				const textarea = $(".comment-form-textarea", form);
+				setTimeout(() => {
+					textarea.focus();
+					window.rangyInput.surroundSelectedText(
+						textarea,
+						detailsBlock[0], // prefix
+						detailsBlock[1] // suffix
+					);
+				}, 100);
 				return false;
 			}
 		});
-	}
+	};
 
-	function $(str, el) {
-		return (el || document).querySelector(str);
-	}
-
-	document.addEventListener("ghmo:container", addDetailsButton);
-	document.addEventListener("ghmo:comments", addDetailsButton);
+	on(document, "ghmo:container", addDetailsButton);
+	on(document, "ghmo:comments", addDetailsButton);
 
 	addDetailsButton();
 	addBindings();
