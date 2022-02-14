@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Indent Comments
-// @version     1.0.16
+// @version     1.0.17
 // @description A userscript that allows you to indent & outdent blocks in the comment editor
 // @license     MIT
 // @author      Rob Garrison
@@ -14,12 +14,14 @@
 // @grant       GM_registerMenuCommand
 // @connect     github.com
 // @require     https://greasyfork.org/scripts/28721-mutations/code/mutations.js?version=952601
+// @require     https://greasyfork.org/scripts/398877-utils-js/code/utilsjs.js?version=952600
 // @require     https://greasyfork.org/scripts/28239-rangy-inputs-mod-js/code/rangy-inputs-modjs.js?version=181769
 // @icon        https://github.githubassets.com/pinned-octocat.svg
 // @updateURL   https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-indent-comments.user.js
 // @downloadURL https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-indent-comments.user.js
 // @supportURL  https://github.com/Mottie/GitHub-userscripts/issues
 // ==/UserScript==
+/* global $ $$ on make */
 (() => {
 	"use strict";
 
@@ -45,29 +47,26 @@
 	}
 
 	function createButton(name) {
-		const toolbars = $$(".toolbar-commenting"),
-			nam = name.toLowerCase(),
-			button = document.createElement("button");
-		let el,
-			indx = toolbars.length;
-		if (indx) {
-			button.type = "button";
-			button.className = `ghio-${nam.toLowerCase()} ghio-in-outdent toolbar-item tooltipped tooltipped-n`;
-			button.setAttribute("aria-label", `${name} Selected Text`);
-			button.setAttribute("tabindex", "-1");
-			button.innerHTML = icons[nam.toLowerCase()];
-			while (indx--) {
-				el = toolbars[indx];
-				if (!$(`.ghio-${nam.toLowerCase()}`, el)) {
-					el.insertBefore(button.cloneNode(true), el.childNodes[0]);
-				}
+		const nam = name.toLowerCase();
+		const button = make({
+			className: `ghio-${nam.toLowerCase()} ghio-in-outdent btn-link toolbar-item btn-octicon no-underline tooltipped tooltipped-n`,
+			attrs: {
+				"aria-label": `${name} Selected Text`,
+				tabindex: "-1",
+				type: "button"
+			},
+			html: icons[nam.toLowerCase()]
+		});
+		$$(".toolbar-commenting").forEach(el => {
+			if (el && !$(`.ghio-${nam.toLowerCase()}`, el)) {
+				el.insertBefore(button.cloneNode(true), el.childNodes[0]);
 			}
-		}
+		});
 	}
 
 	function indent(text) {
-		let result = [],
-			block = new Array(parseInt(spaceSize, 10) + 1).join(" ");
+		let result = [];
+		let block = new Array(parseInt(spaceSize, 10) + 1).join(" ");
 		(text || "").split(/\r*\n/).forEach(line => {
 			result.push(block + line);
 		});
@@ -75,8 +74,8 @@
 	}
 
 	function outdent(text) {
-		let regex = new RegExp(`^(\x20{1,${spaceSize}}|\xA0{1,${spaceSize}}|\x09)`),
-			result = [];
+		let regex = new RegExp(`^(\x20{1,${spaceSize}}|\xA0{1,${spaceSize}}|\x09)`);
+		let result = [];
 		(text || "").split(/\r*\n/).forEach(line => {
 			result.push(line.replace(regex, ""));
 		});
@@ -86,12 +85,10 @@
 	function addBindings() {
 		window.rangyInput.init();
 		saveTabSize();
-		$("body").addEventListener("click", event => {
-			let textarea,
-				target = event.target;
-			if (target && target.classList.contains("ghio-in-outdent")) {
-				textarea = closest(".previewable-comment-form", target);
-				textarea = $(".comment-form-textarea", textarea);
+		on($("body"), "click", ({ target }) => {
+			if (target?.classList.contains("ghio-in-outdent")) {
+				const form = target.closest(".previewable-comment-form");
+				const textarea = $(".comment-form-textarea", form);
 				textarea.focus();
 				setTimeout(() => {
 					window.rangyInput.indentSelectedText(
@@ -103,10 +100,10 @@
 			}
 		});
 		// Add Tab & Shift + Tab
-		$("body").addEventListener("keydown", event => {
-			if (event.key === "Tab") {
-				let target = event.target;
-				if (target && target.classList.contains("comment-form-textarea")) {
+		on($("body"), "keydown", event => {
+			const { target, key } = event;
+			if (key === "Tab") {
+				if (target?.classList.contains("comment-form-textarea")) {
 					event.preventDefault();
 					target.focus();
 					setTimeout(() => {
@@ -132,24 +129,6 @@
 		$el.innerHTML = `.comment-form-textarea { tab-size:${spaceSize}; }`;
 	}
 
-	function $(selector, el) {
-		return (el || document).querySelector(selector);
-	}
-
-	function $$(selector, el) {
-		return Array.from((el || document).querySelectorAll(selector));
-	}
-
-	function closest(selector, el) {
-		while (el && el.nodeType === 1) {
-			if (el.matches(selector)) {
-				return el;
-			}
-			el = el.parentNode;
-		}
-		return null;
-	}
-
 	// Add GM options
 	GM_registerMenuCommand(
 		"Indent or outdent size",
@@ -164,7 +143,7 @@
 		}
 	);
 
-	document.addEventListener("ghmo:container", addButtons);
+	on(document, "ghmo:container", addButtons);
 	addBindings();
 	addButtons();
 })();
