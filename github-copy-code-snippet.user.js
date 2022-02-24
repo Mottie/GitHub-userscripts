@@ -1,11 +1,10 @@
 // ==UserScript==
 // @name        GitHub Copy Code Snippet
-// @version     0.3.8
+// @version     0.3.9
 // @description A userscript adds a copy to clipboard button on hover of markdown code snippets
 // @license     MIT
 // @author      Rob Garrison
 // @namespace   https://github.com/Mottie
-// @include     https://github.com/*
 // @include     https://gist.github.com/*
 // @run-at      document-idle
 // @grant       GM_addStyle
