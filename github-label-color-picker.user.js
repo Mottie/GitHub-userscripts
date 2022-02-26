@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Label Color Picker
-// @version     1.0.7
+// @version     1.0.8
 // @description A userscript that adds a color picker to the label color input
 // @license     MIT
 // @author      Rob Garrison
@@ -13,20 +13,20 @@
 // @grant       GM_setValue
 // @grant       GM_registerMenuCommand
 // @require     https://greasyfork.org/scripts/23181-colorpicker/code/colorPicker.js?version=147862
+// @require     https://greasyfork.org/scripts/398877-utils-js/code/utilsjs.js?version=952600
 // @icon        https://github.githubassets.com/pinned-octocat.svg
 // @updateURL   https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-label-color-picker.user.js
 // @downloadURL https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-label-color-picker.user.js
 // @supportURL  https://github.com/Mottie/GitHub-userscripts/issues
 // ==/UserScript==
-/* global jsColorPicker */
+/* global jsColorPicker $ on */
 (() => {
 	"use strict";
 
-	// GitHub-Dark changes "text-black" to #c0c0c0
 	GM_addStyle(`
-		div.cp-app { margin:0; z-index:10; }
+		div.cp-app { margin:100px 0 0 -7px; z-index:10; }
 		.js-new-label-color-icon { pointer-events:none; }
-		.js-new-label-color-icon.text-black { color:#000 !important; }
+		.js-new-label-color-icon.color-scale-black { color:#000 !important; }
 	`);
 
 	function addPicker() {
@@ -35,7 +35,7 @@
 				customBG: "#222",
 				noAlpha: true,
 				renderCallback: function(colors) {
-					let input = this && this.input;
+					const input = this && this.input;
 					if (input) {
 						updateSwatch(input, colors);
 					}
@@ -45,31 +45,34 @@
 	}
 
 	function updateSwatch(input, colors) {
-		let background = "#" + colors.HEX;
-		input.value = background;
-		let textColor = calcContrast(colors.HEX);
+		input.value = colors.HEX;
+		const colorStyle = calcStyle(colors.rgb, colors.hsl);
+
 		// Update color swatch next to input
-		let swatch = $(".js-new-label-color", input.closest("dd"));
-		updateIcon(swatch, textColor);
-		updateColors(swatch, background, textColor);
+		const inputSwatch = $(".js-new-label-color", input.closest("dd"));
+		inputSwatch.style = colorStyle;
+
 		// Update label preview
-		swatch = $(
+		const labelSwatch = $(
 			".js-label-preview .IssueLabel--big",
-			input.closest(".table-list-item")
+			input.closest(".Box-row")
 		);
-		updateColors(swatch, background, textColor);
+		labelSwatch.style = colorStyle;
 	}
 
-	function updateIcon(swatch, textColor) {
-		let icon = $(".octicon", swatch);
-		// !important set on these GitHub primer color definitions
-		icon.classList.remove("text-white", "text-black");
-		icon.classList.add("text-" + textColor);
-	}
-
-	function updateColors(el, background, color) {
-		el.style.backgroundColor = background;
-		el.style.color = color;
+	function calcStyle(rgb, hsl) {
+		// GitHub adds CSS variables to the wrapper
+		// rgb is used as the foreground (text) color
+		// hsl is used to calculate a color variant for the background
+		const multiplier = { h: 360, s: 100, l: 100 };
+		const fg = Object.entries(rgb).map(
+			([c, v]) => `--label-${c}:${(v * 255).toFixed(0)}`
+		);
+		const bg = Object.entries(hsl).map(
+			([c, v]) => `--label-${c}:${(v * multiplier[c]).toFixed(0)}`
+		);
+		// --label-r:255; --label-g:255; --label-b:255; --label-h:15; --label-s:0; --label-l:100;
+		return `${fg.join("; ")}; ${bg.join("; ")}`;
 	}
 
 	/* replace colorPicker storage */
@@ -84,51 +87,36 @@
 	"'rgba(83,25,231,1)','rgba(86,66,66,1)','rgba(22,20,223,1)'"
 	*/
 	function convertColorsToRgba(values) {
-		let result = [];
 		// see http://stackoverflow.com/a/26196012/145346
-		values
+		return values
 			.replace(/['"]/g, "")
 			.split(/\s*,(?![^()]*(?:\([^()]*\))?\))\s*/g)
-			.forEach(val => {
-				let rgb = hexToRgb(val);
+			.map(val => {
+				const rgb = hexToRgb(val);
 				if (rgb) {
-					result.push(`'rgba(${rgb.r},${rgb.g},${rgb.b},1)'`);
+					return `'rgba(${rgb.r},${rgb.g},${rgb.b},1)'`;
 				} else if (rgb === null && val.indexOf("rgba(") > -1) {
 					// allow adding rgba() definitions
-					result.push(`'${val}'`);
+					return`'${val}'`;
 				}
-			});
-		return result.join(",");
+			})
+			.filter(Boolean)
+			.join(",");
 	}
 
 	// Modified code from http://stackoverflow.com/a/5624139/145346
+	// Expand shorthand form (e.g. "03F") to full form (e.g. "0033FF")
+	const shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
 	function hexToRgb(hex) {
-		let result,
-			// Expand shorthand form (e.g. "03F") to full form (e.g. "0033FF")
-			shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
-		hex = hex.replace(shorthandRegex, (m, r, g, b) => {
+		const modHex = hex.replace(shorthandRegex, (_, r, g, b) => {
 			return r + r + g + g + b + b;
 		});
-		result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+		const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(modHex);
 		return result ? {
 			r: parseInt(result[1], 16),
 			g: parseInt(result[2], 16),
 			b: parseInt(result[3], 16)
 		} : null;
-	}
-
-	// Calculate contrasting text color for the given background color
-	// https://24ways.org/2010/calculating-color-contrast/
-	function calcContrast(hex) {
-		const r = parseInt(hex.substr(0, 2), 16),
-			g = parseInt(hex.substr(2, 2), 16),
-			b = parseInt(hex.substr(4, 2), 16),
-			yiq = ((r * 299) + (g * 587) + (b * 114)) / 1000;
-		return yiq >= 128 ? "black" : "white";
-	}
-
-	function $(selector, el) {
-		return (el || document).querySelector(selector);
 	}
 
 	// Add GM options
@@ -143,15 +131,14 @@
 		}
 	);
 
-	document.body.addEventListener("click", event => {
+	on(document.body, "click", event => {
 		// initialize if "Edit" or "New label" button clicked
 		// because "Save changes" updates the entire item
 		if (
-			event.target && event.target.matches(".js-edit-label, .js-details-target")
+			event.target?.matches(".js-edit-label, .js-details-target")
 		) {
 			addPicker();
 		}
 	});
 	addPicker();
-
 })();
