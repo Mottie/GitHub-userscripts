@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Diff Filename
-// @version     1.1.4
+// @version     1.1.5
 // @description A userscript that highlights filename & permission alterations
 // @license     MIT
 // @author      Rob Garrison
@@ -24,7 +24,6 @@
 	const regex = new RegExp(`\\s${arrow}\\s`);
 
 	function processFileInfo(el) {
-		let node;
 		if (!$(".ghdfn", el)) {
 			// A file can be moved AND include permission changes
 			// e.g. main.js → scripts/main.js 100755 → 100644
@@ -37,7 +36,7 @@
 			}
 			// permission changes in a text node as a direct child of the wrapper
 			// process permission change (if it exists)
-			node = findTextNode(el)[0];
+			const node = findTextNode(el)[0];
 			processNode(node);
 		}
 	}
@@ -46,8 +45,8 @@
 		if (link) {
 			const [oldFile, newFile] = (link.title || "").split(regex);
 			link.innerHTML = `
-				<span class="ghdfn color-text-danger">${oldFile}</span> ${arrow}
-				<span class="ghdfn color-text-success">${newFile}</span>`;
+				<span class="ghdfn color-fg-danger">${oldFile}</span> ${arrow}
+				<span class="ghdfn color-fg-success">${newFile}</span>`;
 		}
 	}
 
@@ -60,7 +59,7 @@
 				wrapParts({
 					start: middle + 2,
 					end: txt.length,
-					name: "ghdfn color-text-success",
+					name: "ghdfn color-fg-success",
 					node
 				});
 			}
@@ -69,7 +68,7 @@
 				wrapParts({
 					start: 0,
 					end: middle - 1,
-					name: "ghdfn color-text-danger",
+					name: "ghdfn color-fg-danger",
 					node
 				});
 			}
@@ -101,8 +100,7 @@
 		}
 	}
 
-	on(document, "ghmo:container", init);
-	on(document, "ghmo:diff", init);
+	on(document, "ghmo:container ghmo:diff", init);
 	init();
 
 })();
