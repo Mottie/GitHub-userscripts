@@ -16,7 +16,7 @@ Userscripts to add functionality to GitHub.
 	* Install a script from [GreasyFork](https://greasyfork.org/en/users/24847-mottie) (GF) from the userscript site page
 	* Or, install the scripts from [OpenUserJS](https://openuserjs.org/users/Mottie/scripts) (OU).<br><br>
 
-	| Userscript Wiki                        | ![][ico] | Direct<br>Install | Sites                 | Created    | Updated    |
+	| Userscript Wiki                        | ![][ico] | Direct<br>Install | Sites                 | Added      | Updated    |
 	|----------------------------------------|:---:|:------------------:|:-------------------------:|:----------:|:----------:|
 	| [GitHub code colors][ccr-wiki]         |     | [install][ccr-raw] | [GF][ccr-gf] [OU][ccr-ou] | 2016.03.20 | 2021.07.21 |
 	| [GitHub code folding][cfd-wiki]        |     | [install][cfd-raw] | [GF][cfd-gf] [OU][cfd-ou] | 2016.12.28 | 2021.07.21 |
@@ -24,10 +24,11 @@ Userscripts to add functionality to GitHub.
 	| [GitHub code show whitespace][csw-wiki]|     | [install][csw-raw] | [GF][csw-gf] [OU][csw-ou] | 2017.03.26 | 2021.07.21 |
 	| [GitHub collapse in comment][cic-wiki] |  *  | [install][cic-raw] | [GF][cic-gf] [OU][cic-ou] | 2016.06.27 | 2021.07.21 |
 	| [GitHub collapse markdown][cmd-wiki]   |  *  | [install][cmd-raw] | [GF][cmd-gf] [OU][cmd-ou] | 2016.06.27 | 2021.07.21 |
-	| [GitHub copy code snippet][ccs-wiki]   |     | [install][ccs-raw] | [GF][ccs-gf] [OU][ccs-ou] | 2018.01.12 | 2021.07.21 |
+	| [GitHub copy code snippet][ccs-wiki]   |     | [install][ccs-raw] | [GF][ccs-gf] [OU][ccs-ou] | 2018.01.12 | 2022.02.24 |
 	| [GitHub custom hotkeys][chk-wiki]      |     | [install][chk-raw] | [GF][chk-gf] [OU][chk-ou] | 2016.04.10 | 2021.07.21 |
 	| [GitHub custom navigation][cnv-wiki]   |     | [install][cnv-raw] | [GF][cnv-gf] [OU][cnv-ou] | 2016.06.22 | 2021.11.30 |
-	| [GitHub diff filename][dfn-wiki]       |     | [install][dfn-raw] | [GF][dfn-gf] [OU][dfn-ou] | 2017.08.27 | 2021.11.30 |
+	| [GitHub diff filename][dfn-wiki]       |     | [install][dfn-raw] | [GF][dfn-gf] [OU][dfn-ou] | 2017.08.27 | 2022.02.28 |
+	| [GitHub diff file toggle][dft-wiki]    |     | [install][dft-raw] | [GF][dft-gf] [OU][dft-ou] | 2022.02.28 | 2022.02.28 |
 	| [GitHub diff files filter][dff-wiki]   |     | [install][dff-raw] | [GF][dff-gf] [OU][dff-ou] | 2016.12.31 | 2021.07.21 |
 	| [GitHub diff links][dfl-wiki]          |     | [install][dfl-raw] | [GF][dfl-gf] [OU][dfl-ou] | 2016.07.21 | 2021.07.21 |
 	| [GitHub download zip][dlz-wiki]        |     | [install][dlz-raw] | [GF][dlz-gf] [OU][dlz-ou] | 2018.10.22 | 2021.07.21 |
@@ -41,7 +42,7 @@ Userscripts to add functionality to GitHub.
 	| [GitHub issue add details][iad-wiki]   |     | [install][iad-raw] | [GF][iad-gf] [OU][iad-ou] | 2018.01.05 | 2022.02.14 |
 	| [GitHub issue comments][ic1-wiki]      |     | [install][ic1-raw] | [GF][ic1-gf] [OU][ic1-ou] | 2016.04.04 | 2021.07.21 |
 	| [GitHub issue counts][ic2-wiki]        |     | [install][ic2-raw] | [GF][ic2-gf] [OU][ic2-ou] | 2012.01.16 | 2021.07.21 |
-	| [GitHub label color picker][glc-wiki]  |     | [install][glc-raw] | [GF][glc-gf] [OU][glc-ou] | 2016.09.16 | 2019.07.25 |
+	| [GitHub label color picker][glc-wiki]  |     | [install][glc-raw] | [GF][glc-gf] [OU][glc-ou] | 2016.09.16 | 2022.02.26 |
 	| [GitHub mentioned links][iml-wiki]     |     | [install][iml-raw] | [GF][iml-gf] [OU][iml-ou] | 2020.03.28 | 2021.07.21 |
 	| [GitHub reveal header][rhd-wiki]       |     | [install][rhd-raw] | [GF][rhd-gf] [OU][rhd-ou] | 2017.06.03 | 2019.03.29 |
 	| [GitHub rtl comments][rtl-wiki]        |     | [install][rtl-raw] | [GF][rtl-gf] [OU][rtl-ou] | 2016.06.13 | 2021.07.21 |
@@ -81,6 +82,7 @@ Userscripts to add functionality to GitHub.
 [csw-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-code-show-whitespace
 [dex-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-diff-expander
 [dff-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-diff-files-filter
+[dft-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-diff-file-toggle
 [dfl-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-diff-links
 [dfn-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-diff-filename
 [dlz-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-download-zip
@@ -127,6 +129,7 @@ Userscripts to add functionality to GitHub.
 [csw-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-code-show-whitespace.user.js
 [dex-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-diff-expander.user.js
 [dff-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-diff-files-filter.user.js
+[dft-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-diff-file-toggle.user.js
 [dfl-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-diff-links.user.js
 [dfn-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-diff-filename.user.js
 [dlz-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-download-zip.user.js
@@ -173,6 +176,7 @@ Userscripts to add functionality to GitHub.
 [csw-gf]: https://greasyfork.org/en/scripts/28454-github-code-show-whitespace
 [dex-gf]: https://greasyfork.org/en/scripts/369373-github-diff-expander
 [dff-gf]: https://greasyfork.org/en/scripts/26191-github-diff-files-filter
+[dft-gf]: https://greasyfork.org/en/scripts/440713-github-diff-file-toggle
 [dfl-gf]: https://greasyfork.org/en/scripts/21559-github-diff-links
 [dfn-gf]: https://greasyfork.org/en/scripts/32634-github-diff-filename
 [dlz-gf]: https://greasyfork.org/en/scripts/373514-github-download-zip
@@ -219,6 +223,7 @@ Userscripts to add functionality to GitHub.
 [csw-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Code_Show_Whitespace
 [dex-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Diff_Expander
 [dff-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Diff_Files_Filter
+[dft-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Diff_File_Toggle
 [dfl-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Diff_Links
 [dfn-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Diff_Filename
 [dlz-ou]: https://openuserjs.org/scripts/Mottie/GitHub_Download_ZIP
