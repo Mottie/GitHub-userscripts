@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Diff File Toggle
-// @version     0.1.1
+// @version     0.1.2
 // @description A userscript that adds global diff file toggles
 // @license     MIT
 // @author      Rob Garrison
@@ -11,6 +11,10 @@
 // @require     https://greasyfork.org/scripts/28721-mutations/code/mutations.js?version=882023
 // @require     https://greasyfork.org/scripts/398877-utils-js/code/utilsjs.js?version=785415
 // @icon        https://github.githubassets.com/pinned-octocat.svg
+// @updateURL   https://raw.githubusercontent.com/Mottie/Github-userscripts/master/github-diff-file-toggle.user.js
+// @downloadURL https://raw.githubusercontent.com/Mottie/Github-userscripts/master/github-diff-file-toggle.user.js
+// @supportURL  https://github.com/Mottie/GitHub-userscripts/issues
+
 // ==/UserScript==
 /* global $ $$ on debounce make */
 (() => {
@@ -63,7 +67,7 @@
 
 	const handleChange = event => {
 		const { target, altKey, shiftKey } = event;
-		const anyModifier =  altKey || shiftKey;
+		const anyModifier = altKey || shiftKey;
 		if (!busy && anyModifier && target.matches(".js-reviewed-checkbox")) {
 			busy = true;
 			toggle(target, target.checked);
