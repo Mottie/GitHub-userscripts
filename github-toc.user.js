@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Table of Contents
-// @version     2.1.3
+// @version     2.1.4
 // @description A userscript that adds a table of contents to readme & wiki pages
 // @license     MIT
 // @author      Rob Garrison
@@ -9,6 +9,7 @@
 // @include     https://gist.github.com/*
 // @run-at      document-idle
 // @grant       GM_registerMenuCommand
+// @grant       GM.registerMenuCommand
 // @grant       GM_getValue
 // @grant       GM.getValue
 // @grant       GM_setValue
