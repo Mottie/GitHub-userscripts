@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Image Preview
-// @version     2.0.6
+// @version     2.0.7
 // @description A userscript that adds clickable image thumbnails
 // @license     MIT
 // @author      Rob Garrison
@@ -29,8 +29,9 @@
 			background-color:transparent !important; }
 		.ghip-show-previews .Box-row:not(.ghsc-header):not(.hidden) > div[role] {
 			display:none !important; }
-		.ghip-wrapper.ghip-show-previews img.ghip-non-image { height:80px;
-			margin-top:15px; opacity:.2; }
+		.ghip-wrapper.ghip-show-previews svg.ghip-non-image, 
+        .ghip-wrapper.ghip-show-previews img.ghip-non-image { height:80px; width:80px;
+			margin-top:15px; }
 		.ghip-wrapper.ghip-show-previews .image { width:100%; position:relative;
 			overflow:hidden; text-align:center; }
 
@@ -185,7 +186,7 @@
 			let content = "";
 			// not every submodule includes a link; reference examples from
 			// see https://github.com/electron/electron/tree/v1.1.1/vendor
-			const el = $("a", row) || $("div[role='rowheader'] span[title]", row);
+			const el = $("div[role='rowheader'] a, div[role='rowheader'] span[title]", row);
 			const url = el && el.nodeName === "A" ? el.href : "";
 			// use innerHTML because some links include path - see "third_party/lss"
 			const fileName = el && el.textContent.trim() || "";
@@ -215,28 +216,16 @@
 				content = updateTemplate(url, `${title()}${svgPlaceholder(url)}`);
 			} else {
 				// *** non-images (file/folder icons) ***
-				const svg = $("svg", row);
+				const svg = $("[role='gridcell'] svg, [role='gridcell'] img", row);
 				if (svg) {
 					// non-files svg class: "directory", "submodule" or "symlink"
 					// add "ghip-folder" class for file-filters userscript
 					const noExt = svg.matches(folderIconClasses) ? " ghip-folder" : "";
-					// add xmlns otherwise the svg won't work inside an img
-					// GitHub doesn't include this attribute on any svg octicons
-					const svgHTML = svg.outerHTML.replace("<svg", "<svg xmlns='http://www.w3.org/2000/svg'");
+					const clone = svg.cloneNode(true);
+                    clone.classList.add("ghip-non-image");
 					// include "leaflet-tile-container" to invert icon for GitHub-Dark
 					content = `${title("non-image")}<span class="leaflet-tile-container${noExt}">` +
-						`<img class="ghip-non-image" src="data:image/svg+xml;base64,` +
-						window.btoa(svgHTML) + `"/>`;
-					// get file name + extension
-					const str = url.substring(url.lastIndexOf("/") + 1, url.length);
-					// don't include extension for folders, or files with no extension,
-					// or files starting with a "." (e.g. ".gitignore")
-					content += (!noExt && str.indexOf(".") > 0) ?
-						"<h4 class='ghip-file-type'>" +
-						str
-							.substring(str.lastIndexOf(".") + 1, str.length)
-							.toUpperCase() +
-						"</h4></span>" : "</span>";
+						clone.outerHTML + "</span>";
 					content = url ?
 						updateTemplate(url, content) :
 						// empty url; use non-link template
