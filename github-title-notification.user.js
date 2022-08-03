@@ -27,7 +27,7 @@
 	function check() {
 		let title = document.title,
 			mail = document.querySelector(".mail-status"),
-			hasUnread = mail ? mail.classList.contains("unread") : false;
+			hasUnread = mail ? !mail.hidden : false;
 		//
 		if (!/^\(\d+\)/.test(title)) {
 			title = title.replace(/^(\([^)]+\)\s)*/g, "");
