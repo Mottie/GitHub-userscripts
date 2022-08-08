@@ -27,7 +27,7 @@
 	function check() {
 		let title = document.title,
 			mail = document.querySelector(".mail-status"),
-			hasUnread = mail ? mail.classList.contains("unread") : false;
+			hasUnread = mail ? !mail.hidden : false;
 		//
 		if (!/^\(\d+\)/.test(title)) {
 			title = title.replace(/^(\([^)]+\)\s)*/g, "");
@@ -49,14 +49,14 @@
 	GM_registerMenuCommand("Set GitHub Title Notification Indicator", () => {
 		const val = prompt("Indicator Value (it will be wrapped in parentheses)?", indicator);
 		if (val !== null) {
-			GM_setValue("indicator", indicator);
+			GM_setValue("indicator", val);
 			check();
 		}
 	});
 	GM_registerMenuCommand("Set GitHub Title Notification Interval", () => {
 		const val = prompt("Interval Value (in seconds)?", interval);
 		if (val !== null) {
-			GM_setValue("interval", interval);
+			GM_setValue("interval", val);
 			setTimer();
 		}
 	});
