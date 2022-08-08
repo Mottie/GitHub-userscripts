@@ -18,7 +18,7 @@ Userscripts to add functionality to GitHub.
 
 	| Userscript Wiki                        | ![][ico] | Direct<br>Install | Sites                 | Added      | Updated    |
 	|----------------------------------------|:---:|:------------------:|:-------------------------:|:----------:|:----------:|
-	| [GitHub code colors][ccr-wiki]         |     | [install][ccr-raw] | [GF][ccr-gf] [OU][ccr-ou] | 2016.03.20 | 2021.07.21 |
+	| [GitHub code colors][ccr-wiki]         |     | [install][ccr-raw] | [GF][ccr-gf] [OU][ccr-ou] | 2016.03.20 | 2022.05.30 |
 	| [GitHub code folding][cfd-wiki]        |     | [install][cfd-raw] | [GF][cfd-gf] [OU][cfd-ou] | 2016.12.28 | 2021.07.21 |
 	| [GitHub code guides][cgl-wiki]         |     | [install][cgl-raw] | [GF][cgl-gf] [OU][cgl-ou] | 2016.08.27 | 2020.07.11 |
 	| [GitHub code show whitespace][csw-wiki]|     | [install][csw-raw] | [GF][csw-gf] [OU][csw-ou] | 2017.03.26 | 2021.07.21 |
@@ -50,8 +50,8 @@ Userscripts to add functionality to GitHub.
 	| [GitHub sort content][srt-wiki]        |     | [install][srt-raw] | [GF][srt-gf] [OU][srt-ou] | 2016.07.13 | 2021.07.21 |
 	| [GitHub sort reactions][gsr-wiki]      |     | [install][gsr-raw] | [GF][gsr-gf] [OU][gsr-ou] | 2018.02.10 | 2021.07.21 |
 	| [GitHub static time][stt-wiki]         |     | [install][stt-raw] | [GF][stt-gf] [OU][stt-ou] | 2017.04.24 | 2021.07.21 |
-	| [GitHub table of contents][toc-wiki]   |     | [install][toc-raw] | [GF][toc-gf] [OU][toc-ou] | 2016.03.28 | 2021.07.21 |
-	| [GitHub title notification][tbn-wiki]  |     | [install][tbn-raw] | [GF][tbn-gf] [OU][tbn-ou] | 2016.03.24 | 2018.02.16 |
+	| [GitHub table of contents][toc-wiki]   |     | [install][toc-raw] | [GF][toc-gf] [OU][toc-ou] | 2016.03.28 | 2022.04.30 |
+	| [GitHub title notification][tbn-wiki]  |     | [install][tbn-raw] | [GF][tbn-gf] [OU][tbn-ou] | 2016.03.24 | 2022.08.08 |
 	| [GitHub toggle diff comments][tdc-wiki]|     | [install][tdc-raw] | [GF][tdc-gf] [OU][tdc-ou] | 2017.12.10 | 2021.07.21 |
 	| [GitHub toggle expanders][tex-wiki]    |     | [install][tex-raw] | [GF][tex-gf] [OU][tex-ou] | 2016.09.17 | 2020.12.18 |
 	| [GitHub toggle wiki sidebar][tws-wiki] |     | [install][tws-raw] | [GF][tws-gf] [OU][tws-ou] | 2016.04.01 | 2021.07.21 |
