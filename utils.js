@@ -1,5 +1,5 @@
-/* GitHub userscript utilities v0.2.0
- * Copyright © 2021 Rob Garrison
+/* GitHub userscript utilities v0.2.1
+ * Copyright © 2022 Rob Garrison
  * License: MIT
  */
 /* exported
@@ -210,8 +210,9 @@ const debounce = (fxn, time = 500) => {
 		make({ el: 'li', text: 'item #2' })
 	]);
  */
-const make = (obj, children) => {
+const make = (obj = {}, children) => {
 	const el = document.createElement(obj.el || "div");
+	const { appendTo } = obj;
 	const xref = {
 		className: "className",
 		id: "id",
@@ -222,7 +223,7 @@ const make = (obj, children) => {
 		if (obj[key]) {
 			el[xref[key]] = obj[key];
 		}
-	})
+	});
 	if (obj.attrs) {
 		for (let key in obj.attrs) {
 			if (obj.attrs.hasOwnProperty(key)) {
@@ -233,8 +234,10 @@ const make = (obj, children) => {
 	if (Array.isArray(children) && children.length) {
 		children.forEach(child => el.appendChild(child));
 	}
-	if (obj.appendTo) {
-		const wrap = typeof obj.appendTo === "string" ? $(el) : el;
+	if (appendTo) {
+		const wrap = typeof appendTo === "string"
+			? $(appendTo)
+			: appendTo;
 		if (wrap) {
 			wrap.appendChild(el);
 		}
