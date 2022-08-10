@@ -2,29 +2,41 @@
 "use strict";
 
 const { getUserscriptsInFolder, readFile, writeFile } = require("./files");
-const getVersion = require("./get-mutation-version");
+const mutations = require("./update-mutation");
+const utils = require("./update-utils");
 const getXrefs = require("./get-xrefs");
 
-const regexpMutations = /mutations.js\?version=\d+/;
+let processes = [
+	mutations,
+	utils
+];
+
+let usXref;
+const updatedList = [];
+
 const regexpPatch = /(@version\s+)([\d.]+)/;
 const regexpName = /(@name\s+)([\w ]+)/;
 const today = (new Date()).toISOString().substring(0, 10).replace(/-/g, ".");
-
-const updatedList = [];
-
-let currentVersion, usXref;
 
 function updateFile(name) {
 	return new Promise((resolve, reject) => {
 		readFile("./" + name)
 			.then(data => {
-				if (regexpMutations.test(data)) {
-					let {content, updated} = updateMutationVersion(data);
-					if (updated) {
-						// Only update userscript patch if the mutation version was modified
-						content = updatePatch(content);
-						updatedList.push(content.match(regexpName)[2]);
+				let wasUpdated = false;
+				let content = data;
+				processes.forEach(process => {
+					if (process.regexp.test(content)) {
+						const result = process.replace(content, process.version);
+						if (result.updated) {
+							content = result.content;
+							wasUpdated = true;
+						}
 					}
+				});
+				if (wasUpdated) {
+					// Only update userscript patch if the file version was modified
+					content = updatePatch(content);
+					updatedList.push(content.match(regexpName)[2]);
 					return writeFile(name, content).then(resolve);
 				}
 				resolve();
@@ -34,16 +46,6 @@ function updateFile(name) {
 				exit(err);
 			});
 	});
-}
-
-function updateMutationVersion(content) {
-	let updated = false;
-	const replacement = `mutations.js?version=${currentVersion}`;
-	if (content.indexOf(replacement) < 0) {
-		updated = true;
-		content = content.replace(regexpMutations, replacement);
-	}
-	return {content, updated};
 }
 
 function updatePatch(data) {
@@ -87,7 +89,7 @@ function updateReadme() {
 
 function processUserscripts(list) {
 	return Promise.all(list.map(file => updateFile(file)))
-		.then(() => console.log("\x1b[32m%s\x1b[0m", "Mutation URLs updated"))
+		.then(() => console.log("\x1b[32m%s\x1b[0m", "Require URLs updated"))
 		.then(updateReadme)
 		.then(() => console.log("\x1b[32m%s\x1b[0m", "Readme updated"));
 }
@@ -99,10 +101,15 @@ function exit(err) {
 	process.exit(err ? 1 : 0);
 }
 
-Promise.all([ getUserscriptsInFolder(), getVersion(), getXrefs() ])
-	.then(([list, version, xrefs]) => {
-		currentVersion = version;
-		usXref = xrefs;
-		return processUserscripts(list);
-	})
-	.catch(exit);
+Promise.all([
+	getUserscriptsInFolder(),
+	getXrefs(),
+	...processes.map(process => process.getVersion()),
+]).then(([list, xrefs, ...versions]) => {
+	usXref = xrefs;
+	processes = processes.map((process, index) => {
+		process.version = versions[index];
+		return process;
+	});
+	return processUserscripts(list);
+}).catch(exit);

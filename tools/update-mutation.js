@@ -6,8 +6,6 @@
  */
 "use strict";
 
-const fetch = require("make-fetch-happen");
-
 async function getVersion() {
 	const response = await fetch("https://greasyfork.org/en/scripts/28721-mutations");
 	const text = await response.text();
@@ -15,4 +13,21 @@ async function getVersion() {
 	return matches ? matches[1] : null;
 }
 
-module.exports = getVersion;
+const regexp = /mutations.js\?version=\d+/;
+
+const replace = (content, currentVersion) => {
+	const replacement = `mutations.js?version=${currentVersion}`;
+	if (!content.includes(replacement)) {
+		return {
+			content: content.replace(regexp, replacement),
+			updated: true
+		};
+	}
+	return {content, updated: false};
+};
+
+module.exports = {
+	getVersion,
+	regexp,
+	replace
+};

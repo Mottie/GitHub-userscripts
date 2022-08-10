@@ -10,15 +10,14 @@
 		"url": "https://github.com/Mottie"
 	},
 	"devDependencies": {
-		"eslint": "^7.31.0",
+		"eslint": "^8.21.0",
 		"github-reserved-names": "^2.0.4",
-		"make-fetch-happen": "^9.0.4",
 		"ver": "^6.0.2"
 	},
 	"scripts": {
 		"authors": "bash tools/authors.sh",
 		"build:reserved": "node tools/reserved-names.js",
-		"build:mutations": "node tools/update-mutations.js",
+		"build:requires": "node tools/update-requires.js",
 		"lint": "npx eslint *.js",
 		"test": "eslint *.js",
 		"patch": "npm run lint && npx ver patch",
