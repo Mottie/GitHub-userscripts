@@ -1,20 +1,22 @@
 // ==UserScript==
 // @name        GitHub Toggle Expanders
-// @version     2.0.1
+// @version     2.1.0
 // @description A userscript that toggles all expanders when one expander is shift-clicked
 // @license     MIT
 // @author      Rob Garrison
 // @namespace   https://github.com/Mottie
 // @include     https://github.com/*
 // @run-at      document-idle
+// @require     https://greasyfork.org/scripts/398877-utils-js/code/utilsjs.js?version=1079637
 // @icon        https://github.githubassets.com/pinned-octocat.svg
-// @updateURL   https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-toggle-expanders.user.js
-// @downloadURL https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-toggle-expanders.user.js
 // @supportURL  https://github.com/Mottie/GitHub-userscripts/issues
 // ==/UserScript==
 (() => {
+	/* global $ $$ on */
 	"use strict";
 
+	// Commit history toggle
+	// https://github.com/torvalds/linux/commits/master
 	function toggleButton(el, modKey) {
 		const stateNode = el.closest(".js-details-container");
 		const state = stateNode && (
@@ -25,9 +27,11 @@
 		);
 		const parentNode = stateNode && stateNode.closest(modKey
 			// shift+ctrl+click = expand all on page
-			? ".repository-content"
+			?
+			".repository-content"
 			// shift+click = expand all in date
-			: ".Box--condensed"
+			:
+			".Box--condensed"
 		);
 
 		if (parentNode) {
@@ -39,27 +43,37 @@
 		}
 	}
 
+	// Toggle resolved/outdated comments
+	// https://github.com/PowerShell/PowerShell/pull/18210
 	function toggleDetails(el, modKey) {
-		const state = el && el.open;
-		const parentNode = el && el.closest(modKey
-			? "#discussion_bucket" // .js-discussion
-			: ".discussion-item-body" // .container?
+		// clicked button has the previous state
+		const state = el && el.classList.contains("Details-content--closed");
+		const parentNode = el.closest(modKey
+			// shift+ctrl+click = expand all on page
+			?
+			".js-discussion"
+			// shift+click = expand all in date
+			:
+			".js-timeline-item"
 		);
+
 		if (parentNode) {
-			const containers = parentNode.querySelectorAll(
-				".outdated-comment, .js-comment-container"
-			);
-			[...containers].forEach(node => {
-				node.open = state;
+			$$("turbo-frame", parentNode).forEach(node => {
+				const details = $("details", node);
+				if (state) {
+					details.setAttribute("open", state);
+				} else {
+					details.removeAttribute("open");
+				}
 			});
 		}
 	}
 
-	document.body.addEventListener("click", event => {
+	on($("body"), "click", event => {
 		const target = event.target;
-		const mod = event.ctrlKey
-			|| event.metaKey
-			|| window.location.pathname.includes("/compare/");
+		const mod = event.ctrlKey ||
+			event.metaKey ||
+			window.location.pathname.includes("/compare/");
 
 		if (target && event.getModifierState("Shift")) {
 			// give GitHub time to update the elements
@@ -69,7 +83,7 @@
 				} else if (
 					target.matches(".Details-content--closed, .Details-content--open")
 				) {
-					toggleDetails(target.closest("details"), mod);
+					toggleDetails(target, mod);
 				}
 			}, 100);
 		}
