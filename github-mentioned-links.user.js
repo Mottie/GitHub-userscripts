@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Mentioned Links
-// @version     0.1.2
+// @version     0.1.3
 // @description A userscript adds all mentioned links in the side bar
 // @license     MIT
 // @author      Rob Garrison
@@ -9,8 +9,8 @@
 // @run-at      document-idle
 // @grant       GM_getValue
 // @grant       GM_setValue
-// @require     https://greasyfork.org/scripts/28721-mutations/code/mutations.js?version=952601
-// @require     https://greasyfork.org/scripts/398877-utils-js/code/utilsjs.js?version=952600
+// @require     https://greasyfork.org/scripts/28721-mutations/code/mutations.js?version=1108163
+// @require     https://greasyfork.org/scripts/398877-utils-js/code/utilsjs.js?version=1079637
 // @icon        https://github.githubassets.com/pinned-octocat.svg
 // @updateURL   https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-mentioned-links.user.js
 // @downloadURL https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-mentioned-links.user.js
@@ -92,12 +92,13 @@
 
 	function buildLinks(links) {
 		const entry = $("#ghml-wrapper") || item.cloneNode(true);
+		const hasLinks = links.length;
 		entry.innerHTML = `
 			<summary class="discussion-sidebar-heading text-bold d-flex flex-items-center">
-				Mentioned Links
+				Mentioned Links ${hasLinks ? `(${links.length})` : ""}
 			</summary>
 			<ul class="list-style-none">
-				${links.length ? links.join("") : "No links found"}
+				${hasLinks ? links.join("") : "No links found"}
 			</ul>`;
 		$(selectors.sidebar).after(entry);
 		addLoadMoreButton();
