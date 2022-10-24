@@ -53,7 +53,7 @@ Userscripts to add functionality to GitHub.
 	| [GitHub table of contents][toc-wiki]   |     | [install][toc-raw] | [GF][toc-gf] [OU][toc-ou] | 2016.03.28 | 2022.10.24 |
 	| [GitHub title notification][tbn-wiki]  |     | [install][tbn-raw] | [GF][tbn-gf] [OU][tbn-ou] | 2016.03.24 | 2022.08.08 |
 	| [GitHub toggle diff comments][tdc-wiki]|     | [install][tdc-raw] | [GF][tdc-gf] [OU][tdc-ou] | 2017.12.10 | 2022.10.24 |
-	| [GitHub toggle expanders][tex-wiki]    |     | [install][tex-raw] | [GF][tex-gf] [OU][tex-ou] | 2016.09.17 | 2020.10.24 |
+	| [GitHub toggle expanders][tex-wiki]    |     | [install][tex-raw] | [GF][tex-gf] [OU][tex-ou] | 2016.09.17 | 2022.10.24 |
 	| [GitHub toggle wiki sidebar][tws-wiki] |     | [install][tws-raw] | [GF][tws-gf] [OU][tws-ou] | 2016.04.01 | 2022.10.24 |
 	| [GitHub unknown license][gul-wiki]     |     | [install][gul-raw] | [GF][gul-gf] [OU][gul-ou] | 2020.03.29 | 2022.10.24 |
 	| [GitHub update fork][ufk-wiki]         |     | [install][ufk-raw] | [GF][ufk-gf] [OU][ufk-ou] | 2020.02.16 | 2020.10.01 |
