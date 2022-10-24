@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Toggle Diff Comments
-// @version     0.3.2
+// @version     0.3.3
 // @description A userscript that toggles diff/PR and commit comments
 // @license     MIT
 // @author      Rob Garrison
@@ -10,8 +10,8 @@
 // @grant       GM.addStyle
 // @grant       GM_addStyle
 // @require     https://greasemonkey.github.io/gm4-polyfill/gm4-polyfill.js?updated=20180103
-// @require     https://greasyfork.org/scripts/28721-mutations/code/mutations.js?version=952601
-// @require     https://greasyfork.org/scripts/398877-utils-js/code/utilsjs.js?version=952600
+// @require     https://greasyfork.org/scripts/28721-mutations/code/mutations.js?version=1108163
+// @require     https://greasyfork.org/scripts/398877-utils-js/code/utilsjs.js?version=1079637
 // @icon        https://github.githubassets.com/pinned-octocat.svg
 // @updateURL   https://raw.githubusercontent.com/Mottie/Github-userscripts/master/github-toggle-diff-comments.user.js
 // @downloadURL https://raw.githubusercontent.com/Mottie/Github-userscripts/master/github-toggle-diff-comments.user.js
@@ -193,7 +193,7 @@
 
 	function addListeners() {
 		const mainContent = $(".repository-content");
-		if (!mainContent.classList.contains("ghtc-listeners")) {
+		if (mainContent && !mainContent.classList.contains("ghtc-listeners")) {
 			mainContent.classList.add("ghtc-listeners");
 			on(mainContent, "change", debounce(event => {
 				const el = event.target;

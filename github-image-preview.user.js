@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Image Preview
-// @version     2.0.7
+// @version     2.0.8
 // @description A userscript that adds clickable image thumbnails
 // @license     MIT
 // @author      Rob Garrison
@@ -13,7 +13,7 @@
 // @grant       GM_xmlhttpRequest
 // @connect     github.com
 // @connect     githubusercontent.com
-// @require     https://greasyfork.org/scripts/28721-mutations/code/mutations.js?version=952601
+// @require     https://greasyfork.org/scripts/28721-mutations/code/mutations.js?version=1108163
 // @icon        https://github.githubassets.com/pinned-octocat.svg
 // @updateURL   https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-image-preview.user.js
 // @downloadURL https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-image-preview.user.js
@@ -222,7 +222,7 @@
 					// add "ghip-folder" class for file-filters userscript
 					const noExt = svg.matches(folderIconClasses) ? " ghip-folder" : "";
 					const clone = svg.cloneNode(true);
-                    clone.classList.add("ghip-non-image");
+					clone.classList.add("ghip-non-image");
 					// include "leaflet-tile-container" to invert icon for GitHub-Dark
 					content = `${title("non-image")}<span class="leaflet-tile-container${noExt}">` +
 						clone.outerHTML + "</span>";

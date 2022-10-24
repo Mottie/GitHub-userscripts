@@ -13,6 +13,7 @@
 // @grant       GM_setValue
 // @icon        https://github.githubassets.com/pinned-octocat.svg
 // @require     https://cdnjs.cloudflare.com/ajax/libs/dragula/3.7.2/dragula.js
+// @require     https://greasyfork.org/scripts/28721-mutations/code/mutations.js?version=1108163
 // @require     https://greasyfork.org/scripts/398877-utils-js/code/utilsjs.js?version=1079637
 // @updateURL   https://raw.githubusercontent.com/Mottie/Github-userscripts/master/github-custom-navigation.user.js
 // @downloadURL https://raw.githubusercontent.com/Mottie/Github-userscripts/master/github-custom-navigation.user.js
@@ -689,6 +690,7 @@
 		}
 
 		on(window, "hashchange", openPanelOnHash);
+		on(document, "ghmo:container", customize);
 		on($("#ghcn-overlay"), "click", event => {
 			// ignore bubbled up events
 			if (event.target.id === "ghcn-overlay") {

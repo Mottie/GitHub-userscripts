@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Download ZIP
-// @version     0.2.7
+// @version     0.2.8
 // @description A userscript adds download links so that downloaded filenames include the SHA
 // @license     MIT
 // @author      Rob Garrison
@@ -14,7 +14,7 @@
 // @connect     api.github.com
 // @connect     assets-cdn.github.com
 // @require     https://greasemonkey.github.io/gm4-polyfill/gm4-polyfill.js?updated=20180103
-// @require     https://greasyfork.org/scripts/28721-mutations/code/mutations.js?version=952601
+// @require     https://greasyfork.org/scripts/28721-mutations/code/mutations.js?version=1108163
 // @icon        https://github.githubassets.com/pinned-octocat.svg
 // @updateURL   https://raw.githubusercontent.com/Mottie/Github-userscripts/master/github-download-zip.user.js
 // @downloadURL https://raw.githubusercontent.com/Mottie/Github-userscripts/master/github-download-zip.user.js

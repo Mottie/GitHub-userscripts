@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Table of Contents
-// @version     2.1.4
+// @version     2.1.5
 // @description A userscript that adds a table of contents to readme & wiki pages
 // @license     MIT
 // @author      Rob Garrison
@@ -16,8 +16,8 @@
 // @grant       GM.setValue
 // @grant       GM_addStyle
 // @grant       GM.addStyle
-// @require     https://greasyfork.org/scripts/28721-mutations/code/mutations.js?version=952601
-// @require     https://greasyfork.org/scripts/398877-utils-js/code/utilsjs.js?version=952600
+// @require     https://greasyfork.org/scripts/28721-mutations/code/mutations.js?version=1108163
+// @require     https://greasyfork.org/scripts/398877-utils-js/code/utilsjs.js?version=1079637
 // @require     https://greasemonkey.github.io/gm4-polyfill/gm4-polyfill.js?updated=20180103
 // @icon        https://github.githubassets.com/pinned-octocat.svg
 // @updateURL   https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-toc.user.js

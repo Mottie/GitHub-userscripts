@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub in VSCode
-// @version     0.1.3
+// @version     0.1.4
 // @description A userscript that adds a button to open a repo in VSCode using github1s
 // @license     MIT
 // @author      Rob Garrison
@@ -10,8 +10,8 @@
 // @grant       GM_addStyle
 // @connect     github.com
 // @connect     githubusercontent.com
-// @require     https://greasyfork.org/scripts/398877-utils-js/code/utilsjs.js?version=952600
-// @require     https://greasyfork.org/scripts/28721-mutations/code/mutations.js?version=952601
+// @require     https://greasyfork.org/scripts/398877-utils-js/code/utilsjs.js?version=1079637
+// @require     https://greasyfork.org/scripts/28721-mutations/code/mutations.js?version=1108163
 // @icon        https://github.githubassets.com/pinned-octocat.svg
 // @updateURL   https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-in-vscode.user.js
 // @downloadURL https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-in-vscode.user.js

@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Issue Add Details
-// @version     1.0.11
+// @version     1.0.12
 // @description A userscript that adds a button to insert a details block into comments
 // @license     MIT
 // @author      Rob Garrison
@@ -8,8 +8,8 @@
 // @include     https://github.com/*
 // @run-at      document-idle
 // @grant       none
-// @require     https://greasyfork.org/scripts/28721-mutations/code/mutations.js?version=952601
-// @require     https://greasyfork.org/scripts/398877-utils-js/code/utilsjs.js?version=952600
+// @require     https://greasyfork.org/scripts/28721-mutations/code/mutations.js?version=1108163
+// @require     https://greasyfork.org/scripts/398877-utils-js/code/utilsjs.js?version=1079637
 // @require     https://greasyfork.org/scripts/28239-rangy-inputs-mod-js/code/rangy-inputs-modjs.js?version=181769
 // @icon        https://github.githubassets.com/pinned-octocat.svg
 // @updateURL   https://raw.githubusercontent.com/Mottie/Github-userscripts/master/github-issue-add-details.user.js
@@ -73,8 +73,7 @@
 		});
 	};
 
-	on(document, "ghmo:container", addDetailsButton);
-	on(document, "ghmo:comments", addDetailsButton);
+	on(document, "ghmo:container, ghmo:comments", addDetailsButton);
 
 	addDetailsButton();
 	addBindings();

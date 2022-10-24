@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Watcher
-// @version     0.2.2
+// @version     0.2.3
 // @description A userscript that can check a repo, folder, file or branch for updates
 // @license     MIT
 // @author      Rob Garrison
@@ -11,8 +11,8 @@
 // @grant       GM_addStyle
 // @grant       GM_getValue
 // @grant       GM_setValue
-// @require     https://greasyfork.org/scripts/28721-mutations/code/mutations.js?version=952601
-// @require     https://greasyfork.org/scripts/398877-utils-js/code/utilsjs.js?version=952600
+// @require     https://greasyfork.org/scripts/28721-mutations/code/mutations.js?version=1108163
+// @require     https://greasyfork.org/scripts/398877-utils-js/code/utilsjs.js?version=1079637
 // @icon        https://github.githubassets.com/pinned-octocat.svg
 // @updateURL   https://raw.githubusercontent.com/Mottie/Github-userscripts/master/github-watcher.user.js
 // @downloadURL https://raw.githubusercontent.com/Mottie/Github-userscripts/master/github-watcher.user.js
