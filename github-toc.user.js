@@ -1,12 +1,12 @@
 // ==UserScript==
 // @name        GitHub Table of Contents
-// @version     2.1.5
+// @version     2.1.6
 // @description A userscript that adds a table of contents to readme & wiki pages
 // @license     MIT
 // @author      Rob Garrison
 // @namespace   https://github.com/Mottie
-// @include     https://github.com/*
-// @include     https://gist.github.com/*
+// @match       https://github.com/*
+// @match       https://gist.github.com/*
 // @run-at      document-idle
 // @grant       GM_registerMenuCommand
 // @grant       GM.registerMenuCommand
@@ -35,6 +35,7 @@
 		right: "10px", // popup right position when reset
 		headerPad: "48px", // padding added to header when TOC is collapsed
 		headerSelector: [".header", ".Header", ".header-logged-out > div"],
+		wrapperSelector: "#wiki-body, #readme, [id^='file-'][id$='-md']",
 		headerWrap: ".js-header-wrapper",
 		toggle: "g+t", // keyboard toggle shortcut
 		restore: "g+r", // keyboard reset popup position shortcut
@@ -267,7 +268,7 @@
 		if (!tocInit) {
 			return;
 		}
-		const wrapper = $("#wiki-body, #readme");
+		const wrapper = $(defaults.wrapperSelector);
 		if (wrapper) {
 			let indx, header, anchor, txt;
 			let content = "<ul>";
