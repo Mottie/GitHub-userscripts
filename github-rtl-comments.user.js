@@ -54,8 +54,8 @@
 			toolbars = $$(".toolbar-commenting"),
 			indx = toolbars.length;
 		if (indx) {
-			button = document.createElement("md-code");
-			button.type = "md-code";
+			button = document.createElement("button");
+			button.type = "button";
 			button.className = "btn-octicon ghu-rtl toolbar-item tooltipped tooltipped-n";
 			button.setAttribute("aria-label", "RTL");
 			button.setAttribute("tabindex", "-1");
