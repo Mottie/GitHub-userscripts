@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub RTL Comments
-// @version     1.3.3
+// @version     1.3.4
 // @description A userscript that adds a button to insert RTL text blocks in comments
 // @license     MIT
 // @author      Rob Garrison
@@ -19,7 +19,6 @@
 // @downloadURL https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-rtl-comments.user.js
 // @supportURL  https://github.com/Mottie/GitHub-userscripts/issues
 // ==/UserScript==
-/* global GM */
 (() => {
 	"use strict";
 
@@ -57,7 +56,7 @@
 		if (indx) {
 			button = document.createElement("button");
 			button.type = "button";
-			button.className = "ghu-rtl toolbar-item tooltipped tooltipped-n";
+			button.className = "btn-octicon ghu-rtl toolbar-item tooltipped tooltipped-n";
 			button.setAttribute("aria-label", "RTL");
 			button.setAttribute("tabindex", "-1");
 			button.innerHTML = icon;
