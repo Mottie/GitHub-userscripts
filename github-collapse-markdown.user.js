@@ -5,9 +5,9 @@
 // @license     MIT
 // @author      Rob Garrison
 // @namespace   https://github.com/Mottie
-// @include     https://github.com/*
-// @include     https://gist.github.com/*
-// @include     https://help.github.com/*
+// @match       https://github.com/*
+// @match       https://gist.github.com/*
+// @match       https://help.github.com/*
 // @run-at      document-idle
 // @grant       GM_addStyle
 // @grant       GM_getValue

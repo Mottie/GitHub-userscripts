@@ -5,7 +5,7 @@
 // @license     MIT
 // @author      Rob Garrison
 // @namespace   https://github.com/Mottie
-// @include     https://github.com/*
+// @match       https://github.com/*
 // @run-at      document-idle
 // @grant       GM_addStyle
 // @grant       GM_getValue
@@ -29,7 +29,7 @@
 			background-color:transparent !important; }
 		.ghip-show-previews .Box-row:not(.ghsc-header):not(.hidden) > div[role] {
 			display:none !important; }
-		.ghip-wrapper.ghip-show-previews svg.ghip-non-image, 
+		.ghip-wrapper.ghip-show-previews svg.ghip-non-image,
         .ghip-wrapper.ghip-show-previews img.ghip-non-image { height:80px; width:80px;
 			margin-top:15px; }
 		.ghip-wrapper.ghip-show-previews .image { width:100%; position:relative;
@@ -46,7 +46,7 @@
 		.ghip-wrapper.ghip-tiled .image:hover img:not(.ghip-non-image) { zoom:3; }
 
 		.ghip-wrapper.ghip-fullw .image { height:unset; padding-bottom:0; }
-		
+
 		.ghip-wrapper .image span { display:block;	position:relative; }
 		.ghip-wrapper .ghip-folder { margin-bottom:2em; }
 		.image .ghip-file-type { font-size:40px; top:-2em; left:0; z-index:2;
