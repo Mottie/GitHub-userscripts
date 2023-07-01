@@ -5,7 +5,7 @@
 // @license     MIT
 // @author      Rob Garrison
 // @namespace   https://github.com/Mottie
-// @include     https://github.com/*
+// @match       https://github.com/*
 // @run-at      document-idle
 // @require     https://greasyfork.org/scripts/398877-utils-js/code/utilsjs.js?version=1079637
 // @icon        https://github.githubassets.com/pinned-octocat.svg

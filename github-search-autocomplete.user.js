@@ -5,8 +5,8 @@
 // @license     MIT
 // @author      Rob Garrison
 // @namespace   https://github.com/Mottie
-// @include     https://github.com/*
-// @include     https://gist.github.com/*
+// @match       https://github.com/*
+// @match       https://gist.github.com/*
 // @run-at      document-idle
 // @grant       GM_addStyle
 // @require     https://code.jquery.com/jquery-3.2.1.min.js

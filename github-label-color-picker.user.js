@@ -6,7 +6,7 @@
 // @author      Rob Garrison
 // @contributor darkred
 // @namespace   https://github.com/Mottie
-// @include     https://github.com/*
+// @match       https://github.com/*
 // @run-at      document-idle
 // @grant       GM_addStyle
 // @grant       GM_getValue
