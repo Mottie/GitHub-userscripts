@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Static Time
-// @version     1.0.10
+// @version     1.1.0
 // @description A userscript that replaces relative times with a static time formatted as you like it
 // @license     MIT
 // @author      Rob Garrison
@@ -26,6 +26,7 @@
 	let busy = false;
 	let timeFormat = GM_getValue("ghst-format", "LLL");
 	let locale = GM_getValue("ghst-locale", "en");
+	let useUTC = GM_getValue("ghst-utc", "false");
 
 	// list copied from
 	// https://github.com/moment/momentjs.com/blob/master/data/locale.js
@@ -195,14 +196,17 @@
 						return;
 					}
 					el = els[indx];
-					time = el.getAttribute("datetime") || "";
-					if (el && time) {
+					time = moment(el.getAttribute("datetime") || "");
+					if (el && time.isValid()) {
+						if (useUTC === "true") {
+							time = time.utc();
+						}
 						if (tempFormat) {
-							formatted = moment(time).format(tempFormat);
+							formatted = time.format(tempFormat);
 							el.textContent = formatted;
 							el.title = formatted;
 						} else {
-							formatted = moment(time).format(timeFormat);
+							formatted = time.format(timeFormat);
 							node = block.cloneNode(true);
 							node.setAttribute("datetime", time);
 							node.textContent = formatted;
@@ -237,7 +241,7 @@
 			#ghst-settings-inner { position:fixed; left:50%; top:50%; width:25rem;
 				transform:translate(-50%,-50%); box-shadow:0 .5rem 1rem #111;
 				color:#c0c0c0 }
-			#ghst-settings-inner .boxed-group-inner { height: 205px; }
+			#ghst-settings-inner .boxed-group-inner { height: 255px; }
 			#ghst-footer { clear:both; border-top:1px solid rgba(68, 68, 68, .3);
 				padding-top:5px; }
 		`);
@@ -264,11 +268,21 @@
 					</dl>
 					<dl class="form-group flattened">
 						<dt>
+							<label for="ghst-utc">Show UTC time (use "z" in format below)</label>
+						</dt>
+						<dd>
+							<div class="form-checkbox">
+								<input id="ghst-utc" type="checkbox" class="float-right">
+							</div>
+							<br>
+						</dd>
+					</dl>
+					<dl class="form-group flattened">
+						<dt>
 							<label for="ghst-format">
-								<p>Set <a href="https://momentjs.com/docs/#/displaying/format/">
+								Set <a href="https://momentjs.com/docs/#/displaying/format/" target="_blank">
 									MomentJS
 								</a> format (e.g. "MMMM Do YYYY, h:mm A"):
-								</p>
 							</label>
 						</dt>
 						<dd>
@@ -282,6 +296,7 @@
 				</div>
 			</div>`;
 		$("body").appendChild(div);
+		$("#ghst-utc").checked = useUTC === "true";
 		on($("#ghst-settings"), "click", closePanel);
 		on($("body"), "keyup", event => {
 			if (
@@ -297,13 +312,14 @@
 		});
 		on($("#ghst-settings-inner"), "click", event => {
 			event.stopPropagation();
-			event.preventDefault();
+			// event.preventDefault();
 		});
 		on($("#ghst-save"), "click", () => {
 			closePanel();
 			update("save");
 		});
 		on($("#ghst-locale"), "change", update);
+		on($("#ghst-utc"), "change", update);
 		on($("#ghst-format"), "change", update);
 		on($("#ghst-cancel"), "click", closePanel);
 	}
@@ -319,14 +335,18 @@
 		if (mode === "revert") {
 			$("#ghst-locale").value = locale;
 			$("#ghst-format").value = timeFormat;
+			$("#ghst-utc").checked = useUTC === "true";
 		}
 		let loc = $("#ghst-locale").value || "en";
 		let time = $("#ghst-format").value || "LLL";
+		let utc = $("#ghst-utc").checked ? "true" : "false";
 		if (mode === "save") {
 			timeFormat = time;
 			locale = loc;
+			useUTC = utc;
 			GM_setValue("ghst-format", timeFormat);
 			GM_setValue("ghst-locale", locale);
+			GM_setValue("ghst-utc", useUTC);
 		}
 		moment.locale(loc);
 		staticTime(time);
