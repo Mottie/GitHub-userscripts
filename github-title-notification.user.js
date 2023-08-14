@@ -27,7 +27,10 @@
 	function check() {
 		let title = document.title,
 			mail = document.querySelector(".mail-status"),
-			hasUnread = mail ? !mail.hidden : false;
+		        notificationButton = document.querySelector("#AppHeader-notifications-button"), //for new layout
+		        hasUnreadMail = mail ? !mail.hidden : false,
+		        hasIndicator = notificationButton ? notificationButton.classList.contains("AppHeader-button--hasIndicator") : false,
+		        hasUnread = hasUnreadMail || hasIndicator;
 		//
 		if (!/^\(\d+\)/.test(title)) {
 			title = title.replace(/^(\([^)]+\)\s)*/g, "");
