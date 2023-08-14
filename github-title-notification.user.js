@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Title Notification
-// @version     1.0.7
+// @version     1.0.8
 // @description A userscript that changes the document title if there are unread messages
 // @license     MIT
 // @author      Rob Garrison
