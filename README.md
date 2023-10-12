@@ -58,6 +58,7 @@ Userscripts to add functionality to GitHub.
 	| [GitHub unknown license][gul-wiki]     |     | [install][gul-raw] | [GF][gul-gf] [OU][gul-ou] | 2020.03.29 | 2022.10.24 |
 	| [GitHub update fork][ufk-wiki]         |     | [install][ufk-raw] | [GF][ufk-gf] [OU][ufk-ou] | 2020.02.16 | 2020.10.01 |
 	| [GitHub watcher][wat-wiki]             |     | [install][wat-raw] | [GF][wat-gf] [OU][wat-ou] | 2021.02.28 | 2022.10.24 |
+	| [GitHub expand PR comments][exp-wiki]  |     | [install][exp-raw] |  | 2023.10.12 | 2023.10.12 |
 	| [Gist raw links][grl-wiki]             |     | [install][grl-raw] | [GF][grl-gf] [OU][grl-ou] | 2017.05.19 | 2019.06.07 |
 	| [Gist to dabblet][g2d-wiki]            |     | [install][g2d-raw] | [GF][g2d-gf] [OU][g2d-ou] | 2012.01.26 | 2017.02.16 |
 
@@ -117,6 +118,7 @@ Userscripts to add functionality to GitHub.
 [tws-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-toggle-wiki-sidebar
 [ufk-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-update-fork
 [wat-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-watcher
+[exp-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/Github-expand-pr-comments
 
 [ccr-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-code-colors.user.js
 [ccs-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-copy-code-snippet.user.js
@@ -164,6 +166,7 @@ Userscripts to add functionality to GitHub.
 [tws-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-toggle-wiki-sidebar.user.js
 [ufk-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-update-fork.user.js
 [wat-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-watcher.user.js
+[exp-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-expand-pr-comments.user.js
 
 [ccr-gf]: https://greasyfork.org/en/scripts/18141-github-code-colors
 [ccs-gf]: https://greasyfork.org/en/scripts/37307-github-copy-code-snippet
