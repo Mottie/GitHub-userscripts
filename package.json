@@ -11,6 +11,7 @@
 	},
 	"devDependencies": {
 		"eslint": "^8.21.0",
+		"eslint-plugin-userscripts": "^0.4.0",
 		"github-reserved-names": "^2.0.4",
 		"ver": "^6.0.2"
 	},

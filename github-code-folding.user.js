@@ -18,6 +18,7 @@
 // @downloadURL https://raw.githubusercontent.com/Mottie/Github-userscripts/master/github-code-folding.user.js
 // @supportURL  https://github.com/Mottie/GitHub-userscripts/issues
 // ==/UserScript==
+
 /* global $ $$ on */
 /**
  * This userscript has been heavily modified from the "github-code-folding"

@@ -18,6 +18,7 @@
 // @downloadURL https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-code-colors.user.js
 // @supportURL  https://github.com/Mottie/GitHub-userscripts/issues
 // ==/UserScript==
+
 /* global Color */
 (() => {
 	"use strict";
