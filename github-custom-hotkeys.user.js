@@ -18,6 +18,7 @@
 // @downloadURL https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-custom-hotkeys.user.js
 // @supportURL  https://github.com/Mottie/GitHub-userscripts/issues
 // ==/UserScript==
+
 /* global $ $$ on */
 (() => {
 	"use strict";

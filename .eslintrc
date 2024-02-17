@@ -4,6 +4,23 @@
     "es2020": true,
     "greasemonkey": true
   },
+  "overrides": [
+    {
+      "files": ["*.user.js"],
+      "extends": ["plugin:userscripts/recommended"],
+      "rules": {
+        "userscripts/align-attributes": ["error", 1],
+        "userscripts/compat-headers": "error"
+      },
+      "settings": {
+        "userscriptVersions": {
+          "tampermonkey": ">=4",
+          "violentmonkey": ">=2",
+          "greasemonkey": "*"
+        }
+      }
+    }
+  ],
   "parserOptions": {
     "ecmaVersion": 11
   },

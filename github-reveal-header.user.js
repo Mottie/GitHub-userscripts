@@ -14,6 +14,7 @@
 // @downloadURL https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-reveal-header.user.js
 // @supportURL  https://github.com/Mottie/GitHub-userscripts/issues
 // ==/UserScript==
+
 (() => {
 	"use strict";
 

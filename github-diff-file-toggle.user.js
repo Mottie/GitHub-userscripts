@@ -16,6 +16,7 @@
 // @supportURL  https://github.com/Mottie/GitHub-userscripts/issues
 
 // ==/UserScript==
+
 /* global $ $$ on debounce make */
 (() => {
 	"use strict";

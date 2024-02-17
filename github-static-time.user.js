@@ -19,6 +19,7 @@
 // @downloadURL https://raw.githubusercontent.com/Mottie/Github-userscripts/master/github-static-time.user.js
 // @supportURL  https://github.com/Mottie/GitHub-userscripts/issues
 // ==/UserScript==
+
 (() => {
 	/* global moment $ $$ on */
 	"use strict";

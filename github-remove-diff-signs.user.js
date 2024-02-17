@@ -13,6 +13,7 @@
 // @downloadURL https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-remove-diff-signs.user.js
 // @supportURL  https://github.com/Mottie/GitHub-userscripts/issues
 // ==/UserScript==
+
 (() => {
 	"use strict";
 
