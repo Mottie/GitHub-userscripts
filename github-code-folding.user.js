@@ -48,7 +48,7 @@
 
 	triangle.className = "ghcf-collapser";
 	ellipsis.className = "pl-smi ghcf-ellipsis";
-	ellipsis.innerHTML = "&hellip;";
+	ellipsis.innerHTML = "...";
 
 	function countInitialWhiteSpace(arr) {
 		const getWhiteSpaceIndex = i => {
