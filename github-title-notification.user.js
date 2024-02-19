@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Title Notification
-// @version     1.0.7
+// @version     1.0.8
 // @description A userscript that changes the document title if there are unread messages
 // @license     MIT
 // @author      Rob Garrison
@@ -28,7 +28,10 @@
 	function check() {
 		let title = document.title,
 			mail = document.querySelector(".mail-status"),
-			hasUnread = mail ? !mail.hidden : false;
+		        notificationButton = document.querySelector("#AppHeader-notifications-button"), //for new layout
+		        hasUnreadMail = mail ? !mail.hidden : false,
+		        hasIndicator = notificationButton ? notificationButton.classList.contains("AppHeader-button--hasIndicator") : false,
+		        hasUnread = hasUnreadMail || hasIndicator;
 		//
 		if (!/^\(\d+\)/.test(title)) {
 			title = title.replace(/^(\([^)]+\)\s)*/g, "");
