@@ -26,15 +26,15 @@
 
 	const setToggleStyle = state => {
 		const mainToggle = $(".ghdt-toggle");
-		mainToggle.classList.toggle("ghdt-selected", state);
-		mainToggle.style = state
-			? "background-color: var(--color-btn-selected-bg);"
-			: "";
+		if (mainToggle) {
+			mainToggle.classList.toggle("ghdt-selected", state);
+			mainToggle.style = state ? "background-color: var(--color-btn-selected-bg);" : "";
+		}
 	};
 
-	const buildButton = () => {
+	const init = () => {
 		if (!$(".ghdt-toggle")) {
-			const button = make({
+			const toggleButton = make({
 				el: "button",
 				className: "btn btn-sm ghdt-toggle tooltipped tooltipped-s float-right",
 				text: "Toggle viewed",
@@ -42,13 +42,16 @@
 					"aria-label": "Toggle all viewed files"
 				}
 			});
-			on(button, "click", event => {
+			on(toggleButton, "click", event => {
 				toggle(document, !event.target.classList.contains("ghdt-selected"));
 			});
-			$("#files.diff-view")?.prepend(button);
+			const diffBarItem = make({
+				el: "div",
+				className: "diffbar-item js-batched-reviewed mr-3",
+			}, [toggleButton]);
+			$("diff-layout > div.pr-toolbar > div.diffbar > div.pr-review-tools")?.prepend(diffBarItem);
 		}
-		// Update toggle button state after initialized; timer for progressive
-		// loading
+		// Update toggle button state after initialized; timer for progressive loading
 		clearTimeout(timer);
 		timer = setTimeout(() => {
 			if ($$(".js-reviewed-checkbox").every(el => el.checked)) {
@@ -75,12 +78,6 @@
 			setTimeout(() => {
 				busy = false;
 			});
-		}
-	};
-
-	const init = () => {
-		if ($("#files.diff-view") || $(".pr-toolbar")) {
-			buildButton();
 		}
 	};
 
