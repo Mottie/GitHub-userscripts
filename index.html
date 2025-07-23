@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mottie Scripts</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+        :root {
+            --primary-color: #00a8ff;
+            --background-color: #1a1a1a;
+            --card-background: rgba(255, 255, 255, 0.05);
+            --text-color: #e0e0e0;
+            --text-secondary-color: #a0a0a0;
+            --border-color: rgba(255, 255, 255, 0.1);
+            --shadow-color: rgba(0, 0, 0, 0.2);
+            --success-color: #2ecc71;
+            --deprecated-color: #e74c3c;
+        }
+        
+        [data-theme="light"] {
+            --primary-color: #007bff;
+            --background-color: #f4f4f9;
+            --card-background: #ffffff;
+            --text-color: #333;
+            --text-secondary-color: #666;
+            --border-color: #ddd;
+            --shadow-color: rgba(0, 0, 0, 0.1);
+        }
+
+        [data-theme="synthwave"] {
+            --primary-color: #ff00ff;
+            --background-color: #2d1a4c;
+            --card-background: rgba(0, 0, 0, 0.2);
+            --text-color: #00f7ff;
+            --text-secondary-color: #ff8dff;
+            --border-color: rgba(0, 247, 255, 0.3);
+            --shadow-color: rgba(255, 0, 255, 0.2);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            overflow-x: hidden;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 0;
+        }
+
+        header {
+            text-align: center;
+            padding: 2rem 0 4rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(0, 168, 255, 0.1), transparent 40%);
+            animation: rotate 20s linear infinite;
+            z-index: 1;
+        }
+        
+        .header-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        .owner-profile {
+            text-align: center;
+            margin-bottom: 2rem;
+            animation: fadeInDown 1s ease-out;
+            position: relative;
+            z-index: 2;
+        }
+
+        .owner-profile img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 3px solid var(--primary-color);
+            box-shadow: 0 0 20px var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .greasyfork-btn {
+            display: inline-block;
+            padding: 0.7rem 1.5rem;
+            background-color: var(--primary-color);
+            color: #fff;
+            text-decoration: none;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+        }
+
+        .greasyfork-btn:hover {
+            background-color: #007bb5;
+            box-shadow: 0 0 20px rgba(0, 168, 255, 0.5);
+        }
+
+        header h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(45deg, var(--primary-color), #fff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: fadeInDown 1s ease-out;
+        }
+
+        header p {
+            font-size: 1.2rem;
+            color: var(--text-secondary-color);
+            animation: fadeInUp 1s ease-out 0.5s;
+            animation-fill-mode: backwards;
+        }
+        
+        header p a {
+            color: var(--primary-color);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        header p a:hover {
+            color: #fff;
+            text-decoration: underline;
+        }
+
+        .search-container {
+            margin-bottom: 2rem;
+            animation: fadeInUp 1s ease-out 1s;
+            animation-fill-mode: backwards;
+        }
+
+        #search-input {
+            width: 100%;
+            padding: 0.8rem 1.5rem;
+            border-radius: 50px;
+            border: 1px solid var(--border-color);
+            background-color: var(--card-background);
+            color: var(--text-color);
+            font-size: 1rem;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        #search-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 20px rgba(0, 168, 255, 0.3);
+        }
+
+        .scripts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .script-card {
+            background: var(--card-background);
+            border-radius: 15px;
+            border: 1px solid var(--border-color);
+            padding: 1.5rem;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        
+        .script-card a.card-link, .script-card div.card-link {
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .script-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 30px var(--shadow-color);
+        }
+
+        .script-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(0, 168, 255, 0.2), transparent 80%);
+            transform: translate(100%, 100%);
+            transition: transform 0.5s ease;
+            opacity: 0;
+        }
+
+        .script-card:hover::before {
+            transform: translate(0, 0);
+            opacity: 1;
+        }
+        
+        .script-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+        }
+
+        .script-card p {
+            color: var(--text-secondary-color);
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+            flex-grow: 1;
+        }
+
+        .card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.8rem;
+            margin-top: auto;
+        }
+
+        .install-btn {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background-color: var(--primary-color);
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+            cursor: pointer;
+            border: none;
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.8rem;
+        }
+
+        .install-btn:hover {
+            background-color: #007bb5;
+        }
+        
+        .status {
+            padding: 0.2rem 0.5rem;
+            border-radius: 5px;
+            font-weight: 600;
+        }
+        
+        .status.active {
+            background-color: var(--success-color);
+            color: #fff;
+        }
+        
+        .status.deprecated {
+            background-color: var(--deprecated-color);
+            color: #fff;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 4rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .footer-credits {
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .social-links a {
+            color: var(--text-secondary-color);
+            margin: 0 0.5rem;
+            font-size: 1.5rem;
+            transition: color 0.3s ease;
+        }
+
+        .social-links a:hover {
+            color: var(--primary-color);
+        }
+
+        .redirect-banner {
+            position: fixed;
+            bottom: -100px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: var(--primary-color);
+            color: #fff;
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0, 168, 255, 0.4);
+            z-index: 1000;
+            transition: bottom 0.5s ease-in-out;
+            font-weight: 600;
+        }
+
+        .redirect-banner.show {
+            bottom: 20px;
+        }
+
+        .theme-changer {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1001;
+        }
+
+        .theme-btn {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            border: 1px solid var(--border-color);
+            cursor: pointer;
+            margin-left: 5px;
+        }
+
+        .theme-btn.dark { background-color: #1a1a1a; }
+        .theme-btn.light { background-color: #f4f4f9; }
+        .theme-btn.synthwave { background: linear-gradient(45deg, #2d1a4c, #ff00ff); }
+
+        .back-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 10px 15px;
+            border-radius: 50%;
+            display: none;
+            cursor: pointer;
+            z-index: 1000;
+            transition: opacity 0.3s, visibility 0.3s;
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="owner-profile">
+            <img src="https://fiverr-res.cloudinary.com/images/q_auto,f_auto/gigs/200492697/original/44e3989071f448541a0ba6aa90f0fb63d6dbceea/draw-you-a-cute-profile-pic.png" alt="Owner Profile">
+            <a href="https://greasyfork.org/en/users/24847" target="_blank" class="greasyfork-btn">GreasyFork Profile</a>
+        </div>
+        <div class="header-content">
+            <div class="container">
+                <h1>Mottie Scripts</h1>
+                <p>A collection of powerful userscripts for GitHub</p>
+                <p>
+                    Works with 
+                    <a href="https://www.tampermonkey.net/" target="_blank" rel="noopener noreferrer">Tampermonkey</a>, 
+                    <a href="https://addons.mozilla.org/firefox/addon/greasemonkey/" target="_blank" rel="noopener noreferrer">Greasemonkey</a> & 
+                    <a href="https://violentmonkey.github.io/get-it/" target="_blank" rel="noopener noreferrer">Violentmonkey</a>
+                </p>
+            </div>
+        </div>
+    </header>
+
+    <div class="theme-changer">
+        <button class="theme-btn dark" data-theme="dark"></button>
+        <button class="theme-btn light" data-theme="light"></button>
+        <button class="theme-btn synthwave" data-theme="synthwave"></button>
+    </div>
+
+    <main class="container">
+        <div class="search-container">
+            <input type="text" id="search-input" placeholder="Search for a script...">
+        </div>
+        <div id="active-scripts" class="scripts-grid"></div>
+        <h2 style="margin-top: 3rem; margin-bottom: 1.5rem; border-bottom: 2px solid var(--primary-color); padding-bottom: 0.5rem;">Deprecated Scripts</h2>
+        <div id="deprecated-scripts" class="scripts-grid"></div>
+    </main>
+
+    <footer>
+        <div class="footer-credits">
+            Made With 🫀 By 〆༯𝙎คAEED✘🫀
+        </div>
+        <div class="social-links">
+             <a href="https://github.com/SaeedX302" target="_blank" title="GitHub"><img src="https://img.icons8.com/ios-filled/50/9ca3af/github.png" alt="GitHub" width="24" height="24"></a>
+             <a href="https://x.com/saeedx300" target="_blank" title="Twitter"><img src="https://img.icons8.com/ios-filled/50/9ca3af/twitterx.png" alt="Twitter" width="24" height="24"></a>
+             <a href="https://www.instagram.com/saeedxdie" target="_blank" title="Instagram"><img src="https://img.icons8.com/ios-filled/50/9ca3af/instagram-new.png" alt="Instagram" width="24" height="24"></a>
+             <a href="https://t.me/saeedxdie" target="_blank" title="Telegram"><img src="https://img.icons8.com/ios-filled/50/9ca3af/telegram-app.png" alt="Telegram" width="24" height="24"></a>
+             <a href="https://www.tiktok.com/@saeedxdie" target="_blank" title="TikTok"><img src="https://img.icons8.com/ios-filled/50/9ca3af/tiktok.png" alt="TikTok" width="24" height="24"></a>
+             <a href="https://www.youtube.com/@TsunMusicOfficial" target="_blank" title="YouTube"><img src="https://img.icons8.com/ios-filled/50/9ca3af/youtube-play.png" alt="YouTube" width="24" height="24"></a>
+        </div>
+    </footer>
+
+    <div id="redirect-banner" class="redirect-banner">
+        <p>Redirecting you to the script in <span id="redirect-timer">3</span> seconds...</p>
+    </div>
+
+    <button id="back-to-top" class="back-to-top" title="Go to top">&#8679;</button>
+
+    <script>
+        const activeScriptsData = [
+            { id: "code-colors", name: "GitHub code colors", installLink: "https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-code-colors.user.js", description: "Adds a color swatch next to the code color definition.", wikiLink: "https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-code-colors" },
+            { id: "code-folding", name: "GitHub code folding", installLink: "https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-code-folding.user.js", description: "Adds code folding to GitHub files.", wikiLink: "https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-code-folding" },
+            { id: "code-guides", name: "GitHub code guides", installLink: "https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-code-guides.user.js", description: "Allows you to add one or more vertical guidelines to the code.", wikiLink: "https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-code-guides" },
+            { id: "code-show-whitespace", name: "GitHub code show whitespace", installLink: "https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-code-show-whitespace.user.js", description: "Shows whitespace in code blocks.", wikiLink: "https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-code-show-whitespace" },
+            { id: "collapse-in-comment", name: "GitHub collapse in comment", installLink: "https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-collapse-in-comment.user.js", description: "Adds a header that can toggle long code and quote blocks in comments.", wikiLink: "https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-collapse-in-comment" },
+            { id: "collapse-markdown", name: "GitHub collapse markdown", installLink: "https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-collapse-markdown.user.js", description: "Collapses markdown headers.", wikiLink: "https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-collapse-markdown" },
+            { id: "copy-code-snippet", name: "GitHub copy code snippet", installLink: "https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-copy-code-snippet.user.js", description: "Adds a copy to clipboard button on hover of markdown code snippets.", wikiLink: "https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-copy-code-snippet" },
+            { id: "custom-hotkeys", name: "GitHub custom hotkeys", installLink: "https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-custom-hotkeys.user.js", description: "Allows you to add custom GitHub keyboard hotkeys.", wikiLink: "https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-custom-hotkeys" },
+            { id: "custom-navigation", name: "GitHub custom navigation", installLink: "https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-custom-navigation.user.js", description: "Allows you to customize GitHub's main navigation bar.", wikiLink: "https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-custom-navigation" },
+            { id: "diff-filename", name: "GitHub diff filename", installLink: "https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-diff-filename.user.js", description: "A userscript that highlights filename & permission alterations.", wikiLink: "https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-diff-filename" },
+            { id: "diff-file-toggle", name: "GitHub diff file toggle", installLink: "https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-diff-file-toggle.user.js", description: "A userscript that adds global diff file toggles.", wikiLink: "https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-diff-file-toggle" },
+            { id: "diff-files-filter", name: "GitHub diff files filter", installLink: "https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-diff-files-filter.user.js", description: "A userscript that adds filters that toggle diff & PR folders, and files by extension.", wikiLink: "https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-diff-files-filter" },
+            { id: "diff-links", name: "GitHub diff links", installLink: "https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-diff-links.user.js", description: "A userscript that adds links to diff and pull request headers to jump back & forth between files.", wikiLink: "https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-diff-links" },
+            { id: "download-zip", name: "GitHub download zip", installLink: "https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-download-zip.user.js", description: "A userscript adds download links so that downloaded filenames include the SHA.", wikiLink: "https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-download-zip" },
+            { id: "files-filter", name: "GitHub files filter", installLink: "https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-files-filter.user.js", description: "A userscript that adds filters that toggle the view of repo files by extension.", wikiLink: "https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-files-filter" },
+            { id: "font-preview", name: "GitHub font preview", installLink: "https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-font-preview.user.js", description: "A userscript that adds a font file preview.", wikiLink: "https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-font-preview" },
+            { id: "hide-own-feed-meta", name: "GitHub hide own feed meta", installLink: "https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-hide-own-feed-meta.user.js", description: "A userscript that hides your own repo metadata in the GitHub feed.", wikiLink: "https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-hide-own-feed-meta" },
+            { id: "html-preview", name: "GitHub html preview", installLink: "https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-html-preview.user.js", description: "A userscript that adds preview links to HTML files.", wikiLink: "https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-html-preview" },
+            { id: "image-preview", name: "GitHub image preview", installLink: "https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-image-preview.user.js", description: "A userscript that adds clickable image thumbnails.", wikiLink: "https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-image-preview" },
+            { id: "in-vscode", name: "GitHub in VSCode", installLink: "https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-in-vscode.user.js", description: "A userscript that adds a button to open a repo in VSCode using github1s.", wikiLink: "https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-in-VSCode" },
+            { id: "indent-comments", name: "GitHub indent comments", installLink: "https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-indent-comments.user.js", description: "A userscript that allows you to indent & outdent blocks in the comment editor.", wikiLink: "https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-indent-comments" },
+            { id: "issue-add-details", name: "GitHub issue add details", installLink: "https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-issue-add-details.user.js", description: "A userscript that adds a button to insert a details block into comments.", wikiLink: "https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-issue-add-details" },
+            { id: "issue-comments", name: "GitHub issue comments", installLink: "https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-issue-comments.user.js", description: "A userscript that toggles issues/pull request comments & messages.", wikiLink: "https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-issue-comments" },
+            { id: "issue-counts", name: "GitHub issue counts", installLink: "https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-issue-counts.user.js", description: "A userscript that adds a repo issues count to the repository tab & organization page.", wikiLink: "https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-issue-counts" },
+            { id: "label-color-picker", name: "GitHub label color picker", installLink: "https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-label-color-picker.user.js", description: "A userscript that adds a color picker to the label color input.", wikiLink: "https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-label-color-picker" },
+            { id: "mentioned-links", name: "GitHub mentioned links", installLink: "https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-mentioned-links.user.js", description: "A userscript adds all mentioned links in the side bar.", wikiLink: "https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-mentioned-links" },
+            { id: "reveal-header", name: "GitHub reveal header", installLink: "https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-reveal-header.user.js", description: "A userscript that reveals the header when hovering near the top of the screen.", wikiLink: "https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-reveal-header" },
+            { id: "rtl-comments", name: "GitHub rtl comments", installLink: "https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-rtl-comments.user.js", description: "A userscript that adds a button to insert RTL text blocks in comments.", wikiLink: "https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-rtl-comments" },
+            { id: "search-autocomplete", name: "GitHub search autocomplete", installLink: "https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-search-autocomplete.user.js", description: "A userscript that adds autocomplete search filters to GitHub.", wikiLink: "https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-search-autocomplete" },
+            { id: "sort-content", name: "GitHub sort content", installLink: "https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-sort-content.user.js", description: "A userscript that makes some lists & markdown tables sortable.", wikiLink: "https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-sort-content" },
+            { id: "sort-reactions", name: "GitHub sort reactions", installLink: "https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-sort-reactions.user.js", description: "A userscript that sorts comments by reaction.", wikiLink: "https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-sort-reactions" },
+            { id: "static-time", name: "GitHub static time", installLink: "https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-static-time.user.js", description: "A userscript that replaces relative times with a static time formatted as you like it.", wikiLink: "https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-static-time" },
+            { id: "table-of-contents", name: "GitHub table of contents", installLink: "https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-toc.user.js", description: "A userscript that adds a table of contents to readme & wiki pages.", wikiLink: "https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-table-of-contents" },
+            { id: "title-notification", name: "GitHub title notification", installLink: "https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-title-notification.user.js", description: "A userscript that changes the document title if there are unread messages.", wikiLink: "https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-title-notification" },
+            { id: "toggle-diff-comments", name: "GitHub toggle diff comments", installLink: "https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-toggle-diff-comments.user.js", description: "A userscript that toggles diff/PR and commit comments.", wikiLink: "https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-toggle-diff-comments" },
+            { id: "toggle-expanders", name: "GitHub toggle expanders", installLink: "https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-toggle-expanders.user.js", description: "A userscript that toggles all expanders when one expander is shift-clicked.", wikiLink: "https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-toggle-expanders" },
+            { id: "toggle-wiki-sidebar", name: "GitHub toggle wiki sidebar", installLink: "https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-toggle-wiki-sidebar.user.js", description: "A userscript that adds a button to toggle the GitHub Wiki sidebar.", wikiLink: "https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-toggle-wiki-sidebar" },
+            { id: "unknown-license", name: "GitHub unknown license", installLink: "https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-unknown-license.user.js", description: "A userscript that adds 'unknown license' message in repos with no license set.", wikiLink: "https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-unknown-license" },
+            { id: "update-fork", name: "GitHub update fork", installLink: "https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-update-fork.user.js", description: "A userscript that adds a link to update your fork.", wikiLink: "https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-update-fork" },
+            { id: "watcher", name: "GitHub watcher", installLink: "https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-watcher.user.js", description: "A userscript that can check a repo, folder, file or branch for updates.", wikiLink: "https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-watcher" },
+            { id: "gist-raw-links", name: "Gist raw links", installLink: "https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/gist-raw-links.user.js", description: "Add a button that contains a list of gist raw file links.", wikiLink: "https://github.com/Mottie/GitHub-userscripts/wiki/Gist-raw-links" },
+            { id: "gist-to-dabblet", name: "Gist to dabblet", installLink: "https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/gist-to-dabblet.user.js", description: "Add a dabblet.com link button to any gist with dabblet information.", wikiLink: "https://github.com/Mottie/GitHub-userscripts/wiki/Gist-to-dabblet" },
+        ];
+
+        const deprecatedScriptsData = [
+            { id: "diff-expander", name: "GitHub diff expander", installLink: "https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-diff-expander.user.js", description: "Adds more diff code expanding buttons.", wikiLink: "https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-diff-expander" },
+            { id: "issue-highlighter", name: "GitHub issue highlighter", installLink: "https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-issue-highlighter.user.js", description: "Highlights the linked-to comment.", wikiLink: "https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-issue-highlighter" },
+            { id: "issue-show-status", name: "GitHub issue show status", installLink: "https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-issue-show-status.user.js", description: "Adds an obvious indicator showing if an issue or pull request is open or closed.", wikiLink: "https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-issue-show-status" },
+            { id: "remove-diff-signs", name: "GitHub remove diff signs", installLink: "https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-remove-diff-signs.user.js", description: "Hides the '+' and '-' from code diffs.", wikiLink: "https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-remove-diff-signs" },
+        ];
+
+        const activeScriptsContainer = document.getElementById('active-scripts');
+        const deprecatedScriptsContainer = document.getElementById('deprecated-scripts');
+        const searchInput = document.getElementById('search-input');
+        const banner = document.getElementById('redirect-banner');
+        const timerSpan = document.getElementById('redirect-timer');
+        let countdownInterval;
+
+        function createScriptCard(script, status) {
+            const card = document.createElement('div');
+            card.className = 'script-card';
+
+            const mainContentHTML = `
+                <h3>${script.name}</h3>
+                <p>${script.description}</p>
+            `;
+
+            const footerHTML = `
+                <div class="card-footer">
+                    <button class="install-btn" data-href="${script.installLink}">Install</button>
+                    <span class="status ${status}">${status}</span>
+                </div>
+            `;
+            
+            let cardLink;
+            if (script.wikiLink) {
+                if (script.id === 'code-colors') {
+                    cardLink = `<a href="code-colors.html" class="card-link">${mainContentHTML}</a>`;
+                } else {
+                    cardLink = `<a href="${script.wikiLink}" class="card-link" target="_blank">${mainContentHTML}</a>`;
+                }
+            } else {
+                cardLink = `<div class="card-link">${mainContentHTML}</div>`;
+            }
+
+            card.innerHTML = cardLink + footerHTML;
+            return card;
+        }
+
+        function renderScripts() {
+            const searchTerm = searchInput.value.toLowerCase();
+            
+            activeScriptsContainer.innerHTML = '';
+            deprecatedScriptsContainer.innerHTML = '';
+
+            activeScriptsData
+                .filter(script => script.name.toLowerCase().includes(searchTerm) || script.description.toLowerCase().includes(searchTerm))
+                .forEach(script => {
+                    activeScriptsContainer.appendChild(createScriptCard(script, 'active'));
+                });
+
+            deprecatedScriptsData
+                .filter(script => script.name.toLowerCase().includes(searchTerm) || script.description.toLowerCase().includes(searchTerm))
+                .forEach(script => {
+                    deprecatedScriptsContainer.appendChild(createScriptCard(script, 'deprecated'));
+                });
+        }
+
+        document.querySelector('main').addEventListener('click', function(event) {
+            if (event.target.classList.contains('install-btn')) {
+                event.preventDefault();
+                event.stopPropagation();
+                const installUrl = event.target.dataset.href;
+                
+                let seconds = 3;
+                timerSpan.textContent = seconds;
+                banner.classList.add('show');
+
+                clearInterval(countdownInterval);
+                countdownInterval = setInterval(() => {
+                    seconds--;
+                    timerSpan.textContent = seconds;
+                    if (seconds <= 0) {
+                        clearInterval(countdownInterval);
+                        window.open(installUrl, '_blank');
+                        banner.classList.remove('show');
+                    }
+                }, 1000);
+            }
+        });
+
+        searchInput.addEventListener('input', renderScripts);
+        
+        // Theme Changer
+        document.querySelectorAll('.theme-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.body.setAttribute('data-theme', btn.dataset.theme);
+            });
+        });
+
+        // Back to Top button
+        const backToTopBtn = document.getElementById('back-to-top');
+        window.onscroll = () => {
+            if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
+                backToTopBtn.style.display = 'block';
+            } else {
+                backToTopBtn.style.display = 'none';
+            }
+        };
+        backToTopBtn.onclick = () => {
+            document.body.scrollTop = 0;
+            document.documentElement.scrollTop = 0;
+        };
+
+        // Initial render
+        renderScripts();
+        
+    </script>
+</body>
+</html>
