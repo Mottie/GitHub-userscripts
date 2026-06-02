@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name        GitHub PR lines changed
+// @name        GitHub PRs lines changed
 // @version     1.0.0
 // @description A userscript that shows added/removed line counts on pull request lists and adds a "lines changed" sort option
 // @license     MIT
@@ -14,8 +14,8 @@
 // @grant       GM_xmlhttpRequest
 // @connect     api.github.com
 // @icon        https://github.githubassets.com/pinned-octocat.svg
-// @updateURL   https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-pr-lines-changed.user.js
-// @downloadURL https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-pr-lines-changed.user.js
+// @updateURL   https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-prs-lines-changed.user.js
+// @downloadURL https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-prs-lines-changed.user.js
 // @supportURL  https://github.com/Mottie/GitHub-userscripts/issues
 // ==/UserScript==
 

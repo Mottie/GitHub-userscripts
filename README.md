@@ -44,7 +44,7 @@ Userscripts to add functionality to GitHub.
 	| [GitHub issue counts][ic2-wiki]        |     | [install][ic2-raw] | [GF][ic2-gf] [OU][ic2-ou] | 2012.01.16 | 2022.10.24 |
 	| [GitHub label color picker][glc-wiki]  |     | [install][glc-raw] | [GF][glc-gf] [OU][glc-ou] | 2016.09.16 | 2022.10.24 |
 	| [GitHub mentioned links][iml-wiki]     |     | [install][iml-raw] | [GF][iml-gf] [OU][iml-ou] | 2020.03.28 | 2022.10.24 |
-	| [GitHub PR lines changed][plc-wiki]    |     | [install][plc-raw] |                           | 2026.06.02 |            |
+	| [GitHub PRs lines changed][plc-wiki]   |     | [install][plc-raw] |                           | 2026.06.02 |            |
 	| [GitHub reveal header][rhd-wiki]       |     | [install][rhd-raw] | [GF][rhd-gf] [OU][rhd-ou] | 2017.06.03 | 2019.03.29 |
 	| [GitHub rtl comments][rtl-wiki]        |     | [install][rtl-raw] | [GF][rtl-gf] [OU][rtl-ou] | 2016.06.13 | 2022.10.24 |
 	| [GitHub search autocomplete][sac-wiki] |     | [install][sac-raw] | [GF][sac-gf] [OU][sac-ou] | 2017.03.31 | 2018.05.19 |
@@ -105,7 +105,7 @@ Userscripts to add functionality to GitHub.
 [ipv-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-image-preview
 [iss-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-issue-show-status
 [ivs-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-in-VSCode
-[plc-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-PR-lines-changed
+[plc-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-PRs-lines-changed
 [rds-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-remove-diff-signs
 [rhd-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-reveal-header
 [rtl-wiki]: https://github.com/Mottie/GitHub-userscripts/wiki/GitHub-rtl-comments
@@ -153,7 +153,7 @@ Userscripts to add functionality to GitHub.
 [ipv-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-image-preview.user.js
 [iss-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-issue-show-status.user.js
 [ivs-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-in-vscode.user.js
-[plc-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-pr-lines-changed.user.js
+[plc-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-prs-lines-changed.user.js
 [rds-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-remove-diff-signs.user.js
 [rhd-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-reveal-header.user.js
 [rtl-raw]: https://raw.githubusercontent.com/Mottie/GitHub-userscripts/master/github-rtl-comments.user.js
